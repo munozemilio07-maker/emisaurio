@@ -3950,12 +3950,17 @@ function cargarScript(src) {
 }
 async function despertarPython() {
   const estadoPy = $("estado-python");
-  const fuentes = [new URL("py/", document.baseURI).href, "https://cdn.jsdelivr.net/npm/pyodide@0.26.4/"];
+  // Copia local (py/, con la stdlib renombrada a .wasm porque algunos hosts no sirven .zip) y, si no existe, el CDN.
+  const local = new URL("py/", document.baseURI).href;
+  const fuentes = [
+    { indexURL: local, stdLibURL: local + "python_stdlib.wasm" },
+    { indexURL: "https://cdn.jsdelivr.net/npm/pyodide@0.26.4/" },
+  ];
   let ultimoError = null;
-  for (const base of fuentes) {
+  for (const opciones of fuentes) {
     try {
-      await cargarScript(base + "pyodide.js");
-      pyodide = await loadPyodide({ indexURL: base });
+      await cargarScript(opciones.indexURL + "pyodide.js");
+      pyodide = await loadPyodide(opciones);
       break;
     } catch (e) { ultimoError = e; pyodide = null; }
   }
