@@ -1,0 +1,3979 @@
+<title>Torre de Python</title>
+<meta name="description" content="Una torre de 40 pisos para aprender Python escribiendo código real, piso a piso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --piedra: #15121d;
+  --muro: #1f1a2b;
+  --muro-2: #2a2339;
+  --borde: #3d3252;
+  --sombra: #0a0810;
+  --texto: #ece3cf;
+  --apagado: #9a90ad;
+  --oro: #f2b53a;
+  --oro-osc: #a8741a;
+  --sangre: #e0505a;
+  --musgo: #7bc950;
+  --mana: #5aa9e6;
+  --pergamino: #eadcb8;
+  --pergamino-2: #dccb9f;
+  --tinta: #2b1d14;
+  --tinta-2: #6b5234;
+  --codigo-fondo: #120f19;
+  --pixel: "Press Start 2P", "Courier New", monospace;
+  --retro: "VT323", "Courier New", monospace;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--piedra); }
+body {
+  color: var(--texto);
+  font-family: var(--retro);
+  font-size: 21px;
+  line-height: 1.25;
+  background-color: var(--piedra);
+  background-image:
+    linear-gradient(var(--sombra) 2px, transparent 2px),
+    linear-gradient(90deg, var(--sombra) 2px, transparent 2px);
+  background-size: 48px 24px, 48px 48px;
+  background-position: 0 0, 24px 24px;
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--oro); outline-offset: 2px; }
+
+.app {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-areas: "hud hud" "torre sala";
+  gap: 16px;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: 16px 40px;
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  grid-area: hud;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 14px 16px;
+  background: var(--muro);
+  border: 3px solid var(--borde);
+  box-shadow: 6px 6px 0 var(--sombra);
+}
+.marca {
+  font-family: var(--pixel);
+  font-size: 18px;
+  line-height: 1.3;
+  color: var(--oro);
+  text-shadow: 3px 3px 0 var(--oro-osc), 5px 5px 0 var(--sombra);
+  letter-spacing: 1px;
+}
+.marca small { display: block; font-size: 8px; color: var(--apagado); text-shadow: none; letter-spacing: 2px; margin-top: 6px; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-left: auto; }
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.etq { font-family: var(--pixel); font-size: 8px; letter-spacing: 1.5px; color: var(--apagado); }
+.stat b { font-weight: normal; font-size: 24px; color: var(--texto); font-variant-numeric: tabular-nums; }
+.barra-cont { flex: 1 1 100%; display: flex; align-items: center; gap: 12px; }
+.barra {
+  flex: 1;
+  height: 14px;
+  background: var(--sombra);
+  border: 3px solid var(--borde);
+  position: relative;
+}
+.barra > div {
+  height: 100%;
+  width: 0;
+  background: repeating-linear-gradient(90deg, var(--musgo) 0 6px, #5fa83a 6px 8px);
+  transition: width .6s steps(12);
+}
+.estado-py { font-family: var(--pixel); font-size: 8px; letter-spacing: 1px; color: var(--mana); white-space: nowrap; }
+.estado-py.listo { color: var(--musgo); }
+.estado-py.error { color: var(--sangre); white-space: normal; }
+
+/* ---------- TORRE ---------- */
+.torre {
+  grid-area: torre;
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 16px);
+  align-self: start;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  background: var(--muro);
+  border: 3px solid var(--borde);
+  box-shadow: 6px 6px 0 var(--sombra);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scrollbar-color: var(--borde) var(--muro);
+}
+.torre-tope {
+  font-family: var(--pixel);
+  font-size: 9px;
+  text-align: center;
+  color: var(--sangre);
+  padding: 6px 0 10px;
+  letter-spacing: 1px;
+}
+.zona-etq {
+  font-family: var(--pixel);
+  font-size: 7px;
+  letter-spacing: 1px;
+  line-height: 1.6;
+  color: var(--apagado);
+  padding: 10px 4px 4px;
+  border-top: 2px dashed var(--borde);
+}
+.zona-etq:first-of-type { border-top: 0; }
+.piso {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 5px 6px;
+  text-align: left;
+  background: var(--muro-2);
+  border: 2px solid var(--sombra);
+  cursor: pointer;
+  font-size: 19px;
+  line-height: 1.05;
+}
+.piso .num { font-family: var(--pixel); font-size: 9px; color: var(--oro); font-variant-numeric: tabular-nums; }
+.piso .nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.piso .tag { font-family: var(--pixel); font-size: 7px; color: var(--sangre); }
+.piso.hecho .tag { color: var(--musgo); }
+.piso:hover:not(:disabled) { border-color: var(--oro-osc); }
+.piso.actual { border-color: var(--oro); background: #3a2f22; box-shadow: inset 0 0 0 2px var(--oro-osc); }
+.piso:disabled { cursor: not-allowed; opacity: .38; }
+.piso:disabled .num { color: var(--apagado); }
+
+/* ---------- SALA ---------- */
+.sala { grid-area: sala; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.cabecera-sala { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 16px; }
+.zona { font-family: var(--pixel); font-size: 9px; letter-spacing: 2px; color: var(--mana); margin-bottom: 10px; }
+h1 {
+  margin: 0;
+  font-family: var(--pixel);
+  font-weight: normal;
+  font-size: clamp(14px, 2.2vw, 22px);
+  line-height: 1.45;
+  color: var(--texto);
+  text-wrap: balance;
+  text-shadow: 3px 3px 0 var(--sombra);
+}
+h1 .n { color: var(--oro); }
+.enemigo-etq { font-family: var(--pixel); font-size: 8px; line-height: 1.8; color: var(--apagado); text-align: right; }
+.enemigo-etq b { color: var(--sangre); font-weight: normal; }
+
+.escena-marco {
+  position: relative;
+  border: 4px solid var(--sombra);
+  box-shadow: 0 0 0 3px var(--borde), 6px 6px 0 3px var(--sombra);
+  background: #0d0b12;
+  margin: 3px;
+}
+#escena { display: block; width: 100%; height: auto; image-rendering: pixelated; image-rendering: crisp-edges; }
+.cartel {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  transform: translateX(-50%);
+  font-family: var(--pixel);
+  font-size: clamp(12px, 2.6vw, 22px);
+  color: var(--oro);
+  text-shadow: 3px 3px 0 var(--sombra), -2px -2px 0 var(--sombra);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: parpadeo .5s steps(2) 3;
+}
+.cartel.malo { color: var(--sangre); }
+@keyframes parpadeo { 50% { opacity: .2; } }
+
+.columnas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+
+/* Pergamino (teoría) */
+.pergamino {
+  background: var(--pergamino);
+  color: var(--tinta);
+  border: 3px solid var(--tinta);
+  box-shadow: inset 0 0 0 4px var(--pergamino-2), 6px 6px 0 var(--sombra);
+  padding: 18px 20px 20px;
+  font-size: 22px;
+  line-height: 1.22;
+}
+.pergamino h2, .mision h2 {
+  margin: 0 0 12px;
+  font-family: var(--pixel);
+  font-weight: normal;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+.pergamino h2 { color: var(--tinta-2); }
+.pergamino p, .mision p { margin: 0 0 12px; max-width: 62ch; }
+.pergamino ul, .pergamino ol, .mision ul, .mision ol { margin: 0 0 12px; padding-left: 26px; }
+.pergamino li, .mision li { margin-bottom: 4px; }
+.pergamino strong { color: #7a2a14; font-weight: normal; background: rgba(214, 64, 74, .12); padding: 0 3px; }
+.pergamino code {
+  font-family: var(--mono);
+  font-size: 15px;
+  background: #d4c192;
+  padding: 1px 5px;
+  border: 1px solid #b8a172;
+  white-space: nowrap;
+}
+.pergamino pre.codigo { border-color: var(--tinta); }
+pre.codigo, pre.salida-ej, .salida-mini {
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: var(--codigo-fondo);
+  color: #e4dcc8;
+  border: 3px solid var(--sombra);
+  tab-size: 4;
+}
+pre.salida-ej, .salida-mini { background: #07120a; color: #a6f08a; }
+.ejemplo { margin-top: 18px; }
+.ejemplo-cab { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.ejemplo-cab span { font-family: var(--pixel); font-size: 9px; letter-spacing: 2px; color: var(--tinta-2); }
+.salida-mini { margin-top: -6px; white-space: pre-wrap; }
+.salida-mini.err { color: #ff9a9a; background: #1c0b0e; }
+
+/* syntax */
+.k { color: #ff8f6b; }
+.s { color: #b5e07a; }
+.c { color: #7d7392; font-style: italic; }
+.nu { color: #f6c85f; }
+.b { color: #7fc7ff; }
+
+/* Misión + editor */
+.mision-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.mision {
+  background: var(--muro);
+  border: 3px solid var(--oro-osc);
+  box-shadow: 6px 6px 0 var(--sombra);
+  padding: 16px 18px 6px;
+}
+.mision h2 { color: var(--oro); }
+.mision code {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--oro);
+  background: var(--sombra);
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+.mision strong { color: var(--oro); font-weight: normal; }
+
+.editor { border: 3px solid var(--borde); box-shadow: 6px 6px 0 var(--sombra); background: var(--codigo-fondo); }
+.editor-cab {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--muro-2);
+  border-bottom: 3px solid var(--borde);
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--apagado);
+  letter-spacing: 1px;
+}
+.editor-cab span:first-child { color: var(--texto); }
+.editor-cuerpo { display: flex; min-height: 280px; }
+#gutter {
+  margin: 0;
+  padding: 12px 8px 12px 10px;
+  min-width: 42px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #5b5270;
+  background: #0d0b12;
+  border-right: 2px solid var(--muro-2);
+  overflow: hidden;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+#gutter .mal { color: #fff; background: var(--sangre); display: inline-block; padding: 0 3px; margin-right: -3px; }
+#codigo {
+  flex: 1;
+  min-width: 0;
+  resize: vertical;
+  min-height: 280px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #efe7d4;
+  caret-color: var(--oro);
+  font-family: var(--mono);
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 4;
+}
+#codigo::selection { background: #4a3c66; }
+
+.acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  padding: 11px 14px 10px;
+  background: var(--muro-2);
+  color: var(--texto);
+  border: 3px solid var(--sombra);
+  box-shadow: inset -3px -3px 0 rgba(0,0,0,.35), inset 3px 3px 0 rgba(255,255,255,.08), 3px 3px 0 var(--sombra);
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) { background: #362d49; }
+.btn:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: inset 3px 3px 0 rgba(0,0,0,.35), 1px 1px 0 var(--sombra); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn.primario { background: var(--sangre); color: #fff6ea; }
+.btn.primario:hover:not(:disabled) { background: #ee626b; }
+.btn.oro { background: var(--oro); color: var(--tinta); }
+.btn.oro:hover:not(:disabled) { background: #ffc85a; }
+.btn.chico { font-size: 8px; padding: 8px 10px 7px; }
+.pergamino .btn.chico { background: var(--tinta); color: var(--pergamino); }
+.pergamino .btn.chico:hover:not(:disabled) { background: #4a3322; }
+
+.pista, .solucion {
+  border: 3px dashed var(--mana);
+  background: #16202e;
+  padding: 12px 16px 2px;
+}
+.pista .etq, .solucion .etq { display: block; margin-bottom: 8px; color: var(--mana); }
+.pista p, .solucion p { margin: 0 0 10px; }
+.pista code { font-family: var(--mono); font-size: 15px; color: var(--mana); }
+.solucion pre.codigo { margin-bottom: 10px; }
+.solucion .btn { margin-bottom: 12px; }
+
+.consola { border: 3px solid var(--borde); background: #07060b; box-shadow: 6px 6px 0 var(--sombra); }
+.consola-cab { padding: 7px 10px; font-family: var(--pixel); font-size: 8px; letter-spacing: 1px; color: var(--apagado); background: var(--muro-2); border-bottom: 3px solid var(--borde); }
+#consola { padding: 12px 14px; min-height: 110px; font-family: var(--mono); font-size: 14px; line-height: 1.55; overflow-x: auto; }
+#consola .cmd { color: var(--apagado); }
+#consola pre { margin: 0; white-space: pre-wrap; word-break: break-word; font: inherit; color: #d9f5c9; }
+#consola .vacio { color: var(--apagado); font-style: italic; }
+.veredicto { margin-top: 12px; padding: 10px 12px; font-family: var(--retro); font-size: 21px; line-height: 1.2; border-left: 6px solid; }
+.veredicto .etq { display: block; margin-bottom: 6px; }
+.veredicto.ok { border-color: var(--musgo); background: #10200c; color: #c9f5b0; }
+.veredicto.ok .etq { color: var(--musgo); }
+.veredicto.fallo { border-color: var(--oro); background: #241a08; color: #f8dfa6; }
+.veredicto.fallo .etq { color: var(--oro); }
+.veredicto.error { border-color: var(--sangre); background: #240c10; color: #ffc9c9; }
+.veredicto.error .etq { color: var(--sangre); }
+.veredicto .orig { display: block; font-family: var(--mono); font-size: 13.5px; margin: 4px 0 8px; color: #ff9a9a; }
+
+.victoria {
+  border: 3px solid var(--musgo);
+  background: #0f1c0c;
+  box-shadow: 6px 6px 0 var(--sombra);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.victoria h3 { margin: 0; font-family: var(--pixel); font-weight: normal; font-size: 13px; line-height: 1.5; color: var(--musgo); }
+.victoria p { margin: 0; }
+.victoria ul { margin: 0; padding-left: 24px; }
+.victoria .xp { color: var(--oro); }
+.victoria .btn { align-self: flex-start; }
+
+@media (max-width: 1180px) {
+  .columnas { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-areas: "hud" "torre" "sala"; }
+  .torre {
+    position: relative;
+    top: 0;
+    max-height: none;
+    flex-direction: row;
+    align-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px;
+  }
+  .torre-tope, .zona-etq { display: none; }
+  .piso { order: var(--n); grid-template-columns: auto; min-width: 46px; justify-items: center; padding: 8px 4px; }
+  .piso .nom, .piso .tag { display: none; }
+  .piso.jefe { border-color: #5a2230; }
+  .piso.jefe.actual, .piso.actual { border-color: var(--oro); }
+  .stats { margin-left: 0; }
+  #codigo, #gutter { font-size: 16px; }
+  body { font-size: 20px; }
+  .pergamino { font-size: 21px; padding: 14px 14px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cartel { animation: none; }
+  .barra > div { transition: none; }
+}
+</style>
+
+<div class="app">
+  <header class="hud">
+    <div class="marca">TORRE DE PYTHON<small>40 PISOS · 8 ZONAS · 1 DRAGÓN</small></div>
+    <div class="stats">
+      <div class="stat"><span class="etq">RANGO</span><b id="rango">Aprendiz</b></div>
+      <div class="stat"><span class="etq">PISOS</span><b id="pisos-hud">0/40</b></div>
+      <div class="stat"><span class="etq">EXP</span><b id="xp">0</b></div>
+    </div>
+    <div class="barra-cont">
+      <div class="barra" role="progressbar" aria-label="Progreso en la torre" aria-valuemin="0" aria-valuemax="40" id="barra"><div id="barra-progreso"></div></div>
+      <div id="estado-python" class="estado-py">INVOCANDO A PYTHON…</div>
+    </div>
+  </header>
+
+  <nav class="torre" id="torre" aria-label="Pisos de la torre"></nav>
+
+  <main class="sala">
+    <div class="cabecera-sala">
+      <div>
+        <div class="zona" id="zona-nombre"></div>
+        <h1 id="titulo-piso"></h1>
+      </div>
+      <div class="enemigo-etq" id="enemigo-etq"></div>
+    </div>
+
+    <div class="escena-marco">
+      <canvas id="escena" width="320" height="120" aria-label="Escena del combate"></canvas>
+      <div id="cartel" class="cartel" hidden></div>
+    </div>
+
+    <div class="columnas">
+      <section class="pergamino" aria-labelledby="h-pergamino">
+        <h2 id="h-pergamino">PERGAMINO DEL SABIO</h2>
+        <div id="teoria"></div>
+        <div class="ejemplo">
+          <div class="ejemplo-cab"><span>EJEMPLO</span><button class="btn chico" id="btn-ejemplo" type="button">EJECUTAR EJEMPLO</button></div>
+          <pre id="ejemplo-codigo" class="codigo"></pre>
+          <pre id="ejemplo-salida" class="salida-mini" hidden></pre>
+        </div>
+      </section>
+
+      <section class="mision-col" aria-label="Misión y código">
+        <div class="mision">
+          <h2>MISIÓN</h2>
+          <div id="mision"></div>
+        </div>
+
+        <div class="editor">
+          <div class="editor-cab"><span>tu_codigo.py</span><span>CTRL+ENTER EJECUTA</span></div>
+          <div class="editor-cuerpo">
+            <pre id="gutter" aria-hidden="true">1</pre>
+            <textarea id="codigo" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Tu código Python"></textarea>
+          </div>
+        </div>
+
+        <div class="acciones">
+          <button class="btn primario" id="btn-ejecutar" type="button" disabled>ATACAR ▶ EJECUTAR</button>
+          <button class="btn" id="btn-pista" type="button">PISTA</button>
+          <button class="btn" id="btn-solucion" type="button" disabled title="Se desbloquea tras 2 intentos fallidos">SOLUCIÓN</button>
+          <button class="btn" id="btn-reiniciar" type="button">REINICIAR</button>
+        </div>
+
+        <div id="pista" class="pista" hidden></div>
+        <div id="solucion" class="solucion" hidden></div>
+
+        <div class="consola">
+          <div class="consola-cab">CONSOLA</div>
+          <div id="consola" aria-live="polite"></div>
+        </div>
+
+        <div id="victoria" class="victoria" hidden></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script type="text/python" id="motor">
+import sys, io, json, re, unicodedata
+
+_LIMITE = 400000
+
+
+class _Fallo(Exception):
+    pass
+
+
+class _TiempoAgotado(BaseException):
+    pass
+
+
+_ESTADO = {"ns": {}, "codigo": "", "entradas": [], "salida": ""}
+
+
+def _tracer():
+    cuenta = [0]
+
+    def local(frame, evento, arg):
+        if evento == "line":
+            cuenta[0] += 1
+            if cuenta[0] > _LIMITE:
+                raise _TiempoAgotado()
+        return local
+
+    def glob(frame, evento, arg):
+        if frame.f_code.co_filename == "<tu_codigo>":
+            return local
+        return None
+
+    return glob
+
+
+def _correr_crudo(codigo, entradas):
+    buf = io.StringIO()
+    cola = list(entradas)
+
+    def _input(mensaje=""):
+        valor = str(cola.pop(0)) if cola else ""
+        buf.write(str(mensaje) + valor + "\n")
+        return valor
+
+    ns = {"__name__": "__main__", "input": _input}
+    viejo_out = sys.stdout
+    viejo_trace = sys.gettrace()
+    sys.stdout = buf
+    error = None
+    try:
+        sys.settrace(_tracer())
+        exec(compile(codigo, "<tu_codigo>", "exec"), ns)
+    except SystemExit:
+        pass
+    except BaseException as e:
+        error = e
+    finally:
+        sys.settrace(viejo_trace)
+        sys.stdout = viejo_out
+    return buf.getvalue(), ns, error
+
+
+_EXPLICACIONES = {
+    "NameError": "Python no reconoce ese nombre. ¿Está bien escrito, con las mismas mayúsculas? ¿Lo creaste antes de usarlo? Si era un texto, le faltan las comillas.",
+    "UnboundLocalError": "Usas una variable dentro de una función antes de darle un valor ahí dentro.",
+    "SyntaxError": "Python no entiende cómo está escrita esa línea. Revisa que abras y cierres paréntesis y comillas, y que if, elif, else, for, while, def y class terminen con dos puntos (:).",
+    "IndentationError": "Problema de sangría. Lo que va dentro de un if, for, while, def o class debe ir desplazado 4 espacios, y todas las líneas del mismo bloque igual de desplazadas.",
+    "TabError": "Mezclas tabuladores y espacios en la sangría. Usa solo espacios.",
+    "TypeError": "Estás combinando cosas que no encajan, como texto + número, o llamando a una función con más o menos valores de los que espera. Convierte con str() o int() si hace falta.",
+    "ValueError": "El tipo es correcto pero el valor no sirve. Por ejemplo, int('hola') falla porque 'hola' no es un número.",
+    "ZeroDivisionError": "Has dividido entre cero, y eso no lo permite ni la magia.",
+    "IndexError": "Pides una posición que no existe. Las posiciones empiezan en 0 y la última es len(...) - 1.",
+    "KeyError": "Esa clave no existe en el diccionario. Revisa cómo está escrita o usa .get().",
+    "AttributeError": "Ese valor no tiene el atributo o método que pides. Revisa el nombre que va después del punto.",
+    "RecursionError": "La función se llama a sí misma sin parar. Le falta un caso base que detenga la recursión.",
+    "_TiempoAgotado": "Tu programa ha dado demasiados pasos. Casi seguro hay un bucle infinito: comprueba que la condición del while llegue a ser falsa.",
+}
+
+
+def _linea_error(e):
+    if isinstance(e, SyntaxError) and e.filename == "<tu_codigo>":
+        return e.lineno
+    linea = None
+    tb = e.__traceback__
+    while tb is not None:
+        if tb.tb_frame.f_code.co_filename == "<tu_codigo>":
+            linea = tb.tb_lineno
+        tb = tb.tb_next
+    return linea
+
+
+def _explicar(e):
+    tipo = type(e).__name__
+    if tipo == "_TiempoAgotado":
+        original = "Bucle infinito detenido por la torre"
+    elif isinstance(e, SyntaxError):
+        original = f"{tipo}: {e.msg}"
+    else:
+        original = f"{tipo}: {e}"
+    return {
+        "tipo": tipo,
+        "linea": _linea_error(e),
+        "original": original,
+        "explicacion": _EXPLICACIONES.get(tipo, "Algo falló al ejecutar esta parte. Lee el mensaje original: suele dar la pista."),
+    }
+
+
+def _norm(texto):
+    t = unicodedata.normalize("NFD", str(texto))
+    t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    t = re.sub(r"[¡!¿?.,;:«»\"']", "", t.lower())
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def igual(a, b):
+    return _norm(a) == _norm(b)
+
+
+def lineas(salida):
+    return [l.strip() for l in str(salida).splitlines() if l.strip()]
+
+
+def tiene_linea(texto, salida=None):
+    if salida is None:
+        salida = _ESTADO["salida"]
+    buscado = _norm(texto)
+    return any(_norm(l) == buscado for l in lineas(salida))
+
+
+def debe(condicion, mensaje):
+    if not condicion:
+        raise _Fallo(mensaje)
+
+
+def correr(codigo=None, entradas=None):
+    if codigo is None:
+        codigo = _ESTADO["codigo"]
+    if entradas is None:
+        entradas = _ESTADO["entradas"]
+    salida, ns, error = _correr_crudo(codigo, entradas)
+    if error is not None:
+        info = _explicar(error)
+        raise _Fallo(f"Probé tu código con otros datos y falló: {info['original']}. {info['explicacion']}")
+    return salida, ns
+
+
+def con_valores(**valores):
+    codigo = _ESTADO["codigo"]
+    for nombre, valor in valores.items():
+        patron = re.compile(r"^([ \t]*)" + re.escape(nombre) + r"[ \t]*=(?!=).*$", re.M)
+        if not patron.search(codigo):
+            raise _Fallo(f"No encuentro la línea donde se crea «{nombre} = ...». Déjala en tu código para que pueda probarlo con otros valores.")
+        codigo = patron.sub(lambda m: m.group(1) + nombre + " = " + repr(valor), codigo, count=1)
+    return correr(codigo)
+
+
+def capturar(funcion, *args, **kwargs):
+    buf = io.StringIO()
+    viejo = sys.stdout
+    sys.stdout = buf
+    try:
+        resultado = funcion(*args, **kwargs)
+    finally:
+        sys.stdout = viejo
+    return buf.getvalue(), resultado
+
+
+def es_recursiva(nombre, *args):
+    ns = _ESTADO["ns"]
+    original = ns[nombre]
+    llamadas = [0]
+
+    def espia(*a, **k):
+        llamadas[0] += 1
+        return original(*a, **k)
+
+    ns[nombre] = espia
+    try:
+        original(*args)
+    finally:
+        ns[nombre] = original
+    return llamadas[0] > 0
+
+
+def _ejecutar(codigo, prueba, entradas_json):
+    entradas = json.loads(entradas_json)
+    salida, ns, error = _correr_crudo(codigo, entradas)
+    res = {"salida": salida, "ok": False}
+    if error is not None:
+        res["fase"] = "codigo"
+        res["error"] = _explicar(error)
+        return json.dumps(res)
+    if not prueba.strip():
+        res["ok"] = True
+        return json.dumps(res)
+    _ESTADO.update(ns=ns, codigo=codigo, entradas=entradas, salida=salida)
+    ns_prueba = dict(ns)
+    ns_prueba.update(
+        debe=debe, igual=igual, tiene_linea=tiene_linea, lineas=lineas,
+        correr=correr, con_valores=con_valores, capturar=capturar,
+        es_recursiva=es_recursiva, re=re,
+        _salida=salida, _lineas=lineas(salida), _codigo=codigo,
+    )
+    buf = io.StringIO()
+    viejo_out = sys.stdout
+    sys.stdout = buf
+    try:
+        sys.settrace(_tracer())
+        exec(compile(prueba, "<prueba>", "exec"), ns_prueba)
+        res["ok"] = True
+    except _Fallo as f:
+        res["fase"] = "prueba"
+        res["mensaje"] = str(f)
+    except NameError as e:
+        res["fase"] = "prueba"
+        res["mensaje"] = f"No encuentro «{e.name}» en tu código. ¿Lo creaste con ese nombre exacto? Mayúsculas y guiones bajos cuentan."
+    except _TiempoAgotado:
+        res["fase"] = "prueba"
+        res["mensaje"] = "Al probar tu código se quedó dando vueltas sin fin. Revisa tus bucles o tu recursión."
+    except BaseException as e:
+        info = _explicar(e)
+        res["fase"] = "prueba"
+        res["mensaje"] = f"Al probar tu código saltó un error: {info['original']}. {info['explicacion']}"
+        if info["linea"]:
+            res["mensaje"] += f" (línea {info['linea']} de tu código)"
+    finally:
+        sys.settrace(None)
+        sys.stdout = viejo_out
+    return json.dumps(res)
+</script>
+
+<script>
+/* ============================================================
+   CONTENIDO: 8 zonas × 5 pisos. El 5.º de cada zona es un jefe.
+   ============================================================ */
+function dedent(t) {
+  const l = t.replace(/^\n/, "").replace(/\n[ \t]*$/, "").split("\n");
+  const m = Math.min(...l.filter(x => x.trim()).map(x => x.match(/^ */)[0].length));
+  return l.map(x => x.slice(Number.isFinite(m) ? m : 0)).join("\n");
+}
+const T = (s, ...v) => dedent(String.raw({ raw: s.raw }, ...v));
+
+const ZONAS = [
+  { nombre: "Mazmorras de la Entrada", tema: "Primeros pasos", enemigo: "slime", normal: "Slime verde", jefe: "Slime Rey" },
+  { nombre: "Cripta de las Runas", tema: "Textos", enemigo: "murcielago", normal: "Murciélago", jefe: "Murciélago Escriba" },
+  { nombre: "Salón de las Decisiones", tema: "Condicionales", enemigo: "fantasma", normal: "Fantasma", jefe: "Fantasma del Juicio" },
+  { nombre: "Catacumbas del Eterno Retorno", tema: "Bucles", enemigo: "esqueleto", normal: "Esqueleto", jefe: "Rey Esqueleto" },
+  { nombre: "Armería de las Colecciones", tema: "Listas y diccionarios", enemigo: "mimico", normal: "Mímico", jefe: "Mímico Ancestral" },
+  { nombre: "Biblioteca del Nigromante", tema: "Funciones", enemigo: "mago", normal: "Aprendiz oscuro", jefe: "El Nigromante" },
+  { nombre: "Laboratorio del Alquimista", tema: "Herramientas avanzadas", enemigo: "golem", normal: "Gólem menor", jefe: "Gólem de Piedra" },
+  { nombre: "Cima del Dragón", tema: "Clases y objetos", enemigo: "dragon", normal: "Dragoncillo", jefe: "Dragón de la Cima" },
+];
+
+const RANGOS = ["Aprendiz", "Escudero", "Escriba de Runas", "Caballero del Juicio", "Guardián de Catacumbas", "Maestro Armero", "Hechicero de Funciones", "Alquimista", "Matadragones"];
+
+// FLOORS-START
+const PISOS = [
+/* ---------------- ZONA 1: MAZMORRAS DE LA ENTRADA ---------------- */
+{
+  titulo: "El primer grito",
+  teoria: T`
+    Todo aventurero empieza igual: haciendo que la máquina hable. En Python eso se hace con ‹print()›.
+
+    ‹print› es una **función**: una orden con nombre que hace un trabajo. Los paréntesis ‹()› son sus manos: ahí le entregas lo que necesita. En este caso, el mensaje que quieres mostrar.
+
+    El mensaje va entre comillas, como ‹"Hola"›. A un texto entre comillas se le llama **string** (cadena de texto). Las comillas le dicen a Python: esto no es una orden, es texto tal cual. Puedes usar comillas dobles ‹"..."› o simples ‹'...'›, pero cierra con las mismas que abriste.
+
+    Python lee tu programa de arriba hacia abajo, una línea cada vez, como quien lee un pergamino.
+  `,
+  ejemplo: T`
+    print("Hola, aventurero")
+    print('Esto también funciona')
+    print("Python lee de arriba abajo")
+  `,
+  mision: T`
+    Haz que tu caballero grite su lema. Tu programa debe mostrar exactamente:
+    ~~~salida
+    ¡Por la torre!
+    ~~~
+    Escribe tu código en el editor y pulsa **ATACAR**.
+  `,
+  inicial: T`
+    # Escribe tu código debajo de esta línea
+  `,
+  pista: T`
+    Usa ‹print()› y pon el texto entre comillas dentro de los paréntesis. El signo ‹¡› lo puedes copiar de la misión.
+  `,
+  solucion: T`
+    print("¡Por la torre!")
+  `,
+  prueba: T`
+    debe(len(_lineas) > 0, "Tu programa no muestra nada. ¿Usaste print()?")
+    debe(tiene_linea("¡Por la torre!"), "Casi. Debe aparecer la frase: ¡Por la torre!")
+  `,
+},
+{
+  titulo: "Pergaminos y comentarios",
+  teoria: T`
+    Un programa suele tener muchas líneas. Cada ‹print()› muestra su texto en una línea nueva, en el mismo orden en que aparecen en el código. Si escribes ‹print()› sin nada dentro, obtienes una línea en blanco.
+
+    Los **comentarios** son notas para humanos. Todo lo que va detrás de una almohadilla ‹#› lo ignora Python. Sirven para explicar qué hace tu código, a otros y a tu yo del futuro.
+
+    Si te equivocas (por ejemplo, olvidas cerrar unas comillas), Python mostrará un **error**. No pasa nada: los errores son parte del viaje. Léelos, te dicen en qué línea está el problema.
+  `,
+  ejemplo: T`
+    # Esto es un comentario: Python lo ignora
+    print("Primera línea")
+    print()                  # una línea vacía
+    print("Tercera línea")   # también se puede comentar al final
+  `,
+  mision: T`
+    Escribe un programa que muestre estas tres líneas, en este orden:
+    ~~~salida
+    Soy un caballero
+    Entro en la torre
+    No tengo miedo
+    ~~~
+    Añade también al menos un **comentario** que explique lo que hace tu código.
+  `,
+  inicial: T`
+    # Mi segundo programa
+  `,
+  pista: T`
+    Necesitas tres ‹print()›, uno por línea. Un comentario es cualquier línea que empieza por ‹#›, como la que ya tienes. Déjala o escribe la tuya.
+  `,
+  solucion: T`
+    # Presento a mi caballero
+    print("Soy un caballero")
+    print("Entro en la torre")
+    print("No tengo miedo")
+  `,
+  prueba: T`
+    esperadas = ["Soy un caballero", "Entro en la torre", "No tengo miedo"]
+    debe(len(_lineas) >= 3, "Necesito ver tres líneas. Usa un print() para cada una.")
+    for i, texto in enumerate(esperadas):
+        debe(igual(_lineas[i], texto), f"La línea {i + 1} debería ser: {texto}")
+    debe(any(l.strip().startswith("#") for l in _codigo.splitlines()), "Falta un comentario. Empieza una línea con # y escribe una nota.")
+  `,
+},
+{
+  titulo: "El cofre de las variables",
+  teoria: T`
+    Una **variable** es un cofre con una etiqueta: guardas un valor dentro y luego lo recuperas usando su nombre.
+
+    ~~~
+    nombre = "Arturo"
+    ~~~
+    Aquí el signo ‹=› no significa «igual» como en matemáticas. Significa **guarda esto en**: el valor de la derecha se guarda en el nombre de la izquierda.
+
+    Después, cuando escribes ‹nombre› sin comillas, Python lo sustituye por lo que hay dentro. Si escribes ‹"nombre"› con comillas, es solo la palabra.
+
+    Reglas para los nombres: minúsculas, sin espacios (usa ‹_› para separar palabras, como ‹vida_max›), sin empezar por un número y sin tildes ni ñ para evitar líos.
+
+    ‹print› acepta varias cosas separadas por comas y pone un espacio entre ellas.
+  `,
+  ejemplo: T`
+    nombre = "Arturo"
+    oro = 30
+    print(nombre)
+    print("nombre")          # esto muestra la palabra, no el contenido
+    print("Caballero:", nombre, "- Oro:", oro)
+    oro = 45                 # el cofre ahora guarda otro valor
+    print("Oro nuevo:", oro)
+  `,
+  mision: T`
+    Crea la ficha de tu héroe:
+    1. Una variable ‹heroe› con el nombre de tu caballero (un texto entre comillas).
+    2. Una variable ‹vida› con el número ‹100› (sin comillas).
+    3. Muestra las dos usando las variables, por ejemplo: ‹print("Héroe:", heroe)›.
+  `,
+  inicial: T`
+    # 1. Crea la variable heroe
+
+    # 2. Crea la variable vida
+
+    # 3. Muéstralas con print
+  `,
+  pista: T`
+    ‹heroe = "Lancelot"› crea la primera. La segunda es igual pero con un número: ‹vida = 100›. Luego ‹print("Vida:", vida)›.
+  `,
+  solucion: T`
+    heroe = "Lancelot"
+    vida = 100
+    print("Héroe:", heroe)
+    print("Vida:", vida)
+  `,
+  prueba: T`
+    debe(isinstance(heroe, str) and heroe.strip() != "", 'heroe debe ser un texto entre comillas, por ejemplo: heroe = "Arturo"')
+    debe(type(vida) is int and vida == 100, "vida debe ser el número 100, sin comillas.")
+    debe(re.search(r"print\(.*\bheroe\b", _codigo), "Muestra el héroe usando la variable dentro de print, sin comillas: print(heroe)")
+    debe(re.search(r"print\(.*\bvida\b", _codigo), "Muestra la vida usando la variable dentro de print: print(vida)")
+    debe(any(heroe in l for l in _lineas) and any("100" in l for l in _lineas), "No veo el nombre y la vida en la consola.")
+  `,
+},
+{
+  titulo: "Los cuatro elementos",
+  teoria: T`
+    Cada valor en Python tiene un **tipo**. Los cuatro básicos son:
+    - ‹int›: números enteros, como ‹50› o ‹-3›.
+    - ‹float›: números con decimales, como ‹12.5›. Se usa **punto**, nunca coma.
+    - ‹str›: texto entre comillas, como ‹"espada"›.
+    - ‹bool›: verdadero o falso: ‹True› o ‹False›, con mayúscula y sin comillas.
+
+    El tipo importa: ‹"50" + "50"› pega los textos y da ‹"5050"›, mientras que ‹50 + 50› da ‹100›.
+
+    La función ‹type()› te dice el tipo de un valor. Y puedes convertir entre tipos con ‹int()›, ‹float()› y ‹str()›.
+  `,
+  ejemplo: T`
+    oro = 50
+    print(type(oro))
+    print("50" + "50")      # texto + texto: se pegan
+    print(50 + 50)          # número + número: se suman
+    print(int("7") + 3)     # convierto el texto "7" en número
+    print(type(3.14), type(True))
+  `,
+  mision: T`
+    Crea cuatro variables, una de cada tipo:
+    - ‹oro› con el entero ‹250›
+    - ‹peso› con el decimal ‹12.5›
+    - ‹arma› con el texto ‹"espada"›
+    - ‹tiene_escudo› con el valor ‹True›
+
+    Después muestra el tipo de ‹peso› con ‹print(type(peso))›.
+  `,
+  inicial: T`
+    # Crea las cuatro variables
+
+  `,
+  pista: T`
+    ‹peso = 12.5› lleva punto. ‹tiene_escudo = True› va sin comillas y con la T mayúscula.
+  `,
+  solucion: T`
+    oro = 250
+    peso = 12.5
+    arma = "espada"
+    tiene_escudo = True
+    print(type(peso))
+  `,
+  prueba: T`
+    debe(type(oro) is int and oro == 250, "oro debe ser el número entero 250, sin comillas ni decimales.")
+    debe(type(peso) is float and peso == 12.5, "peso debe ser 12.5, con punto y no con coma.")
+    debe(type(arma) is str and igual(arma, "espada"), 'arma debe ser el texto "espada".')
+    debe(tiene_escudo is True, "tiene_escudo debe ser True, con la T mayúscula y sin comillas.")
+    debe("<class 'float'>" in _salida, "Falta mostrar el tipo de peso: print(type(peso))")
+  `,
+},
+{
+  titulo: "JEFE: El Slime Rey",
+  teoria: T`
+    Python es una calculadora muy potente. Estos son sus **operadores**:
+    - ‹+› suma, ‹-› resta, ‹*› multiplica
+    - ‹/› divide y siempre da decimales: ‹7 / 2› es ‹3.5›
+    - ‹//› división entera, sin decimales: ‹7 // 2› es ‹3›
+    - ‹%› el **resto** (módulo): ‹7 % 2› es ‹1›. Muy útil para saber si un número es par.
+    - ‹**› potencia: ‹2 ** 3› es ‹8›
+
+    Como en matemáticas, primero van los paréntesis, luego ‹**›, luego ‹* / // %› y al final ‹+ -›.
+
+    Para **actualizar** una variable: ‹vida = vida - 10›. Python calcula primero la derecha con el valor antiguo y guarda el resultado. Hay un atajo: ‹vida -= 10›. También existen ‹+=› y ‹*=›.
+  `,
+  ejemplo: T`
+    vida = 100
+    vida = vida - 30
+    print(vida)              # 70
+    vida -= 20               # lo mismo que vida = vida - 20
+    print(vida)              # 50
+    print(7 / 2, 7 // 2, 7 % 2, 2 ** 3)
+    print(2 + 3 * 4, (2 + 3) * 4)
+  `,
+  mision: T`
+    ¡El Slime Rey bloquea la salida! Tiene ‹vida_slime = 120›.
+    1. Tu ‹ataque› es 15 y das 7 ‹golpes›. Calcula ‹danio_total› multiplicándolos.
+    2. Réstale ‹danio_total› a ‹vida_slime› (actualiza esa misma variable).
+    3. El botín son 120 monedas para 7 caballeros. Calcula ‹por_caballero› con la división entera y ‹sobran› con el resto.
+    4. Muestra ‹vida_slime›, ‹por_caballero› y ‹sobran›.
+  `,
+  inicial: T`
+    vida_slime = 120
+    ataque = 15
+    golpes = 7
+
+    # 1. danio_total = ...
+
+    # 2. actualiza vida_slime
+
+    # 3. reparte 120 monedas entre 7 caballeros
+
+    # 4. muestra los resultados
+  `,
+  pista: T`
+    ‹danio_total = ataque * golpes›. Luego ‹vida_slime -= danio_total›. Para el botín: ‹120 // 7› y ‹120 % 7›. Escribimos «danio» sin ñ para que el nombre sea sencillo.
+  `,
+  solucion: T`
+    vida_slime = 120
+    ataque = 15
+    golpes = 7
+
+    danio_total = ataque * golpes
+    vida_slime -= danio_total
+
+    por_caballero = 120 // 7
+    sobran = 120 % 7
+
+    print("Vida del slime:", vida_slime)
+    print("Monedas por caballero:", por_caballero)
+    print("Sobran:", sobran)
+  `,
+  prueba: T`
+    debe(danio_total == 105, f"danio_total debería ser 15 * 7 = 105, pero vale {danio_total}.")
+    debe(vida_slime == 15, f"vida_slime debería quedar en 120 - 105 = 15, pero vale {vida_slime}.")
+    debe(por_caballero == 17, f"por_caballero debería ser 120 // 7 = 17, pero vale {por_caballero}.")
+    debe(sobran == 1, f"sobran debería ser 120 % 7 = 1, pero vale {sobran}.")
+    debe("//" in _codigo and "%" in _codigo, "Usa los operadores // y % para repartir el botín.")
+    debe(any("15" in l for l in _lineas), "Muestra la vida que le queda al slime.")
+  `,
+},
+
+/* ---------------- ZONA 2: CRIPTA DE LAS RUNAS ---------------- */
+{
+  titulo: "Runas f-string",
+  teoria: T`
+    Casi siempre querrás mezclar texto con variables. La forma moderna es la **f-string**: pones una ‹f› justo antes de las comillas y escribes las variables entre llaves ‹{}›.
+
+    ~~~
+    print(f"{nombre} tiene {oro} monedas")
+    ~~~
+    Dentro de las llaves puedes poner cualquier cálculo: ‹{oro * 2}›.
+
+    También se puede unir texto con ‹+›, pero solo texto con texto. Un número hay que convertirlo antes con ‹str()›. Por eso las f-strings son más cómodas.
+  `,
+  ejemplo: T`
+    nombre = "Ginebra"
+    oro = 40
+    print(f"{nombre} tiene {oro} monedas")
+    print(f"El doble serían {oro * 2}")
+    print(nombre + " tiene " + str(oro) + " monedas")   # la forma antigua
+  `,
+  mision: T`
+    Usa las variables que ya existen y una **f-string** para mostrar:
+    ~~~salida
+    Lancelot es de nivel 3 y tiene 45 de fuerza
+    Al subir de nivel tendrá 55 de fuerza
+    ~~~
+    El 55 debe calcularse: es ‹fuerza + 10›.
+  `,
+  inicial: T`
+    nombre = "Lancelot"
+    nivel = 3
+    fuerza = 45
+
+    # Usa f"...{variable}..." para construir las frases
+  `,
+  pista: T`
+    ‹print(f"{nombre} es de nivel {nivel} y tiene {fuerza} de fuerza")›. Para la segunda frase, pon ‹{fuerza + 10}› dentro de las llaves.
+  `,
+  solucion: T`
+    nombre = "Lancelot"
+    nivel = 3
+    fuerza = 45
+
+    print(f"{nombre} es de nivel {nivel} y tiene {fuerza} de fuerza")
+    print(f"Al subir de nivel tendrá {fuerza + 10} de fuerza")
+  `,
+  prueba: T`
+    debe(re.search(r"\bf[\"']", _codigo), 'Usa una f-string: una f pegada a las comillas, como f"Hola {nombre}".')
+    debe(tiene_linea("Lancelot es de nivel 3 y tiene 45 de fuerza"), "La primera frase no coincide. Debe ser: Lancelot es de nivel 3 y tiene 45 de fuerza")
+    debe(tiene_linea("Al subir de nivel tendrá 55 de fuerza"), "La segunda frase no coincide. Calcula {fuerza + 10} dentro de las llaves.")
+    s, _ = con_valores(nombre="Tristan", nivel=5, fuerza=20)
+    debe(tiene_linea("Tristan es de nivel 5 y tiene 20 de fuerza", s) and tiene_linea("Al subir de nivel tendrá 30 de fuerza", s), "Parece que escribiste los valores a mano. Usa las variables entre llaves para que la frase cambie si cambian los datos.")
+  `,
+},
+{
+  titulo: "Hechizos de texto",
+  teoria: T`
+    Los textos traen **métodos**: funciones que pertenecen a un valor y se usan con un punto, como ‹grito.upper()›.
+    - ‹.upper()› todo en mayúsculas; ‹.lower()› todo en minúsculas
+    - ‹.title()› Cada Palabra Con Mayúscula
+    - ‹.strip()› quita los espacios de los lados
+    - ‹.replace("a", "b")› cambia un trozo por otro
+
+    Y la función ‹len(texto)› cuenta cuántos caracteres tiene (espacios incluidos).
+
+    Ojo: un método **no cambia** el texto original, devuelve uno nuevo. Si quieres conservarlo, guárdalo: ‹limpio = grito.strip()›. Puedes encadenar métodos: ‹grito.strip().upper()›.
+  `,
+  ejemplo: T`
+    grito = "  a la carga  "
+    print(grito.upper())
+    print(grito.strip())
+    print(grito.strip().title())
+    print(grito.replace("carga", "batalla"))
+    print(len(grito))        # cuenta también los espacios
+  `,
+  mision: T`
+    El eco de la cripta te devuelve el grito deformado: ‹grito = "   que viva el rey   "›
+    1. ‹limpio›: el grito sin los espacios de los lados.
+    2. ‹fuerte›: ‹limpio› en mayúsculas. Muéstralo.
+    3. ‹letras›: cuántos caracteres tiene ‹limpio›. Muéstralo.
+  `,
+  inicial: T`
+    grito = "   que viva el rey   "
+
+  `,
+  pista: T`
+    ‹limpio = grito.strip()›, ‹fuerte = limpio.upper()› y ‹letras = len(limpio)›.
+  `,
+  solucion: T`
+    grito = "   que viva el rey   "
+    limpio = grito.strip()
+    fuerte = limpio.upper()
+    letras = len(limpio)
+    print(fuerte)
+    print(letras)
+  `,
+  prueba: T`
+    debe(limpio == "que viva el rey", "limpio debería ser el grito sin espacios a los lados. Usa .strip()")
+    debe(fuerte == "QUE VIVA EL REY", "fuerte debería ser limpio en mayúsculas. Usa .upper()")
+    debe(letras == 15, f"letras debería ser 15 (len de limpio), pero vale {letras}.")
+    debe("QUE VIVA EL REY" in _lineas, "Muestra fuerte con print(fuerte).")
+    debe("15" in _salida, "Muestra letras con print(letras).")
+  `,
+},
+{
+  titulo: "El índice de la cripta",
+  teoria: T`
+    Cada letra de un texto ocupa una posición llamada **índice**. Y aquí viene lo raro: **se empieza a contar desde 0**.
+    ~~~salida
+     D  R  A  G  O  N
+     0  1  2  3  4  5
+    -6 -5 -4 -3 -2 -1
+    ~~~
+    ‹palabra[0]› es la primera letra. Los índices negativos cuentan desde el final: ‹palabra[-1]› es la última.
+
+    Con dos puntos cortas un trozo (**slicing**): ‹palabra[0:3]› va del 0 al 2. El final **no se incluye**. Si omites un extremo, llega hasta el borde: ‹palabra[3:]›. Y ‹palabra[::-1]› le da la vuelta.
+
+    Si pides una posición que no existe, Python lanza un ‹IndexError›.
+  `,
+  ejemplo: T`
+    palabra = "DRAGON"
+    print(palabra[0])      # D
+    print(palabra[2])      # A
+    print(palabra[-1])     # N, la última
+    print(palabra[0:3])    # DRA
+    print(palabra[3:])     # GON
+    print(palabra[::-1])   # NOGARD
+  `,
+  mision: T`
+    En la pared hay una runa: ‹runa = "EXCALIBUR"›. Usando índices y cortes, crea:
+    - ‹primera›: la primera letra
+    - ‹ultima›: la última letra (usa un índice negativo)
+    - ‹inicio›: las 5 primeras letras
+    - ‹al_reves›: la runa al revés
+
+    Muestra las cuatro.
+  `,
+  inicial: T`
+    runa = "EXCALIBUR"
+
+  `,
+  pista: T`
+    ‹runa[0]›, ‹runa[-1]›, ‹runa[:5]› y ‹runa[::-1]›.
+  `,
+  solucion: T`
+    runa = "EXCALIBUR"
+    primera = runa[0]
+    ultima = runa[-1]
+    inicio = runa[:5]
+    al_reves = runa[::-1]
+    print(primera, ultima, inicio, al_reves)
+  `,
+  prueba: T`
+    debe(primera == "E", f"primera debería ser 'E', pero es {primera!r}. Recuerda que se empieza en 0.")
+    debe(ultima == "R", f"ultima debería ser 'R', pero es {ultima!r}. Prueba con runa[-1].")
+    debe(inicio == "EXCAL", f"inicio debería ser 'EXCAL', pero es {inicio!r}. Prueba con runa[:5].")
+    debe(al_reves == "RUBILACXE", f"al_reves debería ser 'RUBILACXE', pero es {al_reves!r}. Prueba con runa[::-1].")
+    _, ns = con_valores(runa="MERLIN")
+    debe(ns["primera"] == "M" and ns["ultima"] == "N" and ns["inicio"] == "MERLI" and ns["al_reves"] == "NILREM", "Usa índices sobre la variable runa en vez de escribir las letras a mano.")
+    debe(len(_lineas) > 0, "Muestra los resultados con print.")
+  `,
+},
+{
+  titulo: "El oráculo pregunta",
+  teoria: T`
+    ‹input()› detiene el programa y espera a que el usuario escriba algo. El texto entre paréntesis es la pregunta que se muestra.
+
+    ~~~
+    nombre = input("¿Cómo te llamas? ")
+    ~~~
+    Importante: ‹input()› **siempre devuelve texto**, aunque escribas un número. Si necesitas un número, conviértelo con ‹int()›:
+
+    ~~~
+    edad = int(input("¿Cuántos años tienes? "))
+    ~~~
+    Se lee de dentro hacia fuera: primero se pregunta, luego se convierte a entero y al final se guarda.
+
+    En esta torre, el **Oráculo** responde por ti automáticamente (verás sus respuestas en la consola). En tu ordenador serías tú quien escribe.
+  `,
+  ejemplo: T`
+    nombre = input("¿Cómo te llamas? ")
+    print(f"Bienvenido, {nombre}")
+    edad = int(input("¿Cuántos años tienes? "))
+    print(f"El año que viene tendrás {edad + 1}")
+  `,
+  entradas: ["Percival", "7"],
+  mision: T`
+    El Oráculo responderá **Percival** y luego **7**.
+    1. Pregunta el nombre con ‹input› y guárdalo en ‹nombre›.
+    2. Pregunta cuántos dragones ha vencido, conviértelo a número y guárdalo en ‹dragones›.
+    3. Muestra: ‹Percival ha vencido 7 dragones›, usando las variables.
+    4. Muestra: ‹Con el doble serían 14›, calculándolo.
+  `,
+  inicial: T`
+    # El Oráculo contestará por ti
+
+  `,
+  pista: T`
+    ‹dragones = int(input("¿Cuántos dragones has vencido? "))›. Después, una f-string: ‹f"{nombre} ha vencido {dragones} dragones"›.
+  `,
+  solucion: T`
+    nombre = input("¿Cómo te llamas? ")
+    dragones = int(input("¿Cuántos dragones has vencido? "))
+    print(f"{nombre} ha vencido {dragones} dragones")
+    print(f"Con el doble serían {dragones * 2}")
+  `,
+  prueba: T`
+    debe(nombre == "Percival", "nombre debe guardar la primera respuesta de input().")
+    debe(type(dragones) is int and dragones == 7, "dragones debe ser un número. Envuelve el input con int(...).")
+    debe(tiene_linea("Percival ha vencido 7 dragones"), "Falta la frase: Percival ha vencido 7 dragones")
+    debe(tiene_linea("Con el doble serían 14"), "Falta la frase: Con el doble serían 14")
+    s, _ = correr(_codigo, ["Bors", "3"])
+    debe(tiene_linea("Bors ha vencido 3 dragones", s) and tiene_linea("Con el doble serían 6", s), "Si el Oráculo responde otra cosa, tus frases no cambian. Usa las variables en vez de escribir los datos a mano.")
+  `,
+},
+{
+  titulo: "JEFE: El Murciélago Escriba",
+  teoria: T`
+    Para vencer al guardián de la cripta necesitas tres runas nuevas:
+    - ‹in› comprueba si un texto está dentro de otro. Devuelve ‹True› o ‹False›: ‹"rey" in "viva el rey"› es ‹True›.
+    - ‹.count("x")› cuenta cuántas veces aparece algo.
+    - ‹.find("x")› dice en qué posición aparece por primera vez (‹-1› si no está).
+
+    Y ‹.startswith()› y ‹.endswith()› comprueban cómo empieza o termina un texto.
+
+    Este es un combate de jefe: tendrás que combinar todo lo aprendido en la cripta.
+  `,
+  ejemplo: T`
+    lema = "honor y valor"
+    print("valor" in lema)         # True
+    print(lema.count("o"))         # 3
+    print(lema.startswith("hon"))  # True
+    print(lema.find("y"))          # 6
+  `,
+  mision: T`
+    El murciélago te lanza un acertijo: ‹frase = "la torre guarda cien secretos"›
+    1. ‹mayus›: la frase en mayúsculas.
+    2. ‹cambiada›: la frase cambiando ‹"cien"› por ‹"mil"›.
+    3. ‹cuantas_e›: cuántas letras ‹"e"› tiene la frase.
+    4. ‹tiene_torre›: ‹True› o ‹False› según si la frase contiene ‹"torre"›.
+    5. Muestra con una f-string:
+    ~~~salida
+    la torre guarda mil secretos (4 letras e)
+    ~~~
+  `,
+  inicial: T`
+    frase = "la torre guarda cien secretos"
+
+  `,
+  pista: T`
+    ‹frase.upper()›, ‹frase.replace("cien", "mil")›, ‹frase.count("e")› y ‹"torre" in frase›. Para la frase final: ‹f"{cambiada} ({cuantas_e} letras e)"›.
+  `,
+  solucion: T`
+    frase = "la torre guarda cien secretos"
+    mayus = frase.upper()
+    cambiada = frase.replace("cien", "mil")
+    cuantas_e = frase.count("e")
+    tiene_torre = "torre" in frase
+    print(f"{cambiada} ({cuantas_e} letras e)")
+  `,
+  prueba: T`
+    F = "la torre guarda cien secretos"
+    debe(mayus == F.upper(), "mayus debe ser la frase en mayúsculas.")
+    debe(cambiada == "la torre guarda mil secretos", "cambiada debe tener 'mil' en lugar de 'cien'. Usa .replace()")
+    debe(cuantas_e == 4, f"cuantas_e debería ser 4, pero vale {cuantas_e}. Usa .count('e')")
+    debe(tiene_torre is True, "tiene_torre debe ser True. Usa: 'torre' in frase")
+    debe(tiene_linea("la torre guarda mil secretos (4 letras e)"), "Falta mostrar: la torre guarda mil secretos (4 letras e)")
+  `,
+},
+
+/* ---------------- ZONA 3: SALÓN DE LAS DECISIONES ---------------- */
+{
+  titulo: "La balanza de la verdad",
+  teoria: T`
+    Para tomar decisiones primero hay que **comparar**. Una comparación siempre da un ‹bool›: ‹True› o ‹False›.
+    - ‹==› igual (¡dos signos! uno solo es para guardar)
+    - ‹!=› distinto
+    - ‹<› menor, ‹>› mayor
+    - ‹<=› menor o igual, ‹>=› mayor o igual
+
+    Los textos también se comparan, y las mayúsculas cuentan: ‹"Rey" == "rey"› es ‹False›.
+
+    Puedes guardar el resultado de una comparación en una variable, como cualquier otro valor.
+  `,
+  ejemplo: T`
+    vida = 40
+    print(vida > 50)       # False
+    print(vida == 40)      # True
+    print(vida != 0)       # True
+    print("Rey" == "rey")  # False: las mayúsculas cuentan
+    herido = vida < 100
+    print(herido)
+  `,
+  mision: T`
+    Con los datos del código inicial, crea:
+    - ‹herido›: si ‹vida› es menor que ‹vida_max›
+    - ‹muerto›: si ‹vida› es igual a 0
+    - ‹critico›: si ‹vida› es menor o igual que 30
+    - ‹pobre›: si ‹oro› es igual a 0
+
+    Muestra las cuatro.
+  `,
+  inicial: T`
+    vida = 30
+    vida_max = 100
+    oro = 0
+
+  `,
+  pista: T`
+    ‹herido = vida < vida_max›. Para igualdad usa dos signos: ‹muerto = vida == 0›.
+  `,
+  solucion: T`
+    vida = 30
+    vida_max = 100
+    oro = 0
+
+    herido = vida < vida_max
+    muerto = vida == 0
+    critico = vida <= 30
+    pobre = oro == 0
+    print(herido, muerto, critico, pobre)
+  `,
+  prueba: T`
+    debe(herido is True, "herido debería ser True, porque 30 < 100. Usa: herido = vida < vida_max")
+    debe(muerto is False, "muerto debería ser False. Compara con == (dos signos igual).")
+    debe(critico is True, "critico debería ser True. Recuerda que 30 <= 30 es verdad.")
+    debe(pobre is True, "pobre debería ser True: oro == 0")
+    _, ns = con_valores(vida=0, oro=5)
+    debe(ns["muerto"] is True and ns["pobre"] is False and ns["critico"] is True, "Usa comparaciones con las variables. No escribas True o False a mano.")
+    debe(len(_lineas) > 0, "Muestra los resultados con print.")
+  `,
+},
+{
+  titulo: "La puerta del if",
+  teoria: T`
+    Con ‹if› tu programa decide. Si la condición es ‹True›, se ejecuta el bloque; si no, se salta. Con ‹else› indicas qué hacer en caso contrario.
+
+    ~~~
+    if condicion:
+        # esto solo ocurre si es verdad
+    else:
+        # esto ocurre si es mentira
+    ~~~
+    Dos reglas sagradas:
+    - La línea del ‹if› y la del ‹else› terminan en **dos puntos** ‹:›.
+    - Lo de dentro va **sangrado** con 4 espacios. La sangría es lo que le dice a Python qué líneas están dentro del bloque.
+
+    En el editor, ‹Tab› mete 4 espacios y al pulsar Enter tras ‹:› se sangra solo.
+  `,
+  ejemplo: T`
+    oro = 30
+    if oro >= 50:
+        print("Compras la espada")
+        print("¡Qué brillo!")
+    else:
+        print("No te alcanza")
+    print("Sales de la tienda")    # fuera del bloque: siempre se ejecuta
+  `,
+  mision: T`
+    Si ‹llave› es ‹"dorada"›, muestra ‹La puerta se abre›. Si no, muestra ‹La puerta sigue cerrada›.
+
+    Probaré tu código también con otras llaves.
+  `,
+  inicial: T`
+    llave = "dorada"
+
+  `,
+  pista: T`
+    ‹if llave == "dorada":› y en la línea siguiente, con 4 espacios delante, el ‹print›. Luego ‹else:› con su propio ‹print› sangrado.
+  `,
+  solucion: T`
+    llave = "dorada"
+
+    if llave == "dorada":
+        print("La puerta se abre")
+    else:
+        print("La puerta sigue cerrada")
+  `,
+  prueba: T`
+    debe(re.search(r"^\s*if\b", _codigo, re.M) and re.search(r"^\s*else\s*:", _codigo, re.M), "Usa un if y un else.")
+    debe(tiene_linea("La puerta se abre"), "Con la llave dorada debería mostrarse: La puerta se abre")
+    debe(not tiene_linea("La puerta sigue cerrada"), "Con la llave dorada no debería mostrarse que sigue cerrada.")
+    s, _ = con_valores(llave="oxidada")
+    debe(tiene_linea("La puerta sigue cerrada", s) and not tiene_linea("La puerta se abre", s), "Con una llave oxidada debería mostrarse solo: La puerta sigue cerrada")
+  `,
+},
+{
+  titulo: "Los tres caminos",
+  teoria: T`
+    ¿Y si hay más de dos opciones? Para eso está ‹elif› (abreviatura de «else if»: si no, si...).
+
+    Python comprueba las condiciones **en orden, de arriba abajo**, y ejecuta **solo el primer bloque** cuya condición sea verdadera. Los demás se saltan aunque también fueran verdad. Por eso el orden importa.
+
+    Puedes poner tantos ‹elif› como quieras, y el ‹else› final es opcional: recoge todo lo que no encajó antes.
+  `,
+  ejemplo: T`
+    puntos = 72
+    if puntos >= 90:
+        rango = "Leyenda"
+    elif puntos >= 60:
+        rango = "Veterano"
+    elif puntos >= 30:
+        rango = "Novato"
+    else:
+        rango = "Recluta"
+    print(rango)       # Veterano
+  `,
+  mision: T`
+    Según la ‹vida›, guarda en ‹estado›:
+    - ‹"Fuerte"› si la vida es mayor que 70
+    - ‹"Herido"› si es mayor que 30
+    - ‹"Moribundo"› en cualquier otro caso
+
+    Muestra ‹estado›. Probaré con varios valores de vida.
+  `,
+  inicial: T`
+    vida = 75
+
+  `,
+  pista: T`
+    ‹if vida > 70:› ... ‹elif vida > 30:› ... ‹else:›. Dentro de cada uno, ‹estado = "..."›. Al final, fuera de los bloques, ‹print(estado)›.
+  `,
+  solucion: T`
+    vida = 75
+
+    if vida > 70:
+        estado = "Fuerte"
+    elif vida > 30:
+        estado = "Herido"
+    else:
+        estado = "Moribundo"
+    print(estado)
+  `,
+  prueba: T`
+    debe(re.search(r"^\s*elif\b", _codigo, re.M), "Usa al menos un elif.")
+    casos = [(75, "Fuerte"), (71, "Fuerte"), (70, "Herido"), (50, "Herido"), (31, "Herido"), (30, "Moribundo"), (5, "Moribundo")]
+    for v, esperado in casos:
+        s, ns = con_valores(vida=v)
+        debe(igual(ns.get("estado", ""), esperado), f"Con vida = {v}, estado debería ser {esperado}, pero es {ns.get('estado')!r}.")
+    debe(len(_lineas) > 0, "Muestra el estado con print(estado).")
+  `,
+},
+{
+  titulo: "Runas lógicas",
+  teoria: T`
+    Puedes combinar condiciones con tres palabras:
+    - ‹and›: verdad solo si **las dos** son verdad
+    - ‹or›: verdad si **al menos una** es verdad
+    - ‹not›: le da la vuelta: ‹not True› es ‹False›
+
+    ~~~
+    if nivel >= 5 and tiene_llave:
+    ~~~
+    Si una condición se complica, usa paréntesis para dejar claro qué va con qué: ‹(a or b) and c›.
+  `,
+  ejemplo: T`
+    tiene_espada = True
+    tiene_mapa = False
+    print(tiene_espada and tiene_mapa)   # False
+    print(tiene_espada or tiene_mapa)    # True
+    print(not tiene_mapa)                # True
+    nivel = 8
+    if nivel >= 5 and tiene_espada:
+        print("Puedes entrar a la cripta")
+  `,
+  mision: T`
+    Con los datos del código inicial, crea:
+    - ‹equipado›: tiene espada **y** escudo
+    - ‹armado›: tiene espada **o** escudo
+    - ‹es_de_dia›: lo contrario de ‹es_de_noche›
+
+    Y si tiene espada pero **no** tiene escudo, muestra ‹Ataca con cuidado›.
+  `,
+  inicial: T`
+    tiene_espada = True
+    tiene_escudo = False
+    es_de_noche = True
+
+  `,
+  pista: T`
+    ‹equipado = tiene_espada and tiene_escudo›. Para el mensaje: ‹if tiene_espada and not tiene_escudo:›.
+  `,
+  solucion: T`
+    tiene_espada = True
+    tiene_escudo = False
+    es_de_noche = True
+
+    equipado = tiene_espada and tiene_escudo
+    armado = tiene_espada or tiene_escudo
+    es_de_dia = not es_de_noche
+
+    if tiene_espada and not tiene_escudo:
+        print("Ataca con cuidado")
+  `,
+  prueba: T`
+    debe(equipado is False, "equipado debería ser False: usa and.")
+    debe(armado is True, "armado debería ser True: usa or.")
+    debe(es_de_dia is False, "es_de_dia debería ser False: usa not.")
+    debe(tiene_linea("Ataca con cuidado"), "Falta el mensaje: Ataca con cuidado")
+    s, ns = con_valores(tiene_escudo=True, es_de_noche=False)
+    debe(ns["equipado"] is True and ns["es_de_dia"] is True, "Calcula con and, or y not usando las variables.")
+    debe(not tiene_linea("Ataca con cuidado", s), "Si tiene escudo, no debería mostrarse: Ataca con cuidado")
+  `,
+},
+{
+  titulo: "JEFE: El Fantasma del Juicio",
+  teoria: T`
+    El guardián del salón juzga a cada caballero. Para vencerlo tendrás que combinar ‹if›, ‹elif›, ‹else›, comparaciones y ‹and›.
+
+    Un truco: también puedes meter un ‹if› **dentro** de otro. Cada nivel se sangra 4 espacios más.
+
+    Recuerda la regla de oro del ‹elif›: gana la **primera** condición verdadera. Piensa bien en qué orden las pones.
+  `,
+  ejemplo: T`
+    nivel = 7
+    tiene_llave = True
+    if nivel >= 5:
+        if tiene_llave:
+            print("Abres el cofre")
+        else:
+            print("Necesitas una llave")
+    else:
+        print("Aún eres muy débil")
+  `,
+  mision: T`
+    El fantasma aplica sus reglas en este orden:
+    1. Si ‹nivel› es 10 o más → ‹"Pasa, héroe"›
+    2. Si ‹nivel› es 5 o más **y** ‹oro› es 100 o más → ‹"Pasa pagando peaje"›
+    3. Si ‹oro› es 500 o más → ‹"Pasa, el oro lo compra todo"›
+    4. En cualquier otro caso → ‹"No pasarás"›
+
+    Guarda el mensaje en ‹veredicto› y muéstralo. Te juzgará con muchos valores distintos.
+  `,
+  inicial: T`
+    nivel = 6
+    oro = 150
+
+  `,
+  pista: T`
+    Un ‹if›, dos ‹elif› y un ‹else›. La segunda condición es ‹nivel >= 5 and oro >= 100›.
+  `,
+  solucion: T`
+    nivel = 6
+    oro = 150
+
+    if nivel >= 10:
+        veredicto = "Pasa, héroe"
+    elif nivel >= 5 and oro >= 100:
+        veredicto = "Pasa pagando peaje"
+    elif oro >= 500:
+        veredicto = "Pasa, el oro lo compra todo"
+    else:
+        veredicto = "No pasarás"
+    print(veredicto)
+  `,
+  prueba: T`
+    casos = [(12, 0, "Pasa, héroe"), (6, 150, "Pasa pagando peaje"), (5, 100, "Pasa pagando peaje"), (6, 50, "No pasarás"), (2, 600, "Pasa, el oro lo compra todo"), (2, 100, "No pasarás"), (10, 999, "Pasa, héroe"), (4, 500, "Pasa, el oro lo compra todo")]
+    for n, o, esperado in casos:
+        s, ns = con_valores(nivel=n, oro=o)
+        debe(igual(ns.get("veredicto", ""), esperado), f"Con nivel = {n} y oro = {o}, el veredicto debería ser «{esperado}», pero es {ns.get('veredicto')!r}.")
+    debe(len(_lineas) > 0, "Muestra el veredicto con print.")
+  `,
+},
+
+/* ---------------- ZONA 4: CATACUMBAS ---------------- */
+{
+  titulo: "El bucle for",
+  teoria: T`
+    Un **bucle** repite un bloque de código. El más usado es ‹for›:
+
+    ~~~
+    for i in range(5):
+        print(i)
+    ~~~
+    ‹range› genera una secuencia de números, y en cada vuelta la variable ‹i› toma el siguiente:
+    - ‹range(5)› → 0, 1, 2, 3, 4 (empieza en 0 y **no incluye** el 5)
+    - ‹range(1, 6)› → 1, 2, 3, 4, 5
+    - ‹range(0, 10, 2)› → 0, 2, 4, 6, 8 (el tercer número es el salto)
+
+    Igual que con ‹if›: dos puntos al final y el bloque sangrado.
+  `,
+  ejemplo: T`
+    for i in range(3):
+        print("Golpe número", i)
+
+    for piso in range(1, 6):
+        print(f"Subo al piso {piso}")
+
+    for n in range(10, 0, -3):
+        print(n)
+  `,
+  mision: T`
+    Baja la escalera de las catacumbas mostrando, con un solo bucle ‹for›:
+    ~~~salida
+    Escalón 1
+    Escalón 2
+    ...
+    Escalón 10
+    ~~~
+  `,
+  inicial: T`
+    # Un bucle for con range
+
+  `,
+  pista: T`
+    ‹for escalon in range(1, 11):› y dentro ‹print(f"Escalón {escalon}")›. El 11 es porque el final no se incluye.
+  `,
+  solucion: T`
+    for escalon in range(1, 11):
+        print(f"Escalón {escalon}")
+  `,
+  prueba: T`
+    debe(re.search(r"^\s*for\b", _codigo, re.M), "Usa un bucle for.")
+    debe(_codigo.count("print") <= 2, "Usa un solo print dentro del bucle, en vez de escribir diez.")
+    esperado = [f"Escalón {i}" for i in range(1, 11)]
+    debe(len(_lineas) == 10, f"Deberían salir 10 líneas y salieron {len(_lineas)}. Recuerda: range(1, 11) llega hasta 10.")
+    for a, b in zip(_lineas, esperado):
+        debe(igual(a, b), f"Esperaba «{b}» y apareció «{a}».")
+  `,
+},
+{
+  titulo: "Mientras arda la antorcha",
+  teoria: T`
+    ‹while› repite un bloque **mientras** una condición sea verdadera. Es útil cuando no sabes de antemano cuántas vueltas darás.
+
+    ~~~
+    while condicion:
+        # se repite mientras sea True
+    ~~~
+    Peligro: si dentro del bucle nada hace que la condición llegue a ser falsa, el bucle no termina nunca. Es un **bucle infinito**. Casi siempre hay que cambiar alguna variable en cada vuelta.
+
+    (Si te pasa aquí, la torre lo detendrá y te avisará.)
+  `,
+  ejemplo: T`
+    energia = 3
+    while energia > 0:
+        print("Corro... energía:", energia)
+        energia -= 1
+    print("¡Agotado!")
+  `,
+  mision: T`
+    La antorcha tiene 5 cargas. Mientras ‹antorcha› sea mayor que 0, muestra su valor y réstale 1:
+    ~~~salida
+    La antorcha arde: 5
+    La antorcha arde: 4
+    La antorcha arde: 3
+    La antorcha arde: 2
+    La antorcha arde: 1
+    Oscuridad total
+    ~~~
+  `,
+  inicial: T`
+    antorcha = 5
+
+  `,
+  pista: T`
+    ‹while antorcha > 0:›, dentro el ‹print› y ‹antorcha -= 1›. El último mensaje va fuera del bucle, sin sangría.
+  `,
+  solucion: T`
+    antorcha = 5
+    while antorcha > 0:
+        print(f"La antorcha arde: {antorcha}")
+        antorcha -= 1
+    print("Oscuridad total")
+  `,
+  prueba: T`
+    debe(re.search(r"^\s*while\b", _codigo, re.M), "Usa un bucle while.")
+    esperado = [f"La antorcha arde: {n}" for n in range(5, 0, -1)] + ["Oscuridad total"]
+    debe(len(_lineas) == 6, f"Deberían salir 6 líneas y salieron {len(_lineas)}.")
+    for a, b in zip(_lineas, esperado):
+        debe(igual(a, b), f"Esperaba «{b}» y apareció «{a}».")
+    debe(antorcha == 0, "Al terminar, antorcha debería valer 0.")
+    s, _ = con_valores(antorcha=2)
+    debe(len(lineas(s)) == 3, "Con antorcha = 2 deberían salir 3 líneas. Usa la variable en la condición.")
+  `,
+},
+{
+  titulo: "El acumulador de tesoros",
+  teoria: T`
+    Un patrón que usarás siempre: el **acumulador**. Creas una variable a 0 **antes** del bucle y en cada vuelta le sumas algo.
+
+    ~~~
+    total = 0
+    for n in range(1, 4):
+        total += n
+    ~~~
+    Vuelta a vuelta, ‹total› pasa por 1, 3 y 6.
+
+    Si en vez de sumar el valor sumas 1, tienes un **contador**. Combinado con un ‹if› cuentas solo lo que cumple una condición. Y recuerda: un número es par si ‹n % 2 == 0›.
+  `,
+  ejemplo: T`
+    total = 0
+    for moneda in range(1, 6):
+        total += moneda
+        print(f"Recojo {moneda}, llevo {total}")
+    print("Total:", total)
+  `,
+  mision: T`
+    Cada piso de una torre de 100 guarda tantas monedas como su número (el piso 1 tiene 1, el 2 tiene 2...).
+    - ‹tesoros›: la suma de todas las monedas del 1 al 100.
+    - ‹pares›: cuántos pisos pares hay del 1 al 100 (cuéntalos en el bucle con ‹%›).
+
+    Muestra ambos.
+  `,
+  inicial: T`
+    tesoros = 0
+    pares = 0
+
+  `,
+  pista: T`
+    ‹for piso in range(1, 101):›. Dentro: ‹tesoros += piso› y ‹if piso % 2 == 0:› con ‹pares += 1›.
+  `,
+  solucion: T`
+    tesoros = 0
+    pares = 0
+    for piso in range(1, 101):
+        tesoros += piso
+        if piso % 2 == 0:
+            pares += 1
+    print("Tesoros:", tesoros)
+    print("Pisos pares:", pares)
+  `,
+  prueba: T`
+    debe(re.search(r"^\s*for\b", _codigo, re.M), "Usa un bucle for.")
+    debe(tesoros == 5050, f"tesoros debería ser 5050, pero vale {tesoros}. ¿Usaste range(1, 101)?")
+    debe(pares == 50, f"pares debería ser 50, pero vale {pares}.")
+    debe("%" in _codigo, "Usa % para saber si un piso es par.")
+    debe("5050" in _salida, "Muestra tesoros con print.")
+  `,
+},
+{
+  titulo: "Trampas: break y continue",
+  teoria: T`
+    Dos palabras para controlar un bucle desde dentro:
+    - ‹continue›: salta **el resto de esta vuelta** y pasa a la siguiente.
+    - ‹break›: **sale del bucle** del todo, aunque queden vueltas.
+
+    Suelen ir dentro de un ‹if›: «si pasa tal cosa, sáltate esto» o «si encuentras lo que buscas, para».
+  `,
+  ejemplo: T`
+    for n in range(1, 10):
+        if n == 3:
+            continue       # me salto el 3
+        if n == 6:
+            break          # salgo en el 6
+        print(n)
+    print("Fin")
+  `,
+  mision: T`
+    Avanzas por los pasos del 1 al 20:
+    - Los múltiplos de 4 son trampas: sáltalos con ‹continue›.
+    - En el paso 15 está la puerta: muestra ‹¡Puerta encontrada!› y sal con ‹break›.
+    - En los demás pasos muestra ‹Avanzo al paso N›.
+    ~~~salida
+    Avanzo al paso 1
+    Avanzo al paso 2
+    Avanzo al paso 3
+    Avanzo al paso 5
+    ...
+    Avanzo al paso 14
+    ¡Puerta encontrada!
+    ~~~
+  `,
+  inicial: T`
+    for paso in range(1, 21):
+        pass  # sustituye esta línea por tu código
+  `,
+  pista: T`
+    Dentro del bucle: ‹if paso % 4 == 0: continue›, luego ‹if paso == 15:› con el mensaje y ‹break›, y al final el ‹print› del avance.
+  `,
+  solucion: T`
+    for paso in range(1, 21):
+        if paso % 4 == 0:
+            continue
+        if paso == 15:
+            print("¡Puerta encontrada!")
+            break
+        print(f"Avanzo al paso {paso}")
+  `,
+  prueba: T`
+    debe("break" in _codigo and "continue" in _codigo, "Usa break y continue.")
+    esperado = [f"Avanzo al paso {n}" for n in [1, 2, 3, 5, 6, 7, 9, 10, 11, 13, 14]] + ["¡Puerta encontrada!"]
+    debe(len(_lineas) == len(esperado), f"Deberían salir {len(esperado)} líneas y salieron {len(_lineas)}.")
+    for a, b in zip(_lineas, esperado):
+        debe(igual(a, b), f"Esperaba «{b}» y apareció «{a}».")
+  `,
+},
+{
+  titulo: "JEFE: El Rey Esqueleto",
+  teoria: T`
+    El Rey Esqueleto propone un reto clásico de programación (en el mundo real se llama **FizzBuzz** y sale en entrevistas de trabajo).
+
+    La clave es el operador ‹%›: si ‹n % 3 == 0›, ‹n› es múltiplo de 3.
+
+    Y la trampa: un número como 15 es múltiplo de 3 **y** de 5. Como con ‹elif› gana la primera condición verdadera, el caso «de los dos a la vez» tiene que ir **primero**.
+  `,
+  ejemplo: T`
+    for n in range(1, 8):
+        if n % 2 == 0:
+            print(n, "es par")
+        else:
+            print(n, "es impar")
+  `,
+  mision: T`
+    Recorre los números del 1 al 30 y muestra, uno por línea:
+    - ‹Espada y Escudo› si es múltiplo de 3 y de 5
+    - ‹Espada› si es múltiplo de 3
+    - ‹Escudo› si es múltiplo de 5
+    - el propio número en otro caso
+    ~~~salida
+    1
+    2
+    Espada
+    4
+    Escudo
+    ...
+    ~~~
+  `,
+  inicial: T`
+    # El Rey Esqueleto espera
+
+  `,
+  pista: T`
+    ‹for n in range(1, 31):› y dentro ‹if n % 3 == 0 and n % 5 == 0:›, luego ‹elif n % 3 == 0:›, ‹elif n % 5 == 0:› y ‹else: print(n)›.
+  `,
+  solucion: T`
+    for n in range(1, 31):
+        if n % 3 == 0 and n % 5 == 0:
+            print("Espada y Escudo")
+        elif n % 3 == 0:
+            print("Espada")
+        elif n % 5 == 0:
+            print("Escudo")
+        else:
+            print(n)
+  `,
+  prueba: T`
+    def esperado(n):
+        if n % 15 == 0:
+            return "Espada y Escudo"
+        if n % 3 == 0:
+            return "Espada"
+        if n % 5 == 0:
+            return "Escudo"
+        return str(n)
+    debe(len(_lineas) == 30, f"Deberían salir 30 líneas y salieron {len(_lineas)}.")
+    for n in range(1, 31):
+        debe(igual(_lineas[n - 1], esperado(n)), f"En el número {n} esperaba «{esperado(n)}» y apareció «{_lineas[n - 1]}».")
+  `,
+},
+
+/* ---------------- ZONA 5: ARMERÍA ---------------- */
+{
+  titulo: "La mochila: listas",
+  teoria: T`
+    Una **lista** guarda varios valores en orden, entre corchetes y separados por comas:
+
+    ~~~
+    mochila = ["espada", "pocion", "mapa"]
+    ~~~
+    Funciona como los textos: índices desde 0, ‹mochila[-1]› es el último y ‹len(mochila)› dice cuántos elementos hay.
+
+    La gran diferencia es que una lista **se puede modificar**: ‹mochila[1] = "escudo"› cambia el segundo elemento. Con los textos eso no se puede.
+  `,
+  ejemplo: T`
+    mochila = ["espada", "pocion", "mapa"]
+    print(mochila)
+    print(mochila[0])       # espada
+    print(mochila[-1])      # mapa
+    print(len(mochila))     # 3
+    mochila[2] = "brujula"
+    print(mochila)
+  `,
+  mision: T`
+    1. Crea ‹mochila› con ‹"espada"›, ‹"pocion"› y ‹"mapa"›.
+    2. Muestra el primer objeto.
+    3. Muestra cuántos objetos hay.
+    4. Cambia ‹"pocion"› por ‹"pocion grande"› usando su índice.
+    5. Muestra la mochila entera.
+  `,
+  inicial: T`
+    # Prepara tu mochila
+
+  `,
+  pista: T`
+    ‹print(mochila[0])›, ‹print(len(mochila))› y ‹mochila[1] = "pocion grande"›.
+  `,
+  solucion: T`
+    mochila = ["espada", "pocion", "mapa"]
+    print(mochila[0])
+    print(len(mochila))
+    mochila[1] = "pocion grande"
+    print(mochila)
+  `,
+  prueba: T`
+    debe(mochila == ["espada", "pocion grande", "mapa"], f"La mochila final debería ser ['espada', 'pocion grande', 'mapa'], pero es {mochila!r}.")
+    debe(re.search(r"mochila\[1\]\s*=", _codigo), "Cambia la poción usando su índice: mochila[1] = ...")
+    debe("espada" in _lineas, "Muestra el primer objeto con print(mochila[0]).")
+    debe("3" in _lineas, "Muestra cuántos objetos hay con print(len(mochila)).")
+  `,
+},
+{
+  titulo: "Magia de la mochila",
+  teoria: T`
+    Las listas tienen métodos que las **modifican directamente**:
+    - ‹.append(x)› añade al final
+    - ‹.insert(pos, x)› añade en una posición
+    - ‹.remove(x)› quita el primer elemento igual a ‹x›
+    - ‹.pop()› quita el último y te lo **devuelve** (puedes guardarlo)
+    - ‹.sort()› ordena la lista (alfabéticamente o de menor a mayor)
+
+    Para saber si algo está en la lista usa ‹in›: ‹"mapa" in mochila›.
+  `,
+  ejemplo: T`
+    cofre = ["oro"]
+    cofre.append("rubi")
+    cofre.insert(0, "llave")
+    print(cofre)             # ['llave', 'oro', 'rubi']
+    cofre.remove("oro")
+    sacado = cofre.pop()
+    print(sacado, cofre)     # rubi ['llave']
+    print("llave" in cofre)  # True
+  `,
+  mision: T`
+    Partiendo de ‹mochila = ["mapa", "espada"]›:
+    1. Añade ‹"antorcha"› y después ‹"cuerda"› al final.
+    2. Quita ‹"mapa"›.
+    3. Saca el último objeto con ‹pop()› y guárdalo en ‹ultimo›.
+    4. Ordena la mochila.
+    5. ‹lleva_espada›: ‹True› o ‹False› según si ‹"espada"› está en la mochila.
+    6. Muestra la mochila.
+  `,
+  inicial: T`
+    mochila = ["mapa", "espada"]
+
+  `,
+  pista: T`
+    ‹mochila.append("antorcha")›, ‹mochila.remove("mapa")›, ‹ultimo = mochila.pop()›, ‹mochila.sort()› y ‹lleva_espada = "espada" in mochila›.
+  `,
+  solucion: T`
+    mochila = ["mapa", "espada"]
+    mochila.append("antorcha")
+    mochila.append("cuerda")
+    mochila.remove("mapa")
+    ultimo = mochila.pop()
+    mochila.sort()
+    lleva_espada = "espada" in mochila
+    print(mochila)
+  `,
+  prueba: T`
+    for metodo in [".append(", ".remove(", ".pop(", ".sort("]:
+        debe(metodo in _codigo, f"Usa el método {metodo[1:-1]}().")
+    debe(ultimo == "cuerda", f"ultimo debería ser 'cuerda', pero es {ultimo!r}.")
+    debe(mochila == ["antorcha", "espada"], f"La mochila final debería ser ['antorcha', 'espada'], pero es {mochila!r}.")
+    debe(lleva_espada is True, "lleva_espada debería ser True. Usa: 'espada' in mochila")
+    debe(len(_lineas) > 0, "Muestra la mochila con print.")
+  `,
+},
+{
+  titulo: "Patrulla por la lista",
+  teoria: T`
+    ‹for› no solo recorre números: puede recorrer **cualquier lista**, elemento a elemento.
+
+    ~~~
+    for enemigo in enemigos:
+        print(enemigo)
+    ~~~
+    Combinado con lo que ya sabes, puedes hacer de todo en cada vuelta: sumar, contar o construir una **lista nueva** empezando por ‹[]› y usando ‹.append()› con los que cumplan una condición.
+  `,
+  ejemplo: T`
+    monedas = [5, 12, 3, 20]
+    total = 0
+    grandes = []
+    for m in monedas:
+        total += m
+        if m >= 10:
+            grandes.append(m)
+    print(total, grandes)    # 40 [12, 20]
+  `,
+  mision: T`
+    Con la lista de ‹enemigos› del código inicial:
+    1. Recórrela y muestra ‹Derroto al goblin›, ‹Derroto al orco›... uno por línea.
+    2. ‹goblins›: cuántas veces aparece ‹"goblin"› (usa un contador en el bucle).
+    3. ‹largos›: una lista nueva con los nombres de **más de 4 letras**.
+  `,
+  inicial: T`
+    enemigos = ["goblin", "orco", "troll", "goblin", "lich"]
+    goblins = 0
+    largos = []
+
+  `,
+  pista: T`
+    ‹for e in enemigos:› y dentro: el ‹print›, ‹if e == "goblin": goblins += 1› y ‹if len(e) > 4: largos.append(e)›.
+  `,
+  solucion: T`
+    enemigos = ["goblin", "orco", "troll", "goblin", "lich"]
+    goblins = 0
+    largos = []
+
+    for e in enemigos:
+        print(f"Derroto al {e}")
+        if e == "goblin":
+            goblins += 1
+        if len(e) > 4:
+            largos.append(e)
+  `,
+  prueba: T`
+    debe(re.search(r"^\s*for\b", _codigo, re.M), "Recorre la lista con un for.")
+    nombres = ["goblin", "orco", "troll", "goblin", "lich"]
+    derrotas = [l for l in _lineas if l.lower().startswith("derroto")]
+    debe(len(derrotas) == 5, f"Deberían salir 5 líneas «Derroto al ...» y salieron {len(derrotas)}.")
+    for a, n in zip(derrotas, nombres):
+        debe(igual(a, f"Derroto al {n}"), f"Esperaba «Derroto al {n}» y apareció «{a}».")
+    debe(goblins == 2, f"goblins debería ser 2, pero vale {goblins}.")
+    debe(largos == ["goblin", "troll", "goblin"], f"largos debería ser ['goblin', 'troll', 'goblin'], pero es {largos!r}.")
+  `,
+},
+{
+  titulo: "El libro de fichas",
+  teoria: T`
+    Un **diccionario** guarda parejas ‹clave: valor›, entre llaves. En lugar de buscar por posición, buscas por nombre:
+
+    ~~~
+    heroe = {"nombre": "Galahad", "vida": 100}
+    print(heroe["nombre"])
+    ~~~
+    - ‹heroe["vida"] = 80› cambia un valor; si la clave no existía, la crea.
+    - ‹heroe.get("oro", 0)› devuelve 0 si no existe, en lugar de dar un ‹KeyError›.
+    - ‹for clave, valor in heroe.items():› recorre todas las parejas.
+
+    Y una **tupla** es como una lista pero entre paréntesis y **no se puede modificar**: ‹posicion = (3, 7)›. Puedes desempaquetarla en variables: ‹x, y = posicion›.
+  `,
+  ejemplo: T`
+    caballo = {"nombre": "Rocinante", "velocidad": 7}
+    print(caballo["nombre"])
+    caballo["velocidad"] = 9       # modificar
+    caballo["color"] = "blanco"    # añadir
+    for clave, valor in caballo.items():
+        print(clave, "->", valor)
+    print(caballo.get("alas", "no tiene"))
+
+    posicion = (4, 2)
+    x, y = posicion
+    print(f"Estoy en x={x}, y={y}")
+  `,
+  mision: T`
+    1. Crea ‹heroe› con las claves ‹"nombre"› (‹"Galahad"›), ‹"vida"› (‹100›) y ‹"nivel"› (‹1›).
+    2. Muestra su nombre.
+    3. Sube ‹"nivel"› a 2 y añade la clave ‹"arma"› con ‹"lanza"›.
+    4. Recorre el diccionario mostrando cada pareja como ‹clave -> valor›.
+    5. Crea la tupla ‹posicion = (3, 7)› y desempaquétala en ‹x› e ‹y›.
+  `,
+  inicial: T`
+    # La ficha del héroe
+
+  `,
+  pista: T`
+    ‹heroe["nivel"] = 2›, ‹heroe["arma"] = "lanza"›, y para recorrer: ‹for clave, valor in heroe.items(): print(clave, "->", valor)›.
+  `,
+  solucion: T`
+    heroe = {"nombre": "Galahad", "vida": 100, "nivel": 1}
+    print(heroe["nombre"])
+    heroe["nivel"] = 2
+    heroe["arma"] = "lanza"
+    for clave, valor in heroe.items():
+        print(clave, "->", valor)
+
+    posicion = (3, 7)
+    x, y = posicion
+  `,
+  prueba: T`
+    debe(isinstance(heroe, dict), "heroe debe ser un diccionario, entre llaves {}.")
+    debe(heroe == {"nombre": "Galahad", "vida": 100, "nivel": 2, "arma": "lanza"}, f"heroe debería acabar así: {{'nombre': 'Galahad', 'vida': 100, 'nivel': 2, 'arma': 'lanza'}}, pero es {heroe!r}.")
+    debe(tiene_linea("Galahad"), "Muestra el nombre con print(heroe['nombre']).")
+    debe(tiene_linea("arma -> lanza") and tiene_linea("nivel -> 2"), "Recorre heroe.items() mostrando: clave -> valor")
+    debe(isinstance(posicion, tuple) and posicion == (3, 7), "posicion debe ser la tupla (3, 7), con paréntesis.")
+    debe(x == 3 and y == 7, "Desempaqueta la tupla: x, y = posicion")
+  `,
+},
+{
+  titulo: "JEFE: El Mímico Ancestral",
+  teoria: T`
+    El cofre que muerde. Para vencerlo tendrás que combinar listas, diccionarios y bucles.
+
+    Un patrón muy útil es **contar apariciones con un diccionario**: para cada elemento, sumas 1 a su contador. ‹.get(clave, 0)› te da 0 la primera vez, cuando aún no existe:
+
+    ~~~
+    conteo[v] = conteo.get(v, 0) + 1
+    ~~~
+    Y para encontrar el mayor, recorre y guarda el mejor que hayas visto hasta ahora.
+  `,
+  ejemplo: T`
+    votos = ["norte", "sur", "norte", "este", "norte"]
+    conteo = {}
+    for v in votos:
+        conteo[v] = conteo.get(v, 0) + 1
+    print(conteo)        # {'norte': 3, 'sur': 1, 'este': 1}
+  `,
+  mision: T`
+    Estás en la tienda del mímico con ‹precios› y tu lista de ‹compras›.
+    1. ‹total›: lo que cuestan todas tus compras.
+    2. ‹cuenta›: un diccionario con cuántas veces compraste cada cosa.
+    3. ‹mas_caro›: el nombre del objeto más caro de ‹precios› (recórrelo con un bucle).
+    4. Muestra ‹Total: 240 monedas› usando ‹total›.
+  `,
+  inicial: T`
+    precios = {"espada": 150, "escudo": 90, "pocion": 25, "mapa": 40}
+    compras = ["espada", "pocion", "pocion", "mapa"]
+
+  `,
+  pista: T`
+    Recorre ‹compras›: ‹total += precios[c]› y ‹cuenta[c] = cuenta.get(c, 0) + 1›. Para el más caro, empieza con ‹mas_caro = ""› y ‹mayor = 0›, recorre ‹precios.items()› y actualiza si ‹precio > mayor›.
+  `,
+  solucion: T`
+    precios = {"espada": 150, "escudo": 90, "pocion": 25, "mapa": 40}
+    compras = ["espada", "pocion", "pocion", "mapa"]
+
+    total = 0
+    cuenta = {}
+    for c in compras:
+        total += precios[c]
+        cuenta[c] = cuenta.get(c, 0) + 1
+
+    mas_caro = ""
+    mayor = 0
+    for objeto, precio in precios.items():
+        if precio > mayor:
+            mayor = precio
+            mas_caro = objeto
+
+    print(f"Total: {total} monedas")
+  `,
+  prueba: T`
+    debe(total == 240, f"total debería ser 150 + 25 + 25 + 40 = 240, pero vale {total}.")
+    debe(cuenta == {"espada": 1, "pocion": 2, "mapa": 1}, f"cuenta debería ser {{'espada': 1, 'pocion': 2, 'mapa': 1}}, pero es {cuenta!r}.")
+    debe(mas_caro == "espada", f"mas_caro debería ser 'espada', pero es {mas_caro!r}.")
+    debe(tiene_linea("Total: 240 monedas"), "Muestra: Total: 240 monedas")
+    _, ns = con_valores(compras=["mapa", "mapa", "escudo"])
+    debe(ns["total"] == 170 and ns["cuenta"] == {"mapa": 2, "escudo": 1}, "Calcula total y cuenta recorriendo la lista compras, no a mano.")
+  `,
+},
+
+/* ---------------- ZONA 6: BIBLIOTECA ---------------- */
+{
+  titulo: "Tu primer conjuro: def",
+  teoria: T`
+    Una **función** es un conjuro con nombre: un bloque de código que escribes una vez y lanzas cuantas veces quieras. Ya has usado muchas (‹print›, ‹len›, ‹input›); ahora crearás las tuyas.
+
+    ~~~
+    def saludar():
+        print("Hola")
+    ~~~
+    - ‹def› anuncia que vas a definir una función, luego va el nombre, los paréntesis y los dos puntos.
+    - El cuerpo va sangrado.
+
+    Ojo: **definir no es ejecutar**. El código de dentro solo se ejecuta cuando la **llamas** escribiendo su nombre con paréntesis: ‹saludar()›.
+  `,
+  ejemplo: T`
+    def saludo_real():
+        print("¡Salve, majestad!")
+        print("*reverencia*")
+
+    saludo_real()
+    saludo_real()
+  `,
+  mision: T`
+    Define la función ‹grito_de_guerra()› que muestre dos líneas:
+    ~~~salida
+    ¡Por el honor!
+    ¡A la carga!
+    ~~~
+    Después, llámala **dos veces**.
+  `,
+  inicial: T`
+    # Define tu función aquí
+
+
+    # Y llámala dos veces
+  `,
+  pista: T`
+    ‹def grito_de_guerra():› y dentro, sangrados, los dos ‹print›. Después, sin sangría, ‹grito_de_guerra()› dos veces.
+  `,
+  solucion: T`
+    def grito_de_guerra():
+        print("¡Por el honor!")
+        print("¡A la carga!")
+
+    grito_de_guerra()
+    grito_de_guerra()
+  `,
+  prueba: T`
+    debe(callable(grito_de_guerra), "grito_de_guerra debe ser una función creada con def.")
+    salida, _ = capturar(grito_de_guerra)
+    ls = lineas(salida)
+    debe(len(ls) == 2 and igual(ls[0], "¡Por el honor!") and igual(ls[1], "¡A la carga!"), "Al llamar a grito_de_guerra() deben salir: ¡Por el honor! y ¡A la carga!")
+    debe(len(_lineas) == 4, f"Llama a la función dos veces: deberían salir 4 líneas y salieron {len(_lineas)}.")
+  `,
+},
+{
+  titulo: "Parámetros y return",
+  teoria: T`
+    Las funciones pueden recibir datos: los **parámetros**, que van entre los paréntesis. Y pueden devolver un resultado con ‹return›.
+
+    ~~~
+    def curar(vida, pocion):
+        return vida + pocion
+    ~~~
+    Diferencia clave: ‹print› solo **muestra** algo en pantalla. ‹return› **devuelve** un valor que puedes guardar en una variable o usar en un cálculo. Además, ‹return› termina la función en ese momento.
+
+    Las variables creadas dentro de una función son **locales**: solo existen ahí dentro.
+  `,
+  ejemplo: T`
+    def curar(vida, pocion):
+        nueva = vida + pocion
+        return nueva
+
+    resultado = curar(40, 25)
+    print(resultado)             # 65
+    print(curar(10, 5) * 2)      # 30
+    # print(nueva) daría error: 'nueva' solo existe dentro de curar
+  `,
+  mision: T`
+    Define ‹danio(ataque, defensa)› que **devuelva** ‹ataque - defensa›, pero **nunca menos de 0**.
+    - ‹danio(10, 3)› → ‹7›
+    - ‹danio(3, 10)› → ‹0›
+
+    Después muestra ‹danio(25, 8)›.
+  `,
+  inicial: T`
+    def danio(ataque, defensa):
+        pass  # sustituye esto
+
+
+  `,
+  pista: T`
+    Calcula ‹resultado = ataque - defensa›. ‹if resultado < 0:› entonces ‹return 0›. Si no, ‹return resultado›. Al final, ‹print(danio(25, 8))›.
+  `,
+  solucion: T`
+    def danio(ataque, defensa):
+        resultado = ataque - defensa
+        if resultado < 0:
+            return 0
+        return resultado
+
+    print(danio(25, 8))
+  `,
+  prueba: T`
+    debe(callable(danio), "danio debe ser una función.")
+    debe("return" in _codigo, "Usa return para devolver el resultado.")
+    for a, d, esperado in [(10, 3, 7), (3, 10, 0), (5, 5, 0), (100, 1, 99)]:
+        r = danio(a, d)
+        debe(r == esperado, f"danio({a}, {d}) debería devolver {esperado}, pero devuelve {r!r}.")
+    debe("17" in _lineas, "Muestra el resultado de danio(25, 8).")
+  `,
+},
+{
+  titulo: "Conjuros con opciones",
+  teoria: T`
+    Un parámetro puede tener un **valor por defecto**: si al llamar no lo das, se usa ese.
+
+    ~~~
+    def atacar(fuerza, multiplicador=2):
+    ~~~
+    ‹atacar(10)› usa el 2; ‹atacar(10, 3)› usa el 3. Los parámetros con valor por defecto van siempre al final.
+
+    Una función también puede **devolver varios valores** separados por comas. Python los empaqueta en una tupla y tú los desempaquetas al recibirlos:
+
+    ~~~
+    bajo, alto = min_y_max(numeros)
+    ~~~
+  `,
+  ejemplo: T`
+    def atacar(fuerza, multiplicador=2):
+        return fuerza * multiplicador
+
+    print(atacar(10))        # 20
+    print(atacar(10, 3))     # 30
+
+    def min_y_max(numeros):
+        return min(numeros), max(numeros)
+
+    bajo, alto = min_y_max([7, 2, 9])
+    print(bajo, alto)        # 2 9
+  `,
+  mision: T`
+    1. ‹forjar(nombre, material="hierro")› devuelve un texto como ‹"Espada de hierro"›.
+       - ‹forjar("Espada")› → ‹"Espada de hierro"›
+       - ‹forjar("Hacha", "mithril")› → ‹"Hacha de mithril"›
+    2. ‹extremos(numeros)› devuelve dos valores: el menor y el mayor. **Sin usar** ‹min()› ni ‹max()›: recorre la lista.
+       - ‹extremos([4, 9, 1, 7])› → ‹(1, 9)›
+  `,
+  inicial: T`
+    def forjar(nombre, material="hierro"):
+        pass
+
+
+    def extremos(numeros):
+        pass
+
+  `,
+  pista: T`
+    En ‹extremos›, empieza con ‹menor = numeros[0]› y ‹mayor = numeros[0]› (no con 0, ¡piensa en los números negativos!). Recorre y actualiza. Termina con ‹return menor, mayor›.
+  `,
+  solucion: T`
+    def forjar(nombre, material="hierro"):
+        return f"{nombre} de {material}"
+
+
+    def extremos(numeros):
+        menor = numeros[0]
+        mayor = numeros[0]
+        for n in numeros:
+            if n < menor:
+                menor = n
+            if n > mayor:
+                mayor = n
+        return menor, mayor
+
+    print(forjar("Espada"))
+    print(extremos([4, 9, 1, 7]))
+  `,
+  prueba: T`
+    debe(forjar("Espada") == "Espada de hierro", f"forjar('Espada') debería devolver 'Espada de hierro', pero devuelve {forjar('Espada')!r}.")
+    debe(forjar("Hacha", "mithril") == "Hacha de mithril", "forjar('Hacha', 'mithril') debería devolver 'Hacha de mithril'.")
+    debe(not re.search(r"\b(min|max)\(", _codigo), "En este piso no vale usar min() ni max(): recorre la lista tú.")
+    for lista, esperado in [([4, 9, 1, 7], (1, 9)), ([5], (5, 5)), ([-3, -8, -1], (-8, -1))]:
+        r = extremos(lista)
+        debe(tuple(r) == esperado if isinstance(r, (tuple, list)) else False, f"extremos({lista}) debería devolver {esperado}, pero devuelve {r!r}.")
+  `,
+},
+{
+  titulo: "El eco infinito: recursión",
+  teoria: T`
+    Una función puede llamarse **a sí misma**. Se llama **recursión**, y es como un pasillo de espejos.
+
+    Toda función recursiva necesita dos partes:
+    - un **caso base**: la situación sencilla en la que se para y no se vuelve a llamar;
+    - un **paso recursivo**: se llama a sí misma con un problema un poco más pequeño.
+
+    Ejemplo: el factorial de 5 es 5 × 4 × 3 × 2 × 1. Fíjate en que ‹factorial(5) = 5 * factorial(4)›. Y el caso base es ‹factorial(1) = 1›.
+
+    Sin caso base la función se llama sin fin y Python lanza un ‹RecursionError›.
+  `,
+  ejemplo: T`
+    def cuenta_atras(n):
+        if n == 0:
+            print("¡Fuego del dragón!")
+            return
+        print(n)
+        cuenta_atras(n - 1)
+
+    cuenta_atras(3)
+  `,
+  mision: T`
+    Escribe dos funciones **recursivas**:
+    1. ‹factorial(n)›: si ‹n› es 0 o 1 devuelve 1; si no, ‹n * factorial(n - 1)›.
+    2. ‹suma_pisos(n)›: suma ‹n + (n-1) + ... + 1›. ‹suma_pisos(0)› es 0.
+
+    Muestra ‹factorial(5)› y ‹suma_pisos(100)›.
+  `,
+  inicial: T`
+    def factorial(n):
+        pass
+
+
+    def suma_pisos(n):
+        pass
+
+  `,
+  pista: T`
+    ‹suma_pisos› es igual que factorial pero sumando: ‹if n == 0: return 0› y si no ‹return n + suma_pisos(n - 1)›.
+  `,
+  solucion: T`
+    def factorial(n):
+        if n <= 1:
+            return 1
+        return n * factorial(n - 1)
+
+
+    def suma_pisos(n):
+        if n == 0:
+            return 0
+        return n + suma_pisos(n - 1)
+
+    print(factorial(5))
+    print(suma_pisos(100))
+  `,
+  prueba: T`
+    for n, esperado in [(5, 120), (0, 1), (1, 1), (10, 3628800)]:
+        debe(factorial(n) == esperado, f"factorial({n}) debería ser {esperado}, pero es {factorial(n)!r}.")
+    debe(suma_pisos(100) == 5050 and suma_pisos(0) == 0 and suma_pisos(3) == 6, "suma_pisos no da lo esperado: suma_pisos(3) debería ser 3 + 2 + 1 = 6.")
+    debe(es_recursiva("factorial", 4), "factorial debe llamarse a sí misma.")
+    debe(es_recursiva("suma_pisos", 4), "suma_pisos debe llamarse a sí misma.")
+    debe("120" in _lineas and "5050" in _lineas, "Muestra factorial(5) y suma_pisos(100).")
+  `,
+},
+{
+  titulo: "JEFE: El Nigromante",
+  teoria: T`
+    El Nigromante guarda su grimorio con **runas primas**. Un número primo es el que solo se divide exactamente entre 1 y entre sí mismo: 2, 3, 5, 7, 11... El 0 y el 1 no son primos.
+
+    Para saber si ‹n› es primo, prueba a dividirlo entre todos los números desde 2 hasta ‹n - 1›. Si alguno da resto 0, no es primo: puedes hacer ‹return False› en ese mismo momento, sin terminar el bucle.
+
+    Además, una función puede **usar otra** función que hayas escrito. Así se construyen programas grandes: piezas pequeñas que se combinan.
+  `,
+  ejemplo: T`
+    def es_par(n):
+        return n % 2 == 0
+
+    def pares_hasta(limite):
+        resultado = []
+        for n in range(1, limite + 1):
+            if es_par(n):
+                resultado.append(n)
+        return resultado
+
+    print(pares_hasta(10))   # [2, 4, 6, 8, 10]
+  `,
+  mision: T`
+    1. ‹es_primo(n)›: devuelve ‹True› si ‹n› es primo y ‹False› si no.
+    2. ‹primos_hasta(limite)›: devuelve una lista con los primos desde 2 hasta ‹limite› (incluido), usando ‹es_primo›.
+
+    Muestra ‹primos_hasta(30)›.
+  `,
+  inicial: T`
+    def es_primo(n):
+        pass
+
+
+    def primos_hasta(limite):
+        pass
+
+  `,
+  pista: T`
+    En ‹es_primo›: ‹if n < 2: return False›, luego ‹for d in range(2, n):› con ‹if n % d == 0: return False›, y tras el bucle ‹return True›.
+  `,
+  solucion: T`
+    def es_primo(n):
+        if n < 2:
+            return False
+        for d in range(2, n):
+            if n % d == 0:
+                return False
+        return True
+
+
+    def primos_hasta(limite):
+        primos = []
+        for n in range(2, limite + 1):
+            if es_primo(n):
+                primos.append(n)
+        return primos
+
+    print(primos_hasta(30))
+  `,
+  prueba: T`
+    for n, esperado in [(0, False), (1, False), (2, True), (3, True), (4, False), (9, False), (13, True), (25, False), (97, True)]:
+        debe(es_primo(n) is esperado, f"es_primo({n}) debería devolver {esperado}, pero devuelve {es_primo(n)!r}.")
+    debe(primos_hasta(30) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29], f"primos_hasta(30) no es correcto: {primos_hasta(30)!r}")
+    debe(primos_hasta(2) == [2] and primos_hasta(1) == [], "Revisa los bordes: primos_hasta(2) es [2] y primos_hasta(1) es [].")
+    debe(tiene_linea("[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]"), "Muestra primos_hasta(30).")
+  `,
+},
+
+/* ---------------- ZONA 7: LABORATORIO ---------------- */
+{
+  titulo: "Pociones en una línea",
+  teoria: T`
+    Una **comprensión de lista** crea una lista nueva en una sola línea. Estas dos formas hacen lo mismo:
+
+    ~~~
+    dobles = []
+    for n in numeros:
+        dobles.append(n * 2)
+
+    dobles = [n * 2 for n in numeros]
+    ~~~
+    Se lee: «dame ‹n * 2› para cada ‹n› en ‹numeros›».
+
+    Puedes añadir un filtro al final con ‹if›: ‹[n for n in numeros if n > 10]›.
+  `,
+  ejemplo: T`
+    numeros = [1, 2, 3, 4, 5]
+    cuadrados = [n ** 2 for n in numeros]
+    pares = [n for n in numeros if n % 2 == 0]
+    print(cuadrados)     # [1, 4, 9, 16, 25]
+    print(pares)         # [2, 4]
+  `,
+  mision: T`
+    Con ‹pociones = [10, 25, 5, 40, 15]› y usando **una comprensión** para cada una:
+    - ‹dobles›: cada poción multiplicada por 2
+    - ‹grandes›: solo las de 15 o más
+    - ‹etiquetas›: textos como ‹"Poción de 10"› para cada una
+  `,
+  inicial: T`
+    pociones = [10, 25, 5, 40, 15]
+
+  `,
+  pista: T`
+    ‹[p * 2 for p in pociones]›, ‹[p for p in pociones if p >= 15]› y ‹[f"Poción de {p}" for p in pociones]›.
+  `,
+  solucion: T`
+    pociones = [10, 25, 5, 40, 15]
+    dobles = [p * 2 for p in pociones]
+    grandes = [p for p in pociones if p >= 15]
+    etiquetas = [f"Poción de {p}" for p in pociones]
+    print(dobles, grandes, etiquetas)
+  `,
+  prueba: T`
+    debe(dobles == [20, 50, 10, 80, 30], f"dobles no es correcto: {dobles!r}")
+    debe(grandes == [25, 40, 15], f"grandes debería ser [25, 40, 15], pero es {grandes!r}")
+    debe(isinstance(etiquetas, list) and len(etiquetas) == 5 and all(igual(e, f"Poción de {p}") for e, p in zip(etiquetas, [10, 25, 5, 40, 15])), f"etiquetas debería ser ['Poción de 10', 'Poción de 25', ...], pero es {etiquetas!r}")
+    debe(len(re.findall(r"\[[^\]\n]*\bfor\b", _codigo)) >= 3, "Usa una comprensión de lista, [... for ... in ...], para cada una de las tres.")
+  `,
+},
+{
+  titulo: "Compañeros de viaje",
+  teoria: T`
+    Dos ayudantes para recorrer listas:
+    - ‹enumerate(lista)› te da la **posición** y el **elemento** a la vez. Con ‹start=1› empieza a contar desde 1.
+    - ‹zip(a, b)› recorre **dos listas en paralelo**, emparejando el primero con el primero, el segundo con el segundo...
+
+    ~~~
+    for i, nombre in enumerate(nombres, start=1):
+    for nombre, punto in zip(nombres, puntos):
+    ~~~
+    Y un truco: ‹dict(zip(claves, valores))› construye un diccionario a partir de dos listas.
+  `,
+  ejemplo: T`
+    armas = ["espada", "arco", "maza"]
+    for i, arma in enumerate(armas, start=1):
+        print(i, arma)
+
+    danios = [12, 8, 15]
+    for arma, d in zip(armas, danios):
+        print(f"{arma} hace {d} de daño")
+  `,
+  mision: T`
+    1. Con ‹enumerate› (empezando en 1), muestra ‹1. Arturo›, ‹2. Ginebra›, ‹3. Merlin›.
+    2. Con ‹zip›, muestra ‹Arturo: 80 puntos›, etc.
+    3. Crea ‹tabla›: un diccionario nombre → puntos usando ‹dict(zip(...))›.
+  `,
+  inicial: T`
+    heroes = ["Arturo", "Ginebra", "Merlin"]
+    puntos = [80, 95, 70]
+
+  `,
+  pista: T`
+    ‹for i, h in enumerate(heroes, start=1): print(f"{i}. {h}")›. Luego ‹for h, p in zip(heroes, puntos):› y por último ‹tabla = dict(zip(heroes, puntos))›.
+  `,
+  solucion: T`
+    heroes = ["Arturo", "Ginebra", "Merlin"]
+    puntos = [80, 95, 70]
+
+    for i, h in enumerate(heroes, start=1):
+        print(f"{i}. {h}")
+
+    for h, p in zip(heroes, puntos):
+        print(f"{h}: {p} puntos")
+
+    tabla = dict(zip(heroes, puntos))
+  `,
+  prueba: T`
+    debe("enumerate(" in _codigo and "zip(" in _codigo, "Usa enumerate y zip.")
+    for linea in ["1. Arturo", "2. Ginebra", "3. Merlin"]:
+        debe(any(l.strip() == linea for l in _lineas), f"Falta la línea: {linea}")
+    for linea in ["Arturo: 80 puntos", "Ginebra: 95 puntos", "Merlin: 70 puntos"]:
+        debe(tiene_linea(linea), f"Falta la línea: {linea}")
+    debe(tabla == {"Arturo": 80, "Ginebra": 95, "Merlin": 70}, f"tabla no es correcta: {tabla!r}")
+  `,
+},
+{
+  titulo: "Escudos contra errores",
+  teoria: T`
+    Cuando algo sale mal, Python lanza una **excepción** y el programa se detiene. Pero puedes atraparla con ‹try› y ‹except› y seguir adelante:
+
+    ~~~
+    try:
+        numero = int(texto)
+    except ValueError:
+        numero = 0
+    ~~~
+    Python intenta lo del ‹try›. Si ahí salta un ‹ValueError›, en vez de detenerse ejecuta el bloque ‹except›.
+
+    Excepciones típicas: ‹ValueError› (valor inválido), ‹ZeroDivisionError› (dividir entre 0), ‹KeyError› (clave inexistente), ‹IndexError› (posición inexistente). Atrapa siempre la **concreta** que esperas.
+  `,
+  ejemplo: T`
+    texto = "diez"
+    try:
+        numero = int(texto)
+        print("Número:", numero)
+    except ValueError:
+        print("Eso no es un número. Uso 0.")
+        numero = 0
+
+    try:
+        print(10 / 0)
+    except ZeroDivisionError:
+        print("No se puede dividir entre cero")
+  `,
+  mision: T`
+    Escribe tres funciones blindadas:
+    1. ‹convertir(texto)›: devuelve ‹int(texto)›; si da ‹ValueError›, devuelve ‹0›.
+    2. ‹repartir(oro, personas)›: devuelve ‹oro // personas›; si da ‹ZeroDivisionError›, devuelve ‹oro›.
+    3. ‹buscar(inventario, objeto)›: devuelve ‹inventario[objeto]›; si da ‹KeyError›, devuelve ‹"no está"›.
+  `,
+  inicial: T`
+    def convertir(texto):
+        pass
+
+
+    def repartir(oro, personas):
+        pass
+
+
+    def buscar(inventario, objeto):
+        pass
+
+  `,
+  pista: T`
+    Cada función es igual: ‹try:› con el ‹return› arriesgado y ‹except TipoDeError:› con el ‹return› de emergencia.
+  `,
+  solucion: T`
+    def convertir(texto):
+        try:
+            return int(texto)
+        except ValueError:
+            return 0
+
+
+    def repartir(oro, personas):
+        try:
+            return oro // personas
+        except ZeroDivisionError:
+            return oro
+
+
+    def buscar(inventario, objeto):
+        try:
+            return inventario[objeto]
+        except KeyError:
+            return "no está"
+  `,
+  prueba: T`
+    debe("try" in _codigo and "except" in _codigo, "Usa try y except.")
+    debe(convertir("42") == 42 and convertir("abc") == 0 and convertir("7") == 7, "convertir falla: convertir('42') → 42 y convertir('abc') → 0.")
+    debe(repartir(100, 3) == 33 and repartir(50, 0) == 50, "repartir falla: repartir(100, 3) → 33 y repartir(50, 0) → 50.")
+    inv = {"espada": 1, "pocion": 3}
+    debe(buscar(inv, "pocion") == 3 and igual(buscar(inv, "dragon"), "no está"), "buscar falla: si el objeto no existe debe devolver 'no está'.")
+  `,
+},
+{
+  titulo: "La biblioteca de módulos",
+  teoria: T`
+    Python trae de serie cientos de herramientas guardadas en **módulos**. Para usarlas, primero las importas:
+
+    ~~~
+    import math
+    print(math.sqrt(16))
+    ~~~
+    - ‹math›: matemáticas (‹math.sqrt›, ‹math.pi›, ‹math.floor›...).
+    - ‹random›: azar (‹random.randint(1, 6)›, ‹random.choice(lista)›...).
+
+    El azar de un ordenador en realidad sigue una receta. Con ‹random.seed(numero)› fijas el punto de partida y los resultados se repiten siempre igual, algo muy útil para probar programas.
+
+    Otra función útil sin importar nada: ‹round(x, 2)› redondea a 2 decimales.
+  `,
+  ejemplo: T`
+    import math
+    import random
+
+    print(math.sqrt(81))       # 9.0
+    print(math.pi)
+    print(math.floor(7.8))     # 7
+
+    random.seed(1)
+    print(random.randint(1, 6))
+    print(random.choice(["cara", "cruz"]))
+  `,
+  mision: T`
+    1. Importa ‹math› y ‹random›.
+    2. ‹raiz›: la raíz cuadrada de 144.
+    3. ‹area›: el área de un escudo redondo de radio 3 (π · r²).
+    4. ‹redondeada›: ‹area› redondeada a 2 decimales.
+    5. Fija la semilla con ‹random.seed(7)› y tira un dado de 20 caras: ‹dado = random.randint(1, 20)›.
+
+    Muestra los resultados.
+  `,
+  inicial: T`
+    # Importa los módulos
+
+  `,
+  pista: T`
+    ‹raiz = math.sqrt(144)›, ‹area = math.pi * 3 ** 2›, ‹redondeada = round(area, 2)›.
+  `,
+  solucion: T`
+    import math
+    import random
+
+    raiz = math.sqrt(144)
+    area = math.pi * 3 ** 2
+    redondeada = round(area, 2)
+
+    random.seed(7)
+    dado = random.randint(1, 20)
+
+    print(raiz, redondeada, dado)
+  `,
+  prueba: T`
+    debe(re.search(r"^\s*import\s+math", _codigo, re.M) and re.search(r"^\s*import\s+random", _codigo, re.M), "Importa los dos módulos: import math e import random.")
+    debe(raiz == 12, f"raiz debería ser 12, pero es {raiz!r}.")
+    debe(abs(area - 28.274333882308138) < 1e-6, f"area debería ser π · 3², unos 28.27, pero es {area!r}.")
+    debe(redondeada == 28.27, f"redondeada debería ser 28.27, pero es {redondeada!r}.")
+    debe(re.search(r"random\.seed\(\s*7\s*\)", _codigo), "Fija la semilla con random.seed(7).")
+    debe(type(dado) is int and 1 <= dado <= 20, "dado debe ser un número entre 1 y 20: random.randint(1, 20).")
+    debe(len(_lineas) > 0, "Muestra los resultados con print.")
+  `,
+},
+{
+  titulo: "JEFE: El Gólem de Piedra",
+  teoria: T`
+    El gólem exige un **ranking**. Para ordenar datos complejos necesitas ‹sorted› con una ‹key›:
+
+    ~~~
+    sorted(lista, key=funcion, reverse=True)
+    ~~~
+    ‹key› es una función que dice **por qué** ordenar. Para no definir una función aparte se usa una **lambda**, una función pequeña sin nombre escrita en una línea:
+
+    ~~~
+    lambda c: c[1]
+    ~~~
+    Significa: «recibe ‹c› y devuelve ‹c[1]›». Así ‹sorted(caballeros, key=lambda c: c[1])› ordena por el segundo elemento de cada tupla.
+
+    ‹max› y ‹min› también aceptan ‹key›. Y ‹sum(lista)› suma todos los números.
+  `,
+  ejemplo: T`
+    armas = [("daga", 5), ("hacha", 14), ("arco", 9)]
+    por_danio = sorted(armas, key=lambda a: a[1])
+    print(por_danio)
+    mejor = max(armas, key=lambda a: a[1])
+    print(mejor[0])          # hacha
+    doble = lambda x: x * 2
+    print(doble(21))         # 42
+  `,
+  mision: T`
+    Con la lista de ‹caballeros›, cada uno como ‹(nombre, puntos)›:
+    1. ‹ranking›: ordenada por puntos de **mayor a menor** (con ‹sorted›, ‹key› y ‹lambda›).
+    2. ‹aprobados›: los **nombres** con 75 puntos o más (comprensión de lista).
+    3. ‹mejor›: el **nombre** del que más puntos tiene (‹max› con ‹key›).
+    4. ‹media›: la media de puntos.
+    5. Muestra el ranking así, con ‹enumerate›:
+    ~~~salida
+    1. Lancelot - 95
+    2. Percival - 95
+    3. Arturo - 88
+    4. Gawain - 72
+    5. Tristan - 60
+    ~~~
+  `,
+  inicial: T`
+    caballeros = [("Arturo", 88), ("Lancelot", 95), ("Gawain", 72), ("Percival", 95), ("Tristan", 60)]
+
+  `,
+  pista: T`
+    ‹aprobados = [n for n, p in caballeros if p >= 75]›. La media: ‹sum(p for n, p in caballeros) / len(caballeros)›. Para mostrar: ‹for i, (n, p) in enumerate(ranking, start=1):›.
+  `,
+  solucion: T`
+    caballeros = [("Arturo", 88), ("Lancelot", 95), ("Gawain", 72), ("Percival", 95), ("Tristan", 60)]
+
+    ranking = sorted(caballeros, key=lambda c: c[1], reverse=True)
+    aprobados = [n for n, p in caballeros if p >= 75]
+    mejor = max(caballeros, key=lambda c: c[1])[0]
+    media = sum(p for n, p in caballeros) / len(caballeros)
+
+    for i, (n, p) in enumerate(ranking, start=1):
+        print(f"{i}. {n} - {p}")
+    print("Media:", media)
+  `,
+  prueba: T`
+    debe("lambda" in _codigo, "Usa una lambda como key.")
+    esperado = [("Lancelot", 95), ("Percival", 95), ("Arturo", 88), ("Gawain", 72), ("Tristan", 60)]
+    debe([tuple(c) for c in ranking] == esperado, f"ranking no es correcto: {ranking!r}")
+    debe(aprobados == ["Arturo", "Lancelot", "Percival"], f"aprobados debería ser ['Arturo', 'Lancelot', 'Percival'], pero es {aprobados!r}")
+    debe(mejor == "Lancelot", f"mejor debería ser 'Lancelot' (solo el nombre), pero es {mejor!r}")
+    debe(media == 82, f"media debería ser 82.0, pero es {media!r}")
+    for i, (n, p) in enumerate(esperado, start=1):
+        debe(tiene_linea(f"{i}. {n} - {p}"), f"Falta la línea: {i}. {n} - {p}")
+  `,
+},
+
+/* ---------------- ZONA 8: CIMA DEL DRAGÓN ---------------- */
+{
+  titulo: "El molde del caballero: clases",
+  teoria: T`
+    Una **clase** es un molde para fabricar **objetos**. La clase ‹Caballero› describe qué tiene todo caballero; cada caballero concreto (Arturo, Lancelot) es un objeto hecho con ese molde.
+
+    ~~~
+    class Caballero:
+        def __init__(self, nombre):
+            self.nombre = nombre
+            self.vida = 100
+    ~~~
+    - ‹__init__› se ejecuta automáticamente al crear un objeto. Prepara sus datos.
+    - ‹self› es el propio objeto que se está creando.
+    - ‹self.nombre = nombre› guarda un **atributo**: un dato que pertenece a ese objeto.
+
+    Para crear un objeto llamas a la clase como a una función: ‹arturo = Caballero("Arturo")›. Y lees sus atributos con un punto: ‹arturo.vida›. Los nombres de clase se escriben con Mayúscula Inicial.
+  `,
+  ejemplo: T`
+    class Dragon:
+        def __init__(self, nombre, color):
+            self.nombre = nombre
+            self.color = color
+            self.vida = 300
+
+    smaug = Dragon("Smaug", "rojo")
+    print(smaug.nombre, smaug.color, smaug.vida)
+    smaug.vida -= 50
+    print(smaug.vida)
+  `,
+  mision: T`
+    1. Crea la clase ‹Caballero› con ‹__init__(self, nombre, arma="espada")› que guarde ‹nombre›, ‹arma› y una ‹vida› de 100.
+    2. Crea ‹arturo = Caballero("Arturo")› y ‹lancelot = Caballero("Lancelot", "lanza")›.
+    3. Muestra, usando sus atributos:
+    ~~~salida
+    Arturo lleva espada
+    Lancelot lleva lanza
+    ~~~
+  `,
+  inicial: T`
+    class Caballero:
+        def __init__(self, nombre, arma="espada"):
+            pass
+
+  `,
+  pista: T`
+    Dentro de ‹__init__›: ‹self.nombre = nombre›, ‹self.arma = arma›, ‹self.vida = 100›. Luego ‹print(f"{arturo.nombre} lleva {arturo.arma}")›.
+  `,
+  solucion: T`
+    class Caballero:
+        def __init__(self, nombre, arma="espada"):
+            self.nombre = nombre
+            self.arma = arma
+            self.vida = 100
+
+    arturo = Caballero("Arturo")
+    lancelot = Caballero("Lancelot", "lanza")
+    print(f"{arturo.nombre} lleva {arturo.arma}")
+    print(f"{lancelot.nombre} lleva {lancelot.arma}")
+  `,
+  prueba: T`
+    debe(isinstance(Caballero, type), "Caballero debe ser una clase creada con class.")
+    c = Caballero("Bors")
+    debe(getattr(c, "nombre", None) == "Bors", "Guarda el nombre: self.nombre = nombre")
+    debe(getattr(c, "arma", None) == "espada", "El arma por defecto debe ser 'espada': self.arma = arma")
+    debe(getattr(c, "vida", None) == 100, "Todo caballero empieza con self.vida = 100")
+    debe(isinstance(arturo, Caballero) and isinstance(lancelot, Caballero), "arturo y lancelot deben ser objetos Caballero.")
+    debe(arturo.nombre == "Arturo" and lancelot.arma == "lanza", "Revisa cómo creaste a arturo y a lancelot.")
+    debe(tiene_linea("Arturo lleva espada") and tiene_linea("Lancelot lleva lanza"), "Muestra: Arturo lleva espada / Lancelot lleva lanza")
+  `,
+},
+{
+  titulo: "Las habilidades: métodos",
+  teoria: T`
+    Un **método** es una función que vive dentro de una clase y trabaja con los datos del objeto. Su primer parámetro siempre es ‹self›:
+
+    ~~~
+    class Caballero:
+        ...
+        def recibir_danio(self, cantidad):
+            self.vida -= cantidad
+    ~~~
+    Lo llamas con un punto: ‹arturo.recibir_danio(20)›. Python pasa ‹arturo› como ‹self› automáticamente; tú solo das el resto de valores.
+
+    Gracias a ‹self›, cada objeto lleva sus propios datos: herir a Arturo no le quita vida a Lancelot.
+  `,
+  ejemplo: T`
+    class Cofre:
+        def __init__(self, oro):
+            self.oro = oro
+
+        def sacar(self, cantidad):
+            if cantidad > self.oro:
+                cantidad = self.oro
+            self.oro -= cantidad
+            return cantidad
+
+        def vacio(self):
+            return self.oro == 0
+
+    c = Cofre(50)
+    print(c.sacar(20), c.oro)       # 20 30
+    print(c.sacar(99), c.vacio())   # 30 True
+  `,
+  mision: T`
+    Completa la clase ‹Caballero› (nombre y vida 100) con tres métodos:
+    - ‹recibir_danio(cantidad)›: resta vida, pero **nunca por debajo de 0**.
+    - ‹curar(cantidad)›: suma vida, pero **nunca por encima de 100**.
+    - ‹esta_vivo()›: devuelve ‹True› si la vida es mayor que 0.
+  `,
+  inicial: T`
+    class Caballero:
+        def __init__(self, nombre):
+            self.nombre = nombre
+            self.vida = 100
+
+        def recibir_danio(self, cantidad):
+            pass
+
+        def curar(self, cantidad):
+            pass
+
+        def esta_vivo(self):
+            pass
+
+
+    arturo = Caballero("Arturo")
+    arturo.recibir_danio(30)
+    print(arturo.vida)
+  `,
+  pista: T`
+    En ‹recibir_danio›: ‹self.vida -= cantidad› y después ‹if self.vida < 0: self.vida = 0›. ‹curar› es igual pero con el tope de 100.
+  `,
+  solucion: T`
+    class Caballero:
+        def __init__(self, nombre):
+            self.nombre = nombre
+            self.vida = 100
+
+        def recibir_danio(self, cantidad):
+            self.vida -= cantidad
+            if self.vida < 0:
+                self.vida = 0
+
+        def curar(self, cantidad):
+            self.vida += cantidad
+            if self.vida > 100:
+                self.vida = 100
+
+        def esta_vivo(self):
+            return self.vida > 0
+
+
+    arturo = Caballero("Arturo")
+    arturo.recibir_danio(30)
+    print(arturo.vida)
+  `,
+  prueba: T`
+    c = Caballero("Prueba")
+    debe(c.vida == 100 and c.esta_vivo() is True, "Un caballero nuevo tiene 100 de vida y esta_vivo() debe devolver True.")
+    c.recibir_danio(30)
+    debe(c.vida == 70, f"Tras recibir 30 de daño debería tener 70, pero tiene {c.vida}.")
+    c.curar(50)
+    debe(c.vida == 100, f"curar no debe pasar de 100, pero tiene {c.vida}.")
+    c.curar(10)
+    c.recibir_danio(250)
+    debe(c.vida == 0, f"La vida no debe bajar de 0, pero tiene {c.vida}.")
+    debe(c.esta_vivo() is False, "Con 0 de vida, esta_vivo() debe devolver False.")
+    otro = Caballero("Otro")
+    debe(otro.vida == 100, "Cada caballero debe tener su propia vida.")
+  `,
+},
+{
+  titulo: "El inventario encantado",
+  teoria: T`
+    Los atributos de un objeto pueden ser cualquier cosa, también **listas**. Créalas siempre dentro de ‹__init__› con ‹self.objetos = []›, así cada objeto tiene la suya propia.
+
+    Las clases tienen **métodos especiales** con doble guion bajo a cada lado. Ya conoces ‹__init__›. Otro muy útil es ‹__str__›: devuelve el texto que se mostrará cuando hagas ‹print(objeto)›. Sin él, verías algo feo como ‹<__main__.Pocion object at 0x...>›.
+  `,
+  ejemplo: T`
+    class Pocion:
+        def __init__(self, color, poder):
+            self.color = color
+            self.poder = poder
+
+        def __str__(self):
+            return f"Poción {self.color} (+{self.poder})"
+
+    p = Pocion("roja", 30)
+    print(p)       # Poción roja (+30)
+  `,
+  mision: T`
+    Crea la clase ‹Mochila›:
+    - ‹__init__(self, capacidad)›: guarda la capacidad y una lista vacía ‹objetos›.
+    - ‹agregar(objeto)›: si cabe, lo añade y devuelve ‹True›; si está llena, devuelve ‹False›.
+    - ‹cantidad()›: devuelve cuántos objetos lleva.
+    - ‹__str__()›: devuelve un texto como ‹Mochila (2/3): espada, mapa›.
+
+    Pista del formato: ‹", ".join(lista)› une los textos de una lista con comas.
+  `,
+  inicial: T`
+    class Mochila:
+        def __init__(self, capacidad):
+            pass
+
+
+    m = Mochila(3)
+    m.agregar("espada")
+    m.agregar("mapa")
+    print(m)
+  `,
+  pista: T`
+    En ‹agregar›: ‹if len(self.objetos) < self.capacidad:› añade y ‹return True›; si no, ‹return False›. En ‹__str__›: ‹return f"Mochila ({len(self.objetos)}/{self.capacidad}): {', '.join(self.objetos)}"›.
+  `,
+  solucion: T`
+    class Mochila:
+        def __init__(self, capacidad):
+            self.capacidad = capacidad
+            self.objetos = []
+
+        def agregar(self, objeto):
+            if len(self.objetos) < self.capacidad:
+                self.objetos.append(objeto)
+                return True
+            return False
+
+        def cantidad(self):
+            return len(self.objetos)
+
+        def __str__(self):
+            return f"Mochila ({len(self.objetos)}/{self.capacidad}): {', '.join(self.objetos)}"
+
+
+    m = Mochila(3)
+    m.agregar("espada")
+    m.agregar("mapa")
+    print(m)
+  `,
+  prueba: T`
+    m1 = Mochila(2)
+    debe(m1.cantidad() == 0, "Una mochila nueva debe tener 0 objetos.")
+    debe(m1.agregar("espada") is True and m1.agregar("mapa") is True, "agregar debe devolver True cuando el objeto cabe.")
+    debe(m1.agregar("cuerda") is False, "agregar debe devolver False si la mochila está llena.")
+    debe(m1.cantidad() == 2, f"cantidad() debería ser 2, pero es {m1.cantidad()}.")
+    debe(str(m1) == "Mochila (2/2): espada, mapa", f"print de la mochila debería mostrar 'Mochila (2/2): espada, mapa', pero muestra {str(m1)!r}.")
+    m2 = Mochila(3)
+    debe(m2.cantidad() == 0, "Cada mochila debe tener su propia lista: créala en __init__ con self.objetos = []")
+    debe(tiene_linea("Mochila (2/3): espada, mapa"), "Muestra la mochila m con print(m).")
+  `,
+},
+{
+  titulo: "Linajes: herencia",
+  teoria: T`
+    Con la **herencia**, una clase hija recibe todo lo de su clase madre y puede añadir o cambiar cosas:
+
+    ~~~
+    class Mago(Personaje):
+    ~~~
+    - Todo lo que tiene ‹Personaje› lo tiene ‹Mago› sin escribirlo de nuevo.
+    - Si ‹Mago› define un método con el mismo nombre, **lo sustituye** (se llama sobrescribir).
+    - ‹super().__init__(...)› ejecuta el ‹__init__› de la madre, para no repetir su código.
+
+    ‹isinstance(obj, Clase)› te dice si un objeto es de esa clase o de una de sus hijas.
+  `,
+  ejemplo: T`
+    class Animal:
+        def __init__(self, nombre):
+            self.nombre = nombre
+
+        def hablar(self):
+            return "..."
+
+    class Grifo(Animal):
+        def hablar(self):
+            return "¡Kriiii!"
+
+    class Hidra(Animal):
+        def __init__(self, nombre, cabezas):
+            super().__init__(nombre)
+            self.cabezas = cabezas
+
+        def hablar(self):
+            return "¡Sss!" * self.cabezas
+
+    for bestia in [Grifo("Pico"), Hidra("Lerna", 3)]:
+        print(bestia.nombre, bestia.hablar())
+  `,
+  mision: T`
+    1. ‹Personaje›: ‹__init__(self, nombre, vida=100)› y un método ‹atacar()› que devuelve ‹5›.
+    2. ‹Guerrero(Personaje)›: su ‹atacar()› devuelve ‹15›.
+    3. ‹Mago(Personaje)›: ‹__init__(self, nombre, mana=30)› que llama a ‹super().__init__(nombre)› y guarda ‹mana›. Su ‹atacar()›: si le quedan 10 de mana o más, gasta 10 y devuelve ‹25›; si no, devuelve ‹2›.
+  `,
+  inicial: T`
+    class Personaje:
+        def __init__(self, nombre, vida=100):
+            self.nombre = nombre
+            self.vida = vida
+
+        def atacar(self):
+            return 5
+
+  `,
+  pista: T`
+    ‹class Guerrero(Personaje):› solo necesita su propio ‹def atacar(self): return 15›. En ‹Mago›, empieza ‹__init__› con ‹super().__init__(nombre)› y luego ‹self.mana = mana›.
+  `,
+  solucion: T`
+    class Personaje:
+        def __init__(self, nombre, vida=100):
+            self.nombre = nombre
+            self.vida = vida
+
+        def atacar(self):
+            return 5
+
+
+    class Guerrero(Personaje):
+        def atacar(self):
+            return 15
+
+
+    class Mago(Personaje):
+        def __init__(self, nombre, mana=30):
+            super().__init__(nombre)
+            self.mana = mana
+
+        def atacar(self):
+            if self.mana >= 10:
+                self.mana -= 10
+                return 25
+            return 2
+
+
+    merlin = Mago("Merlín")
+    print([merlin.atacar() for _ in range(4)])
+  `,
+  prueba: T`
+    p = Personaje("Aldeano")
+    debe(p.vida == 100 and p.atacar() == 5, "Personaje debe tener vida 100 y atacar() debe devolver 5.")
+    g = Guerrero("Bors")
+    debe(isinstance(g, Personaje), "Guerrero debe heredar de Personaje: class Guerrero(Personaje):")
+    debe(g.vida == 100 and g.nombre == "Bors", "Guerrero debe heredar el __init__ de Personaje.")
+    debe(g.atacar() == 15, f"Guerrero.atacar() debería devolver 15, pero devuelve {g.atacar()!r}.")
+    m = Mago("Merlin")
+    debe(isinstance(m, Personaje), "Mago debe heredar de Personaje.")
+    debe(getattr(m, "vida", None) == 100 and getattr(m, "nombre", None) == "Merlin", "Mago debe llamar a super().__init__(nombre) para tener nombre y vida.")
+    debe(getattr(m, "mana", None) == 30, "Mago debe guardar self.mana (30 por defecto).")
+    ataques = [m.atacar() for _ in range(4)]
+    debe(ataques == [25, 25, 25, 2], f"Con 30 de mana, cuatro ataques deberían dar [25, 25, 25, 2], pero dan {ataques}.")
+    debe(m.mana == 0, f"Tras tres hechizos el mana debería ser 0, pero es {m.mana}.")
+    debe(Mago("Novato", mana=5).atacar() == 2, "Con menos de 10 de mana, atacar() debe devolver 2.")
+  `,
+},
+{
+  titulo: "JEFE FINAL: El Dragón de la Cima",
+  teoria: T`
+    Has llegado a la cima. El dragón solo cae ante quien domine **todo** lo aprendido: variables, condiciones, bucles, funciones y clases, trabajando juntas.
+
+    Vas a construir un pequeño **simulador de combate**. Piensa como un programador de verdad:
+    1. ¿Qué datos tiene cada criatura? (atributos)
+    2. ¿Qué puede hacer? (métodos)
+    3. ¿Cómo se desarrolla la batalla? (un bucle que alterna turnos y una condición de fin)
+
+    Truco para alternar turnos: guarda quién ataca y quién defiende en dos variables e intercámbialas en cada vuelta: ‹atacante, defensor = defensor, atacante›.
+  `,
+  ejemplo: T`
+    jugadores = ["Norte", "Sur"]
+    turno = 0
+    for ronda in range(4):
+        actual = jugadores[turno]
+        print(f"Ronda {ronda + 1}: juega {actual}")
+        turno = 1 - turno      # alterna entre 0 y 1
+
+    a, b = "yo", "tú"
+    a, b = b, a                # intercambio
+    print(a, b)
+  `,
+  mision: T`
+    1. Clase ‹Criatura› con ‹__init__(self, nombre, vida, ataque)› y dos métodos:
+       - ‹esta_viva()›: ‹True› si su vida es mayor que 0.
+       - ‹atacar(otra)›: le resta ‹self.ataque› a la vida de ‹otra›, sin bajar de 0.
+    2. Función ‹batalla(a, b)›: atacan por turnos, **empieza ‹a›**. En cuanto una deja a la otra sin vida, la batalla termina y la función **devuelve el nombre del ganador**.
+    3. Enfrenta a tu héroe (vida 100, ataque 25) contra el Dragón (vida 300, ataque 30) y muestra el ganador. ¿Puedes ganar? Prueba a subir el ataque del héroe.
+  `,
+  inicial: T`
+    class Criatura:
+        def __init__(self, nombre, vida, ataque):
+            pass
+
+
+    def batalla(a, b):
+        pass
+
+
+    heroe = Criatura("Heroe", 100, 25)
+    dragon = Criatura("Dragon", 300, 30)
+    print("Gana:", batalla(heroe, dragon))
+  `,
+  pista: T`
+    En ‹batalla›: ‹atacante, defensor = a, b› y ‹while True:› → ‹atacante.atacar(defensor)›; ‹if not defensor.esta_viva(): return atacante.nombre›; y al final de la vuelta intercámbialos.
+  `,
+  solucion: T`
+    class Criatura:
+        def __init__(self, nombre, vida, ataque):
+            self.nombre = nombre
+            self.vida = vida
+            self.ataque = ataque
+
+        def esta_viva(self):
+            return self.vida > 0
+
+        def atacar(self, otra):
+            otra.vida -= self.ataque
+            if otra.vida < 0:
+                otra.vida = 0
+
+
+    def batalla(a, b):
+        atacante, defensor = a, b
+        while True:
+            atacante.atacar(defensor)
+            if not defensor.esta_viva():
+                return atacante.nombre
+            atacante, defensor = defensor, atacante
+
+
+    heroe = Criatura("Heroe", 100, 25)
+    dragon = Criatura("Dragon", 300, 30)
+    print("Gana:", batalla(heroe, dragon))
+
+    heroe = Criatura("Heroe", 100, 100)
+    dragon = Criatura("Dragon", 300, 30)
+    print("Con más fuerza gana:", batalla(heroe, dragon))
+  `,
+  prueba: T`
+    h = Criatura("Heroe", 100, 25)
+    d = Criatura("Dragon", 300, 30)
+    debe(getattr(h, "nombre", None) == "Heroe" and getattr(h, "vida", None) == 100 and getattr(h, "ataque", None) == 25, "Criatura debe guardar nombre, vida y ataque.")
+    debe(h.esta_viva() is True, "Con vida 100, esta_viva() debe devolver True.")
+    h.atacar(d)
+    debe(d.vida == 275, f"Tras un ataque de 25, el dragón debería tener 275 de vida, pero tiene {d.vida}.")
+    x = Criatura("X", 10, 1)
+    Criatura("Y", 5, 50).atacar(x)
+    debe(x.vida == 0 and x.esta_viva() is False, "La vida no debe bajar de 0, y con 0 esta_viva() es False.")
+    debe(batalla(Criatura("Heroe", 100, 25), Criatura("Dragon", 300, 30)) == "Dragon", "Con ataque 25 el héroe cae: batalla debería devolver 'Dragon'.")
+    debe(batalla(Criatura("Heroe", 100, 100), Criatura("Dragon", 300, 30)) == "Heroe", "Con ataque 100 el héroe gana: batalla debería devolver 'Heroe'.")
+    debe(batalla(Criatura("Rapido", 10, 50), Criatura("Lento", 40, 100)) == "Rapido", "Empieza atacando a: si lo derrota al primer golpe, gana a.")
+    debe(batalla(Criatura("A", 10, 5), Criatura("B", 10, 20)) == "B", "Revisa la alternancia de turnos: a ataca, luego b, luego a...")
+    debe(any("Gana" in l or "gana" in l for l in _lineas), "Muestra el ganador de la batalla.")
+  `,
+},
+];
+// FLOORS-END
+
+/* ============================================================
+   RENDER DE TEXTO
+   ============================================================ */
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+const RE_PY = /(#[^\n]*)|((?:\bf)?"(?:[^"\\\n]|\\.)*"|(?:\bf)?'(?:[^'\\\n]|\\.)*')|\b(\d+(?:\.\d+)?)\b|\b(def|class|if|elif|else|for|while|in|not|and|or|return|import|from|as|try|except|finally|break|continue|pass|True|False|None|lambda|is|del|global|with)\b|\b(print|len|range|input|int|str|float|bool|type|list|dict|tuple|sum|min|max|sorted|enumerate|zip|round|abs|super|isinstance|callable|self)\b/g;
+function resaltar(src) {
+  let out = "", ultimo = 0, m;
+  RE_PY.lastIndex = 0;
+  while ((m = RE_PY.exec(src))) {
+    out += esc(src.slice(ultimo, m.index));
+    const cls = m[1] ? "c" : m[2] ? "s" : m[3] ? "nu" : m[4] ? "k" : "b";
+    out += `<span class="${cls}">${esc(m[0])}</span>`;
+    ultimo = RE_PY.lastIndex;
+  }
+  return out + esc(src.slice(ultimo));
+}
+
+function inline(t) {
+  return esc(t)
+    .replace(/‹([^›]+)›/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+}
+function bloques(texto) {
+  let html = "";
+  for (const b of texto.split(/\n\s*\n/)) {
+    const ls = b.split("\n").filter(l => l.trim());
+    if (!ls.length) continue;
+    if (ls.every(l => /^\s*- /.test(l))) {
+      html += "<ul>" + ls.map(l => `<li>${inline(l.replace(/^\s*- /, ""))}</li>`).join("") + "</ul>";
+    } else if (/^\d+\. /.test(ls[0])) {
+      const items = [];
+      for (const l of ls) {
+        if (/^\d+\. /.test(l)) items.push({ t: l.replace(/^\d+\. /, ""), sub: [] });
+        else if (/^\s+- /.test(l) && items.length) items[items.length - 1].sub.push(l.replace(/^\s+- /, ""));
+        else if (items.length) items[items.length - 1].t += " " + l.trim();
+      }
+      html += "<ol>" + items.map(it => `<li>${inline(it.t)}${it.sub.length ? "<ul>" + it.sub.map(s => `<li>${inline(s)}</li>`).join("") + "</ul>" : ""}</li>`).join("") + "</ol>";
+    } else {
+      html += `<p>${inline(ls.join(" "))}</p>`;
+    }
+  }
+  return html;
+}
+function md(texto) {
+  const partes = texto.split(/^~~~(\w*)[ \t]*$/m);
+  let html = "", dentro = false, lang = "";
+  partes.forEach((p, i) => {
+    if (i % 2) { if (!dentro) lang = p; dentro = !dentro; return; }
+    if (dentro) {
+      const code = p.replace(/^\n/, "").replace(/\n$/, "");
+      html += lang === "salida" ? `<pre class="salida-ej">${esc(code)}</pre>` : `<pre class="codigo">${resaltar(code)}</pre>`;
+    } else html += bloques(p);
+  });
+  return html;
+}
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+const CLAVE = "torre-python-v1";
+let estado = { completados: [], actual: 1, codigos: {}, fallos: {}, xp: 0 };
+try {
+  const g = JSON.parse(localStorage.getItem(CLAVE) || "null");
+  if (g && Array.isArray(g.completados)) estado = Object.assign(estado, g);
+} catch (e) { /* sin almacenamiento: se juega igual */ }
+function guardar() { try { localStorage.setItem(CLAVE, JSON.stringify(estado)); } catch (e) {} }
+
+const total = PISOS.length;
+const esJefe = n => n % 5 === 0;
+const zonaDe = n => ZONAS[Math.floor((n - 1) / 5)];
+const hecho = n => estado.completados.includes(n);
+const abierto = n => n === 1 || hecho(n) || hecho(n - 1);
+if (!abierto(estado.actual)) estado.actual = 1;
+
+/* ============================================================
+   SPRITES 8-BIT
+   ============================================================ */
+const SPR = {
+  caballero: { pal: { k: "#140f1c", r: "#d6404a", l: "#d5dbe4", s: "#7d8799", e: "#140f1c", y: "#f2b53a", b: "#7a4a2a", w: "#f4f7fb" }, px: [
+    ".......rr.......",
+    "......rrr.......",
+    ".....kkkkkk.....",
+    "....kllllssk....",
+    "....keeeeeek....",
+    "....kllllssk...w",
+    ".....kkkkkk...wl",
+    "...kkyyyyyykk.wl",
+    "..kbkllllllsk.wl",
+    "..kbbkllllsk.kyk",
+    "..kbbkllllskkyyk",
+    "..kbkkyyyyyk.kk.",
+    "...k.kssssk.....",
+    ".....ks..sk.....",
+    ".....ks..sk.....",
+    "....kkk..kkk....",
+  ] },
+  slime: { pal: { k: "#10240c", g: "#6cc24a", d: "#3d7a2a", l: "#c8f5a0", w: "#ffffff" }, px: [
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+    "......kkkk......",
+    "....kkggggkk....",
+    "...kggllgggggk..",
+    "..kgglwlgggggk..",
+    "..kggglggggggk..",
+    ".kggkwkggkwkggk.",
+    ".kggkkkggkkkggk.",
+    ".kggggggggggggk.",
+    ".kgggggddddgggk.",
+    "..kddddddddddk..",
+    "...kkkkkkkkkk...",
+  ] },
+  murcielago: { pal: { k: "#140f1c", p: "#7b4fa0", q: "#4d2f6b", r: "#ff5a5a", w: "#ffffff" }, px: [
+    "................",
+    "................",
+    "................",
+    "k..............k",
+    "kk....k..k....kk",
+    "kpk...kkkk...kpk",
+    "kppk.kppppk.kppk",
+    "kpppkprpprpkpppk",
+    "kppppppppppppppk",
+    "kqppkppwwppkppqk",
+    ".kqk.kppppk.kqk.",
+    "..k...kqqk...k..",
+    ".......kk.......",
+    "................",
+    "................",
+    "................",
+  ] },
+  fantasma: { pal: { k: "#16233a", w: "#d8f3f5", b: "#3a6fd0", s: "#9fd3dc" }, px: [
+    ".....kkkkkk.....",
+    "....kwwwwwwk....",
+    "...kwwwwwwwwk...",
+    "..kwwwwwwwwwwk..",
+    "..kwwkkwwkkwwk..",
+    "..kwwkbwwkbwwk..",
+    "..kwwwwwwwwwwk..",
+    "..kwwwwkkwwwwk..",
+    "..kwwwkbbkwwwk..",
+    "..kwwwwkkwwwwk..",
+    "..kswwwwwwwwsk..",
+    "..kswwwwwwwwsk..",
+    "..ksswwwwwwssk..",
+    "..kswkswwkswsk..",
+    "..kk.kk..kk.kk..",
+    "................",
+  ] },
+  esqueleto: { pal: { k: "#140f1c", w: "#e8e2cf", g: "#a8a08a", r: "#ff5a3a" }, px: [
+    ".....kkkkkk.....",
+    "....kwwwwwwk....",
+    "...kwwwwwwwwk...",
+    "...kwkkwwkkwk...",
+    "...kwkrwwkrwk...",
+    "...kwwwwkwwwk...",
+    "....kwkwkwkk....",
+    ".....kkkkkk.....",
+    "...kk.kwwk.kk...",
+    "..kwwkkwwkkwwk..",
+    "..kgk.kwwk.kgk..",
+    "..kwk.kggk.kwk..",
+    "......kwwk......",
+    ".....kwkkwk.....",
+    ".....kwk.kwk....",
+    "....kkk..kkk....",
+  ] },
+  mimico: { pal: { k: "#140f1c", b: "#8a5a2b", d: "#5e3a19", y: "#f2b53a", w: "#f4ecd8", r: "#c0304a" }, px: [
+    "................",
+    "................",
+    "..kkkkkkkkkkkk..",
+    ".kbbbbbbbbbbbbk.",
+    ".kbybdbbbbdbybk.",
+    ".kkkkkkkkkkkkkk.",
+    ".kwkwkwkwkwkwkk.",
+    ".krrrrrrrrrrrrk.",
+    ".krrrrrrrrrrrrk.",
+    ".kkwkwkwkwkwkwk.",
+    ".kkkkkkykkkkkkk.",
+    ".kbbbbbyybbbbbk.",
+    ".kbybdbbbbdbybk.",
+    ".kbbbbbbbbbbbbk.",
+    ".kkkkkkkkkkkkkk.",
+    "................",
+  ] },
+  mago: { pal: { k: "#0d0816", p: "#4b2a7a", q: "#2e1a4d", y: "#7df0ff", d: "#1d1030", b: "#8a5a2b", o: "#f2b53a" }, px: [
+    ".......k........",
+    "......kpk.......",
+    ".....kppk.......",
+    "....kppopk...y..",
+    "...kpppppk..yyy.",
+    "..kkkkkkkkkk.y..",
+    "....kddddk...b..",
+    "....kdydyk...b..",
+    "....kddddk...b..",
+    "...kppppppk..b..",
+    "..kpppoppppk.b..",
+    "..kqppppppqkkb..",
+    "..kqpppoppqkkb..",
+    "..kqppppppqk.b..",
+    ".kqqppppppqqkb..",
+    ".kkkkkkkkkkkkk..",
+  ] },
+  golem: { pal: { k: "#1a1a14", s: "#8a8f7a", t: "#5f6454", y: "#ffb347", g: "#5d9a3a" }, px: [
+    "....kkkkkkkk....",
+    "...ksssssssgk...",
+    "...ksyysyyssk...",
+    "...ksssssssstk..",
+    "..kkstkkkkstkk..",
+    ".kssssssssssssk.",
+    "ksssskssgsksssk.",
+    "ksstk.ksssk.ksstk",
+    "ksstk.ktssk.ksstk",
+    "kgsk..kssgk..ksk",
+    "kkkk..kssssk.kkkk",
+    "......kstkstk....",
+    ".....ksk..ksk...",
+    ".....ksk..ksk...",
+    "....kkkk..kkkk..",
+    "................",
+  ] },
+  dragon: { flip: true, pal: { k: "#1a0808", r: "#b8283a", q: "#7a1626", o: "#f2b53a", w: "#ffffff", y: "#ffe066" }, px: [
+    "..........kk.....kk.....",
+    "..........krk...krk.....",
+    "...........krkkkrk......",
+    "......kk...krrrrrk......",
+    ".....krrk.krrrrrrrk.....",
+    "....krrqrkrrykrrykrk....",
+    "...krrqrrkrrrrrrrrrk....",
+    "..krrqrrrkrrrwrwrrrk....",
+    ".krrqkrrrrkrrrrrrrk.....",
+    "krrk.krrrrrkkkkkkk......",
+    "krk..krroooorrrk........",
+    "kk...kroooooorrrk.......",
+    ".....krooooorrrrk..kk...",
+    "......krrrrrrrrrk.krk...",
+    ".......krrk.krrkkrrk....",
+    "......kkkk..kkkkkkk.....",
+  ] },
+  corona: { pal: { k: "#140f1c", y: "#f2b53a", r: "#d6404a" }, px: [
+    "k..k..k..k",
+    "kykkykkyk.",
+    "kyyyryyyyk",
+    "kkkkkkkkkk",
+  ] },
+};
+
+/* ============================================================
+   ESCENA (canvas 320×120)
+   ============================================================ */
+const canvas = document.getElementById("escena");
+const ctx = canvas.getContext("2d");
+ctx.imageSmoothingEnabled = false;
+const W = 320, H = 120, SUELO = 102;
+const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let anim = { tipo: "idle", t0: 0 };
+let enemigoVencido = false;
+
+function sprite(nombre, x, y, escala, opciones = {}) {
+  const s = SPR[nombre];
+  const ancho = Math.max(...s.px.map(r => r.length));
+  const flip = !!s.flip !== !!opciones.flip;
+  s.px.forEach((fila, j) => {
+    for (let i = 0; i < fila.length; i++) {
+      const ch = fila[i];
+      if (ch === ".") continue;
+      ctx.fillStyle = opciones.color || s.pal[ch] || "#ff00ff";
+      const col = flip ? ancho - 1 - i : i;
+      ctx.fillRect(Math.round(x + col * escala), Math.round(y + j * escala), escala, escala);
+    }
+  });
+  return { ancho: ancho * escala, alto: s.px.length * escala };
+}
+
+function fondo(t) {
+  const z = Math.floor((PISO() - 1) / 5);
+  const tonos = [["#221c2e", "#1a1524"], ["#1d1f2e", "#161826"], ["#241c2a", "#1b1520"], ["#1f1d1b", "#171614"], ["#261e18", "#1d1712"], ["#1f1830", "#171226"], ["#1a2420", "#131b18"], ["#2c1618", "#200f11"]][z];
+  ctx.fillStyle = tonos[1];
+  ctx.fillRect(0, 0, W, H);
+  // ladrillos
+  for (let fila = 0; fila < 13; fila++) {
+    const y = fila * 8;
+    const des = fila % 2 ? 8 : 0;
+    for (let x = -16 + des; x < W; x += 16) {
+      ctx.fillStyle = tonos[0];
+      ctx.fillRect(x + 1, y + 1, 14, 6);
+    }
+  }
+  // suelo
+  ctx.fillStyle = "#0d0b12";
+  ctx.fillRect(0, SUELO, W, H - SUELO);
+  for (let x = 0; x < W; x += 12) {
+    ctx.fillStyle = (x / 12) % 2 ? "#2a2339" : "#322a44";
+    ctx.fillRect(x, SUELO, 11, 4);
+  }
+  // antorchas
+  [[20, 34], [300, 34], [160, 18]].forEach(([x, y], i) => {
+    ctx.fillStyle = "#5e3a19";
+    ctx.fillRect(x - 1, y, 3, 10);
+    ctx.fillStyle = "#2a1a0e";
+    ctx.fillRect(x - 3, y, 7, 2);
+    const f = menosMovimiento ? 0 : Math.floor((t / 120 + i * 3) % 3);
+    ctx.fillStyle = "#f2b53a";
+    ctx.fillRect(x - 2, y - 5 - f, 5, 5 + f);
+    ctx.fillStyle = "#ffe8a0";
+    ctx.fillRect(x - 1, y - 3 - f, 3, 3);
+    ctx.fillStyle = "#d6404a";
+    ctx.fillRect(x - 2 + (f % 2), y - 7 - f, 2, 2);
+    ctx.fillStyle = "rgba(242,181,58,0.06)";
+    ctx.fillRect(x - 18, y - 16, 36, 36);
+  });
+  // número de piso en la pared
+  ctx.fillStyle = "#0d0b12";
+  ctx.fillRect(126, 38, 68, 14);
+  ctx.fillStyle = "#3d3252";
+  ctx.fillRect(127, 39, 66, 12);
+  ctx.fillStyle = "#f2b53a";
+  ctx.font = "8px 'Press Start 2P', monospace";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("PISO " + String(PISO()).padStart(2, "0"), 160, 45.5);
+}
+
+function escalera() {
+  // puerta abierta con escalones hacia el siguiente piso
+  const x = 244, y = 44;
+  ctx.fillStyle = "#0d0b12";
+  ctx.fillRect(x - 4, y - 4, 56, SUELO - y + 4);
+  ctx.fillStyle = "#050408";
+  ctx.fillRect(x, y, 48, SUELO - y);
+  ctx.fillStyle = "#3d3252";
+  for (let i = 0; i < 6; i++) ctx.fillRect(x + 4 + i * 6, SUELO - 8 - i * 8, 44 - i * 6, 4);
+  ctx.fillStyle = "#f2b53a";
+  ctx.fillRect(x + 20, y + 4, 8, 2);
+}
+
+function PISO() { return estado.actual; }
+
+function dibujar(t) {
+  fondo(t);
+  const n = PISO();
+  const z = Math.floor((n - 1) / 5);
+  const jefe = esJefe(n);
+  const nombreEnemigo = ZONAS[z].enemigo;
+  const escala = jefe ? 4 : 3;
+  const dt = t - anim.t0;
+
+  // enemigo
+  const anchoE = Math.max(...SPR[nombreEnemigo].px.map(r => r.length)) * escala;
+  const altoE = SPR[nombreEnemigo].px.length * escala;
+  let ex = W - 24 - anchoE, ey = SUELO - altoE;
+  let alfa = 1, colorE = null;
+  const flota = nombreEnemigo === "murcielago" || nombreEnemigo === "fantasma";
+  if (flota) ey -= 10;
+  if (!menosMovimiento && anim.tipo !== "ataque") ey += Math.round(Math.sin(t / 300) * (flota ? 3 : 1));
+
+  // caballero
+  let kx = 40, ky = SUELO - 48, colorK = null;
+  if (!menosMovimiento && anim.tipo === "idle") ky += Math.round(Math.sin(t / 400));
+
+  if (anim.tipo === "ataque") {
+    if (dt < 260) kx = 40 + (ex - 70 - 40) * (dt / 260);
+    else if (dt < 420) { kx = ex - 70; colorE = Math.floor(dt / 50) % 2 ? "#ffffff" : null; }
+    else if (dt < 700) kx = ex - 70 - (ex - 110) * ((dt - 420) / 280);
+    if (dt >= 420) { alfa = Math.max(0, 1 - (dt - 420) / 700); ey += Math.round((dt - 420) / 40); }
+    if (dt > 1150) { anim = { tipo: "idle", t0: t }; enemigoVencido = true; }
+  } else if (anim.tipo === "herido") {
+    if (dt < 180) ex -= Math.round(40 * (dt / 180));
+    else if (dt < 360) ex -= Math.round(40 * (1 - (dt - 180) / 180));
+    if (dt > 160 && dt < 700) { colorK = Math.floor(dt / 70) % 2 ? "#e0505a" : null; kx += Math.round(Math.sin(dt / 20) * 2); }
+    if (dt > 800) anim = { tipo: "idle", t0: t };
+  }
+
+  if (enemigoVencido) {
+    escalera();
+  } else {
+    ctx.globalAlpha = alfa;
+    sprite(nombreEnemigo, ex, ey, escala, { flip: true, color: colorE });
+    if (jefe) sprite("corona", ex + anchoE / 2 - 15, ey - 16, 3);
+    ctx.globalAlpha = 1;
+    // barra de vida
+    let vidaPct = 1;
+    if (anim.tipo === "ataque") vidaPct = dt < 260 ? 1 : Math.max(0, 1 - (dt - 260) / 160);
+    const bx = ex + anchoE / 2 - 25, by = Math.max(4, ey - (jefe ? 26 : 10));
+    if (alfa > 0.05) {
+      ctx.globalAlpha = alfa;
+      ctx.fillStyle = "#0d0b12";
+      ctx.fillRect(bx - 1, by - 1, 52, 6);
+      ctx.fillStyle = "#3a1418";
+      ctx.fillRect(bx, by, 50, 4);
+      ctx.fillStyle = jefe ? "#e0505a" : "#7bc950";
+      ctx.fillRect(bx, by, Math.round(50 * vidaPct), 4);
+      ctx.globalAlpha = 1;
+    }
+    // chispas del golpe
+    if (anim.tipo === "ataque" && dt > 250 && dt < 520) {
+      ctx.fillStyle = "#ffe066";
+      for (let i = 0; i < 8; i++) {
+        const a = i * Math.PI / 4, r = (dt - 250) / 8;
+        ctx.fillRect(Math.round(ex + 8 + Math.cos(a) * r), Math.round(SUELO - 30 + Math.sin(a) * r), 3, 3);
+      }
+    }
+  }
+  sprite("caballero", kx, ky, 3, { color: colorK });
+  requestAnimationFrame(dibujar);
+}
+
+/* ============================================================
+   INTERFAZ
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const ta = $("codigo");
+let pyodide = null, ejecutarPy = null, ocupado = false;
+
+function construirTorre() {
+  const torre = $("torre");
+  let html = `<div class="torre-tope">▲ CIMA ▲</div>`;
+  for (let z = ZONAS.length - 1; z >= 0; z--) {
+    html += `<div class="zona-etq">${esc(ZONAS[z].nombre.toUpperCase())}</div>`;
+    for (let n = z * 5 + 5; n > z * 5; n--) {
+      const p = PISOS[n - 1];
+      const cls = ["piso", hecho(n) ? "hecho" : "", esJefe(n) ? "jefe" : "", n === estado.actual ? "actual" : ""].join(" ");
+      const tag = hecho(n) ? "OK" : esJefe(n) ? "JEFE" : "";
+      html += `<button type="button" class="${cls}" style="--n:${n}" data-n="${n}" ${abierto(n) ? "" : "disabled"} aria-label="Piso ${n}: ${esc(p.titulo)}${abierto(n) ? "" : " (cerrado)"}"${n === estado.actual ? ' aria-current="step"' : ""}>
+        <span class="num">${String(n).padStart(2, "0")}</span><span class="nom">${esc(p.titulo.replace(/^JEFE( FINAL)?: /, ""))}</span><span class="tag">${tag}</span></button>`;
+    }
+  }
+  torre.innerHTML = html;
+  const act = torre.querySelector(".actual");
+  if (act) {
+    torre.scrollTop = act.offsetTop - torre.clientHeight / 2;
+    torre.scrollLeft = act.offsetLeft - torre.clientWidth / 2;
+  }
+}
+
+function actualizarHud() {
+  const c = estado.completados.length;
+  $("pisos-hud").textContent = `${c}/${total}`;
+  $("xp").textContent = estado.xp;
+  $("rango").textContent = RANGOS[Math.min(RANGOS.length - 1, Math.floor(c / 5))];
+  $("barra-progreso").style.width = (c / total * 100) + "%";
+  $("barra").setAttribute("aria-valuenow", c);
+}
+
+function actualizarGutter(lineaMala) {
+  const n = ta.value.split("\n").length;
+  let h = "";
+  for (let i = 1; i <= n; i++) h += (i === lineaMala ? `<span class="mal">${i}</span>` : i) + "\n";
+  $("gutter").innerHTML = h;
+  $("gutter").scrollTop = ta.scrollTop;
+}
+
+function cargarPiso(n) {
+  estado.actual = n;
+  guardar();
+  const p = PISOS[n - 1];
+  const zona = zonaDe(n);
+  $("zona-nombre").textContent = `ZONA ${Math.floor((n - 1) / 5) + 1} · ${zona.nombre.toUpperCase()} · ${zona.tema.toUpperCase()}`;
+  $("titulo-piso").innerHTML = `<span class="n">PISO ${String(n).padStart(2, "0")}</span> ${esc(p.titulo)}`;
+  $("enemigo-etq").innerHTML = `ENEMIGO<br><b>${esc(esJefe(n) ? zona.jefe : zona.normal)}</b>${esJefe(n) ? "<br>JEFE DE ZONA" : ""}`;
+  $("teoria").innerHTML = md(p.teoria);
+  $("ejemplo-codigo").innerHTML = resaltar(p.ejemplo);
+  $("ejemplo-salida").hidden = true;
+  $("mision").innerHTML = md(p.mision);
+  ta.value = estado.codigos[n] ?? (p.inicial + "\n");
+  actualizarGutter();
+  $("pista").hidden = true;
+  $("pista").innerHTML = `<span class="etq">PISTA</span>${md(p.pista)}`;
+  $("solucion").hidden = true;
+  actualizarBotonSolucion();
+  $("consola").innerHTML = `<span class="cmd">${pyodide ? "Listo. Escribe tu código y pulsa ATACAR." : "Esperando a que Python despierte…"}</span>`;
+  $("victoria").hidden = true;
+  $("cartel").hidden = true;
+  enemigoVencido = hecho(n);
+  anim = { tipo: "idle", t0: performance.now() };
+  construirTorre();
+  actualizarHud();
+}
+
+function actualizarBotonSolucion() {
+  const n = estado.actual;
+  const fallos = estado.fallos[n] || 0;
+  const b = $("btn-solucion");
+  b.disabled = !(fallos >= 2 || hecho(n));
+  b.title = b.disabled ? `Se desbloquea tras 2 intentos fallidos (llevas ${fallos})` : "Ver una solución posible";
+}
+
+function mostrarCartel(texto, malo) {
+  const c = $("cartel");
+  c.textContent = texto;
+  c.className = "cartel" + (malo ? " malo" : "");
+  c.hidden = false;
+  clearTimeout(mostrarCartel.t);
+  mostrarCartel.t = setTimeout(() => { c.hidden = true; }, 1800);
+}
+
+function renderSalida(salida) {
+  return salida.trim() ? `<pre>${esc(salida.replace(/\n$/, ""))}</pre>` : `<div class="vacio">(tu programa no mostró nada)</div>`;
+}
+
+function ejecutar() {
+  if (!ejecutarPy || ocupado) return;
+  ocupado = true;
+  const n = estado.actual;
+  const p = PISOS[n - 1];
+  const codigo = ta.value;
+  estado.codigos[n] = codigo;
+  guardar();
+  $("consola").innerHTML = `<div class="cmd">&gt; python tu_codigo.py</div><div class="cmd">Ejecutando…</div>`;
+  $("btn-ejecutar").disabled = true;
+  setTimeout(() => {
+    let r;
+    try {
+      r = JSON.parse(ejecutarPy(codigo, p.prueba, JSON.stringify(p.entradas || [])));
+    } catch (e) {
+      r = { ok: false, salida: "", fase: "prueba", mensaje: "La torre tuvo un problema interno al ejecutar tu código: " + e.message };
+    }
+    ocupado = false;
+    $("btn-ejecutar").disabled = false;
+    let html = `<div class="cmd">&gt; python tu_codigo.py</div>` + renderSalida(r.salida);
+    if (r.ok) {
+      html += `<div class="veredicto ok"><span class="etq">¡GOLPE CRÍTICO!</span>Misión cumplida. El enemigo cae.</div>`;
+      $("consola").innerHTML = html;
+      actualizarGutter();
+      victoria(n);
+    } else {
+      if (r.fase === "codigo") {
+        const e = r.error;
+        html += `<div class="veredicto error"><span class="etq">ERROR${e.linea ? " EN LA LÍNEA " + e.linea : ""}</span><span class="orig">${esc(e.original)}</span>${esc(e.explicacion)}</div>`;
+        actualizarGutter(e.linea);
+      } else {
+        html += `<div class="veredicto fallo"><span class="etq">EL ENEMIGO RESISTE</span>${esc(r.mensaje)}</div>`;
+        actualizarGutter();
+      }
+      $("consola").innerHTML = html;
+      estado.fallos[n] = (estado.fallos[n] || 0) + 1;
+      guardar();
+      actualizarBotonSolucion();
+      if (!enemigoVencido) {
+        anim = { tipo: "herido", t0: performance.now() };
+        mostrarCartel(r.fase === "codigo" ? "¡ERROR!" : "¡FALLASTE!", true);
+      }
+    }
+  }, 30);
+}
+
+function victoria(n) {
+  const primeraVez = !hecho(n);
+  const ganada = esJefe(n) ? 300 : 100;
+  if (primeraVez) {
+    estado.completados.push(n);
+    estado.xp += ganada;
+    guardar();
+  }
+  if (!enemigoVencido) anim = { tipo: "ataque", t0: performance.now() };
+  mostrarCartel(n === total ? "¡DRAGÓN VENCIDO!" : esJefe(n) ? "¡JEFE VENCIDO!" : "¡VICTORIA!");
+  const v = $("victoria");
+  if (n === total) {
+    v.innerHTML = `
+      <h3>LA TORRE ES TUYA, ${esc(RANGOS[RANGOS.length - 1].toUpperCase())}</h3>
+      ${primeraVez ? `<p class="xp">+${ganada} EXP</p>` : ""}
+      <p>Has subido los 40 pisos: variables, textos, decisiones, bucles, colecciones, funciones, errores, módulos y clases. Eso es la base de casi cualquier programa en Python.</p>
+      <p>Tu próxima aventura, fuera de la torre:</p>
+      <ul>
+        <li>Instala Python desde python.org y un editor como Thonny o VS Code.</li>
+        <li>Programa un juego de adivinar un número con random e input.</li>
+        <li>Haz una aventura de texto con clases: salas, objetos y un héroe.</li>
+        <li>Crea un gestor de tareas que guarde una lista en un archivo.</li>
+      </ul>
+      <p>Puedes volver a cualquier piso cuando quieras para repasar.</p>`;
+  } else {
+    const sig = PISOS[n];
+    v.innerHTML = `
+      <h3>¡PISO ${String(n).padStart(2, "0")} SUPERADO!</h3>
+      ${primeraVez ? `<p class="xp">+${ganada} EXP${esJefe(n) ? " · ¡Zona completada!" : ""}</p>` : `<p>Ya habías superado este piso. Repasar también cuenta.</p>`}
+      <p>Siguiente: <strong>PISO ${String(n + 1).padStart(2, "0")} · ${esc(sig.titulo)}</strong></p>
+      <button class="btn oro" id="btn-subir" type="button">SUBIR AL PISO ${n + 1} ▲</button>`;
+    setTimeout(() => { const b = $("btn-subir"); if (b) b.addEventListener("click", () => { cargarPiso(n + 1); window.scrollTo({ top: 0, behavior: menosMovimiento ? "auto" : "smooth" }); }); });
+  }
+  v.hidden = false;
+  actualizarBotonSolucion();
+  construirTorre();
+  actualizarHud();
+}
+
+/* ----- editor ----- */
+function insertar(texto) {
+  ta.focus();
+  if (!document.execCommand || !document.execCommand("insertText", false, texto)) {
+    ta.setRangeText(texto, ta.selectionStart, ta.selectionEnd, "end");
+  }
+  actualizarGutter();
+}
+ta.addEventListener("keydown", e => {
+  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); ejecutar(); return; }
+  if (e.key === "Tab" && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault();
+    const ini = ta.value.lastIndexOf("\n", ta.selectionStart - 1) + 1;
+    if (e.shiftKey) {
+      const quitar = (ta.value.slice(ini).match(/^ {1,4}/) || [""])[0].length;
+      if (quitar) {
+        const pos = ta.selectionStart;
+        ta.setSelectionRange(ini, ini + quitar);
+        insertar("");
+        ta.setSelectionRange(Math.max(ini, pos - quitar), Math.max(ini, pos - quitar));
+      }
+    } else insertar("    ");
+    return;
+  }
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    const ini = ta.value.lastIndexOf("\n", ta.selectionStart - 1) + 1;
+    const linea = ta.value.slice(ini, ta.selectionStart);
+    let sangria = linea.match(/^ */)[0];
+    if (/:\s*(#.*)?$/.test(linea)) sangria += "    ";
+    insertar("\n" + sangria);
+  }
+});
+ta.addEventListener("input", () => {
+  actualizarGutter();
+  estado.codigos[estado.actual] = ta.value;
+  clearTimeout(ta._t);
+  ta._t = setTimeout(guardar, 400);
+});
+ta.addEventListener("scroll", () => { $("gutter").scrollTop = ta.scrollTop; });
+
+/* ----- botones ----- */
+$("btn-ejecutar").addEventListener("click", ejecutar);
+$("btn-pista").addEventListener("click", () => { $("pista").hidden = !$("pista").hidden; });
+$("btn-solucion").addEventListener("click", () => {
+  const s = $("solucion");
+  if (!s.hidden) { s.hidden = true; return; }
+  const p = PISOS[estado.actual - 1];
+  s.innerHTML = `<span class="etq">UNA SOLUCIÓN POSIBLE</span><p>Léela con calma e intenta entender cada línea antes de copiarla. Hay muchas formas correctas de resolver un reto.</p><pre class="codigo">${resaltar(p.solucion)}</pre><button class="btn chico" id="btn-copiar-sol" type="button">PONER EN EL EDITOR</button>`;
+  s.hidden = false;
+  $("btn-copiar-sol").addEventListener("click", () => {
+    ta.value = p.solucion + "\n";
+    estado.codigos[estado.actual] = ta.value;
+    guardar();
+    actualizarGutter();
+    ta.focus();
+  });
+});
+$("btn-reiniciar").addEventListener("click", e => {
+  const b = e.currentTarget;
+  if (b.dataset.confirmar) {
+    delete b.dataset.confirmar;
+    b.textContent = "REINICIAR";
+    const p = PISOS[estado.actual - 1];
+    ta.value = p.inicial + "\n";
+    delete estado.codigos[estado.actual];
+    guardar();
+    actualizarGutter();
+    return;
+  }
+  b.dataset.confirmar = "1";
+  b.textContent = "¿SEGURO? PULSA OTRA VEZ";
+  setTimeout(() => { if (b.dataset.confirmar) { delete b.dataset.confirmar; b.textContent = "REINICIAR"; } }, 3000);
+});
+$("btn-ejemplo").addEventListener("click", () => {
+  const out = $("ejemplo-salida");
+  out.hidden = false;
+  if (!ejecutarPy) { out.className = "salida-mini"; out.textContent = "Python todavía se está despertando…"; return; }
+  const p = PISOS[estado.actual - 1];
+  const r = JSON.parse(ejecutarPy(p.ejemplo, "", JSON.stringify(p.entradas || [])));
+  if (r.fase === "codigo") { out.className = "salida-mini err"; out.textContent = r.salida + r.error.original; }
+  else { out.className = "salida-mini"; out.textContent = r.salida.replace(/\n$/, "") || "(sin salida)"; }
+});
+$("torre").addEventListener("click", e => {
+  const b = e.target.closest(".piso");
+  if (b && !b.disabled) cargarPiso(Number(b.dataset.n));
+});
+
+/* ============================================================
+   PYTHON (Pyodide: CPython real compilado a WebAssembly)
+   ============================================================ */
+function cargarScript(src) {
+  return new Promise((ok, mal) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.onload = ok;
+    s.onerror = () => mal(new Error("No se pudo cargar " + src));
+    document.head.appendChild(s);
+  });
+}
+async function despertarPython() {
+  const estadoPy = $("estado-python");
+  const fuentes = [new URL("py/", document.baseURI).href, "https://cdn.jsdelivr.net/npm/pyodide@0.26.4/"];
+  let ultimoError = null;
+  for (const base of fuentes) {
+    try {
+      await cargarScript(base + "pyodide.js");
+      pyodide = await loadPyodide({ indexURL: base });
+      break;
+    } catch (e) { ultimoError = e; pyodide = null; }
+  }
+  if (!pyodide) {
+    estadoPy.textContent = "PYTHON NO PUDO DESPERTAR. REVISA TU CONEXIÓN Y RECARGA.";
+    estadoPy.className = "estado-py error";
+    $("consola").innerHTML = `<div class="veredicto error"><span class="etq">SIN PYTHON</span>No se pudo cargar el intérprete de Python en este navegador (${esc(ultimoError && ultimoError.message || "error desconocido")}). Prueba a recargar la página.</div>`;
+    return;
+  }
+  pyodide.runPython(document.getElementById("motor").textContent);
+  ejecutarPy = pyodide.globals.get("_ejecutar");
+  estadoPy.textContent = "PYTHON " + pyodide.runPython("import sys; sys.version.split()[0]") + " LISTO";
+  estadoPy.className = "estado-py listo";
+  $("btn-ejecutar").disabled = false;
+  $("consola").innerHTML = `<span class="cmd">Listo. Escribe tu código y pulsa ATACAR.</span>`;
+}
+
+cargarPiso(estado.actual);
+requestAnimationFrame(dibujar);
+despertarPython();
+</script>
