@@ -1,0 +1,1012 @@
+<title>Expediciones de Ashenfall</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Alegreya+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* required styles */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+/* Prevents IE11 from highlighting tiles in blue */
+.leaflet-tile::selection {
+	background: transparent;
+}
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+/* hack that prevents hw layers "stretching" when loading new tiles */
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+
+.leaflet-container img.leaflet-tile {
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+	mix-blend-mode: plus-lighter;
+}
+
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	/* Fallback for FF which doesn't support pinch-zoom */
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+
+.leaflet-pane         { z-index: 400; }
+
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+
+
+/* control positioning */
+
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+
+
+/* zoom and fade animations */
+
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+
+
+/* cursors */
+
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+
+/* marker & overlays interactivity */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+
+/* visual tweaks */
+
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+
+
+/* general typography */
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+
+
+/* general toolbar styles */
+
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+
+/* zoom control */
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+
+
+/* layers control */
+
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+
+/* Default icon URLs */
+.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
+	background-image: url(images/marker-icon.png);
+	}
+
+
+/* attribution and scale controls */
+
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+
+
+/* popup */
+
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+
+
+/* div icon */
+
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+
+
+/* Tooltip */
+/* Base styles for the element that has a tooltip */
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+
+/* Directions */
+
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+
+/* Printing */
+
+@media print {
+	/* Prevent printers from removing background-images of controls. */
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+
+</style>
+<style>
+/* Layout: cuaderno de expedición — rail de expediciones a la izquierda, mapa + lista de paradas a la derecha */
+:root{
+  --bg:#eef0ec; --panel:#f8f9f6; --ink:#1d2622; --muted:#5d6a63; --line:#cfd6d0;
+  --route:#7a4a12; --accent:#a8641c; --done:#3f7a55;
+  --k-cofre:#b07d12; --k-lore:#6b5aa8; --k-mision:#b2452f; --k-vault:#1f6f8b; --k-jefe:#8a1f3a; --k-secreto:#2f7d6b; --k-npc:#59636b; --k-viaje:#3a5fb0;
+  --f-display:"IM Fell English SC", "Palatino Linotype", Georgia, serif;
+  --f-body:"Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a18; --panel:#1b2320; --ink:#e4e9e5; --muted:#97a49d; --line:#2e3a35;
+  --route:#e3a45a; --accent:#e3a45a; --done:#6cc08b;
+  --k-cofre:#e0b23e; --k-lore:#a796e6; --k-mision:#ec7a62; --k-vault:#55b4d4; --k-jefe:#e2647f; --k-secreto:#5fc4a9; --k-npc:#9aa6ae; --k-viaje:#7d9cf0;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a18; --panel:#1b2320; --ink:#e4e9e5; --muted:#97a49d; --line:#2e3a35;
+  --route:#e3a45a; --accent:#e3a45a; --done:#6cc08b;
+  --k-cofre:#e0b23e; --k-lore:#a796e6; --k-mision:#ec7a62; --k-vault:#55b4d4; --k-jefe:#e2647f; --k-secreto:#5fc4a9; --k-npc:#9aa6ae; --k-viaje:#7d9cf0;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:20px}
+header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(28px,5vw,42px);margin:0;line-height:1.05;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
+.total{min-width:220px;flex:0 1 300px}
+.total .lbl{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.total .num{font-family:var(--f-mono);font-size:22px;font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;background:var(--done);width:0;transition:width .3s}
+.main{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px;align-items:start}
+nav{display:grid;gap:14px;position:sticky;top:max(12px,env(safe-area-inset-top,0px))}
+nav h2{font-family:var(--f-display);font-weight:400;font-size:17px;margin:0 0 4px;color:var(--muted)}
+nav .grp{display:grid;gap:2px}
+nav button{all:unset;cursor:pointer;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;padding:7px 8px;border-radius:6px;font-size:15px}
+nav button:hover{background:var(--panel)}
+nav button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+nav button[aria-current="true"]{background:var(--panel);box-shadow:inset 3px 0 0 var(--accent)}
+nav .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+nav .pc{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+nav .pc.full{color:var(--done)}
+.sel{display:none}
+section.exp{display:grid;gap:16px;min-width:0}
+.exphead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:baseline}
+.exphead h2{font-family:var(--f-display);font-weight:400;font-size:clamp(24px,3.6vw,32px);margin:0;text-wrap:balance}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.meta{color:var(--muted);font-size:14px}
+.mapbox{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+#map{height:min(68vh,640px);min-height:360px;background:#0f1416}
+.leaflet-container{font-family:var(--f-body)}
+.pin{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:600 11px/1 var(--f-mono);color:#fff;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.6)}
+.pin.done{opacity:.45}
+.pin.hl{transform:scale(1.35);box-shadow:0 0 0 3px var(--accent),0 1px 4px rgba(0,0,0,.6)}
+.leaflet-popup-content{margin:10px 12px;font-size:14px;line-height:1.35}
+.leaflet-popup-content b{display:block;font-size:15px}
+.leaflet-popup-content a{color:#a8641c;font-weight:600}
+.fitbtn{position:absolute;right:10px;top:10px;z-index:500}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.tools label{font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer}
+.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 12px;border-radius:6px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent)}
+ol.stops{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+ol.stops li{display:grid;grid-template-columns:24px 30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line)}
+ol.stops li.hl{background:var(--panel)}
+ol.stops li.done .name{text-decoration:line-through;color:var(--muted)}
+ol.stops input{width:18px;height:18px;accent-color:var(--done);margin:0;cursor:pointer}
+.n{font-family:var(--f-mono);font-size:13px;color:var(--accent);text-align:center;font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:50%;width:30px;height:30px;display:grid;place-items:center}.n:hover{border-color:var(--accent)}
+.what{min-width:0;display:grid;gap:2px}
+.name{font-weight:500;overflow-wrap:anywhere}
+.kind{font-size:12px;display:flex;gap:6px;align-items:center;color:var(--muted);flex-wrap:wrap}
+.chip{font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:1px 6px;border-radius:3px;border:1px solid currentColor}
+a.go{color:var(--accent);font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap;padding:4px 2px}
+a.go:hover{text-decoration:underline}
+a.go:focus-visible{outline:2px solid var(--accent)}
+.next{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tips{font-size:14px;color:var(--muted);max-width:75ch;margin:0}
+.tips b{color:var(--ink)}
+
+/* chat */
+[hidden]{display:none!important}
+.chatbtn{position:fixed;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:2000;font:600 15px var(--f-body);background:var(--accent);color:var(--bg);border:0;border-radius:999px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.chatbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.chat{position:fixed;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:2001;width:min(420px,calc(100vw - 32px));height:min(640px,calc(100vh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)));background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}
+.chat header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line);gap:8px}
+.chat header b{font-family:var(--f-display);font-weight:400;font-size:20px}
+.chat header .hbtns{display:flex;gap:6px}
+.chat .x{font:inherit;font-size:13px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:4px 8px;cursor:pointer}
+.msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.msg{max-width:92%;padding:9px 12px;border-radius:10px;font-size:15px;line-height:1.45;overflow-wrap:anywhere}
+.msg.u{align-self:flex-end;background:var(--accent);color:var(--bg)}
+.msg.a{align-self:flex-start;background:var(--bg);border:1px solid var(--line)}
+.msg.a ul{margin:4px 0;padding-left:18px}
+.msg.a p{margin:0 0 6px}.msg.a p:last-child{margin:0}
+.msg.err{color:var(--k-mision)}
+.act{font-size:12px;color:var(--muted);align-self:flex-start}
+.sugs{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.sugs button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:5px 10px;cursor:pointer;text-align:left}
+.sugs button:hover{border-color:var(--accent)}
+.chat form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+.chat textarea{flex:1;min-width:0;font:inherit;font-size:16px;resize:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px 10px;height:44px}
+.chat textarea:focus-visible{outline:2px solid var(--accent)}
+.chat form .btn{white-space:nowrap}
+@media (max-width:820px){
+  .main{grid-template-columns:minmax(0,1fr)}
+  nav{display:none}
+  .sel{display:block}
+  .sel select{width:100%;font:inherit;font-size:16px;padding:10px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Expediciones de Ashenfall</h1>
+      <p class="sub">25 expediciones para limpiar Brynmoor, Ghornfell, Fellhollow y Dowdun Reach, incluido su subterráneo. La ruta va dibujada sobre el mapa real; toca el número de una parada para ir a ella, o ábrela en MetaForge. Marca lo que vayas completando.</p>
+    </div>
+    <div class="total" aria-live="polite">
+      <div class="lbl">Progreso total</div>
+      <div class="num" id="tnum">0 / 0</div>
+      <div class="bar"><i id="tbar"></i></div>
+    </div>
+  </header>
+
+  <div class="sel"><label for="expsel" class="meta">Expedición</label><select id="expsel"></select></div>
+
+  <div class="main">
+    <nav id="nav" aria-label="Expediciones"></nav>
+    <section class="exp">
+      <div class="exphead">
+        <div>
+          <div class="eyebrow" id="eregion"></div>
+          <h2 id="ename"></h2>
+        </div>
+        <div class="meta" id="emeta"></div>
+      </div>
+      <div class="mapbox" style="position:relative">
+        <div class="fitbtn" style="display:flex;gap:6px"><button class="btn" id="ugbtn" type="button" hidden>Ver subterráneo</button><button class="btn" id="fit" type="button">Centrar ruta</button></div>
+        <div id="map" role="region" aria-label="Mapa de Ashenfall con la ruta de la expedición"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="tools">
+        <label for="hide"><input type="checkbox" id="hide"> Ocultar paradas hechas</label>
+        <button class="btn" id="reset" type="button">Desmarcar esta expedición</button>
+      </div>
+      <ol class="stops" id="stops"></ol>
+      <div class="next">
+        <button class="btn" id="prev" type="button">← Anterior</button>
+        <button class="btn" id="nxt" type="button">Siguiente →</button>
+      </div>
+      <p class="tips"><b>Cómo usarla:</b> el orden de las paradas ya está optimizado para caminar lo menos posible; la expedición siguiente arranca cerca de donde termina la anterior. En MetaForge usa <b>Mark as Found</b> además del check de aquí si quieres ver el avance en su mapa. Los pines son de MetaForge; si un cofre no aparece, puede haber cambiado con un parche.</p>
+    </section>
+  </div>
+</div>
+
+
+<button class="chatbtn" id="chatbtn" type="button" hidden>Pregúntale a Claude</button>
+<div class="chat" id="chat" hidden role="dialog" aria-label="Chat con Claude">
+  <header><b>Tu guía</b><div class="hbtns"><button class="x" id="chatclear" type="button">Borrar chat</button><button class="x" id="chatclose" type="button" aria-label="Cerrar chat">Cerrar</button></div></header>
+  <div class="msgs" id="msgs"></div>
+  <div class="sugs" id="sugs">
+    <button type="button">¿Qué me falta en esta expedición?</button>
+    <button type="button">Voy en el pantano de Bloodblight, ¿qué hay cerca?</button>
+    <button type="button">¿Dónde empieza The Great Body Robbery y qué llevo?</button>
+    <button type="button">Ya hice el vault de Chaktan Kara, márcalo</button>
+  </div>
+  <form id="chatform"><label for="chatin" class="sr" hidden>Mensaje</label><textarea id="chatin" placeholder="Voy en… / Quiero…" rows="1"></textarea><button class="btn" id="chatsend" type="submit">Enviar</button></form>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+const DATA=[{"r":"Brynmoor","n":"Templo (Lodestone)","s":[["264f3ce2a006663b3faeb41dce883d8a","viaje","Temple Lodestone","Lodestone",189026,5065],["2fa232bf486b31c37150bdb224a878bc","lore","Dust-covered Diary","",190522,5159],["ee88218b6db25c079c7d14dbcd0b1212","cofre","Cofre del tesoro","",190727,5179],["832a92bc884e231651b63eddf4c3993c","secreto","Relicario","",187978,2477],["e7f4512879fb56d876fcbf4c1700b5b5","mision","Wise Old Man (FTUE)","Wise Old Man (pesca)",187357,6133],["a1d8ecd45e5a25d141cdf40526cba069","cofre","Cofre del tesoro","",186133,6975],["5b20f0ec1fcf70f73c47b73bff043bbb","npc","Doric","NPC",184632,10908],["5eede060636d3b1ea65e477a51e01a6c","npc","Vannaka","NPC",178853,15183],["60ea01ecdd3dc168d63b523b6941a621","lore","Cathan's note","",178838,15512],["b3fda668f669c82da960c0aac38d5422","cofre","Cofre del tesoro","",172061,16257],["8d6490b64acbaea7a294036c4d23a402","npc","Ghost of Cathan","NPC",173549,19101],["89b219a31b0eaeb4fa5d8dccc2eb9a57","lore","Bloodstained Journal","",173386,19774],["904896c74d716ce8ea46c3775ef5c530","npc","Zanik","NPC",182395,26688],["2acd12d1c37ed3ece57944991ff3d8ac","vault","Crasorak Kara","Dragonkin Vault",191874,37458],["ad6e65e393604d3816329f1de8d8a60f","mision","Candle","Mirror, Mirror",196823,35199],["11f5f3b2b91b2e43a267850b94cf68ae","lore","Priest's Journal","",192183,13010]]},{"r":"Brynmoor","n":"Thishepen Kara","s":[["4c621a0cd97a890b108961d2f6216162","cofre","Cofre del tesoro","",164348,32440],["de5b8541c9edba10ee3c3f05be2b3278","lore","Soot-stained Diary","",163832,31204],["23ebff3d97fc1537116180715c68a8dd","lore","Ancient Journal Page","",156991,29119],["1fc8d929fcfedfd7afb57a71d5b01f10","secreto","Agilidad: Chasm Dash","",155052,30068],["17e9d9f21357c6a5cf93913ef3095a56","secreto","Madriguera de kebbit","",152245,28047],["d387bacdbe10c6c9b65fddcb4849b9fa","vault","Thishepen Kara","Dragonkin Vault",150931,26827],["63f5c9db18ca2b9e4851ecbaacf8af95","cofre","Cofre del tesoro","",153625,22386],["6ad2f7421cf78cf995168a1bb755c34e","secreto","Estatua de Saradomin","",149101,18919],["9e948faef5e7d45df98cb6ef06676902","secreto","Madriguera de kebbit","",146860,18134],["9544552234a61b4fbbb1d371c9fffdb7","cofre","Cofre del tesoro","",144927,19218],["200cd84e12322c1b20951b606a7c52c1","secreto","Estatua de Saradomin","",145320,19932],["e749ffb1c22c571fb9f7a57267752ade","lore","Vault Hunter's Journal","",145874,19694],["c8a6f98bc36cbdf4a5c3d79d9664203c","secreto","Estatua de Saradomin","",147057,19235],["25f06ac471f43f9a33daab59838d63c7","cofre","Cofre del tesoro","",147506,21416],["2525142f5a0dcd856dd37ecf90e7cdfb","cofre","Cofre del tesoro","",148191,21603],["b7eb5bd2a2f3763564566c74c0ece246","secreto","Estatua de Saradomin","",146324,23717],["065458f9ad6155a232f64da461ff6d3f","lore","Preserved Diary","",146327,24322],["17e392b5eda3773a3a173ccc3fd5ef2d","cofre","Cofre del tesoro","",144824,43567]]},{"r":"Brynmoor","n":"el Castillo del Duque","s":[["f720471ed865d970149ec3118ec4778f","npc","Ghost of Cathan","NPC",146597,54059],["2db9fa72a5605aeca2706e59cf1f2212","lore","Forgotten Diary","",153659,50467],["e16c8f8319ef761e0f9e34812910f585","secreto","Urna sanguina","",153631,51232],["6efdda2a3abb94301ced49bdc74511d8","cofre","Cofre del tesoro","",157281,54889],["126911e8b213cee190da404f3f20e41d","cofre","Cofre del tesoro","",161643,58155],["5ceaf76ce62340a223fd35c6b11c395d","lore","Servant's Secret Diary","",159035,61445],["83cc203a75c867d5b0fbc2790e9d1717","lore","Duke's Diary","",160405,63040],["bff309ae92a3a6a24ada4b2c9758ed8b","cofre","Cofre del tesoro","",160999,61541],["0c9048659e6c3244c1bdf9f541c351f8","cofre","Cofre del tesoro","",161581,61498],["b53eba03a752b9afedffa4b0b1fee46a","cofre","Cofre del tesoro","",168439,66367],["cdaac8c523b88a0cb5fd1d4bbd409fde","cofre","Cofre del tesoro","",171890,62608],["f644d9204f1b12bac5463ec2a5983297","lore","Druid's Memoirs","",172179,62614],["e0dc88d4bf28ea34195eabc9df62f53f","lore","Grubby Note","",178598,68969],["c2045c95f0b1f7b80b1ecc5f06bf5f34","cofre","Cofre del tesoro","",184926,72215],["4ed9195eb1b5627e78c1a49429b196d0","secreto","Madriguera de kebbit","",187117,75797],["65043ab285b64f13a4203e13ac29bc15","lore","Tear-stained journal","",186936,73772],["5dc888e0f20f967258b89f5cf191c5e8","cofre","Cofre del tesoro","",186217,64499],["35962a78931ac830c371d8d14e113ef1","npc","Ghost of Cathan","NPC",186678,64043],["b145b2c57251c0019d0a9e42efef8574","cofre","Cofre del tesoro","",186196,46449],["6e0bd9cf4d6ad0c193b33bbd51777b27","lore","Pungent Scribble","",177693,48282],["0af201a60c9e0790829757f88b27e91f","npc","Wise Old Man","NPC",177605,48500],["a8c90edb332a77873b42fa1f7a6348c2","cofre","Cofre del tesoro","",176878,48306],["cf96fe7c47d1366ea35ce51e6702006b","secreto","Urna sanguina","",172225,52124],["1b74cd35c4cc24215314a7289a4f2579","lore","Scrawled Diary Page","",172031,52153],["83ddd4d9e7539c8913a3d64518b6f6d5","cofre","Cofre del tesoro","",172321,42721],["ddba6ac04c2eba3fbad622581a6e3549","secreto","Relicario","",169670,41280],["c0ca65d6a610c7da0269d80f88c43020","npc","Ghost of Cathan","NPC",174580,37694]]},{"r":"Brynmoor","n":"Pantano Susurrante","s":[["9e114d6d1dec667656adc01392c241f8","npc","Wormelbow","NPC",172224,79038],["cedfc78cd6824b05cf838281ed28716c","secreto","Relicario","",174744,80605],["8903129fe7d37d63ea27d92a6252a279","cofre","Cofre del tesoro","",175590,81540],["9772a0cacf75625774b002db6e37be88","lore","Grimey Parchment","",173926,81423],["ca3e9a77bb1fc62462babeec5ed6f0ca","secreto","Urna sanguina","",173185,82654],["4ff02583b9628ff05aa355de82bc6bff","lore","Weathered Diary","",162733,85904],["c28052cbd2bd3a9bb06219f16c313e1d","mision","Candle","Mirror, Mirror",152929,110924],["192514453fdbf264b2f1c8a6dfbd2564","vault","Vertentis Kara","Dragonkin Vault",144813,102752],["36b6aa2f9f43d3d092c0f4a7033655c8","lore","Elder's Storybook Page","",133041,87043],["de40411b30251f8f8848ae532768374c","mision","Candle","Mirror, Mirror",147081,87129],["dbc981bf19bd05982f44a7a86f9ebdb0","cofre","Cofre del tesoro","",143639,82870],["299705efd9ba3b88d664706f17f17c1f","secreto","Urna sanguina","",142355,74399],["bf92ffbe905f62053449966134c818de","cofre","Cofre del tesoro","",142070,73396],["d19c8c2ce75e2044320ab310290074ad","mision","Garou Druid","Goblin Diplomacy",146909,77256],["45a41bd9991acbc429aa353cd314a4d4","cofre","Cofre del tesoro","",147825,76664],["e4922a741163b488f7f5fd1138c07f0e","secreto","Madriguera de kebbit","",149009,78070],["ecc3b8d3a542bd86f7c75b744d95a54b","secreto","Urna sanguina","",150386,76151],["87ef6a89e2afa685c036b29ce3e295d6","lore","Muddy Scrawl","",153565,79929],["1ef5e7681bb430f7a5ad5261594e2149","cofre","Cofre del tesoro","",153419,80945],["0dcd7b66b0da0643393e3564a8d6e2fa","secreto","Relicario","",154387,81070],["017e5bd43169b5fc0c28721ad64e8979","npc","Bilegut","NPC",156893,79805],["311293f30f78d32f9a3f810694729a1e","mision","Zanik","Goblin Diplomacy",157559,74432],["24570a884854dc8a9f359d27f1d4f542","cofre","Cofre del tesoro","",160704,71100],["3a894686b06b44954da8929611c01bb3","cofre","Cofre del tesoro","",153547,66198],["b19b82d945a5d55bcb281f1683116d18","cofre","Cofre del tesoro","",150433,61406],["b7cdb3dab45c30a54efef44874f6ba6e","jefe","Plague King","Enemigo importante",140326,63187]]},{"r":"Brynmoor · Pantano Bloodblight","n":"Fenkenstrain","s":[["a086f61b70fe2553efcafb7f88929258","cofre","Cofre del tesoro","",154879,114636],["90ac4110bb3bcee900e925fc0f6b72c2","mision","Dig Spot #3 - Treasure Map #3","Scarecrow Scavenging",160074,118245],["8b9de6401d5a66e896f9866671c50b2d","vault","Kletterbuja Kara","Dragonkin Vault",168454,118972],["ac1099cc788c6d658d1aae08705bc222","cofre","Cofre del tesoro","",170500,125214],["36976829ab944edea41f6f07559a182d","cofre","Cofre del tesoro","",163266,126499],["f4a93fd8f492d75ac823dcac0af7a5ac","secreto","Madriguera de kebbit","",160544,127427],["8a89771f5ded07ec8f87e7ec48e1fadb","cofre","Cofre del tesoro","",158164,125994],["f80934321e88da3a795b1974d5573882","npc","Doctor Fenkenstrain","NPC",157086,125148],["8fd620bc1f3db72786edf1dceec9227a","secreto","Urna sanguina","",157955,124799],["1c161a868a9e8d0d2c5ce0e048c4f1bb","lore","Scarecrow's Scribbles #3","",158755,119030],["ff87920f8c3acf6c79b2262d0b3e93da","mision","Undead Twig Bundle","Animal Magnetism",148991,128694],["e552bef5fb77107b481546ffd10b6482","mision","Coffin","The Great Body Robbery",143619,129595],["c1101689bae3fc75621702f43f65d5da","jefe","Abyssal Demon","Enemigo importante",143724,126794],["56ae31281ec8019457b1d7e5cc430062","cofre","Cofre del tesoro","",145283,123147],["18759c3896105ed0ebb321e8216d2990","jefe","Plague King","Enemigo importante",144355,121658],["85d84f3ba3f1dcca79d8e220a804e25b","cofre","Cofre del tesoro","",141274,122165],["cb040ab06abbbf865c5112463a961413","mision","Coffin","The Great Body Robbery",138267,124687],["cfd92d43ac3f98a623b258c173a529d9","lore","Bloodstained Page","",136677,124886],["8b2e8086060dc3a87c967645a6bef83c","mision","Coffin","The Great Body Robbery",139993,131128],["5d85762b8dd59a037d5b6f94268deaa9","cofre","Cofre del tesoro","",146595,139494]]},{"r":"Ghornfell · Stormtouched Highlands","n":"Chaktan Kara","s":[["b376adcb882ffeea2bf573be81bd9c28","cofre","Cofre del tesoro","",93099,49044],["1c7ada7378b4834f796ac62502908a83","npc","Vannaka","NPC",92794,44085],["07676af20cc97fd873c077be499e497d","lore","Leathery Parchment","",99722,33582],["324a3c65034d9da18655d90c50460f18","lore","Ritual Of Purification","",99944,25979],["a095e08b781a2d08fc473623b23b52cd","cofre","Cofre del tesoro","",99571,26102],["e98d3d142bd613d143db5a20ed3365a9","secreto","Diente de dragón","",95942,21949],["71fe39c3283693d557b479b5431fe8ed","secreto","Agilidad: Thunder Assault","",91619,25252],["bbb58c46ea16cd83fbfd3a1c18dac877","cofre","Cofre del tesoro","",91088,25712],["1d7b6ed760f99fd47dc3a66663bbc308","cofre","Cofre del tesoro","",91755,27667],["003b6542ef63dc2aa750583590475c92","cofre","Cofre del tesoro","",80094,20690],["ef46e6557091f37bb414269736ac63cb","cofre","Cofre del tesoro","",82523,16382],["8df61a565c69c05a38a7fed5c977f040","vault","Chaktan Kara","Dragonkin Vault",80494,16385],["d427d58240bc5ec094650de45a1cabee","secreto","Urna sanguina","",73450,13599],["c90fa1dc6f9067790676d14dda19f7c0","lore","Dragonkin Diary Page","",72491,19145],["9b6c49429eaff3abe3f8912a0cdc646a","cofre","Cofre del tesoro","",71957,21453],["7762ac92c13ab12079c2f07eb3db8f60","lore","Scarecrow's Scribbles #2","",73106,30453],["b971f6c9603502b09245321d408274a0","mision","Dig Spot #2 - Treasure Map #2","Scarecrow Scavenging",74464,29864],["e98af0aa7d9da3ff1b864c9fcdc90a87","cofre","Cofre del tesoro","",83030,36399],["dbbd2129df8248cebacec64a17479b28","npc","Pollo no-muerto","NPC",82645,40748],["d787b9c2073d6f75134d54b4f187291c","npc","Santuario de Lougrim","NPC",77752,42919],["764c01bc712984ee3f80cf4bd13e5e91","secreto","Madriguera de kebbit","",78583,44307],["442aad86744bc8b966d6da3bb4e47bf1","cofre","Cofre del tesoro","",79280,44979]]},{"r":"Ghornfell · Fractured Plains","n":"Manktongue","s":[["d86861c40506aeaf0f35fb17b16d99c3","mision","Elder Garou","Elder Garou",89610,61375],["0c12165652655eb2c24198e08689e07e","mision","Scarecrow (quest giver)","Scarecrow Scavenging",97569,55341],["979a534e80c04752ff84a540cd522367","lore","Scarecrow's Scribbles #1","",97881,55164],["3a38758f14180d90a8be02b1e8b91e68","mision","Dig Spot #1 - Treasure Map #1 (near Scarecrow)","Scarecrow Scavenging",97893,55429],["a4ae55312493f70afe36b6d8839d9262","cofre","Cofre del tesoro","",106215,55960],["369c262452a37ec904a5315779c630fa","mision","Advert-Inna-Bottle (start)","Animal Magnetism",120915,43807],["ef5cc2452d838e3e71a8ddc58ed4574f","npc","Pulpknuckle","NPC",120226,43142],["567a1924a8c44281a57771ee5e2c22e5","npc","Slopfinger","NPC",120849,43067],["33fb7463317599ccda50be7234cafd7e","secreto","Urna sanguina","",131700,41590],["75ac13452d7748000315b31e78c80baf","cofre","Cofre del tesoro","",132271,40461],["d06f8513937f45af554d371975b30fa1","cofre","Cofre del tesoro","",133136,41588],["38370253f7b22b667a13f74f568d3e66","jefe","Abyssal Demon","Enemigo importante",136443,44952],["7ecf6212c90707fe85909b75e6bee7b2","cofre","Cofre del tesoro","",137360,55004],["a04ab7957b0045c17e8b63f97655d43c","lore","Garou Writings","",126504,55319],["e43126c76c4d2db252d57d512824754c","cofre","Cofre del tesoro","",125432,54679],["d4a18c8956a9a75aea73295c852369ee","cofre","Cofre del tesoro","",124088,54468],["ebb07bcbbb6f0c73c4186b2f9f8f992c","lore","Torn Journal Page","",135975,68009],["92b72e04a55cc0e625878c06c80842b4","cofre","Cofre del tesoro","",136257,68984]]},{"r":"Ghornfell · Fractured Plains","n":"Takla Kara","s":[["898b2b95f0c384adaf2d20726a826c4d","lore","Cathan's Journal [Ghornfell]","",134320,78184],["f492c4d0730f1419e9077e3d976be55a","secreto","Agilidad: Fractured Ruins","",133497,80035],["c8f166db1e5a9c6f129f3cf69fccc360","cofre","Cofre del tesoro","",132867,87963],["8ce28f5b94bbd7f72fa2c2aa6f18b168","lore","Dragonkin Journal Page","",127363,94588],["d4dbd4b2c846f81b297d5cbf7763412b","cofre","Cofre del tesoro","",132872,102181],["6d63087ffd6c88bfa41fa91d6a4ffe9b","lore","Leaf-scented Page","",130746,105591],["bd842db7c495de2cbcd4de37bfaaf4b3","mision","Candle","Mirror, Mirror",121217,112661],["691a5be21e5b97406c21bf1f9a409671","mision","Heartstrings Memorial","Heartstrings",113279,111394],["45d1bfab05ab5c39aa04e42872d3cf3a","vault","Dragon's Lair","Dragonkin Vault",100247,98829],["75a517c34dcffcb5fd4a75163cf7d46f","npc","Wise Old Man","NPC",105680,99330],["f796255c72b21f2dad4647313b11b484","mision","Ghost of Cathan (Ghornfell)","Withering Heights",105875,99188],["5f83e8580562dd4dab67d55855be21da","mision","Heartstrings Memorial","Heartstrings",113294,93023],["ab68d4ef8b29a416d54ca77a898949b5","cofre","Cofre del tesoro","",124209,84262],["9aed780516069f424b8d52cda63bf094","lore","Scorched Journal","",124449,71521],["28f173d38e469f404274fea60160c4ac","secreto","Madriguera de kebbit","",121956,74037],["715dc18fb4f3233c5c7ca53eb565fc46","vault","Takla Kara","Dragonkin Vault",118288,74800],["9bdf8c54a7df1559c027996dee13277a","cofre","Cofre del tesoro","",115279,72800],["21b442dfbe0e4b5c786a9c5d2bf5003c","cofre","Cofre del tesoro","",114689,78367],["8b01d1b877816f80ab7ed211f17ec283","cofre","Cofre del tesoro","",113793,79144],["6c48e25b10d2c12f5717b676eaba8ed5","mision","Final Chest - Scarecrow's Hat","Scarecrow Scavenging",114250,79736],["05b67fbd9553e9d0239522c3eeae5020","lore","Scarecrow's Scribbles #4","",113722,79956],["3dc2cc3e5f46e9134e0ab4505997761a","mision","Heartstrings Memorial","Heartstrings",113518,80763],["056ace3bb6ac7b14789050e457f8350c","cofre","Cofre del tesoro","",96749,69699],["befbd9511a1b2e88054a280675097ded","cofre","Cofre del tesoro","",83225,75549],["18cae917bd5d6debb5d9c4d8311c800b","secreto","Madriguera de kebbit","",81674,77262],["c9f8d11f46c634784303115e09d973e7","cofre","Cofre del tesoro","",90461,86190]]},{"r":"Ghornfell · Fractured Plains","n":"Ashien's Watch","s":[["9be0d9796b49ebddc532dcedf737c850","mision","Heartstrings Memorial","Heartstrings",116568,123674],["5780e0d271e80ba371425fbba5d8a9a2","mision","Heartstrings Memorial","Heartstrings",124238,140373],["186f2473532cbc5bec235acdd5c40063","lore","Dragonkin Notebook Page","",123527,140830],["f09d37e1cc951066a7d1a24e72c4490f","cofre","Cofre del tesoro","",109799,142624],["f99a7449f7eec2f567a5bd7b306e705f","mision","Heartstrings Memorial","Heartstrings",109848,144550],["d073f0f1c3dc30bb848af0b9bc9ce699","npc","Doric","NPC",92602,142219],["142c04504a22609bcb260b05323d813f","cofre","Cofre del tesoro","",77451,142668],["be243379dc46e442e0cfe0c612690637","lore","Infused Journal","",76161,138422],["ec4df753a1b0fe6e5144dec7a2fadd97","cofre","Cofre del tesoro","",76395,138348],["e6c6ed5c32532eb1ba8cae1895254e4a","vault","Skeklac Kara","Dragonkin Vault",77714,138097],["9fa6b45451873571d04e90df060a1b76","secreto","Estatua de Saradomin","",83947,136266],["6504b7815354c3668adb34e12105fe49","jefe","Abyssal Demon","Enemigo importante",89308,133735],["41cd9bb5d288416dc06cf328f0d2dcd2","secreto","Madriguera de kebbit","",97613,127982],["6470de2d11737fb71dd3a42f5e363d3e","mision","Heartstrings Memorial","Heartstrings",99972,130153],["e76b0e9cd4fd25753569f8782a4a9385","secreto","Urna sanguina","",104132,124803],["3aa5113a27120d804c4bc28c381a4a2b","cofre","Cofre del tesoro","",103615,124680],["013fa49cb9a26473757c7493517dd4df","jefe","Abyssal Demon","Enemigo importante",98202,116576],["9ed37a159ed892d3598858fef4f89871","cofre","Cofre del tesoro","",82146,115712],["07c7a14ef4c3280d25bed91b3293ad2a","cofre","Cofre del tesoro","",65199,118932],["8b54dffdd9d32a5b9d08752357343a86","cofre","Cofre del tesoro","",62845,118550],["720c1ac43983a5721a478d13dc4483c2","npc","Wise Old Man","NPC",59362,124361]]},{"r":"Fellhollow","n":"el Templo Olvidado","s":[["770c30e9983a070a1276d3a941b51269","viaje","Death Temple Lodestone","Lodestone",38672,133137],["54331898558f1f538d72ab7325bc9f7b","mision","Soul Rift (Deaths Domain)","Withering Heights",38003,132147],["684cede709ad4485cef9ae3f5287d1e4","npc","Death","NPC",35470,127610],["3112498144fa9272e8cb176aebd59fad","lore","Ravanna's First Journal","",30611,132249],["f88b1ed62ce6d69da0e7d145a6095de3","lore","Weathered Diary","",25635,133234],["33dcc0575843830c0bf00d2df5b9dcfe","npc","Postie Pete","NPC",24771,132812],["80915908a8aed904d57fcb685418a6b7","mision","Parcel Pete","Letters from the Dead",24670,132770],["1d72e22653581a8f8253bf11857a4056","secreto","Sala espectral 11","",20679,132540],["4e2aef18c2185a1d2661a2372970cfe6","mision","Soul Rift","Withering Heights",10052,131180],["975703d277fcee89ef4757bb89b6b396","cofre","Cofre del tesoro","",5383,135578],["6ca3f32dbca4935d21edf9cc92bce726","lore","Ravanna's Third Journal","",5286,136003],["f8396176340a611e7c4707f6c6496e66","mision","Suspicious Skeleton","Letters from the Dead",5182,135393],["e40e7acd55287b05c014c806d974a37d","cofre","Cofre del tesoro","",-2587,81493],["95cef8e2779b48546221ecc161cc8bcf","cofre","Cofre del tesoro","",735,80672],["37d0a4702c9af00c70bc36aa7f20500c","lore","Anima-infused Tome","",1810,82103],["50318d33c78d851cf248d119bad5d51e","lore","Lavish Dragonkin Tome","",12218,78743],["15b1db56ac17fbeac3f8b69ddf1a6fb8","cofre","Cofre del tesoro","",12852,79502]]},{"r":"Fellhollow","n":"Hope's Fall","s":[["d97224b547286a61284d15403b4d43ed","secreto","Espíritu de la naturaleza","",-11223,81118],["0ce1c98f57691e76bf977f8a7ce461e2","secreto","Madriguera de kebbit","",-14972,83557],["4fa2e601ab9d7972efc4af7a414d00d2","secreto","Sala espectral 1","",-17238,86051],["d96061d8d4a3c3cf4563441f460a6869","cofre","Cofre del tesoro","",-30010,72857],["74252987b9ffb417dcd90edae8bae3c1","cofre","Cofre del tesoro","",-44973,74071],["c32561ba6f219de7108ff2765d53ddd6","jefe","Zogre","Enemigo importante",-46027,76014],["fe778446b4aa2eec51f4ffd0eea949d4","cofre","Cofre del tesoro","",-51706,81045],["faef8d6f7ad77f8b826a63f9a96c7c39","jefe","Zogre","Enemigo importante",-52067,80269],["6de220ef485d06be9e80e786b44a7145","secreto","Espíritu de la naturaleza","",-60235,80564],["1be70b3bf2069d69f665edeb2bd5f1c1","cofre","Cofre del tesoro","",-63258,74965],["973f2e274f76d059e8a91edf11846754","cofre","Cofre del tesoro","",-62468,80301],["d8a29531e5770e0e442620d1589c9d8e","lore","The Tale of the Ghost Wolves","",-62654,86217],["a3c62d78c615afbd34b23818a341b3b2","mision","Edna","Mirror, Mirror",-61840,86304],["9c8bb92de00d9bde2bb3fad68016be39","secreto","Pájaro espectral","",-62209,91771],["2c06eb591fde9ea0534e8de993553d6c","cofre","Cofre del tesoro","",-62993,92886],["141b510dc89da1a8d68d7dde30773654","secreto","Sala espectral 8","",-61964,93143],["04267c88f0d88bc5f4f9a4dfd49b4602","jefe","Dragón verde","Enemigo importante",-55056,98443],["4ff231269bf3ff5d720eeb6459f2ece2","cofre","Cofre del tesoro","",-54065,99248],["ab5da6f927e6cf2d2085f7b4073f6de3","secreto","Madriguera de kebbit","",-49049,107850],["ff3678073be74eb28fa0bb6860d8feb7","secreto","Agilidad: Grave Run","",-53562,111002],["2527813d7ab00244bc419777a0282759","secreto","Pájaro espectral","",-45822,119407],["780ec34ca63cf236f01db52a6a1cec76","cofre","Cofre del tesoro","",-37436,112370],["6f052ac2ddb4930a52808f7f16f06326","lore","Weathered Journal","",-36565,112897],["b68d660ab32b1820e706e068cec184dd","cofre","Cofre del tesoro","",-28755,98277],["5863d7f9d6d09eebb27f72980f03e521","lore","Dragon-embossed Journal","",-29909,98010],["9a0a698bb94afd9429a1f9f49a72e545","cofre","Cofre del tesoro","",-32326,90189],["47c4764443dd49245a3fb3ee6b695e19","lore","Winston Henning's Diary","",-41087,95320]]},{"r":"Fellhollow","n":"Emberwood","s":[["b30920c0ad0033331d9cbda936ff4bf1","mision","Saradomin Symbol","Withering Heights",-54256,70215],["9f362256e011c772cb91920bfc65c0a9","mision","Saradomin Dispenser","Withering Heights",-54315,69202],["475057d2f145a2bbec1a9fe0d6532c85","cofre","Cofre del tesoro","",-67036,64558],["f27286228ff5fe9018609ef199449c15","secreto","Pájaro espectral","",-67635,63159],["286a09ac694aa7df2e31352ba6b4a0f5","lore","Farmer Fred's Journal","",-69820,60838],["9d0c2a6b2edd551f6702a61a485a98ac","cofre","Cofre del tesoro","",-63561,56949],["2124d4c6490230dcff9b419208547aff","mision","Curse Seal","Withering Heights",-60543,53562],["913b4fdd2c4355181ce00b62f6a48068","mision","Fellhollow Ghost","Even More Restless Ghosts",-63947,53214],["6a5a1460f0053348a2713e6abe9aa729","cofre","Cofre del tesoro","",-63386,51170],["2d522e50071bd18be1019cc79aae8d4a","mision","Bedraggled Spellbook","Mirror, Mirror",-61014,47528],["338673cc1d7a9749074d3a234c136208","secreto","Sala espectral 2","",-59924,48169],["ae1221fd5524192ca89a49032572afb5","mision","Saradomin Statue","Withering Heights",-52888,51554],["68b5f9747c75fe74bacf31e3c654aa46","lore","Lazilly-penned Diary","",-48012,59376],["120917f97ff91661a7fbdb8395ed533f","lore","Ravanna's Sixth Journal","",-46300,58460],["0cc6f33e29df1618c3160d62d5117a6b","secreto","Pájaro espectral","",-44937,60009],["bd9b550da042231cc579b88ae6a9242d","cofre","Cofre del tesoro","",-43735,57624],["94313fe9417818d73874ebd7aba3cfc4","npc","Fantasma","NPC",-42994,53101],["fabb5f61361c812cd8fb88d6079391b0","npc","Fantasma","NPC",-42728,52816],["87a96be10397d7db77e2bc7c738c1581","mision","Armadyl Ghost","Withering Heights",-42817,52451],["3e9ddc8ce89fb550add33825787712a8","lore","Ravanna's Second Journal","",-47314,52872],["e7402d45f5b351555589b6d83cbf5f16","jefe","Dragón verde","Enemigo importante",-43438,43062],["702750b716467a03811c6b23d19e2e1a","secreto","Sala espectral 9","",-38996,38553],["697571f145fa05a7128c4a9d808a122d","jefe","Dragón verde","Enemigo importante",-41418,36946],["9dd35685583f93e085c8ba03852bc1e2","cofre","Cofre del tesoro","",-41752,33940],["f8d8b9c8c668221fc91f85b52cadc6bb","secreto","Urna sanguina","",-46994,32025],["ff2460482a4d1989db56b0ef85724b6e","vault","Kalistrakthen Kara","Dragonkin Vault",-51139,29580],["037b78d32320d5b3a7d8035383fea57c","secreto","Espíritu de la naturaleza","",-47175,27674],["1a5814d6ac5d0751895b1c81312b3446","lore","Experiment Log","",-41442,27817],["d0e6b46333545ba87108ce2e0ef1a287","mision","Magic Mirror","Mirror, Mirror",-40978,27850],["37ead837ef567e56a5e72e8c997b2d7b","mision","Candle","Mirror, Mirror",-40832,27808]]},{"r":"Fellhollow","n":"Bleakfields","s":[["840d35a158b1fb85293a2234c909bc20","mision","Ghost Sheep (Shaun)","Letters from the Dead",-24005,120676],["ae6bcac51e63c4732edb82bedc1730f0","mision","Ghost Sheep (Steve)","Letters from the Dead",-23390,122628],["6dfa35676ca3bf1d2d2db9edcf6a4d31","mision","Ghost Sheep (Stuart)","Letters from the Dead",-23475,124188],["3b161b70777b2be8468cf42a71ec1c15","mision","Ghost Sheep (Simon)","Letters from the Dead",-21115,124250],["3e17c70ae992a8a5f86fc2d4c035f7f9","lore","Mould-covered Journal","",-20227,129347],["3d2ec98ceefa9d3702788a9849b2f85e","mision","Standing Stone (Emberwood)","Withering Heights",-19679,137844],["478f0847c87cde70d0b58a22bc1c581f","mision","Ghost of Cathan (Fellhollow)","Withering Heights",-18830,139414],["b2ed8a4b1605aacbde864e8128988c3f","mision","Standing Stone (Silverthorn)","Withering Heights",-19052,140428],["ec66289e2834ba18c4c6ba0d4ec0aaaa","secreto","Piedra erguida","",-19945,139344],["e554547408794f08028380f255f03663","npc","Vannaka","NPC",-30161,126491],["63ddaa9bb4e7915a90c10319b37bc51e","lore","Battered Diary","",-44138,141003],["3d2fe071117310f904b96d1a8301a20f","mision","Soul Rift","Withering Heights",-35240,146630],["6ea0c5155c44e828e32b0da6638a8a77","cofre","Cofre del tesoro","",-42497,160851],["540f3b20d8e5e8591b31b63774a17f63","lore","Withered Diary","",-29480,151792],["1696ff01a89b8dc565046b0217d3b1af","secreto","Pájaro espectral","",-22869,144379],["731cc724ba181fafbbbd87668207ae5c","cofre","Cofre del tesoro","",-21406,152411],["60bfc2638c988ecaf4b86cbf65824c4e","npc","Zanik","NPC",-21251,153382],["17b0709cecf163a71f26b2636c84b58b","secreto","Sala espectral 6","",-18969,151505],["93ff847aad1f4dd65567169153d61d01","mision","Missing Letter","Letters from the Dead",-15540,149608],["5141c7188c1f1ed2ee3344abb59491be","lore","Eleanor Scathe's Diary","",-5319,152876]]},{"r":"Fellhollow","n":"Lago de las Almas Perdidas","s":[["5e816164286785a148d4d0be5a89027b","cofre","Cofre del tesoro","",-50829,132216],["d1a3f14460dc54bf319d5ea81dd28bf7","vault","Imaru's Lair","Dragonkin Vault",-57991,131804],["04fe35c81e90ba33138433d86801ece0","jefe","Dragón verde","Enemigo importante",-73145,118431],["22c9cf2a1b430d2f8b36a7c775197247","secreto","Espíritu de la naturaleza","",-80638,128182],["e4445dc087acf4464037b0f0f119c7b0","lore","Samuel Malcifer's Journal","",-83203,134877],["956b4f491e0da133982a728e3c9624c6","secreto","Madriguera de kebbit","",-79772,134795],["af1a03a229053e5a35fb4017438de7a4","cofre","Cofre del tesoro","",-76583,131779],["77e32f75f43dd9859811795c91d06cc7","secreto","Pájaro espectral","",-75528,131665],["9b5c34f5efb66c94471156cfd34e8f78","mision","Fellhollow Ghost","Even More Restless Ghosts",-74423,130410],["686e51b7e260d0a366266649e0aa3e89","cofre","Cofre del tesoro","",-65291,129511],["e192550c1ea3e7d57e657c4af8c341a2","lore","Ravanna's Seventh Journal","",-64599,129160],["043d33a025c2724c70d7e1706c26b8d9","lore","Ravanna's Fifth Journal","",-56388,139717],["158013b07b43861616b61bd04b314e50","cofre","Cofre del tesoro","",-60510,142672],["51dd6228fd1086a5a5da64b568a26b74","mision","Curse Seal","Withering Heights",-57714,144594],["752542a755d4e22040e4b8d91d88f2f5","cofre","Cofre del tesoro","",-60713,146647],["371c5711f8bdb9416d79be5c5854004b","secreto","Sala espectral 5","",-66929,144714],["4bd509d93f297e6aa78682f6e987349a","jefe","Zogre","Enemigo importante",-64736,146978],["8fd954404dc9dc6b0048ce0618c78edf","secreto","Urna sanguina","",-62753,151032],["3bc8a7edb1f8b3f4154bb0ef35be6c29","lore","Withered Journal","",-57242,157080],["1b749f6275834344c624f9ef97ca58e5","cofre","Cofre del tesoro","",-54185,161006],["9930f120bb5e3ca74d06b7e858ab128d","lore","Ravanna's Fourth Journal","",-50609,165793],["7ea8dd2d264ae2d4ee198960771f4c4e","secreto","Sala espectral 7","",-46462,171402],["64887ea8f377408e0cb3c2f6d04ea950","jefe","Zogre","Enemigo importante",-71711,160823]]},{"r":"Fellhollow","n":"Coalridge","s":[["389020735e4b64c9f1d1125f30363f6d","secreto","Pájaro espectral","",-64973,176547],["41aafa3433db833a7a57ce6d7af82be4","lore","Lacrussa's Journal","",-71402,183590],["a61e0e640b98e0f1347fd03aea3a8c82","mision","Fellhollow Ghost","Even More Restless Ghosts",-71826,184642],["93265c74c92e51fd2d38c2fa4585e185","lore","Nolan Scathe's Journal","",-80320,193128],["1743559e2fd9c671ea95b7b0d537e4cd","mision","Abraxus The Eternal","Even More Restless Ghosts",-74597,200519],["2dc5273bf7bd3b14b26309e0212ec590","lore","Laboratory Note","",-75646,201421],["77397ebb3319bbfa44b0fb73af098da9","mision","Dust-covered Sketchbook","Even More Restless Ghosts",-80080,205081],["ad9f113c04e161cc433a782044289dc9","cofre","Cofre del tesoro","",-74770,210296],["b95a643ab71cc845232d8eb3c1066d3c","cofre","Cofre del tesoro","",-71465,221674],["3e6f537bc02b48e63f71d0b603b4ab03","secreto","Sala espectral 4","",-69541,218114],["dd6e72785a6a574e0723b3a295c60994","mision","Coclear Malificarum","What Remains",-66376,217552],["5ec08c695a4e4cc64d2ba8506fc465fd","cofre","Cofre del tesoro","",-66271,218030],["2a92d942f1d7d70f4061aed4e947eacc","jefe","Ulgo the Zogre","Enemigo importante",-65519,217819],["0ae99564ed5be6d6ada1a2740e117e03","cofre","Cofre del tesoro","",-63783,206042],["2a44f918b1e94509ca1c46c20f0fa9c2","cofre","Cofre del tesoro","",-55102,207470],["1cdbb2acbccdf9f622174c9e7070a14b","secreto","Madriguera de kebbit","",-47550,202850],["cd19aa13eb57eb00f936e4ba75d5ed89","npc","Doric","NPC",-42347,194041],["e1902dc67512d7a2b97b2d3d26277a99","secreto","Estatua de Saradomin","",-41803,192105],["ffe92ec0faa1505c9c79ef68457fcc67","vault","Skekven Kara","Dragonkin Vault",-42244,197429],["4434f0f5d01b54b7ec2cd7405dea90f4","secreto","Espíritu de la naturaleza","",-44232,206241],["9a8b2c433ada4ec81a0b70809dc92bd5","secreto","Pájaro espectral","",-45495,221990],["e552654d9ea66cc346bfb7d7e11deeca","mision","Curse Seal","Withering Heights",-48904,224086],["2eaf9831daf8c8b205347ada477ac2b9","mision","Aetheric Fundamentals, a Primordial Primer","What Remains",-49900,223835],["381aff72b44eb42430cee8352c7bd71a","jefe","Dragón verde","Enemigo importante",-48159,226999]]},{"r":"Fellhollow","n":"Skekven Kara","s":[["666da92a72621171d60521de4e7b9beb","cofre","Cofre del tesoro","",-36910,234239],["b6df56b2a3225c333040a9753d347926","cofre","Cofre del tesoro","",-35701,233030],["1410c2e396fabd16395cc1937c7e01b6","secreto","Pájaro espectral","",-32063,229746],["14ee7335de3fdeb77195ea6a76517e00","secreto","Sala espectral 10","",-17978,234864],["83a073bee877f61bc995c7c4101e2b0c","jefe","Blightscale (dragón verde menor)","Enemigo importante",-17604,234246],["d2752ac09075e997b75dd0db893ad1b3","cofre","Cofre del tesoro","",-16536,232605],["704d35f0c67e4eca0ff8bdade16a3b83","jefe","Razlem the Necromancer","Enemigo importante",-1666,226249],["f9df6748eda2fcd9e4f320adf22560bd","mision","Eventide - A New Spawn","What Remains",-1784,226021],["76a8a136626b12d41987445de859931b","cofre","Cofre del tesoro","",-817,224907],["4b74a2380c1f9d81b550aee789b4b005","cofre","Cofre del tesoro","",-6592,217619],["b4b11f7ff743b346c562f5e31e870d62","cofre","Cofre del tesoro","",-2293,216290],["e8cabcaea93444304cf7f05014c0b96c","mision","Ghost of Cathan (Dowdun Gate)","Withering Heights",-2935,210753],["75197260b29dc27211958826561e3c43","mision","The Importance of Chaos","What Remains",-16179,208616],["171d162859fbcfd03c9d3328b6b8ad8e","cofre","Cofre del tesoro","",-20165,214941],["44a1b6980c878673eb10c70bb22d2138","secreto","Pájaro espectral","",-20365,214949],["230462e39e75b438df722574bbcfd752","jefe","Zogre","Enemigo importante",-18930,218199],["3a931599abce9885b633e47dd232280e","mision","The Wrath of Baba Potterington","What Remains",-39282,211989],["8ffade62a96df41d56286d291d41ff24","cofre","Cofre del tesoro","",-40741,211224],["c6df130c4f4cd3a6bce1c01eea63a68a","secreto","Sala espectral 3","",-31231,199145],["d2aaa795021bd6a775a93f972d5a880b","cofre","Cofre del tesoro","",-28666,193761],["13906d5bf55dd814fedf2a0bf05a3c2f","cofre","Cofre del tesoro","",-23097,190831],["077ee12c09ccaa02e4607b353da5612d","secreto","Urna sanguina","",-15881,185163],["2f378f17b9c82519ac9b3584fe30c558","mision","Leonard The Bound","What Remains",-22882,187996],["7e40f47ab602a5a1fe488709711e128c","lore","Ulgo's Diary","",-31740,185934],["08d9d057beb521c75e3befa39d155182","cofre","Cofre del tesoro","",-32066,184543]]},{"r":"Dowdun Reach","n":"El Lodestone de Dowdun","s":[["03b3517ded822d5a1c242806cecea7ea","viaje","Dowdun Reach Lodestone","Lodestone",28802,220779],["2b97300b6ec7161077e7fd9e21570401","mision","Strange Raven","Biohazard",30662,221649],["e130412df367aa21337139c747c2189c","mision","Wise Old Man","Black Knight's Fortress",32940,222410],["38c93504740a87180ec00eaf68397e87","mision","Postie Pete","Black Knight's Fortress",33090,224019],["ec7e1012b861d4bd604fb2f85a66ffaa","mision","Strange Raven","Biohazard",30457,228035],["6f07950209d0aa8ac2e16259fc0e0922","cofre","Cofre del tesoro","",25607,228183],["ca8f082e338af186f9ed65cc3599a57f","cofre","Cofre del tesoro","",24894,227806],["00c2a582528014994db9692a5f2ad212","cofre","Cofre del tesoro","",22327,230043],["43ab6c82c012a1d438b66196d65a086e","mision","Nodestone (The Garrison)","Nodestones (Valerius)",21991,230685],["0b3e668fd3624f5205ce6deaee7b46da","mision","Hastily Scrawled Note","Nodestones (Valerius)",22027,231282],["1f4f4f75adb174237e8f7c6b99f272c1","cofre","Cofre del tesoro","",20704,234588],["3da7a4f9e1952e10cbb267670fa9a320","mision","Dreaming Stone Shard","Black Knight's Fortress",22915,231067],["4c50667ed0497f78a032ead206ecd1de","cofre","Cofre del tesoro","",24980,231821],["c4978911c565583a31961cfeb56ac210","jefe","Houndmaster Rexiton","Enemigo importante",27148,231642],["86bdf7011fef085fb143701fa86eb3c7","jefe","Houndmaster Rexiton","Enemigo importante",27481,231785],["8e33bcff8dc58456643ad80aba9b75c0","cofre","Cofre del tesoro","",34452,237355],["1aced7fa9a1840d44cd5299258707426","cofre","Cofre del tesoro","",39268,231344],["ecd874ddabf86de30dff917d7097017d","cofre","Cofre del tesoro","",34701,230864],["06ea2873a07bba13c19666aa107fe7b7","cofre","Cofre del tesoro","",33680,229143],["c2ce8698e82d489c863f9decf70b7215","lore","Rasmodel's Diary","",34596,227666],["d21c93c7c1f3067d0a245e7dee458450","npc","Offalfoot","NPC",39945,220027],["753f5feec5d5c8a8ba8b1aefff59cc9f","mision","Nodestone (The Courtyard)","Nodestones (Valerius)",37325,218771],["b00c47589368b0c028e5f29087d89b77","cofre","Cofre del tesoro","",31085,218889],["b5df1fffe720c1caa39fff6376a4f3eb","cofre","Cofre del tesoro","",29409,217839],["cff1192b104bad87c85383eb4a7d2d4b","cofre","Cofre del tesoro","",28045,219026],["087244b393043494d7136daddf9ff2f4","cofre","Cofre del tesoro","",17107,217206],["c0d9345b4f46d02d7dff536708ff27b4","lore","Badly Scrawled Note","",9312,219748]]},{"r":"Dowdun Reach","n":"The Garrison","s":[["0e51ee87938842310b621f1b00693faa","cofre","Cofre del tesoro","",20829,235990],["6f3a256e8110671e0c7e09d444869230","mision","Dreaming Stone Shard","Black Knight's Fortress",21662,237103],["687cfce5341874be25fe05de66374c6f","jefe","Sergeant Blister","Enemigo importante",22013,237298],["668cda4fb12359f5b56d9969beecde3e","secreto","Libro de recetas","",20436,238359],["dabbc6256e1ab4946d8f73db980e3184","cofre","Cofre del tesoro","",19660,239330],["659c1f3b993b71046b46cb82ba16bd3e","cofre","Cofre del tesoro","",19490,239119],["4120ac2e1251c0a0646883c2b47815b6","jefe","Dragón azul","Enemigo importante",14392,239928],["485820c05e1fc13199d4878bb594a7cb","secreto","Urna sanguina","",10909,241211],["57f18d952c5e9f7e86fd72d8a4f232ab","cofre","Cofre del tesoro","",10965,241687],["4dbaab069b155c3ff651fea16c26c3a5","jefe","Dragón azul","Enemigo importante",16267,250163],["e50fe741735e5977fea699b7b64aa4cf","mision","Dreaming Stone Shard","Black Knight's Fortress",16173,251417],["9c4e43af76cd69da2ff3028bd75b87bb","mision","Strange Raven","Biohazard",16054,254087],["4f44d24b7bf61429ea163d7cf0fcb429","cofre","Cofre del tesoro","",16643,255465],["e86ced748a6b681eae24dded50ee95af","cofre","Cofre del tesoro","",19099,251876],["dbd15987ff5948ddd23de4e7abb1a863","cofre","Cofre del tesoro","",24794,251466],["a4a201f46fc68e48f436c3187479eb4b","lore","Quartermaster's Journal","",25329,243734],["e1eb41feb5b4ea2cd1abd19e994ffa4b","cofre","Cofre del tesoro","",26789,239634],["0d5307b71594910d441b030f31b78365","cofre","Cofre del tesoro","",27463,241457],["d539d0bdc0af51d048508657e5855d66","cofre","Cofre del tesoro","",28570,241864],["badb8cde9d900c3ce54d6e77b5cfaf06","cofre","Cofre del tesoro","",32833,240250],["3dc8a32de02e73f221eeaf0262aa3b55","cofre","Cofre del tesoro","",29738,244921],["cf58952d508b29c0554c196da9cf4c56","mision","Strange Raven","Biohazard",27542,244634],["93fa07aa20f6472405d996ef765948d8","cofre","Cofre del tesoro","",31330,252810],["bb201d54fd9000fa494cb037092af673","secreto","Madriguera de kebbit","",27920,260295],["0e8f97cf903d838750b8a838788e5a99","cofre","Cofre del tesoro","",29037,261543],["c02e7663293984d7f727b963a93f39d8","lore","Goblins of da Reach Unite!","",30555,259891],["799cde1a239308bb69b5b4a9803c3634","cofre","Cofre del tesoro","",35088,259941],["b589780f7386c5e8ddfb2f0b74eb9de5","mision","Dreaming Stone Shard","Black Knight's Fortress",37170,260625]]},{"r":"Dowdun Reach","n":"The Pastures","s":[["69e8b8942c9793bbde14abfba55de570","mision","Nodestone (The Pastures)","Nodestones (Valerius)",45028,253706],["dfbde69161ffb727cd659f5199be5dc0","cofre","Cofre del tesoro","",45592,249988],["d4413dea91460ca80f4b387b1a733f95","mision","Dreaming Stone Shard","Black Knight's Fortress",51510,250690],["e3ea1a84c2a0ab5c7a7e70e6fa325c9b","cofre","Cofre del tesoro","",52428,250009],["e64ce402a087344f5b60c5569d70bf81","cofre","Cofre del tesoro","",57469,248382],["5356a3ff0366ed7bece4ee46784b2301","cofre","Cofre del tesoro","",57984,247831],["7512c6cfc67a2a368a8fb52f0d1d9212","jefe","Zogre","Enemigo importante",52768,247775],["80618c37e189ccb0a7f5f5c38e5bb8a7","mision","Strange Raven","Biohazard",51278,247235],["3ff586d792be5ee84244e60f77ddd5db","mision","Putrilius","Biohazard",50007,245542],["ac52288442029f3b2947e098cc63c0dd","cofre","Cofre del tesoro","",50823,245424],["d5fa07f2812a43340ffb47464d1936a1","cofre","Cofre del tesoro","",50731,244672],["03aea964bec496fc41fc2c447b785353","cofre","Cofre del tesoro","",49336,242365],["3c4b0613cf6b343b82e93e9125663730","cofre","Cofre del tesoro","",49118,241393],["2f555e4cce2c665754371653d6f49ecc","cofre","Cofre del tesoro","",52898,240320],["3c14e2de2adf53c008ac44502942dbdf","cofre","Cofre del tesoro","",53281,240096],["e13abdbd7412a6471b8b22399dcdf654","cofre","Cofre del tesoro","",51182,237850],["8cb701ca27167684cf8b624d172f51a8","cofre","Cofre del tesoro","",50625,238201],["416ca74697fc70d79d8e4decfb8afe75","jefe","Stormpact Demon","Enemigo importante",50528,237238],["6411bfcea0e71da594c563b3f83c6095","cofre","Cofre del tesoro","",50316,234847],["7cc02820734677ac4a90461c53c08a93","cofre","Cofre del tesoro","",48812,235990],["0f5043dd7673587e6a73f8bc413dfae5","cofre","Cofre del tesoro","",48589,236682],["d294e9bd7d670a61955c7628c86b4590","cofre","Cofre del tesoro","",47923,235068],["72df3b37dc09e0e31b19f2898177da00","cofre","Cofre del tesoro","",47465,235184],["7b1429799be98a72ee9a8f7b99b332fd","cofre","Cofre del tesoro","",46538,235363],["f23565baa2f86aa0ccb5a19115fb2141","cofre","Cofre del tesoro","",44826,233711],["61a5961eeaec63f869ac0f77c6e19b7b","secreto","Urna sanguina","",43987,235467],["4c082d4a8bdef682a0aebeedeceb874c","cofre","Cofre del tesoro","",42357,237452],["f82a73716abaf6a80737e7bc57ed0664","cofre","Cofre del tesoro","",43606,239313],["d41507524d848333de0d716483493177","cofre","Cofre del tesoro","",45534,243003],["f0fb6df6a2f09600343baff743e0bf05","cofre","Cofre del tesoro","",43656,242029],["1172a82beabc6d5499d72a6c64af00c7","cofre","Cofre del tesoro","",38933,240404],["008351322b820a97ac74412adc0da5a9","cofre","Cofre del tesoro","",35915,239295]]},{"r":"Dowdun Reach","n":"The Nexus","s":[["12b8c072fc931c34693cddc571e3f39c","cofre","Cofre del tesoro","",58203,236947],["7be56e97577812685011c574eed0a1f3","cofre","Cofre del tesoro","",53926,234672],["a477f0e2eda47837ad8f583b18e5d895","cofre","Cofre del tesoro","",53806,234638],["7b5eb2d2b339d1be679c0b88a6c05e8f","cofre","Cofre del tesoro","",49555,232424],["a45ab26cb49d24c627637e3776e4ea43","cofre","Cofre del tesoro","",44761,226436],["6aa555c68be30700eb40c4b1130847c7","cofre","Cofre del tesoro","",51558,224576],["26fd3b26824fd8a5ee4dcc6fe66487aa","mision","Nodestone (The Cathedral)","Nodestones (Valerius)",53995,226894],["bc519a2b96b6af7264dd9a2c40dc4c9a","mision","Nodestone (The Library)","Nodestones (Valerius)",53773,227564],["0d88f12bc2162dcbcd7e6c3e8e4f808d","mision","Nodestone (The Garrison)","Nodestones (Valerius)",53530,228218],["d19d29730b75cb202b89abb0cf1560ed","mision","Nodestone (The Pastures)","Nodestones (Valerius)",53861,228832],["466ff42bc91db471e8cc690ebbe837a5","lore","A Transport Network","",53720,229763],["8713996c0eb67084777ee10f6ae67cba","mision","Nodestone (The Menagerie)","Nodestones (Valerius)",53669,230474],["9aa25eb168387ec74754dd546e283d61","mision","Nexus Tower","Black Knight's Fortress",53923,232276],["5931a664659eba51b194fbe7f525bba8","mision","Nodestone (The Lake)","Nodestones (Valerius)",54420,231761],["df30f9839f3cb4edf4301efac023821b","mision","Nodestone (The Demon Gate)","Nodestones (Valerius)",55021,231321],["1bb17bdb6396153830bd0dfb8a816f62","cofre","Cofre del tesoro","",55998,231338],["0b71561e4bab0e2a5ba5f369d1af5773","mision","Dreaming Stone","Black Knight's Fortress",54470,228490],["7aeb86f63ee43a568df93b01f7d4b70d","mision","Doric","Black Knight's Fortress",54540,228062],["05fcb922f6b7524cce6d189fc2096a56","mision","Nodestone (The Courtyard)","Nodestones (Valerius)",54472,227320],["554a777f976067afe17394cc8b36e9c5","cofre","Cofre del tesoro","",59445,226802],["e58a22d00fec05a3020de154d606ee51","cofre","Cofre del tesoro","",59147,227208],["9bb649d201c8bd9c07ce1cbbcb791848","mision","Nodestone (The Bastion)","Nodestones (Valerius)",59235,227998],["d425cd5c52e6d34a42039add2742585a","mision","Nodestone (The Bastion)","Nodestones (Valerius)",63730,229100],["c1e1bff1d8b80e585f9a5084f56a54c8","lore","Hall of Heroes","",69536,231130],["e7ae54fb6b225d6693a81e50d4e21e43","jefe","Black Knight Titan","Enemigo importante",79016,235264]]},{"r":"Dowdun Reach","n":"The Cathedral","s":[["ac3671aeb5a920250123ae85b1b097ba","cofre","Cofre del tesoro","",60466,220733],["c11cc19b9e3be8512353ac92d01cc8d8","cofre","Cofre del tesoro","",55595,220286],["db16888187a05a3540b03f90f0004093","mision","Strange Raven","Biohazard",53242,220197],["b8f8a3398adf49c6d25246f907a44eb4","cofre","Cofre del tesoro","",59294,215139],["54750c2b07fc0e2214891e51d3b1de16","mision","Strange Raven","Biohazard",62505,216152],["204d9f0702c9425c3694af193a7a9159","mision","Unholy Water","Biohazard",60691,208273],["b97a504775526564d516f13f9387f587","mision","Dreaming Stone Shard","Black Knight's Fortress",60395,211295],["3c0618f1418d48f1d3d44970249a06bc","cofre","Cofre del tesoro","",59224,212728],["ab6f45066a3dfdc00d902d0b4335120d","mision","Dowdun Altar","Black Knight's Fortress",58024,213589],["71c2812ffbb24482bebfd7a63c296db0","lore","The Gospel of Zamorak","",57694,213887],["9b561247883a83dd3b02a93f2b04cb5b","cofre","Cofre del tesoro","",53347,216818],["6bebb132525fafdc9b17d9d634f06e05","jefe","Summoner Flament","Enemigo importante",50601,216840],["78d2601fe8f23826d324452cd4dcebb7","secreto","Libro de recetas","",50748,214569],["6c03adc9a8dedf3cf4e76f37ffe4e796","mision","Nodestone (The Cathedral)","Nodestones (Valerius)",50670,213955],["2d42873b895c463b6e294205fdcd9b0a","mision","Hastily Scrawled Note","Nodestones (Valerius)",51011,213548],["70576e574d91b51fcfc9b1f1344bb909","cofre","Cofre del tesoro","",51866,212953],["32308392fbf0dc0411769369a085ab9f","lore","A Report on the Withering","",46368,210531],["56a1befdf6f1e991f6db2cc3cd2cb85f","mision","Strange Raven","Biohazard",47959,214239],["d4921d238c391931aba1e16f2cc5d203","cofre","Cofre del tesoro","",48875,218595],["58eb9b2460b6f4699b1ec70fa746c8a0","lore","An Acolyte's Guide to Demon Handling","",48112,218408],["6e3a32e48907faf76a5b8d3fa856bd06","cofre","Cofre del tesoro","",42944,219992]]},{"r":"Dowdun Reach","n":"The Library","s":[["ce863c2c1950ff925e5eb3ecca30e85c","cofre","Cofre del tesoro","",38024,209077],["b100255d6348d00416593567ad2d5a29","cofre","Cofre del tesoro","",38173,207414],["9fe236cef3dcfea7cd5d46d8ef3783c5","lore","Archmage's Note to Students","",39508,206611],["b4e34bac945977254d455721fbd51bb7","cofre","Cofre del tesoro","",40885,204243],["061aae2f3b0fe5c6bd9038c505264135","secreto","Agilidad: Tower Climb","",42939,203059],["bae71102860983d59a4190b1bc34ad22","secreto","Libro de recetas","",48558,202923],["89f268bc904ccd383f299fd70e4eb81d","lore","Alric's Journal","",49666,203437],["0eb44f3d616c7e67623b250c97ba2940","cofre","Cofre del tesoro","",50661,204052],["ca8583e2997dc965dcbbdca168e91d03","mision","Dreaming Stone Shard","Black Knight's Fortress",50615,203033],["f0fe0ad290a392c90d76c53d402d607a","mision","Strange Raven","Biohazard",51363,201266],["43478475bcf18b4a5b9e05af50d57612","cofre","Cofre del tesoro","",48886,201737],["ad4dab4453e9687849063cc18f2fb9ba","jefe","Dragón azul","Enemigo importante",46935,193263],["911272ad54a2c0068106219e9833e373","lore","Alric's Plan (Part 2)","",43253,198570],["9ec9418bfe60adb96bc425f58c99cafd","cofre","Cofre del tesoro","",43550,198749],["0663ad558d5510902a44dce2219ed768","mision","Nodestone (The Library)","Nodestones (Valerius)",43571,199160],["a29d9f1d58aba345dd259ff0d2a7843a","lore","Alric's Plan (Part 1)","",42338,199977],["024df0958ce22ca0046660013f22255c","mision","Shardbound Lesser Demon","Black Knight's Fortress",41459,201474],["1b7eaae2923dc94f5a0d59213d30aa15","mision","Shardbound Lesser Demon","Black Knight's Fortress",41174,201216],["7ea6fb0c04863f02aa4231ee926d6884","cofre","Cofre del tesoro","",37625,202698],["ecc1688d7a682325ad253fa3a61d8207","lore","A New Pestilence","",33929,199142],["a9b7a8e3478fb37f42b88f3e9cb8019c","cofre","Cofre del tesoro","",32634,200836],["108eb36e7de9f79e413e9ef74abf63a9","cofre","Cofre del tesoro","",32795,201702],["8d9881dab54f7e6b5524d630c5c08842","secreto","Libro de recetas","",34717,201455],["8c11b468d115e09044dc6a0ce7151476","mision","Vannaka","Wanted!",34222,210295]]},{"r":"Dowdun Reach","n":"The Menagerie","s":[["3f8cf132b0d6b02ce9e6aa703004402e","cofre","Cofre del tesoro","",51048,190809],["18bee50d0024c44d193091a7d4679706","cofre","Cofre del tesoro","",55368,193195],["b6a4c2317fc0d391ab5f47afd3b37a47","mision","Strange Raven","Biohazard",55118,184736],["b38885d15d49e6dee4cf3ba238e995d8","mision","Nodestone (The Menagerie)","Nodestones (Valerius)",54270,182630],["9093ac88b1cfc863296483f46a0adb08","cofre","Cofre del tesoro","",54149,180387],["ca48d39ede78f349635540520474b451","cofre","Cofre del tesoro","",66699,183531],["ba994b4fbc63df9967ef4657c7b8abac","secreto","Madriguera de kebbit","",65320,185303],["6a8c7c8a5a956f098a3a3763f541fa89","secreto","Urna sanguina","",63727,194484],["16f405f57bbcf5ad8736a9fe8f5d43b9","mision","Rat Master's Journal","Wanted!",64396,199029],["de075feb4915d7fe3392e8d1dc83d97b","jefe","Rat Master Skrexis","Enemigo importante",64779,198589],["69145233d45502e89d263756a414c1c2","cofre","Cofre del tesoro","",66530,198163],["f56a6ec111a94bbf09b8a2c523f3b168","jefe","Dragón azul","Enemigo importante",70660,197599],["7fed714490d40e7cc3a0b9f4b2bddd2a","cofre","Cofre del tesoro","",72054,201066],["a23a8bc626ce7a11bad4159cd01e5eae","mision","Dreaming Stone Shard","Black Knight's Fortress",70047,201045],["fc86f1d28f1cd5ecc9eddad63e54b6f5","mision","Dreaming Stone Shard","Black Knight's Fortress",68939,204445]]},{"r":"Dowdun Reach · Subterráneo","n":"La Demon Gate","s":[["ea3e38cb68b9c40982c0ea06ade43597","mision","Summoner's Journal","Wanted! · Subterráneo",51970,214487,1],["59811dbc2c981a39e677c330ea41ba30","cofre","Cofre del tesoro","Subterráneo",51191,213612,1],["447698d475f9d02b1b5b58e3c549f069","mision","Delrom","Black Knight's Fortress · Subterráneo",50449,215248,1],["563c5b5216765840af83cc7ea4ae3260","cofre","Cofre del tesoro","Subterráneo",52274,222201,1],["f761da6afbd901b2d572bb778d336e43","cofre","Cofre del tesoro","Subterráneo",50875,224190,1],["7e19ffce2f1fa4728cd71aa29a7cec44","cofre","Cofre del tesoro","Subterráneo",42100,217400,1],["e9b0900ec7525d2ff83e21e630089b59","mision","Dreaming Stone Shard","Black Knight's Fortress · Subterráneo",45025,215311,1],["ccf859a3d7d455ff0a8317d954e58be9","jefe","Zogre","Enemigo importante · Subterráneo",44868,215117,1],["463678d391d5cfdf72159eb7cf07e716","mision","Hastily Scrawled Note","Nodestones (Valerius) · Subterráneo",42610,212843,1],["e1ae258d0fd58d48d79d1d01eafedffd","cofre","Cofre del tesoro","Subterráneo",44241,210341,1],["0302ca8aace47e38ff75737046461124","cofre","Cofre del tesoro","Subterráneo",48820,206768,1],["b74b02404e952359ccdb63579bae386d","mision","Dreaming Stone Shard","Black Knight's Fortress · Subterráneo",41687,200924,1]]},{"r":"Dowdun Reach · Subterráneo","n":"El Lago subterráneo","s":[["4eb77f53fe102e0cf6f5d09946346134","cofre","Cofre del tesoro","Subterráneo",41580,218119,1],["a1a35e0a60b417b0a7d5141b3ee11379","cofre","Cofre del tesoro","Subterráneo",40141,217628,1],["7d19fd52f33388ede424c580b4cb0840","mision","Nodestone (The Demon Gate)","Nodestones (Valerius) · Subterráneo",40328,218469,1],["5e47c36fa610e091f7acb6185fe84d8f","mision","Dreaming Stone Shard","Black Knight's Fortress · Subterráneo",39934,220039,1],["cf7f856257213986822d632cbc6df2aa","mision","Shard Fishing Node","Black Knight's Fortress · Subterráneo",40260,220320,1],["05c7dcb7f6f113c32f98ec7b20fdc381","mision","Twilight Lily","Biohazard · Subterráneo",42430,221280,1],["db9f68160d7944ecc1b5df62fdf9405d","mision","Nodestone (The Lake)","Nodestones (Valerius) · Subterráneo",44735,223315,1],["402001e279ee48ba83ab07f385844904","mision","Lesser Demon","Black Knight's Fortress · Subterráneo",44176,223208,1],["48400be75a564fdea9dc1a5f08725570","mision","Shardbound Lesser Demon","Black Knight's Fortress · Subterráneo",37164,224632,1],["12f9eda160336795996f8e0f5dd7599e","mision","Shardbound Lesser Demon","Black Knight's Fortress · Subterráneo",36857,226199,1],["8acdcfc47e13981e5320ef42a32f1a81","mision","Dreaming Stone Shard","Black Knight's Fortress · Subterráneo",36216,225250,1],["5d0509f401b8d17a67f023da94fe86d1","mision","Dead Mage (Valerius)","Nodestones (Valerius) · Subterráneo",35056,223857,1],["ba00e55a20133aa46e80796ff4146dc3","cofre","Cofre del tesoro","Subterráneo",34622,223049,1],["5ac7b655dde5f0749c24ef07ce0dd9f7","secreto","Libro de recetas","Subterráneo",31672,217906,1],["a7a6b94aae3f1948ab5521fff314cf0e","mision","Zanik","Biohazard · Subterráneo",27595,220463,1],["b48d8eedc5caef77965aa3478ebf436e","mision","Hound Master's Journal","Wanted! · Subterráneo",25986,229883,1]]}];
+const KIND={cofre:'Cofre',lore:'Lore',mision:'Misión',vault:'Vault',jefe:'Jefe',secreto:'Secreto',npc:'NPC',viaje:'Lodestone'};
+const URL0='https://metaforge.app/runescape-dragonwilds/map/ashenfall?markerID=';
+let done={};try{done=JSON.parse(localStorage.getItem('aw-done')||'{}')}catch(e){}
+let cur=0;try{cur=+localStorage.getItem('aw-cur')||0}catch(e){}
+if(!(cur>=0&&cur<DATA.length))cur=0;
+let hide=false;try{hide=localStorage.getItem('aw-hide')==='1'}catch(e){}
+const save=()=>{try{localStorage.setItem('aw-done',JSON.stringify(done));localStorage.setItem('aw-cur',cur);localStorage.setItem('aw-hide',hide?'1':'0')}catch(e){}};
+const $=id=>document.getElementById(id);
+const all=DATA.flatMap(e=>e.s);
+const cnt=e=>e.s.filter(s=>done[s[0]]).length;
+function nav(){
+  const n=$('nav');n.innerHTML='';const sel=$('expsel');sel.innerHTML='';
+  let reg=null,grp;
+  DATA.forEach((e,i)=>{
+    if(e.r!==reg){reg=e.r;const g=document.createElement('div');g.className='grp';g.innerHTML='<h2></h2>';g.firstChild.textContent=reg;n.appendChild(g);grp=g;}
+    const b=document.createElement('button');b.type='button';b.setAttribute('aria-current',i===cur);
+    const c=cnt(e);
+    b.innerHTML=`<span class="no">${String(i+1).padStart(2,'0')}</span><span></span><span class="pc${c===e.s.length?' full':''}">${c}/${e.s.length}</span>`;
+    b.children[1].textContent=e.n;b.onclick=()=>{cur=i;save();render();window.scrollTo({top:0})};grp.appendChild(b);
+    const o=document.createElement('option');o.value=i;o.textContent=`${i+1}. ${e.n} — ${e.r} (${c}/${e.s.length})`;sel.appendChild(o);
+  });
+  sel.value=cur;
+}
+$('expsel').onchange=e=>{cur=+e.target.value;save();render()};
+const PC={cofre:'#d9a520',lore:'#8f7be0',mision:'#e0603f',vault:'#2f9cc4',jefe:'#c93356',secreto:'#2fae8f',npc:'#7d8890',viaje:'#4f78e0'};
+const IMG_W=5376,IMG_H=6400;
+const LL=s=>{const x=(s[5]+12000)/420000*8192,y=(s[4]+118500)/419900*8192-256;return L.latLng(-y,x)};
+const M=L.map('map',{crs:L.CRS.Simple,minZoom:-3,maxZoom:1.5,zoomSnap:.25,attributionControl:true});
+const IB=[[-IMG_H,0],[0,IMG_W]];
+L.imageOverlay('ashenfall-mapa.webp',IB,{attribution:'Mapa: <a href="https://metaforge.app/runescape-dragonwilds/map/ashenfall" target="_blank" rel="noopener">MetaForge</a>'}).addTo(M);
+const UGB=[[-(2432+768),3968],[-2432,3968+896]];
+const ugLayer=L.layerGroup([L.rectangle(L.latLngBounds(UGB).pad(.6),{stroke:false,fillColor:'#0b0f10',fillOpacity:.78,interactive:false}),L.imageOverlay('dowdun-subterraneo.webp',UGB,{interactive:false})]);
+let ugManual=null;const isUG=()=>!!DATA[cur].s[0][6];
+function setUG(){const on=ugManual===null?isUG():ugManual;if(on)ugLayer.addTo(M);else ugLayer.remove();const b=$('ugbtn');b.textContent=on?'Ver superficie':'Ver subterráneo';b.hidden=!(isUG()||DATA[cur].r.startsWith('Dowdun'))}
+M.setMaxBounds(L.latLngBounds(IB).pad(.15));
+const others=L.layerGroup().addTo(M),route=L.layerGroup().addTo(M);let pins=[];
+function map(fit){
+  if(fit)ugManual=null;setUG();
+  others.clearLayers();route.clearLayers();pins=[];
+  DATA.forEach((e,i)=>{if(i===cur||!!e.s[0][6]!==isUG())return;
+    L.polyline(e.s.map(LL),{color:'#e8dcc4',weight:1.5,opacity:.35,dashArray:'3 5',interactive:false}).addTo(others);
+    e.s.forEach(s=>L.circleMarker(LL(s),{radius:3,stroke:false,fillColor:'#e8dcc4',fillOpacity:done[s[0]]?.15:.5,interactive:false}).addTo(others));});
+  const e=DATA[cur],pts=e.s.map(LL);
+  L.polyline(pts,{color:'#111',weight:6,opacity:.55,interactive:false}).addTo(route);
+  L.polyline(pts,{color:'#ffb347',weight:3,dashArray:'8 6',interactive:false}).addTo(route);
+  e.s.forEach((s,j)=>{
+    const ic=L.divIcon({className:'',html:`<div class="pin${done[s[0]]?' done':''}" style="background:${PC[s[1]]}">${j+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]});
+    const mk=L.marker(pts[j],{icon:ic,title:`${j+1}. ${s[2]}`,zIndexOffset:j===0?1000:0}).addTo(route);
+    const pop=document.createElement('div');
+    pop.innerHTML=`<span style="font-size:12px;opacity:.75">${j+1} · ${KIND[s[1]]}</span><b></b><a target="_blank" rel="noopener" href="${URL0+s[0]}">Ver en MetaForge ↗</a>`;
+    pop.querySelector('b').textContent=s[2];mk.bindPopup(pop);
+    mk.on('click',()=>flash(j,true));pins.push(mk);});
+  if(fit)fitRoute();
+}
+function fitRoute(){M.fitBounds(L.latLngBounds(DATA[cur].s.map(LL)),{padding:[30,30],maxZoom:0.5})}
+$('fit').onclick=fitRoute;
+$('ugbtn').onclick=()=>{const on=ugManual===null?isUG():ugManual;ugManual=!on;setUG()};
+function flash(j,fromMap){
+  document.querySelectorAll('li.hl').forEach(l=>l.classList.remove('hl'));document.querySelectorAll('.pin.hl').forEach(p=>p.classList.remove('hl'));
+  const li=document.querySelector(`li[data-i="${j}"]`);if(li){li.classList.add('hl');if(fromMap)li.scrollIntoView({block:'nearest',behavior:'smooth'})}
+  const el=pins[j]&&pins[j].getElement();if(el)el.firstChild.classList.add('hl');
+}
+
+function list(){
+  const e=DATA[cur],ol=$('stops');ol.innerHTML='';
+  e.s.forEach((s,j)=>{
+    if(hide&&done[s[0]])return;
+    const li=document.createElement('li');li.dataset.i=j;if(done[s[0]])li.classList.add('done');
+    const id='c'+s[0];
+    li.innerHTML=`<input type="checkbox" id="${id}"><span class="n">${j+1}</span><label class="what" for="${id}"><span class="name"></span><span class="kind"><span class="chip" style="color:var(--k-${s[1]})">${KIND[s[1]]}</span><span class="extra"></span></span></label><a class="go" target="_blank" rel="noopener" href="${URL0+s[0]}">MetaForge ↗</a>`;
+    li.querySelector('.name').textContent=s[2];li.querySelector('.extra').textContent=s[3];
+    const cb=li.querySelector('input');cb.checked=!!done[s[0]];
+    cb.onchange=()=>{if(cb.checked)done[s[0]]=1;else delete done[s[0]];save();refresh()};
+    li.querySelector('.n').style.cursor='pointer';li.querySelector('.n').title='Ver en el mapa de aquí';li.querySelector('.n').onclick=()=>{M.flyTo(pins[j].getLatLng(),0.5,{duration:.6});pins[j].openPopup();flash(j);document.getElementById('map').scrollIntoView({block:'nearest',behavior:'smooth'})};
+    ol.appendChild(li);
+  });
+}
+function legend(){
+  const e=DATA[cur],c={};e.s.forEach(s=>c[s[1]]=(c[s[1]]||0)+1);
+  $('legend').innerHTML=Object.keys(KIND).filter(k=>c[k]).map(k=>`<span><i class="dot" style="background:${PC[k]}"></i>${KIND[k]} · ${c[k]}</span>`).join('');
+}
+function totals(){
+  const d=all.filter(s=>done[s[0]]).length;$('tnum').textContent=`${d} / ${all.length}`;$('tbar').style.width=(d/all.length*100)+'%';
+  const e=DATA[cur];const c=cnt(e);
+  const km=e.s.length;$('emeta').textContent=`${c} de ${e.s.length} paradas hechas`;
+}
+function refresh(fit){nav();map(fit);list();totals()}
+function render(){
+  const e=DATA[cur];$('eregion').textContent=`Expedición ${cur+1} · ${e.r}`;$('ename').textContent=e.n;
+  $('hide').checked=hide;$('prev').disabled=cur===0;$('nxt').disabled=cur===DATA.length-1;
+  legend();refresh(true);
+}
+$('hide').onchange=e=>{hide=e.target.checked;save();list()};
+$('reset').onclick=()=>{DATA[cur].s.forEach(s=>delete done[s[0]]);save();refresh()};
+$('prev').onclick=()=>{if(cur>0){cur--;save();render();window.scrollTo({top:0})}};
+$('nxt').onclick=()=>{if(cur<DATA.length-1){cur++;save();render();window.scrollTo({top:0})}};
+render();
+
+// ---------- chat ----------
+const KB="# Guía de misiones secundarias activas (resumen)\nOrden recomendado: Goblin Diplomacy (Bramblemead/Whispering Swamp) → Animal Magnetism (SO de Fractured Plains) → The Great Body Robbery (Bloodblight Swamp) → A Melody Remembered (Stormtouched Highlands) → Heartstrings (Fractured Plains, oeste a este) → Even More Restless Ghosts (Fellhollow).\n\n## Even More Restless Ghosts\nRecompensa: receta Dorgeshuun Crossbow. Requisitos: Restless Ghosts hecha y los 4 God Shrines de Withering Heights activados (si no, sigue la barrera del pueblo). Lleva Amulet of Ghostspeak, materiales para casita (24–36 Ash Logs: cimiento, 4 paredes, techo), 1 Clay Decoration horneada, pico de Iron o mejor, comida, antídotos.\n1. Zanik (Bleakfields Valley), ruinas al este de Cathan, al norte de una Spectral Door.\n2. Windswept Ghost (Emberwood): casita en ruinas al NE del pueblo que tenía barrera; construye cimiento debajo del fantasma, paredes, techo, cierra la puerta y háblale.\n3. Reminiscing Ghost (Hope's Fall): reja en ruinas al norte de la torre de Imaru; dale la Clay Decoration.\n4. Paint-Spattered Ghost: entre Lake of Lost Souls y Coalridge Pass, al NE del tramo más al este del río contaminado; pide el Sketchbook.\n5. Sketchbook: al NE, ruinas en la boca de una cueva; adentro a la izquierda rompe granito que tapa un nodo de carbón; esqueleto + Sketchbook. Regresa al fantasma y luego a Zanik.\n\n## The Great Body Robbery\nRecompensa: Zombie Arm (maza Crush 56–99) + receta Lightning Rod. Lleva pala, muchos antídotos (Antipoison II: Irit + Poison Ichor + Glass Vessel), comida.\nPociones pedidas: Weak Antipoison (Marrentill, Bittercap Mushroom, Clay Vessel), Weak Focused Attack (Marrentill, Small Animal Fang, Clay Vessel), Weak Lumberjack (Harralander, Antler, Clay Vessel).\n1. Doctor Fenkenstrain: Lodestone sur de Bloodblight Swamp, castillito de piedra junto al campamento Garou del Bloodwood Tree; 2º piso.\n2. Human Torso: tumba entre tres árboles cerca del Abyssal Demon; cava junto a la lápida.\n3. Goblin Legs: al norte del torso entre dos árboles. 4. Garou Arms: cerca de la entrada norte del pantano.\n5. Pon partes en la mesa, entrega pociones, recibes Empty Vial. 6. Deja que te caiga un rayo (Stormtouched Highlands o cualquier tormenta) con el frasco; llega con vida llena.\n7. Pon la cabeza al cuerpo, mete Lightning-in-a-bottle en el pylon, habla con el doctor. Bug: si se traba el diálogo, sal y entra al mundo.\n\n## Animal Magnetism\nRecompensa: Ava's Accumulator (capa, +10% recuperar flechas; activa Auto-Magnetise World Items) + receta. Lleva 1 Iron Bar, 5 Law Runes, antídotos.\n1. Manktongue: edificio en ruinas lleno de goblins, borde SO de Fractured Plains al norte del Whispering Swamp. Acepta, lee el Advert-in-a-Bottle de la mesita y VUELVE a hablarle.\n2. Undead Chicken: rocas del acantilado cerca de nodos de hierro en Stormtouched Highlands.\n3. Undead Twig Bundle: gran árbol rojo (Undead Tree) con niebla verde en Bloodblight Swamp; rodéalo para interactuar.\n4. Pulpknuckle en la azotea del edificio de Manktongue: dale Iron Bar + 5 Law Runes → Magnetised Iron Bar. 5. Entrega todo a Manktongue.\n\n## Heartstrings\nRecompensa: Crystal Bow (receta: 4 Anima-Infused Bark, 18 Opal, 8 Vault Shard, 1 Vault Core, 4 Bronze Bar, 4 Wool Thread). 7 piedras conmemorativas al pie de árboles de hojas azules, en orden, oeste→este por Fractured Plains. Si mueres se reinicia; deja un espacio libre antes de la última. Lleva Air Runes (Windstep).\nPiedra 1: cima del acantilado sobre el primer dungeon del centro de Fractured Plains (entra por el camino del Whispering Swamp, sendero izquierdo, Windstep en la estructura de madera junto a la cueva 3 veces). No te tires al este. 2: ladera sobre un estanque (este). 3: borde de acantilado pequeño. 4: arco de piedra y torre en ruinas (SE). 5: campamento Garou (Shaman + 2 Berserkers) cerca de Bloodblight; jálalos lejos. 6: colina frente al mar (norte). 7: cruza el tronco caído, gira a la izquierda; elige \"Sing the bard's song of remembrance\".\n\n## A Melody Remembered\nRecompensa: Ravanna's Ring + receta. Caja de música al sur de la fortaleza del Garou King (NO de Stormtouched Highlands), en edificio en ruinas sobre un escritorio. Pide Inspiring Ring of Runecrafting (Clay Mould, 2 Silver Bar, 2 Opal, 3 Vault Shard) y luego Amulet of Magic NORMAL (Clay Mould, 2 Gold Bar, 2 Silver Bar, 4 Sapphire, 6 Vault Shard), no el Inspiring. Jeweler's Bench: 12 Oak Plank, 8 Ground Sandstone, 2 Gold Bar, 2 Silver Bar, 1 Vault Core. Garou Thane/King débiles a Crush.\n\n## Goblin Diplomacy\nRecompensa: capa Goblin War Banner. Zanik en la loma de Bramblemead que mira al Whispering Swamp. Relicarios en Outlook Ruins (NE, más fácil) y Adventurer's Guild (sur, enredaderas: hacha y 20 Woodcutting). Solo sacas un amuleto de un relicario; en el otro sitio habla con el goblin enjaulado (Bilegut en las ruinas, Wormelbow en el gremio). El segundo amuleto lo tiene el Garou Druid en la Druid's Cave, parte más baja del Whispering Swamp (baja por el puente inferior). Débil a fuego; envenena. Entrega ambos a Zanik. Tip: Lodestone junto a Zanik (32 Stone, 20 Rune Essence, 1 Vault Core).\n\n\n\n# Guía 100%: zonas PL1 a PL5 – Dragonwilds\n · \n## Cómo usar esta guía\nPara el 100% usa dos herramientas a la vez: esta guía te dice qué buscar y en qué orden, y el mapa interactivo te pone el pin exacto.\n- Mapa de The Hidden Gaming Lair en español: más de 40,000 ubicaciones. Ya marca qué cofres están en un piso alto de una ruina y cuáles están en una cueva debajo del pin, con la dirección de la entrada.\n- Listas de control de th.gl: marcas cada cofre, lore o coleccionable que ya agarraste y te filtra lo que te falta. Es lo más cercano a un tracker del 100%.\n- Mapa de MetaBot: útil para ver los puntos de cada misión y los planos de las 13 vaults por dentro.\nOrden sugerido: limpia de sur a norte, una región por sesión: Brynmoor (PL1–2), luego Ghornfell (PL3–4) y al final Fellhollow (PL5). Con tu equipo actual, Brynmoor y Ghornfell ya no te van a dar problemas, así que puedes ir rápido y concentrarte en lo que falta.\nTruco general: antes de cada región, abre la checklist, filtra por esa región y activa solo cofres, lore y quests. Así el mapa no se satura.\n## Misiones que aún no empiezas (PL1–5)\nAdemás de las 6 activas (que ya tienen su propia guía), te faltan 9 secundarias en estas regiones. Tres son rapidísimas (dos en Brynmoor y una en Ghornfell) y las otras seis están en Fellhollow, así que conviene hacerlas mientras avanzas Withering Heights.\n|Misión\n |Región\n |Dónde empieza\n |Requisito\n |Recompensa\n |\n|A Room With A Garou\n |Fractured Plains\n |Caratacus the Elder, en un muelle de madera roto frente al agua, esquina noroeste de Fractured Plains\n |Ninguno\n |3 decoraciones de construcción exclusivas (Hanging Tools, Pots on a Bench y una más)\n |\n|Shrimp Catcher\n |Brynmoor\n |Fabrica una red de pesca y habla con el Wise Old Man en Bramblemead\n |Ninguno\n |Carnada de pluma (feather bait); cuenta para el logro Brynmoor Helper\n |\n|Seeking Salvation\n |Fellhollow\n |Doric, en su campamento frente a Skekven Kara\n |Acceso a Fellhollow\n |Salve Crystal\n |\n|Doric's Quest\n |Fellhollow\n |Doric, al terminar Seeking Salvation\n |Seeking Salvation\n |Zombie Axe y su receta, más 12 Iron Bar, 11 Coal, 12 Dragon Blood y otros materiales\n |\n|Letters for the Dead\n |Fellhollow\n |Postie Pete, en el Forgotten Temple (opción 2)\n |Withering Heights empezada\n |Postbox construible y una actividad repetible de entregas (50 Soul Fragments por carta)\n |\n|Mirror, Mirror\n |Fellhollow (y velas en todo el mapa)\n |Espejo al oeste de Emberwood Village, pasando el Green Dragon (se oye llanto)\n |Withering Heights empezada\n |Ulv's Longbow (PL5) y su receta\n |\n|What Remains is Written\n |Fellhollow\n |Abraxus the Eternal, en Coalridge Pass\n |Acceso a Fellhollow; lleva el Amulet of Ghostspeak\n |Por confirmar en el juego\n |\n|Things That Go Boom In The Night\n |Fellhollow\n |Vannaka, al oeste de Cathan en Bleakfields Valley\n |The Wild Hunt (ya la tienes)\n |Spectral Chinchompa Cape\n |\n|Growing Pains\n |Brynmoor\n |Sube Farming y habla con el Wise Old Man\n |Ninguno\n |3 Plant Cure y Tome of Farming Vol. 2\n |Si Growing Pains ya es tu \"Comienzos difíciles\" en completadas, sáltala.\nDetalles que te ahorran vueltas:\n- Seeking Salvation: activa las cuatro Dragonkin Statues alrededor de Skekven Kara, entra al vault, sube por el pasaje alto de la pared y lee Lacrussa's Writings en la estatua. Llévaselas a Doric.\n- Doric's Quest: le llevas tres armas: Undead Ranger's Bow (receta en una efigie de Skekven Kara), Necromancer's Staff (receta en Vekchenven Kara) y Shadow Sword (receta que suelta un Zogre).\n- Letters for the Dead: uno de los esqueletos te miente y te niega la carta. Elige la opción 3 para que se le escape, y luego la opción 1 hasta que te la entregue. Otra carta está en una antorcha con una bolsa de correo colgando, al sureste de Cathan.\n- Mirror, Mirror: Dragon Blood sale de Dragon Wolves (más fácil) o del Green Dragon. El libro está en lo alto del molino roto al oeste del pueblo (Windstep para subir). Para el Spectral Silver Thread, el esqueleto de Edna en Dragon's Run te pide materiales (Silver Bar, Fine Thread, Sacred Oil, 6 Soul Fragments). Después enciendes velas de calavera en todo el mapa: junto al espejo, en un lago al sureste de Velgar's Rise, al oeste del campamento Garou de Bloodblight Swamp, en un acantilado de Stormtouched Highlands, junto a un árbol enorme en Whispering Swamp y en un acantilado de Bramblemead Valley.\n- Things That Go Boom: los Spectral Chinchompas desaparecen si no los atacas rápido y tardan hasta 10 días del juego en volver. Usa arco o magia y dispárales en cuanto los veas. Hay varios en el bosque de sauces de Witchwillow Range.\n- A Room With A Garou: lleva más de 20 Ash Logs. Construye 4 paredes y techo alrededor de Caratacus (él no se mueve) y háblale ya adentro. A veces llega un Garou Berserker a interrumpir.\n## Dragonkin Vaults de PL1–5\nHay 10 vaults entre Brynmoor, Ghornfell y Fellhollow, con 69 cofres en total. Para el 100% hay que entrar a todas, abrir cada cofre y hablar con cada Dragonkin Effigy (la estatua con orbe azul), que es la que enseña las recetas (HostedGG, MetaBot).\n|Vault\n |PL\n |Dónde\n |Cofres\n |Jefe (debilidad)\n |Recetas que enseña\n |\n|Crasorak Kara\n |2\n |Temple Woods\n |6\n |Vault Overlord (Crush)\n |Ninguna; puro Vault Core\n |\n|Thishepen Kara\n |2\n |Bramblemead Valley\n |7\n |Vault Archon\n |Ninguna; puro Vault Core\n |\n|Vertentis Kara\n |2\n |Whispering Swamp\n |6\n |Rat King (Stab), Plague King (Crush)\n |Anti-Dragon Shield\n |\n|Takla Kara\n |3\n |Fractured Plains\n |6\n |Vault Incinerator (Agua)\n |Set Paladin, Wild Scout's Shortbow; único lugar con Blurite\n |\n|Kletterbuja Kara\n |3\n |Bloodblight Swamp\n |5\n |Plague King (Crush)\n |Set Wild Archer\n |\n|Skeklac Kara\n |4\n |Fractured Plains, bajo Ashien's Watch\n |5\n |Vault Corruptor (Agua)\n |Granite Maul; tiene 150 trampas, la más peligrosa\n |\n|Chaktan Kara\n |4\n |Stormtouched Highlands, río arriba\n |7\n |Vault Pyroclast (Agua)\n |Dragonbone Dagger, set Dragonkin Mage; la mejor para minar\n |\n|Kalistrakthen Kara\n |5\n |Emberwood (Fellhollow)\n |8\n |Vault Striker, Rat King (Stab)\n |Fallen Hoplite's Chest\n |\n|Skekven Kara\n |5\n |Al este del Lake of Lost Souls\n |9\n |Vault Overlord (Crush)\n |Fallen Hoplite's Tassets, Undead Ranger's Bow\n |\n|Vekchenven Kara\n |5\n |Al oeste del Lake of Lost Souls\n |10\n |Dragon Wolves y Zogre\n |Necromancer's Staff, Fallen Hoplite's Helm, Wolfbane Dagger\n |Lo que te falta revisar: tienes el maul (Skeklac), las grebas Paladin (Takla), el escudo (Vertentis) y la daga (Vekchenven), así que ya pisaste esas cuatro. Revisa en el mapa de MetaBot cuántos cofres hay en cada una y compara con lo que recuerdas; muchos cofres están detrás de rutas ocultas o palancas.\nReglas útiles:\n- Cada vault aparece en tu mapa solo cuando la descubres caminando.\n- La mayoría se abre activando estatuas Dragonkin alrededor de la entrada.\n- Cada vault da unos 3 Vault Cores, que reaparecen cada 3 días del juego. Si mueres adentro, tu tumba queda en la entrada.\n- Vekchenven Kara tiene barreras espectrales: necesitas estar en estado Withered para cruzarlas. Su Zogre aguanta más que Velgar.\n- Para tu maul, los jefes débiles a Crush son los más fáciles: Vault Overlord y Plague King. Para los de Agua, lleva hechizos de agua en tu báculo.\n## Brynmoor (PL1–2): Temple Woods, Bramblemead Valley, Whispering Swamp\nAquí lo que más se pierde son los cofres fijos con vestigios (recetas permanentes que solo se abren una vez) y dos capas escondidas. Con tu equipo, Brynmoor es un paseo; ve directo a lo que se esconde arriba o bajo tierra.\nCofres y secretos que no son al azar:\n- Cofre en lo alto del molino de Temple Woods: trae el vestigio Suspiciously Light Tattered Boots (PL1). Sube con Windstep.\n- Cofre alto dentro del templo de Saradomin: cofre de nivel 2 en un piso superior; el mapa de th.gl indica cuánto sube y si hay muros para trepar.\n- Patrón de Bramblemead Cape: cofre en el techo del Runecrafting Guild. Solo con Windstep es muy difícil; constrúyete cimientos o escaleras para subir (wiki).\n- Patrón de Whispering Cape: cofre debajo de la cascada del Whispering Swamp (wiki).\n- A Threadbare Grain Sack: vestigio en una casa abandonada de Bramblemead Village.\n- A Simple Broken Bow: vestigio en un cofre al sur de Bramblemead Valley.\n- Cofre en cueva bajo el Whispering Swamp: el pin cae encima de la cueva; la entrada está unos 30 m al noreste, en el pantano.\n- Druid's Cave: conecta el Whispering Swamp con Bramblemead Valley por debajo; revísala completa.\nStatues of Saradomin (búsqueda del tesoro sin requisitos): empieza en Bramblemead Valley, al este de Crasorak Kara. Lleva 1 Opal, 1 Jade y 1 Sapphire antes de salir, porque las estatuas están en tres regiones (Gamever):\n|Estatua\n |Dónde\n |Qué pones\n |Qué recibes\n |\n|1\n |Whispering Swamp, esquina noroeste\n |Opal\n |Opal Emblem\n |\n|2\n |Fractured Plains, centro: al este de la torre, al oeste de un lago, al pie de un acantilado pequeño\n |Jade\n |Jade Emblem\n |\n|3\n |Stormtouched Highlands, noreste, en la orilla del acantilado\n |Sapphire\n |Sapphire Emblem\n |Si te faltan gemas, en Mining 16 se desbloquea Gem Prospector y empiezan a salir minando.\nVaults de la región: Crasorak Kara (Temple Woods), Thishepen Kara (abajo del Runecrafting Guild; entra con un salto con Windstep) y Vertentis Kara (Whispering Swamp).\nKebbit Burrows (4): cerca del lago grande y la vault de Bramblemead, junto a la iglesia en ruinas (por la estatua y el muro de roca), en la loma junto a la Goblin Fortress y dentro de la Garou Cave a la que se entra desde el Whispering Swamp. Se excavan con pala y se usan con Agility 27 (NoobFeed).\nAgility Course: Chasm Dash (Agility 1), en la orilla sur del lago grande de Bramblemead, junto a la vault. Si sacas oro en el tiempo de maestría, desbloqueas la versión dorada de la capa de la región (NoobFeed).\nRecordatorio: los cofres normales se rellenan cada 5 días del juego (unas 2 horas reales), así que un recorrido por Brynmoor sirve también para juntar materiales.\n## Ghornfell (PL3–4): Fractured Plains, Stormtouched Highlands, Bloodblight Swamp\nGhornfell tiene tres capas escondidas, cuatro cofres fijos con vestigios en Fractured Plains y la búsqueda del espantapájaros. Muchos de estos cofres te quedan de paso con las misiones activas.\nCapas regionales:\n- Fractured Cape: cofre en la punta norte-noreste de Fractured Plains, pasando Ashien's Watch, cerca de un pequeño asentamiento Garou (wiki).\n- Stormtouched Cape: cofre en lo más alto del Highlands Castle (la fortaleza del Garou King) en Stormtouched Highlands (wiki).\n- Bloodblight Cape: en el castillo del sur de Bloodblight Swamp. Rompe el muro agrietado con el pico o con Rocksplosion; detrás está el cofre (wiki).\nCofres fijos de Fractured Plains (cada uno siempre suelta su objeto) (wiki):\n- A Corroded Serrated Blade: cofre cerca del árbol azul donde empieza Heartstrings. Agárralo cuando subas a la primera piedra.\n- Azure Metal Contraption (PL4): cofre debajo de la loma al oeste del río principal.\n- Parts of a Sinister-Looking Staff: otro cofre fijo de la zona; búscalo con el filtro de cofres de th.gl.\n- Plan de Blurite Crossbow: también sale de un cofre de Fractured Plains.\nScarecrow Scavenging (búsqueda del tesoro):\n- Habla con Joe y pídele la Scarecrow's Key.\n- El espantapájaros está justo al sur de donde el río se divide en tres, en la frontera entre Fractured Plains y Stormtouched Highlands.\n- Cava en la tierra suelta junto a él: sale el Mapa 1.\n- El Mapa 1 te lleva al Mapa 2, y este al Mapa 3; cada parada trae lore.\n- Cava en el último punto para sacar el tesoro.\nEstatuas de Saradomin aquí: la de Jade (centro de Fractured Plains) y la de Sapphire (noreste de Stormtouched Highlands). Ver la tabla de Brynmoor.\nVaults de la región: Takla Kara y Skeklac Kara (Fractured Plains), Kletterbuja Kara (sur de Bloodblight Swamp) y Chaktan Kara (noroeste de Stormtouched Highlands, río arriba).\nKebbit Burrows (5):\n- Stormtouched Highlands: dentro de la cueva bajo el esqueleto gigante, cerca de la estatua norte de Saradomin.\n- Fractured Plains: en el acantilado junto a Velgar's Tower (entrada sur), en la orilla norte del río junto a la cascada, y al sur de la fortaleza del norte pasando el puente roto.\n- Bloodblight Swamp: en la parte sur, cerca de la fortaleza.\nAgility Courses (Agility 15):\n- Thunder Assault: ve al esqueleto de dragón gigante de Stormtouched Highlands y gira hacia el puente grande en ruinas; arranca ahí y cruza hacia las murallas.\n- Fractured Ruins: orilla sur de Fractured Plains, en la frontera con el Whispering Swamp. Pasa el arco de piedra; la estación está junto a la estructura.\nDato útil: el Garou King del Highlands Castle es PL5, tiene 1,035 de vida y es débil a Crush (HostedGG). Con tu maul es presa fácil, y de paso subes por la Stormtouched Cape.\n## Fellhollow (PL5): secretos, cofres enterrados y extras\nFellhollow es la región con más secretos de las cinco. Lo más valioso: la búsqueda X Marks the Spot, la ruta de cofres enterrados (de ahí sale la receta de la Undead Spade) y los Spectral Birds, la forma más rápida de juntar Soul Fragments. Siempre trae una pala en el inventario, no en la base.\nX Marks the Spot (4 esqueletos con capucha roja, en cualquier orden) (NoobFeed):\n- Eleanor Scathe's Diary: Bleakfields Valley, siguiendo el camino junto a los árboles.\n- Nolan Scathe's Journal: Coalridge Pass. Empieza junto a la estructura fantasma, sube al terreno elevado y baja a la cornisa.\n- Samuel Malcifer's Journal: al norte de Hope's Fall. Ve a la estructura cercana, hacia la línea de árboles, y trepa la cornisa.\n- Winston Henning's Diary: desde Samuel, ve al sur y sigue el camino hasta el final.\n- El tesoro: en Hope's Fall, dale la espalda a la torre de Imaru, cruza el puente cercano y cava en el montículo de la izquierda. Trae el plan del Spectral Book y el vestigio Scratchy Sackcloth, que desbloquea la Shroud of Noggin (casco PL1 que reduce la acumulación de Wither).\nRuta de cofres enterrados (busca tierra removida y cava) (NoobFeed):\n- Witchwillow Range: dos cofres, uno contra el muro de roca del sendero oeste junto al Wither Rot y otro al suroeste pasando el arroyo.\n- Emberwood: uno en la entrada del cementerio, otro en una cueva al oeste (con lobos) y otro detrás de Emberwood Village.\n- Pasando Dragon's Run: bajo el arco de piedra del camino.\n- Bleakfields Valley: bajo un árbol en el cruce de tres caminos frente a la torre de Imaru.\n- Hope's Fall: uno al norte y otro rodeando la torre de Imaru por el este.\n- Lake of Lost Souls: en la orilla al oeste de la cascada, en unas ruinas al noreste y junto a una estructura grande al otro lado del lago.\n- Coalridge Pass: en un hueco cerca de donde salen Zogres.\n- Silverthorn Keep: en el patio (a la izquierda al entrar), en la estructura al sur con Necromancer y cerca del muro defensivo.\nEstos cofres tienen 5% de soltar el Rotten Farming Tool, que desbloquea la Undead Spade (4 Steel Bar, 4 Undead Bones, 2 Willow Logs, 2 Draconic Leather).\nOtros pendientes de Fellhollow:\n- Spectral Birds: halcones espectrales posados en edificios en ruinas. Tienen 1 de vida, no atacan y sueltan 12 a 15 Soul Fragments (Gamever). Úsalos para comprar vestigios en Death's Exchange (200, 300 o 400 Soul Fragments cada uno).\n- Spectral Platforming: actividad de plataformas espectrales de Fellhollow; los cofres de esa zona sueltan planes de decoración para esos sets.\n- Postboxes (11): después de Letters for the Dead, cada entrega paga 50 Soul Fragments; el mapa de th.gl dice qué carta va en cada buzón.\n- Vestigios de enemigos: Serrated Claw (1/10 de Imaru), Shard of Smoky Glass (1/10 de Zogres, 1/6.7 de Ulgo the Zogre), Sundering Spiked Slab (1/20 de Skeletal Hoplites).\n- Vaults: Kalistrakthen Kara (Emberwood), Skekven Kara (este del Lake of Lost Souls) y Vekchenven Kara (oeste del lago).\n- Capa regional: existe la Golden Fellhollow Cape, pero no encontré dónde está el patrón base; búscalo con el filtro de cofres de th.gl.\nKebbit Burrows (4, se usan con Agility 42): en una loma cerca de Witchwillow Range; al este de Dragon's Run sobre una pared de roca (Windstep para el salto); al norte de Hope's Fall, al este del lago, por un barranco; y al sur de Coalridge Pass, entrando a la cueva de los Zogres hasta la orilla del agua.\nAgility Course: Grave Run (Agility 30), en la pared de roca elevada entre Dragon's Run y Hope's Fall.\n## Checklist 100% y fuentes\nResumen de lo que te falta en PL1–5:\n- 9 secundarias sin empezar + las 6 activas\n- 10 vaults con sus 69 cofres y todas las efigies\n- 6 capas regionales: Bramblemead, Whispering, Fractured, Stormtouched, Bloodblight y Fellhollow\n- Statues of Saradomin (Opal, Jade, Sapphire)\n- Scarecrow Scavenging (Joe y los 3 mapas)\n- X Marks the Spot (4 diarios y el cofre de Hope's Fall)\n- Ruta completa de cofres enterrados de Fellhollow\n- Vestigios fijos de Brynmoor y Fractured Plains\n- 13 Kebbit Burrows (4 Brynmoor, 5 Ghornfell, 4 Fellhollow)\n- 4 Agility Courses: Chasm Dash, Thunder Assault, Fractured Ruins, Grave Run\nAntes de salir de la base: pala, pico, Air Runes para Windstep, 1 Opal, 1 Jade, 1 Sapphire, materiales para construir escaleras y antídotos.\nFuentes:\n- The Hidden Gaming Lair: mapa y checklist en español\n- MetaBot: mapa interactivo y planos de vaults\n- HostedGG: guía de vaults\n- Gamever: búsquedas del tesoro\n- Gamever: cofres y vestigios\n- Gamever: sistema de vestigios\n- NoobFeed: Kebbit Burrows\n- NoobFeed: Agility Courses\n- NoobFeed: X Marks the Spot\n- NoobFeed: cofres enterrados\n- Wiki: cofres de Fractured Plains\n- HolyHosting: todas las misiones\n\n# Dowdun Reach (expediciones 17–25; 24–25 son el mapa Subterráneo / Dowdun Underground)\nZona después de Fellhollow (más de PL5). Lodestone: Dowdun Reach Lodestone. Sub-zonas: The Courtyard, The Library, The Cathedral, The Nexus (con la Dreaming Stone), The Bastion, The Garrison, The Pastures, The Menagerie, The Lake y Demon Gate; bajo tierra: Crypt, Lake y Demon Gate.\nMisiones:\n- Black Knight's Fortress (principal): se empieza hablando con Death en el Forgotten Temple. Pines: Dreaming Stone Shards por toda la zona, Demon Gates, Dowdun Altar, Delrom, Nexus Tower, Shardbound Lesser Demons, Dreaming Stone. Recompensa: Titan's Wrath (arma) y Maple Toastie.\n- Biohazard (secundaria): ataca y recoge el botín del cuervo corrupto en The Courtyard. Pines: Strange Ravens, Putrilius, Twilight Lily, Unholy Water, Zanik. Recompensa: Zamorak Cape.\n- Wanted! (secundaria): habla con Vannaka en The Courtyard. Pines: diarios del Hound Master, Summoner y Rat Master (jefes Houndmaster Rexiton, Summoner Flament, Rat Master Skrexis). Recompensa: Unholy Symbol.\n- What's Theirs is Mine! (secundaria): habla con Doric junto a la Dreaming Stone en The Nexus. Recompensa: Zamorak Staff.\n- Misión de Nodestones (Valerius): Hastily Scrawled Notes, Dead Mage (Valerius) y nodestones en cada sub-zona (cada una tiene su par en The Nexus). En la app aparece como \"Nodestones (Valerius)\"; el nombre exacto de la misión no está confirmado.\nAcertijo de la Biblioteca (Notas de Alric, en The Library junto al pasaje sellado): lee las Notas de Alric y luego interactúa en orden con The Empty Throne → The Eye of Oculus → Taking the Crown → Zamorak's Rebellion, terminando cada diálogo. Un libro equivocado reinicia el acertijo. Al cuarto se cae la barrera.\nJefes de la zona: dragones azules, Black Knight Titan, Stormpact Demon, Sergeant Blister, Zogres.\n";
+const PROFILE=`Jugador: Emilio, juega RuneScape: Dragonwilds en modo melee, va en PL5 a medias. Meta: completar al 100% las zonas PL1–5 (Brynmoor, Ghornfell, Fellhollow).
+Equipo: Granite Maul legendario (PL3, lo subirá a PL5), báculo de mago de una vault, cota de Steel, grebas de Paladin, Wolfbane Dagger, escudo de dragón de ácido (Dragonblight Shield), herramientas de Steel.
+Misiones activas: Withering Heights, Goblin Diplomacy, Animal Magnetism, A Melody Remembered, The Great Body Robbery, Heartstrings, Even More Restless Ghosts.
+Completadas: Dragon Slayer, Restless Ghosts, Growing Pains (probable), Highlighting the Problem, Cook's Assistant, Dog Days, Granite Mauled, The Wild Hunt.`;
+const RULES=`Eres la guía experta de RuneScape: Dragonwilds dentro de la app "Expediciones de Ashenfall". Responde SIEMPRE en español mexicano, cercano y directo, breve (máx. ~150 palabras salvo que pida detalle). Usa viñetas cortas cuando listes pasos.
+La app tiene 25 expediciones numeradas (1–5 Brynmoor, 6–9 Ghornfell, 10–16 Fellhollow, 17–23 Dowdun Reach superficie, 24–25 Dowdun subterráneo), cada una con paradas numeradas en orden de ruta. Cuando el jugador diga dónde va ("voy en…") o qué quiere ("quiero…"), usa las herramientas para encontrar las paradas relevantes, dile "Expedición X, parada N" y llévalo en el mapa con mostrar_en_mapa a la mejor. Marca paradas como hechas SOLO cuando él diga que ya las hizo.
+Usa solo la guía de abajo y los datos de las herramientas. Si algo no está ahí, dilo con honestidad y sugiere revisar el pin en MetaForge o el wiki; no inventes ubicaciones ni recetas.
+
+${PROFILE}
+
+GUÍA:
+${KB}`;
+function ctx(){const e=DATA[cur];return `Estado actual de la app: está viendo la Expedición ${cur+1} "${e.n}" (${e.r}), ${cnt(e)}/${e.s.length} paradas hechas. Progreso total ${all.filter(s=>done[s[0]]).length}/${all.length}.`}
+const findExp=n=>{n=Math.round(Number(n));if(!(n>=1&&n<=DATA.length))throw new Error('Número de expedición inválido (1–'+DATA.length+')');return n-1};
+const TOOLS=[
+ {name:'buscar_paradas',description:'Busca paradas por texto (nombre, tipo o zona/landmark, en español o inglés) y opcionalmente por tipo y/o expedición. Devuelve hasta 25: expedicion, parada, nombre, tipo, detalle, hecha.',
+  inputSchema:{type:'object',properties:{texto:{type:'string'},tipo:{type:'string',enum:['cofre','lore','mision','vault','jefe','secreto','npc','viaje']},expedicion:{type:'integer'},solo_pendientes:{type:'boolean'}}},
+  execute(i){const q=String(i.texto||'').toLowerCase().trim();const out=[];DATA.forEach((e,ei)=>{if(i.expedicion&&ei!==Number(i.expedicion)-1)return;e.s.forEach((s,j)=>{if(i.tipo&&s[1]!==i.tipo)return;if(i.solo_pendientes&&done[s[0]])return;const hay=(s[2]+' '+s[3]+' '+KIND[s[1]]+' '+e.n+' '+e.r).toLowerCase();if(q&&!q.split(/\s+/).every(w=>hay.includes(w)))return;out.push({expedicion:ei+1,zona:e.n,parada:j+1,nombre:s[2],tipo:KIND[s[1]],detalle:s[3]||undefined,hecha:!!done[s[0]]})})});return {total:out.length,resultados:out.slice(0,25)}}},
+ {name:'ver_expedicion',description:'Lista todas las paradas de una expedición (1–25) en orden de ruta, con tipo y si ya están hechas.',
+  inputSchema:{type:'object',properties:{numero:{type:'integer'}},required:['numero']},
+  execute(i){const ei=findExp(i.numero),e=DATA[ei];return {expedicion:ei+1,zona:e.n,region:e.r,hechas:cnt(e),total:e.s.length,paradas:e.s.map((s,j)=>`${j+1}. [${KIND[s[1]]}] ${s[2]}${s[3]?' ('+s[3]+')':''}${done[s[0]]?' ✓':''}`)}}},
+ {name:'progreso',description:'Resumen de avance de las 25 expediciones (hechas/total por expedición).',
+  execute(){return DATA.map((e,i)=>`${i+1}. ${e.n} — ${e.r}: ${cnt(e)}/${e.s.length}`)}},
+ {name:'mostrar_en_mapa',description:'Cambia la app a una expedición y centra el mapa en una parada (abre su ficha). Úsala para llevar al jugador a donde debe ir.',
+  inputSchema:{type:'object',properties:{expedicion:{type:'integer'},parada:{type:'integer'}},required:['expedicion']},
+  execute(i){const ei=findExp(i.expedicion);if(ei!==cur){cur=ei;save();render()}if(i.parada){const j=Math.round(Number(i.parada))-1;if(!pins[j])throw new Error('Esa parada no existe');setTimeout(()=>{M.flyTo(pins[j].getLatLng(),0.5,{duration:.6});pins[j].openPopup();flash(j)},250)}return 'ok'}},
+ {name:'marcar_hecho',description:'Marca o desmarca paradas como hechas. Solo cuando el jugador diga que ya las completó.',
+  inputSchema:{type:'object',properties:{expedicion:{type:'integer'},paradas:{type:'array',items:{type:'integer'}},hecho:{type:'boolean'}},required:['expedicion','paradas']},
+  execute(i){const ei=findExp(i.expedicion),e=DATA[ei];const h=i.hecho!==false;const names=[];(i.paradas||[]).forEach(p=>{const s=e.s[Math.round(Number(p))-1];if(!s)return;if(h)done[s[0]]=1;else delete done[s[0]];names.push(s[2])});save();refresh();return {marcadas:names,hecho:h}}}
+];
+let turns=[];try{turns=JSON.parse(localStorage.getItem('aw-chat')||'[]')}catch(e){}
+const saveChat=()=>{try{localStorage.setItem('aw-chat',JSON.stringify(turns.slice(-20)))}catch(e){}};
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function md(t){const lines=esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').split('\n');let h='',inl=false;for(const l of lines){const m=l.match(/^\s*(?:[-*•]|\d+\.)\s+(.*)/);if(m){if(!inl){h+='<ul>';inl=true}h+='<li>'+m[1]+'</li>'}else{if(inl){h+='</ul>';inl=false}if(l.trim())h+='<p>'+l.replace(/^#+\s*/,'')+'</p>'}}if(inl)h+='</ul>';return h}
+function bubble(role,text){const d=document.createElement('div');d.className='msg '+(role==='user'?'u':'a');if(role==='user')d.textContent=text;else d.innerHTML=md(text);$('msgs').appendChild(d);$('msgs').scrollTop=1e9;return d}
+function drawChat(){$('msgs').innerHTML='';if(!turns.length){bubble('assistant','¡Qué onda! Dime dónde vas o qué quieres hacer (por ejemplo: "voy en Emberwood" o "quiero el Crystal Bow") y te digo a qué expedición y parada ir.')}turns.forEach(t=>bubble(t.role,t.content));$('sugs').hidden=turns.length>0}
+let sample=null,busy=false,ctl=null,dead=false;
+(async()=>{try{sample=await claude.use('sample')}catch(e){}if(!sample)return;$('chatbtn').hidden=false})();
+$('chatbtn').onclick=()=>{$('chat').hidden=false;$('chatbtn').hidden=true;drawChat();$('chatin').focus()};
+$('chatclose').onclick=()=>{$('chat').hidden=true;$('chatbtn').hidden=false;ctl?.abort()};
+$('chatclear').onclick=()=>{ctl?.abort();turns=[];saveChat();drawChat()};
+$('sugs').onclick=e=>{if(e.target.tagName==='BUTTON'){$('chatin').value=e.target.textContent;send()}};
+$('chatform').onsubmit=e=>{e.preventDefault();send()};
+$('chatin').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
+const ERR={not_granted:'No se dio permiso para usar Claude en esta página.',sampling_disabled:'Claude no está disponible en esta cuenta.',rate_limited:'Demasiadas preguntas seguidas. Espera un momento y vuelve a intentar.',session_expired:'Tu sesión expiró; vuelve a iniciar sesión.',refused:'No pude responder eso; prueba a preguntarlo de otra forma.'};
+async function send(){
+  const q=$('chatin').value.trim();if(!q||busy||!sample)return;
+  busy=true;$('chatsend').disabled=true;$('chatin').value='';$('sugs').hidden=true;
+  turns.push({role:'user',content:q});bubble('user',q);const b=bubble('assistant','');b.innerHTML='<p>Pensando…</p>';
+  const act=document.createElement('div');act.className='act';
+  const lim=await sample.limits().catch(()=>null);const useTools=!!lim?.tools;
+  const wrapped=TOOLS.map(t=>({...t,execute:(i,c)=>{act.textContent={buscar_paradas:'Buscando en el mapa…',ver_expedicion:'Revisando la expedición…',progreso:'Revisando tu progreso…',mostrar_en_mapa:'Moviendo el mapa…',marcar_hecho:'Marcando paradas…'}[t.name];if(!act.parentNode)$('msgs').insertBefore(act,b);return t.execute(i,c)}}));
+  const fallback=useTools?'':'\n\nPARADAS DE LA EXPEDICIÓN ACTUAL:\n'+DATA[cur].s.map((s,j)=>`${j+1}. [${KIND[s[1]]}] ${s[2]}${done[s[0]]?' ✓':''}`).join('\n')+'\n\nRESUMEN:\n'+DATA.map((e,i)=>`${i+1}. ${e.n} (${e.r}) ${cnt(e)}/${e.s.length}`).join('\n');
+  const input=[{role:'user',content:RULES+fallback},...turns.slice(-12,-1),{role:'user',content:ctx()+'\n\n'+q}];
+  ctl=new AbortController();
+  try{
+    const opts={signal:ctl.signal,onText:({text})=>{b.innerHTML=md(text);$('msgs').scrollTop=1e9}};
+    if(useTools)opts.tools=wrapped;else opts.cache=false;
+    const r=await sample(input,opts);
+    turns.push({role:'assistant',content:r.text});saveChat();b.innerHTML=md(r.text);
+  }catch(e){
+    if(e.code==='cancelled'){b.remove()}else{b.innerHTML=e.text?md(e.text):'';const m=document.createElement('div');m.className='msg a err';m.textContent=ERR[e.code]||'Algo falló al responder. Intenta de nuevo.';$('msgs').appendChild(m);turns.pop();saveChat();
+      if(e.code==='not_granted'||e.code==='sampling_disabled')dead=true}
+  }finally{act.remove();busy=false;$('chatsend').disabled=dead;$('msgs').scrollTop=1e9}
+}
+
+</script>

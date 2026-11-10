@@ -1,0 +1,391 @@
+4b74a2380c1f9d81b550aee789b4b005|p|treasure_chest||-6592|217619|
+171d162859fbcfd03c9d3328b6b8ad8e|p|treasure_chest||-20165|214941|
+76a8a136626b12d41987445de859931b|p|treasure_chest||-817|224907|
+b4b11f7ff743b346c562f5e31e870d62|p|treasure_chest||-2293|216290|
+b53eba03a752b9afedffa4b0b1fee46a|p|treasure_chest||168439|66367|
+3a894686b06b44954da8929611c01bb3|p|treasure_chest||153547|66198|
+24570a884854dc8a9f359d27f1d4f542|p|treasure_chest||160704|71100|
+6efdda2a3abb94301ced49bdc74511d8|p|treasure_chest||157281|54889|
+cdaac8c523b88a0cb5fd1d4bbd409fde|p|treasure_chest||171890|62608|
+5ec08c695a4e4cc64d2ba8506fc465fd|p|treasure_chest||-66271|218030|
+2a44f918b1e94509ca1c46c20f0fa9c2|p|treasure_chest||-55102|207470|
+0ae99564ed5be6d6ada1a2740e117e03|p|treasure_chest||-63783|206042|
+ad9f113c04e161cc433a782044289dc9|p|treasure_chest||-74770|210296|
+b95a643ab71cc845232d8eb3c1066d3c|p|treasure_chest||-71465|221674|
+8ffade62a96df41d56286d291d41ff24|p|treasure_chest||-40741|211224|
+1ef5e7681bb430f7a5ad5261594e2149|p|treasure_chest||153419|80945|
+8903129fe7d37d63ea27d92a6252a279|p|treasure_chest||175590|81540|
+74252987b9ffb417dcd90edae8bae3c1|p|treasure_chest||-44973|74071|
+bd9b550da042231cc579b88ae6a9242d|p|treasure_chest||-43735|57624|
+d96061d8d4a3c3cf4563441f460a6869|p|treasure_chest||-30010|72857|
+36976829ab944edea41f6f07559a182d|p|treasure_chest||163266|126499|
+5d85762b8dd59a037d5b6f94268deaa9|p|treasure_chest||146595|139494|
+45a41bd9991acbc429aa353cd314a4d4|p|treasure_chest||147825|76664|
+dbc981bf19bd05982f44a7a86f9ebdb0|p|treasure_chest||143639|82870|
+c8f166db1e5a9c6f129f3cf69fccc360|p|treasure_chest||132867|87963|
+056ace3bb6ac7b14789050e457f8350c|p|treasure_chest||96749|69699|
+6a5a1460f0053348a2713e6abe9aa729|p|treasure_chest||-63386|51170|
+1be70b3bf2069d69f665edeb2bd5f1c1|p|treasure_chest||-63258|74965|
+9d0c2a6b2edd551f6702a61a485a98ac|p|treasure_chest||-63561|56949|
+475057d2f145a2bbec1a9fe0d6532c85|p|treasure_chest||-67036|64558|
+3aa5113a27120d804c4bc28c381a4a2b|p|treasure_chest||103615|124680|
+befbd9511a1b2e88054a280675097ded|p|treasure_chest||83225|75549|
+975703d277fcee89ef4757bb89b6b396|p|treasure_chest||5383|135578|
+ee88218b6db25c079c7d14dbcd0b1212|p|treasure_chest||190727|5179|
+a1d8ecd45e5a25d141cdf40526cba069|p|treasure_chest||186133|6975|
+bf92ffbe905f62053449966134c818de|p|treasure_chest||142070|73396|
+b19b82d945a5d55bcb281f1683116d18|p|treasure_chest||150433|61406|
+7ecf6212c90707fe85909b75e6bee7b2|p|treasure_chest||137360|55004|
+92b72e04a55cc0e625878c06c80842b4|p|treasure_chest||136257|68984|
+9dd35685583f93e085c8ba03852bc1e2|p|treasure_chest||-41752|33940|
+973f2e274f76d059e8a91edf11846754|p|treasure_chest||-62468|80301|
+4ff231269bf3ff5d720eeb6459f2ece2|p|treasure_chest||-54065|99248|
+fe778446b4aa2eec51f4ffd0eea949d4|p|treasure_chest||-51706|81045|
+2c06eb591fde9ea0534e8de993553d6c|p|treasure_chest||-62993|92886|
+d2aaa795021bd6a775a93f972d5a880b|p|treasure_chest||-28666|193761|
+08d9d057beb521c75e3befa39d155182|p|treasure_chest||-32066|184543|
+b3fda668f669c82da960c0aac38d5422|p|treasure_chest||172061|16257|
+63f5c9db18ca2b9e4851ecbaacf8af95|p|treasure_chest||153625|22386|
+ab68d4ef8b29a416d54ca77a898949b5|p|treasure_chest||124209|84262|
+8b01d1b877816f80ab7ed211f17ec283|p|treasure_chest||113793|79144|
+21b442dfbe0e4b5c786a9c5d2bf5003c|p|treasure_chest||114689|78367|
+13906d5bf55dd814fedf2a0bf05a3c2f|p|treasure_chest||-23097|190831|
+e40e7acd55287b05c014c806d974a37d|p|treasure_chest||-2587|81493|
+a095e08b781a2d08fc473623b23b52cd|p|treasure_chest||99571|26102|
+442aad86744bc8b966d6da3bb4e47bf1|p|treasure_chest||79280|44979|
+e98af0aa7d9da3ff1b864c9fcdc90a87|p|treasure_chest||83030|36399|
+bbb58c46ea16cd83fbfd3a1c18dac877|p|treasure_chest||91088|25712|
+1d7b6ed760f99fd47dc3a66663bbc308|p|treasure_chest||91755|27667|
+b376adcb882ffeea2bf573be81bd9c28|p|treasure_chest||93099|49044|
+c9f8d11f46c634784303115e09d973e7|p|treasure_chest||90461|86190|
+ec4df753a1b0fe6e5144dec7a2fadd97|p|treasure_chest||76395|138348|
+142c04504a22609bcb260b05323d813f|p|treasure_chest||77451|142668|
+9ed37a159ed892d3598858fef4f89871|p|treasure_chest||82146|115712|
+9544552234a61b4fbbb1d371c9fffdb7|p|treasure_chest||144927|19218|
+2525142f5a0dcd856dd37ecf90e7cdfb|p|treasure_chest||148191|21603|
+25f06ac471f43f9a33daab59838d63c7|p|treasure_chest||147506|21416|
+af1a03a229053e5a35fb4017438de7a4|p|treasure_chest||-76583|131779|
+b6df56b2a3225c333040a9753d347926|p|treasure_chest||-35701|233030|
+666da92a72621171d60521de4e7b9beb|p|treasure_chest||-36910|234239|
+d4dbd4b2c846f81b297d5cbf7763412b|p|treasure_chest||132872|102181|
+56ae31281ec8019457b1d7e5cc430062|p|treasure_chest||145283|123147|
+85d84f3ba3f1dcca79d8e220a804e25b|p|treasure_chest||141274|122165|
+d2752ac09075e997b75dd0db893ad1b3|p|treasure_chest||-16536|232605|
+9b6c49429eaff3abe3f8912a0cdc646a|p|treasure_chest||71957|21453|
+9a0a698bb94afd9429a1f9f49a72e545|p|treasure_chest||-32326|90189|
+b68d660ab32b1820e706e068cec184dd|p|treasure_chest||-28755|98277|
+1b749f6275834344c624f9ef97ca58e5|p|treasure_chest||-54185|161006|
+6ea0c5155c44e828e32b0da6638a8a77|p|treasure_chest||-42497|160851|
+731cc724ba181fafbbbd87668207ae5c|p|treasure_chest||-21406|152411|
+752542a755d4e22040e4b8d91d88f2f5|p|treasure_chest||-60713|146647|
+686e51b7e260d0a366266649e0aa3e89|p|treasure_chest||-65291|129511|
+158013b07b43861616b61bd04b314e50|p|treasure_chest||-60510|142672|
+5e816164286785a148d4d0be5a89027b|p|treasure_chest||-50829|132216|
+a4ae55312493f70afe36b6d8839d9262|p|treasure_chest||106215|55960|
+d4a18c8956a9a75aea73295c852369ee|p|treasure_chest||124088|54468|
+9bdf8c54a7df1559c027996dee13277a|p|treasure_chest||115279|72800|
+f09d37e1cc951066a7d1a24e72c4490f|p|treasure_chest||109799|142624|
+5dc888e0f20f967258b89f5cf191c5e8|p|treasure_chest||186217|64499|
+c2045c95f0b1f7b80b1ecc5f06bf5f34|p|treasure_chest||184926|72215|
+a086f61b70fe2553efcafb7f88929258|p|treasure_chest||154879|114636|
+ac1099cc788c6d658d1aae08705bc222|p|treasure_chest||170500|125214|
+ef46e6557091f37bb414269736ac63cb|p|treasure_chest||82523|16382|
+780ec34ca63cf236f01db52a6a1cec76|p|treasure_chest||-37436|112370|
+83ddd4d9e7539c8913a3d64518b6f6d5|p|treasure_chest||172321|42721|
+4c621a0cd97a890b108961d2f6216162|p|treasure_chest||164348|32440|
+b145b2c57251c0019d0a9e42efef8574|p|treasure_chest||186196|46449|
+a8c90edb332a77873b42fa1f7a6348c2|p|treasure_chest||176878|48306|
+d06f8513937f45af554d371975b30fa1|p|treasure_chest||133136|41588|
+75ac13452d7748000315b31e78c80baf|p|treasure_chest||132271|40461|
+17e392b5eda3773a3a173ccc3fd5ef2d|p|treasure_chest||144824|43567|
+07c7a14ef4c3280d25bed91b3293ad2a|p|treasure_chest||65199|118932|
+8b54dffdd9d32a5b9d08752357343a86|p|treasure_chest||62845|118550|
+126911e8b213cee190da404f3f20e41d|p|treasure_chest||161643|58155|
+0c9048659e6c3244c1bdf9f541c351f8|p|treasure_chest||161581|61498|
+bff309ae92a3a6a24ada4b2c9758ed8b|p|treasure_chest||160999|61541|
+8a89771f5ded07ec8f87e7ec48e1fadb|p|treasure_chest||158164|125994|
+003b6542ef63dc2aa750583590475c92|p|treasure_chest||80094|20690|
+95cef8e2779b48546221ecc161cc8bcf|p|treasure_chest||735|80672|
+15b1db56ac17fbeac3f8b69ddf1a6fb8|p|treasure_chest||12852|79502|
+e43126c76c4d2db252d57d512824754c|p|treasure_chest||125432|54679|
+017e5bd43169b5fc0c28721ad64e8979|n|bilegut||156893|79805|
+d073f0f1c3dc30bb848af0b9bc9ce699|n|doric||92602|142219|
+cd19aa13eb57eb00f936e4ba75d5ed89|n|doric||-42347|194041|
+5b20f0ec1fcf70f73c47b73bff043bbb|n|doric||184632|10908|
+6f5116aa0715edb9fffd1e1293049383|n|statue||116568|123674|
+160a7081fedfc0dd9b11a92023ddbae5|n|statue||113294|93023|
+3af1b3594eeb855685f1515a8a305764|n|statue||99972|130153|
+eb245d9dc715b1c02adcdbab783f923f|n|statue||109848|144550|
+a709065cf4f3b13149a9ba71b645a5ea|n|statue||113518|80763|
+4edf24193ee95378231f014aba78f0fd|n|statue||113279|111394|
+0f13437b8fa6c3ab0a9460e0944eefbb|n|statue||124238|140373|
+b7eb5bd2a2f3763564566c74c0ece246|n|statue||146324|23717|
+6ad2f7421cf78cf995168a1bb755c34e|n|statue||149101|18919|
+200cd84e12322c1b20951b606a7c52c1|n|statue||145320|19932|
+c8a6f98bc36cbdf4a5c3d79d9664203c|n|statue||147057|19235|
+d787b9c2073d6f75134d54b4f187291c|n|lougrims_shrine||77752|42919|
+0dcd7b66b0da0643393e3564a8d6e2fa|n|reliquary||154387|81070|
+cedfc78cd6824b05cf838281ed28716c|n|reliquary||174744|80605|
+832a92bc884e231651b63eddf4c3993c|n|reliquary||187978|2477|
+ddba6ac04c2eba3fbad622581a6e3549|n|reliquary||169670|41280|
+f720471ed865d970149ec3118ec4778f|n|ghost_of_cathan||146597|54059|
+8d6490b64acbaea7a294036c4d23a402|n|ghost_of_cathan||173549|19101|
+35962a78931ac830c371d8d14e113ef1|n|ghost_of_cathan||186678|64043|
+c0ca65d6a610c7da0269d80f88c43020|n|ghost_of_cathan||174580|37694|
+5eede060636d3b1ea65e477a51e01a6c|n|vannaka||178853|15183|
+1c7ada7378b4834f796ac62502908a83|n|vannaka||92794|44085|
+e1902dc67512d7a2b97b2d3d26277a99|n|statue||-41803|192105|
+9fa6b45451873571d04e90df060a1b76|n|statue||83947|136266|
+720c1ac43983a5721a478d13dc4483c2|n|wise_old_man||59362|124361|
+910264e915ef11fc8c6fa33c5a1d22af|n|wise_old_man||187357|6133|
+75a517c34dcffcb5fd4a75163cf7d46f|n|wise_old_man||105680|99330|
+0af201a60c9e0790829757f88b27e91f|n|wise_old_man||177605|48500|
+9e114d6d1dec667656adc01392c241f8|n|wormelbow||172224|79038|
+9abb059fcd82cf2048dff8650b086e7c|n|zanik||157559|74432|
+904896c74d716ce8ea46c3775ef5c530|n|zanik||182395|26688|
+684cede709ad4485cef9ae3f5287d1e4|n|death||35470|127610|
+fabb5f61361c812cd8fb88d6079391b0|n|ghost||-42728|52816|
+f75288bedd07960fd7f51033b9ab27c4|n|ghost||-42817|52451|
+94313fe9417818d73874ebd7aba3cfc4|n|ghost||-42994|53101|
+06b4a050a719cdcb7bada4a47ad4f361|n|ghost||-63947|53214|
+cc5d560c35aa4e64024cd309ecacb8dc|n|ghost||-71826|184642|
+b64988713dead85cf9e17fe6a5e4ba01|n|ghost||-74423|130410|
+c8bf19a59ec48436d48f1a3d2e259951|n|cathan||-18830|139414|
+33dcc0575843830c0bf00d2df5b9dcfe|n|postie_pete||24771|132812|
+42bd217ec8284531055b0871bd1e8f7c|p|curse_seal||-48904|224086|
+c64109b32c9f6d06d11f1d505bd19158|p|curse_seal||-60543|53562|
+d6daed84a2ccc9f6a46a1c50bc59d6aa|p|curse_seal||-57714|144594|
+971e51b31ab92c5dde9d3f5b3740f5e9|n|standing_stone||-19679|137844|
+dc12e7656790434c0d8f3a5fb95e27d7|n|standing_stone||-19052|140427|
+ec66289e2834ba18c4c6ba0d4ec0aaaa|n|standing_stone||-19945|139344|
+e554547408794f08028380f255f03663|n|vannaka||-30161|126491|
+60bfc2638c988ecaf4b86cbf65824c4e|n|zanik||-21251|153382|
+c5aed0fa86a609cee4e3eeef17f4959b|n|ghost_of_cathan||-2935|210753|
+bafaae794d804efc15c35afe3d0e8ba8|n|edna||-61840|86304|
+2e902015e358b990d2aa9a88ff3d0c29|n|parcel_pete||24670|132770|
+9e010dbf72f921d15d868c500d842f96|n|abraxus_the_eternal||-74597|200519|
+567a1924a8c44281a57771ee5e2c22e5|n|slopfinger||120849|43067|
+ef5cc2452d838e3e71a8ddc58ed4574f|n|pulpknuckle||120226|43142|
+7addc0eeaccd023f69ea06bb25637c17|n|manktongue||120899|43673|
+5dda6bc6ad94d8fc3073d2f70dacf68a|n|advert-inna-bottle||120915|43807|
+dbbd2129df8248cebacec64a17479b28|n|undead_chicken||82645|40748|
+d0815c61081630eac357d752cba110bd|n|undead_tree||148991|128694|
+fc4b14d8ca440eef01ef0cf2eb2e76a3|n|scarecrow||97569|55341|
+c7dbb22e74cdcdd5bf5bdff51524fc03|n|caratacus_the_elder||89610|61375|
+f80934321e88da3a795b1974d5573882|n|doctor_fenkenstrain||157086|125148|
+38370253f7b22b667a13f74f568d3e66|i|abyssal_demon||136443|44952|
+c1101689bae3fc75621702f43f65d5da|i|abyssal_demon||143724|126794|
+013fa49cb9a26473757c7493517dd4df|i|abyssal_demon||98202|116576|
+6504b7815354c3668adb34e12105fe49|i|abyssal_demon||89308|133735|
+b7cdb3dab45c30a54efef44874f6ba6e|i|plague_king||140326|63187|
+18759c3896105ed0ebb321e8216d2990|i|plague_king||144355|121658|
+697571f145fa05a7128c4a9d808a122d|i|green_dragon||-41418|36946|
+04267c88f0d88bc5f4f9a4dfd49b4602|i|green_dragon||-55056|98443|
+04fe35c81e90ba33138433d86801ece0|i|green_dragon||-73145|118431|
+381aff72b44eb42430cee8352c7bd71a|i|green_dragon||-48159|226999|
+e7402d45f5b351555589b6d83cbf5f16|i|green_dragon||-43438|43062|
+c32561ba6f219de7108ff2765d53ddd6|i|zogre||-46027|76014|
+4bd509d93f297e6aa78682f6e987349a|i|zogre||-64736|146978|
+faef8d6f7ad77f8b826a63f9a96c7c39|i|zogre||-52067|80269|
+64887ea8f377408e0cb3c2f6d04ea950|i|zogre||-71711|160823|
+230462e39e75b438df722574bbcfd752|i|zogre||-18930|218199|
+704d35f0c67e4eca0ff8bdade16a3b83|i|razlem_the_necromancer||-1666|226249|
+83a073bee877f61bc995c7c4101e2b0c|i|blightscale_the_lesser_green_dragon||-17604|234246|
+2a92d942f1d7d70f4061aed4e947eacc|i|ulgo_the_zogre||-65519|217819|
+d1a3f14460dc54bf319d5ea81dd28bf7|p|vault|Imaru's Lair|-57991|131804|
+1d72e22653581a8f8253bf11857a4056|p|spectral_room|Spectral Room 11|20679|132540|
+ff2460482a4d1989db56b0ef85724b6e|p|vault|Kalistrakthen Kara|-51139|29580|
+8ac90c0a5fe1b4c0c5f7600bd9ecf5dc|p|vault|Vekchenven Kara|-57714|144594|
+ffe92ec0faa1505c9c79ef68457fcc67|p|vault|Skekven Kara|-42244|197429|
+d387bacdbe10c6c9b65fddcb4849b9fa|p|vault|Thishepen Kara|150931|26827|
+8df61a565c69c05a38a7fed5c977f040|p|vault|Chaktan Kara|80494|16385|
+2acd12d1c37ed3ece57944991ff3d8ac|p|vault|Crasorak Kara|191874|37458|
+192514453fdbf264b2f1c8a6dfbd2564|p|vault|Vertentis Kara|144813|102752|
+8b9de6401d5a66e896f9866671c50b2d|p|vault|Kletterbuja Kara|168454|118972|
+715dc18fb4f3233c5c7ca53eb565fc46|p|vault|Takla Kara|118288|74800|
+3e6f537bc02b48e63f71d0b603b4ab03|p|spectral_room|Spectral Room 4|-69541|218114|
+371c5711f8bdb9416d79be5c5854004b|p|spectral_room|Spectral Room 5|-66929|144714|
+45d1bfab05ab5c39aa04e42872d3cf3a|p|vault|Dragon's Lair|100247|98829|
+4fa2e601ab9d7972efc4af7a414d00d2|p|spectral_room|Spectral Room 1|-17238|86051|
+338673cc1d7a9749074d3a234c136208|p|spectral_room|Spectral Room 2|-59924|48169|
+17b0709cecf163a71f26b2636c84b58b|p|spectral_room|Spectral Room 6|-18969|151505|
+702750b716467a03811c6b23d19e2e1a|p|spectral_room|Spectral Room 9|-38996|38553|
+141b510dc89da1a8d68d7dde30773654|p|spectral_room|Spectral Room 8|-61964|93143|
+e6c6ed5c32532eb1ba8cae1895254e4a|p|vault|Skeklac Kara|77714|138097|
+c6df130c4f4cd3a6bce1c01eea63a68a|p|spectral_room|Spectral Room 3|-31231|199145|
+7ea8dd2d264ae2d4ee198960771f4c4e|p|spectral_room|Spectral Room 7|-46462|171402|
+14ee7335de3fdeb77195ea6a76517e00|p|spectral_room|Spectral Room 10|-17978|234864|
+1b74cd35c4cc24215314a7289a4f2579|p|lore_item|Scrawled Diary Page|172031|52153|
+f644d9204f1b12bac5463ec2a5983297|p|lore_item|Druid's Memoirs|172179|62614|
+2db9fa72a5605aeca2706e59cf1f2212|p|lore_item|Forgotten Diary|153659|50467|
+5ceaf76ce62340a223fd35c6b11c395d|p|lore_item|Servant's Secret Diary|159035|61445|
+83cc203a75c867d5b0fbc2790e9d1717|p|lore_item|Duke's Diary|160405|63040|
+5bb74fac3c543879b37affacf917e748|p|lore_item|Cathan's Journal [Castle]|160992|61409|
+87ef6a89e2afa685c036b29ce3e295d6|p|lore_item|Muddy Scrawl|153565|79929|
+9772a0cacf75625774b002db6e37be88|p|lore_item|Grimey Parchment|173926|81423|
+4ff02583b9628ff05aa355de82bc6bff|p|lore_item|Weathered Diary|162733|85904|
+36b6aa2f9f43d3d092c0f4a7033655c8|p|lore_item|Elder's Storybook Page|133041|87043|
+8ce28f5b94bbd7f72fa2c2aa6f18b168|p|lore_item|Dragonkin Journal Page|127363|94588|
+898b2b95f0c384adaf2d20726a826c4d|p|lore_item|Cathan's Journal [Ghornfell]|134320|78184|
+2fa232bf486b31c37150bdb224a878bc|p|lore_item|Dust-covered Diary|190522|5159|
+11f5f3b2b91b2e43a267850b94cf68ae|p|lore_item|Priest's Journal|192183|13010|
+60ea01ecdd3dc168d63b523b6941a621|p|lore_item|Cathan's note|178838|15512|
+ebb07bcbbb6f0c73c4186b2f9f8f992c|p|lore_item|Torn Journal Page|135975|68009|
+a04ab7957b0045c17e8b63f97655d43c|p|lore_item|Garou Writings|126504|55319|
+89b219a31b0eaeb4fa5d8dccc2eb9a57|p|lore_item|Bloodstained Journal|173386|19774|
+324a3c65034d9da18655d90c50460f18|p|lore_item|Ritual Of Purification|99944|25979|
+07676af20cc97fd873c077be499e497d|p|lore_item|Leathery Parchment|99722|33582|
+be243379dc46e442e0cfe0c612690637|p|lore_item|Infused Journal|76161|138422|
+e749ffb1c22c571fb9f7a57267752ade|p|lore_item|Vault Hunter's Journal|145874|19694|
+cfd92d43ac3f98a623b258c173a529d9|p|lore_item|Bloodstained Page|136677|124886|
+6d63087ffd6c88bfa41fa91d6a4ffe9b|p|lore_item|Leaf-scented Page|130746|105591|
+c90fa1dc6f9067790676d14dda19f7c0|p|lore_item|Dragonkin Diary Page|72491|19145|
+9aed780516069f424b8d52cda63bf094|p|lore_item|Scorched Journal|124449|71521|
+186f2473532cbc5bec235acdd5c40063|p|lore_item|Dragonkin Notebook Page|123527|140830|
+e0dc88d4bf28ea34195eabc9df62f53f|p|lore_item|Grubby Note|178598|68969|
+65043ab285b64f13a4203e13ac29bc15|p|lore_item|Tear-stained journal|186936|73772|
+23ebff3d97fc1537116180715c68a8dd|p|lore_item|Ancient Journal Page|156991|29119|
+de5b8541c9edba10ee3c3f05be2b3278|p|lore_item|Soot-stained Diary|163832|31204|
+6e0bd9cf4d6ad0c193b33bbd51777b27|p|lore_item|Pungent Scribble|177693|48282|
+120917f97ff91661a7fbdb8395ed533f|p|lore_item|Ravanna's Sixth Journal|-46300|58460|
+68b5f9747c75fe74bacf31e3c654aa46|p|lore_item|Lazilly-penned Diary|-48012|59376|
+3e9ddc8ce89fb550add33825787712a8|p|lore_item|Ravanna's Second Journal|-47314|52872|
+3112498144fa9272e8cb176aebd59fad|p|lore_item|Ravanna's First Journal|30611|132249|
+f88b1ed62ce6d69da0e7d145a6095de3|p|lore_item|Weathered Diary|25635|133234|
+63ddaa9bb4e7915a90c10319b37bc51e|p|lore_item|Battered Diary|-44138|141003|
+286a09ac694aa7df2e31352ba6b4a0f5|p|lore_item|Farmer Fred's Journal|-69820|60838|
+c0234eac838a92431228cd61eaf31420|p|lore_item|Priestly Journal|-54332|70231|
+6ca3f32dbca4935d21edf9cc92bce726|p|lore_item|Ravanna's Third Journal|5286|136003|
+1a5814d6ac5d0751895b1c81312b3446|p|lore_item|Experiment Log|-41442|27817|
+d8a29531e5770e0e442620d1589c9d8e|p|lore_item|The Tale of the Ghost Wolves|-62654|86217|
+e4445dc087acf4464037b0f0f119c7b0|p|lore_item|Samuel Malcifer's Journal|-83203|134877|
+5863d7f9d6d09eebb27f72980f03e521|p|lore_item|Dragon-embossed Journal|-29909|98010|
+47c4764443dd49245a3fb3ee6b695e19|p|lore_item|Winston Henning's Diary|-41087|95320|
+2dc5273bf7bd3b14b26309e0212ec590|p|lore_item|Laboratory Note|-75646|201421|
+93265c74c92e51fd2d38c2fa4585e185|p|lore_item|Nolan Scathe's Journal|-80320|193128|
+3e17c70ae992a8a5f86fc2d4c035f7f9|p|lore_item|Mould-covered Journal|-20227|129347|
+5141c7188c1f1ed2ee3344abb59491be|p|lore_item|Eleanor Scathe's Diary|-5319|152876|
+043d33a025c2724c70d7e1706c26b8d9|p|lore_item|Ravanna's Fifth Journal|-56388|139717|
+e192550c1ea3e7d57e657c4af8c341a2|p|lore_item|Ravanna's Seventh Journal|-64599|129160|
+6f052ac2ddb4930a52808f7f16f06326|p|lore_item|Weathered Journal|-36565|112897|
+7e40f47ab602a5a1fe488709711e128c|p|lore_item|Ulgo's Diary|-31740|185934|
+3bc8a7edb1f8b3f4154bb0ef35be6c29|p|lore_item|Withered Journal|-57242|157080|
+9930f120bb5e3ca74d06b7e858ab128d|p|lore_item|Ravanna's Fourth Journal|-50609|165793|
+540f3b20d8e5e8591b31b63774a17f63|p|lore_item|Withered Diary|-29480|151792|
+41aafa3433db833a7a57ce6d7af82be4|p|lore_item|Lacrussa's Journal|-71402|183590|
+979a534e80c04752ff84a540cd522367|p|lore_item|Scarecrow's Scribbles #1|97881|55164|
+7762ac92c13ab12079c2f07eb3db8f60|p|lore_item|Scarecrow's Scribbles #2|73106|30453|
+1c161a868a9e8d0d2c5ce0e048c4f1bb|p|lore_item|Scarecrow's Scribbles #3|158755|119030|
+05b67fbd9553e9d0239522c3eeae5020|p|lore_item|Scarecrow's Scribbles #4|113722|79956|
+065458f9ad6155a232f64da461ff6d3f|p|lore_item|Preserved Diary|146327|24322|
+50318d33c78d851cf248d119bad5d51e|p|lore_item|Lavish Dragonkin Tome|12218|78743|
+37d0a4702c9af00c70bc36aa7f20500c|p|lore_item|Anima-infused Tome|1810|82103|
+d19c8c2ce75e2044320ab310290074ad|q|quest_goblin_diplomacy|Garou Druid|146909|77256|
+311293f30f78d32f9a3f810694729a1e|q|quest_goblin_diplomacy|Zanik|157559|74432|
+75197260b29dc27211958826561e3c43|q|quest_what_remains|The Importance of Chaos|-16179|208616|
+f9df6748eda2fcd9e4f320adf22560bd|q|quest_what_remains|Eventide - A New Spawn|-1784|226021|
+dd6e72785a6a574e0723b3a295c60994|q|quest_what_remains|Coclear Malificarum|-66376|217552|
+2eaf9831daf8c8b205347ada477ac2b9|q|quest_what_remains|Aetheric Fundamentals, a Primordial Primer|-49900|223835|
+3a931599abce9885b633e47dd232280e|q|quest_what_remains|The Wrath of Baba Potterington|-39282|211989|
+2f378f17b9c82519ac9b3584fe30c558|q|quest_what_remains|Leonard The Bound|-22882|187996|
+de40411b30251f8f8848ae532768374c|q|quest_mirror_mirror|Candle|147081|87129|
+bd842db7c495de2cbcd4de37bfaaf4b3|q|quest_mirror_mirror|Candle|121217|112661|
+37ead837ef567e56a5e72e8c997b2d7b|q|quest_mirror_mirror|Candle|-40832|27808|
+2d522e50071bd18be1019cc79aae8d4a|q|quest_mirror_mirror|Bedraggled Spellbook|-61014|47528|
+c28052cbd2bd3a9bb06219f16c313e1d|q|quest_mirror_mirror|Candle|152929|110924|
+ad6e65e393604d3816329f1de8d8a60f|q|quest_mirror_mirror|Candle|196823|35199|
+d0e6b46333545ba87108ce2e0ef1a287|q|quest_mirror_mirror|Magic Mirror|-40978|27850|
+a3c62d78c615afbd34b23818a341b3b2|q|quest_mirror_mirror|Edna|-61840|86304|
+93ff847aad1f4dd65567169153d61d01|q|quest_letters_dead|Missing Letter|-15540|149608|
+840d35a158b1fb85293a2234c909bc20|q|quest_letters_dead|Ghost Sheep (Shaun)|-24005|120676|
+3b161b70777b2be8468cf42a71ec1c15|q|quest_letters_dead|Ghost Sheep (Simon)|-21115|124250|
+ae6bcac51e63c4732edb82bedc1730f0|q|quest_letters_dead|Ghost Sheep (Steve)|-23390|122628|
+6dfa35676ca3bf1d2d2db9edcf6a4d31|q|quest_letters_dead|Ghost Sheep (Stuart)|-23475|124188|
+f8396176340a611e7c4707f6c6496e66|q|quest_letters_dead|Suspicious Skeleton|5182|135393|
+80915908a8aed904d57fcb685418a6b7|q|quest_letters_dead|Parcel Pete|24670|132770|
+1743559e2fd9c671ea95b7b0d537e4cd|q|quest_even_more_ghosts|Abraxus The Eternal|-74597|200519|
+913b4fdd2c4355181ce00b62f6a48068|q|quest_even_more_ghosts|Fellhollow Ghost|-63947|53214|
+a61e0e640b98e0f1347fd03aea3a8c82|q|quest_even_more_ghosts|Fellhollow Ghost|-71826|184642|
+9b5c34f5efb66c94471156cfd34e8f78|q|quest_even_more_ghosts|Fellhollow Ghost|-74423|130410|
+77397ebb3319bbfa44b0fb73af098da9|q|quest_even_more_ghosts|Dust-covered Sketchbook|-80080|205081|
+f796255c72b21f2dad4647313b11b484|q|quest_withering_heights|Ghost of Cathan (Ghornfell)|105875|99188|
+478f0847c87cde70d0b58a22bc1c581f|q|quest_withering_heights|Ghost of Cathan (Fellhollow)|-18830|139414|
+e8cabcaea93444304cf7f05014c0b96c|q|quest_withering_heights|Ghost of Cathan (Dowdun Gate)|-2935|210753|
+3d2ec98ceefa9d3702788a9849b2f85e|q|quest_withering_heights|Standing Stone (Emberwood)|-19679|137844|
+b2ed8a4b1605aacbde864e8128988c3f|q|quest_withering_heights|Standing Stone (Silverthorn)|-19052|140428|
+b30920c0ad0033331d9cbda936ff4bf1|q|quest_withering_heights|Saradomin Symbol|-54256|70215|
+9f362256e011c772cb91920bfc65c0a9|q|quest_withering_heights|Saradomin Dispenser|-54315|69202|
+ae1221fd5524192ca89a49032572afb5|q|quest_withering_heights|Saradomin Statue|-52888|51554|
+87a96be10397d7db77e2bc7c738c1581|q|quest_withering_heights|Armadyl Ghost|-42817|52451|
+54331898558f1f538d72ab7325bc9f7b|q|quest_withering_heights|Soul Rift (Deaths Domain)|38003|132147|
+4e2aef18c2185a1d2661a2372970cfe6|q|quest_withering_heights|Soul Rift|10052|131180|
+3d2fe071117310f904b96d1a8301a20f|q|quest_withering_heights|Soul Rift|-35240|146630|
+e552654d9ea66cc346bfb7d7e11deeca|q|quest_withering_heights|Curse Seal|-48904|224086|
+2124d4c6490230dcff9b419208547aff|q|quest_withering_heights|Curse Seal|-60543|53562|
+51dd6228fd1086a5a5da64b568a26b74|q|quest_withering_heights|Curse Seal|-57714|144594|
+369c262452a37ec904a5315779c630fa|q|quest_animalmagnetism|Advert-Inna-Bottle (start)|120915|43807|
+ff87920f8c3acf6c79b2262d0b3e93da|q|quest_animalmagnetism|Undead Twig Bundle|148991|128694|
+d86861c40506aeaf0f35fb17b16d99c3|q|quest_eldergarou|Elder Garou|89610|61375|
+e7f4512879fb56d876fcbf4c1700b5b5|q|quest_ftue_fishing|Wise Old Man (FTUE)|187357|6133|
+0c12165652655eb2c24198e08689e07e|q|quest_scarecrowscavenging|Scarecrow (quest giver)|97569|55341|
+3a38758f14180d90a8be02b1e8b91e68|q|quest_scarecrowscavenging|Dig Spot #1 - Treasure Map #1 (near Scarecrow)|97893|55429|
+b971f6c9603502b09245321d408274a0|q|quest_scarecrowscavenging|Dig Spot #2 - Treasure Map #2|74464|29864|
+90ac4110bb3bcee900e925fc0f6b72c2|q|quest_scarecrowscavenging|Dig Spot #3 - Treasure Map #3|160074|118245|
+6c48e25b10d2c12f5717b676eaba8ed5|q|quest_scarecrowscavenging|Final Chest - Scarecrow's Hat|114250|79736|
+cb040ab06abbbf865c5112463a961413|q|quest_greatbodyrobbery|Coffin|138267|124687|
+e552bef5fb77107b481546ffd10b6482|q|quest_greatbodyrobbery|Coffin|143619|129595|
+8b2e8086060dc3a87c967645a6bef83c|q|quest_greatbodyrobbery|Coffin|139993|131128|
+3dc2cc3e5f46e9134e0ab4505997761a|q|quest_heartstrings|Heartstrings Memorial|113518|80763|
+5f83e8580562dd4dab67d55855be21da|q|quest_heartstrings|Heartstrings Memorial|113294|93023|
+691a5be21e5b97406c21bf1f9a409671|q|quest_heartstrings|Heartstrings Memorial|113279|111394|
+9be0d9796b49ebddc532dcedf737c850|q|quest_heartstrings|Heartstrings Memorial|116568|123674|
+6470de2d11737fb71dd3a42f5e363d3e|q|quest_heartstrings|Heartstrings Memorial|99972|130153|
+5780e0d271e80ba371425fbba5d8a9a2|q|quest_heartstrings|Heartstrings Memorial|124238|140373|
+f99a7449f7eec2f567a5bd7b306e705f|q|quest_heartstrings|Heartstrings Memorial|109848|144550|
+770c30e9983a070a1276d3a941b51269|p|lodestone|Death Temple Lodestone|38672|133137|
+264f3ce2a006663b3faeb41dce883d8a|p|lodestone|Temple Lodestone|189026|5065|
+44a1b6980c878673eb10c70bb22d2138|p|spectral_bird|Spectral Bird|-20365|214949|
+9a8b2c433ada4ec81a0b70809dc92bd5|p|spectral_bird|Spectral Bird|-45495|221990|
+0cc6f33e29df1618c3160d62d5117a6b|p|spectral_bird|Spectral Bird|-44937|60009|
+f27286228ff5fe9018609ef199449c15|p|spectral_bird|Spectral Bird|-67635|63159|
+9c8bb92de00d9bde2bb3fad68016be39|p|spectral_bird|Spectral Bird|-62209|91771|
+1410c2e396fabd16395cc1937c7e01b6|p|spectral_bird|Spectral Bird|-32063|229746|
+1696ff01a89b8dc565046b0217d3b1af|p|spectral_bird|Spectral Bird|-22869|144379|
+77e32f75f43dd9859811795c91d06cc7|p|spectral_bird|Spectral Bird|-75528|131665|
+2527813d7ab00244bc419777a0282759|p|spectral_bird|Spectral Bird|-45822|119407|
+389020735e4b64c9f1d1125f30363f6d|p|spectral_bird|Spectral Bird|-64973|176547|
+4434f0f5d01b54b7ec2cd7405dea90f4|p|nature_spirit|Nature Spirit|-44232|206241|
+037b78d32320d5b3a7d8035383fea57c|p|nature_spirit|Nature Spirit|-47175|27674|
+6de220ef485d06be9e80e786b44a7145|p|nature_spirit|Nature Spirit|-60235|80564|
+d97224b547286a61284d15403b4d43ed|p|nature_spirit|Nature Spirit|-11223|81118|
+22c9cf2a1b430d2f8b36a7c775197247|p|nature_spirit|Nature Spirit|-80638|128182|
+cf96fe7c47d1366ea35ce51e6702006b|p|sanguine_urn|Sanguine Urn|172225|52124|
+e16c8f8319ef761e0f9e34812910f585|p|sanguine_urn|Sanguine Urn|153631|51232|
+ca3e9a77bb1fc62462babeec5ed6f0ca|p|sanguine_urn|Sanguine Urn|173185|82654|
+ecc3b8d3a542bd86f7c75b744d95a54b|p|sanguine_urn|Sanguine Urn|150386|76151|
+e76b0e9cd4fd25753569f8782a4a9385|p|sanguine_urn|Sanguine Urn|104132|124803|
+299705efd9ba3b88d664706f17f17c1f|p|sanguine_urn|Sanguine Urn|142355|74399|
+f8d8b9c8c668221fc91f85b52cadc6bb|p|sanguine_urn|Sanguine Urn|-46994|32025|
+077ee12c09ccaa02e4607b353da5612d|p|sanguine_urn|Sanguine Urn|-15881|185163|
+d427d58240bc5ec094650de45a1cabee|p|sanguine_urn|Sanguine Urn|73450|13599|
+8fd954404dc9dc6b0048ce0618c78edf|p|sanguine_urn|Sanguine Urn|-62753|151032|
+33fb7463317599ccda50be7234cafd7e|p|sanguine_urn|Sanguine Urn|131700|41590|
+8fd620bc1f3db72786edf1dceec9227a|p|sanguine_urn|Sanguine Urn|157955|124799|
+e98d3d142bd613d143db5a20ed3365a9|p|dragon_tooth|Dragon Tooth|95942|21949|
+1fc8d929fcfedfd7afb57a71d5b01f10|p|agility_course|Chasm Dash|155052|30068|
+71fe39c3283693d557b479b5431fe8ed|p|agility_course|Thunder Assault|91619|25252|
+ff3678073be74eb28fa0bb6860d8feb7|p|agility_course|Grave Run|-53562|111002|
+f492c4d0730f1419e9077e3d976be55a|p|agility_course|Fractured Ruins|133497|80035|
+9e948faef5e7d45df98cb6ef06676902|p|kebbit_burrow|Kebbit Burrow|146860|18134|
+17e9d9f21357c6a5cf93913ef3095a56|p|kebbit_burrow|Kebbit Burrow|152245|28047|
+4ed9195eb1b5627e78c1a49429b196d0|p|kebbit_burrow|Kebbit Burrow|187117|75797|
+e4922a741163b488f7f5fd1138c07f0e|p|kebbit_burrow|Kebbit Burrow|149009|78070|
+0ce1c98f57691e76bf977f8a7ce461e2|p|kebbit_burrow|Kebbit Burrow|-14972|83557|
+ab5da6f927e6cf2d2085f7b4073f6de3|p|kebbit_burrow|Kebbit Burrow|-49049|107850|
+956b4f491e0da133982a728e3c9624c6|p|kebbit_burrow|Kebbit Burrow|-79772|134795|
+1cdbb2acbccdf9f622174c9e7070a14b|p|kebbit_burrow|Kebbit Burrow|-47550|202850|
+764c01bc712984ee3f80cf4bd13e5e91|p|kebbit_burrow|Kebbit Burrow|78583|44307|
+28f173d38e469f404274fea60160c4ac|p|kebbit_burrow|Kebbit Burrow|121956|74037|
+18cae917bd5d6debb5d9c4d8311c800b|p|kebbit_burrow|Kebbit Burrow|81674|77262|
+f4a93fd8f492d75ac823dcac0af7a5ac|p|kebbit_burrow|Kebbit Burrow|160544|127427|
+41cd9bb5d288416dc06cf328f0d2dcd2|p|kebbit_burrow|Kebbit Burrow|97613|127982|

@@ -1,0 +1,237 @@
+087244b393043494d7136daddf9ff2f4|poi|treasure_chest||17107|217206|1
+a45ab26cb49d24c627637e3776e4ea43|poi|treasure_chest||44761|226436|1
+6e3a32e48907faf76a5b8d3fa856bd06|poi|treasure_chest||42944|219992|1
+cff1192b104bad87c85383eb4a7d2d4b|poi|treasure_chest||28045|219026|1
+ce863c2c1950ff925e5eb3ecca30e85c|poi|treasure_chest||38024|209077|1
+b4e34bac945977254d455721fbd51bb7|poi|treasure_chest||40885|204243|1
+7ea6fb0c04863f02aa4231ee926d6884|poi|treasure_chest||37625|202698|1
+b100255d6348d00416593567ad2d5a29|poi|treasure_chest||38173|207414|1
+0302ca8aace47e38ff75737046461124|poi|treasure_chest||48820|206768|2
+b00c47589368b0c028e5f29087d89b77|poi|treasure_chest||31085|218889|1
+d4921d238c391931aba1e16f2cc5d203|poi|treasure_chest||48875|218595|1
+43478475bcf18b4a5b9e05af50d57612|poi|treasure_chest||48886|201737|1
+108eb36e7de9f79e413e9ef74abf63a9|poi|treasure_chest||32795|201702|1
+e1ae258d0fd58d48d79d1d01eafedffd|poi|treasure_chest||44241|210341|2
+7e19ffce2f1fa4728cd71aa29a7cec44|poi|treasure_chest||42100|217400|2
+b5df1fffe720c1caa39fff6376a4f3eb|poi|treasure_chest||29409|217839|1
+0eb44f3d616c7e67623b250c97ba2940|poi|treasure_chest||50661|204052|1
+b8f8a3398adf49c6d25246f907a44eb4|poi|treasure_chest||59294|215139|1
+3c0618f1418d48f1d3d44970249a06bc|poi|treasure_chest||59224|212728|1
+c11cc19b9e3be8512353ac92d01cc8d8|poi|treasure_chest||55595|220286|1
+9b561247883a83dd3b02a93f2b04cb5b|poi|treasure_chest||53347|216818|1
+6aa555c68be30700eb40c4b1130847c7|poi|treasure_chest||51558|224576|1
+70576e574d91b51fcfc9b1f1344bb909|poi|treasure_chest||51866|212953|1
+554a777f976067afe17394cc8b36e9c5|poi|treasure_chest||59445|226802|1
+ac3671aeb5a920250123ae85b1b097ba|poi|treasure_chest||60466|220733|1
+12b8c072fc931c34693cddc571e3f39c|poi|treasure_chest||58203|236947|1
+3c14e2de2adf53c008ac44502942dbdf|poi|treasure_chest||53281|240096|1
+2f555e4cce2c665754371653d6f49ecc|poi|treasure_chest||52898|240320|1
+e3ea1a84c2a0ab5c7a7e70e6fa325c9b|poi|treasure_chest||52428|250009|1
+5356a3ff0366ed7bece4ee46784b2301|poi|treasure_chest||57984|247831|1
+d5fa07f2812a43340ffb47464d1936a1|poi|treasure_chest||50731|244672|1
+1bb17bdb6396153830bd0dfb8a816f62|poi|treasure_chest||55998|231338|1
+e13abdbd7412a6471b8b22399dcdf654|poi|treasure_chest||51182|237850|1
+7be56e97577812685011c574eed0a1f3|poi|treasure_chest||53926|234672|1
+ac52288442029f3b2947e098cc63c0dd|poi|treasure_chest||50823|245424|1
+e64ce402a087344f5b60c5569d70bf81|poi|treasure_chest||57469|248382|1
+e58a22d00fec05a3020de154d606ee51|poi|treasure_chest||59147|227208|1
+a477f0e2eda47837ad8f583b18e5d895|poi|treasure_chest||53806|234638|1
+8cb701ca27167684cf8b624d172f51a8|poi|treasure_chest||50625|238201|1
+00c2a582528014994db9692a5f2ad212|poi|treasure_chest||22327|230043|1
+57f18d952c5e9f7e86fd72d8a4f232ab|poi|treasure_chest||10965|241687|1
+dabbc6256e1ab4946d8f73db980e3184|poi|treasure_chest||19660|239330|1
+0e51ee87938842310b621f1b00693faa|poi|treasure_chest||20829|235990|1
+1f4f4f75adb174237e8f7c6b99f272c1|poi|treasure_chest||20704|234588|1
+dbd15987ff5948ddd23de4e7abb1a863|poi|treasure_chest||24794|251466|1
+e86ced748a6b681eae24dded50ee95af|poi|treasure_chest||19099|251876|1
+ca8f082e338af186f9ed65cc3599a57f|poi|treasure_chest||24894|227806|1
+659c1f3b993b71046b46cb82ba16bd3e|poi|treasure_chest||19490|239119|1
+4c50667ed0497f78a032ead206ecd1de|poi|treasure_chest||24980|231821|1
+4f44d24b7bf61429ea163d7cf0fcb429|poi|treasure_chest||16643|255465|1
+0e8f97cf903d838750b8a838788e5a99|poi|treasure_chest||29037|261543|1
+93fa07aa20f6472405d996ef765948d8|poi|treasure_chest||31330|252810|1
+799cde1a239308bb69b5b4a9803c3634|poi|treasure_chest||35088|259941|1
+18bee50d0024c44d193091a7d4679706|poi|treasure_chest||55368|193195|1
+3f8cf132b0d6b02ce9e6aa703004402e|poi|treasure_chest||51048|190809|1
+ca48d39ede78f349635540520474b451|poi|treasure_chest||66699|183531|1
+69145233d45502e89d263756a414c1c2|poi|treasure_chest||66530|198163|1
+7fed714490d40e7cc3a0b9f4b2bddd2a|poi|treasure_chest||72054|201066|1
+9093ac88b1cfc863296483f46a0adb08|poi|treasure_chest||54149|180387|1
+6f07950209d0aa8ac2e16259fc0e0922|poi|treasure_chest||25607|228183|1
+d539d0bdc0af51d048508657e5855d66|poi|treasure_chest||28570|241864|1
+ecd874ddabf86de30dff917d7097017d|poi|treasure_chest||34701|230864|1
+badb8cde9d900c3ce54d6e77b5cfaf06|poi|treasure_chest||32833|240250|1
+008351322b820a97ac74412adc0da5a9|poi|treasure_chest||35915|239295|1
+4c082d4a8bdef682a0aebeedeceb874c|poi|treasure_chest||42357|237452|1
+f23565baa2f86aa0ccb5a19115fb2141|poi|treasure_chest||44826|233711|1
+1aced7fa9a1840d44cd5299258707426|poi|treasure_chest||39268|231344|1
+f0fb6df6a2f09600343baff743e0bf05|poi|treasure_chest||43656|242029|1
+f82a73716abaf6a80737e7bc57ed0664|poi|treasure_chest||43606|239313|1
+7b5eb2d2b339d1be679c0b88a6c05e8f|poi|treasure_chest||49555|232424|1
+6411bfcea0e71da594c563b3f83c6095|poi|treasure_chest||50316|234847|1
+7b1429799be98a72ee9a8f7b99b332fd|poi|treasure_chest||46538|235363|1
+dfbde69161ffb727cd659f5199be5dc0|poi|treasure_chest||45592|249988|1
+3dc8a32de02e73f221eeaf0262aa3b55|poi|treasure_chest||29738|244921|1
+0f5043dd7673587e6a73f8bc413dfae5|poi|treasure_chest||48589|236682|1
+e1eb41feb5b4ea2cd1abd19e994ffa4b|poi|treasure_chest||26789|239634|1
+72df3b37dc09e0e31b19f2898177da00|poi|treasure_chest||47465|235184|1
+3c4b0613cf6b343b82e93e9125663730|poi|treasure_chest||49118|241393|1
+1172a82beabc6d5499d72a6c64af00c7|poi|treasure_chest||38933|240404|1
+7cc02820734677ac4a90461c53c08a93|poi|treasure_chest||48812|235990|1
+d294e9bd7d670a61955c7628c86b4590|poi|treasure_chest||47923|235068|1
+d41507524d848333de0d716483493177|poi|treasure_chest||45534|243003|1
+0d5307b71594910d441b030f31b78365|poi|treasure_chest||27463|241457|1
+03aea964bec496fc41fc2c447b785353|poi|treasure_chest||49336|242365|1
+06ea2873a07bba13c19666aa107fe7b7|poi|treasure_chest||33680|229143|1
+a9b7a8e3478fb37f42b88f3e9cb8019c|poi|treasure_chest||32634|200836|1
+9ec9418bfe60adb96bc425f58c99cafd|poi|treasure_chest||43550|198749|1
+f761da6afbd901b2d572bb778d336e43|poi|treasure_chest||50875|224190|2
+563c5b5216765840af83cc7ea4ae3260|poi|treasure_chest||52274|222201|2
+59811dbc2c981a39e677c330ea41ba30|poi|treasure_chest||51191|213612|2
+a1a35e0a60b417b0a7d5141b3ee11379|poi|treasure_chest||40141|217628|2
+4eb77f53fe102e0cf6f5d09946346134|poi|treasure_chest||41580|218119|2
+ba00e55a20133aa46e80796ff4146dc3|poi|treasure_chest||34622|223049|2
+8e33bcff8dc58456643ad80aba9b75c0|poi|treasure_chest||34452|237355|1
+ab4bb8b3433be13f8f7179f667d7ec1c|npc|doric||54540|228062|1
+04312fc78e1db5e73a58d69ad2e69325|npc|vannaka||34222|210295|1
+ba3795f5fa63f2575221e9b83c24b558|npc|wise_old_man||32940|222410|1
+d00ef4bf99af53157465fc1113084d87|npc|zanik||27594|220463|2
+bcfa1741d3b0b5b758af2d875839947b|npc|postie_pete||33090|224019|1
+60cdecdbba47b33f95f5ab22f670f895|npc|putrilius||50007|245542|1
+d21c93c7c1f3067d0a245e7dee458450|npc|offalfoot||39945|220027|
+7486c52ac0fe03e14213cab9a1dde0b0|npc|spittletoe||51486|250672|1
+71ff1f66973c9055f6ee6a22af05aa37|npc|valerius||50620|203035|1
+ccf859a3d7d455ff0a8317d954e58be9|important_mob|zogre||44868|215117|2
+7512c6cfc67a2a368a8fb52f0d1d9212|important_mob|zogre||52768|247775|1
+ad4dab4453e9687849063cc18f2fb9ba|important_mob|blue_dragon||46935|193263|1
+f56a6ec111a94bbf09b8a2c523f3b168|important_mob|blue_dragon||70660|197599|1
+4120ac2e1251c0a0646883c2b47815b6|important_mob|blue_dragon||14392|239928|1
+4dbaab069b155c3ff651fea16c26c3a5|important_mob|blue_dragon||16267|250163|1
+687cfce5341874be25fe05de66374c6f|important_mob|sergeant_blister||22013|237298|1
+c4978911c565583a31961cfeb56ac210|important_mob|houndmaster_rexiton||27148|231642|1
+86bdf7011fef085fb143701fa86eb3c7|important_mob|houndmaster_rexiton||27481|231785|1
+de075feb4915d7fe3392e8d1dc83d97b|important_mob|rat_master_skrexis||64779|198589|1
+6bebb132525fafdc9b17d9d634f06e05|important_mob|summoner_flament||50601|216840|
+e7ae54fb6b225d6693a81e50d4e21e43|important_mob|black_knight_titan||79016|235264|1
+416ca74697fc70d79d8e4decfb8afe75|important_mob|stormpact_demon||50528|237238|1
+a29d9f1d58aba345dd259ff0d2a7843a|poi|lore_item|Alric's Plan (Part 1)|42338|199977|1
+911272ad54a2c0068106219e9833e373|poi|lore_item|Alric's Plan (Part 2)|43253|198570|1
+ecc1688d7a682325ad253fa3a61d8207|poi|lore_item|A New Pestilence|33929|199142|1
+71c2812ffbb24482bebfd7a63c296db0|poi|lore_item|The Gospel of Zamorak|57694|213887|1
+9fe236cef3dcfea7cd5d46d8ef3783c5|poi|lore_item|Archmage's Note to Students|39508|206611|1
+89f268bc904ccd383f299fd70e4eb81d|poi|lore_item|Alric's Journal|49666|203437|1
+32308392fbf0dc0411769369a085ab9f|poi|lore_item|A Report on the Withering|46368|210531|1
+466ff42bc91db471e8cc690ebbe837a5|poi|lore_item|A Transport Network|53720|229763|1
+c1e1bff1d8b80e585f9a5084f56a54c8|poi|lore_item|Hall of Heroes|69536|231130|1
+c02e7663293984d7f727b963a93f39d8|poi|lore_item|Goblins of da Reach Unite!|30555|259891|1
+c0d9345b4f46d02d7dff536708ff27b4|poi|lore_item|Badly Scrawled Note|9312|219748|1
+a4a201f46fc68e48f436c3187479eb4b|poi|lore_item|Quartermaster's Journal|25329|243734|1
+58eb9b2460b6f4699b1ec70fa746c8a0|poi|lore_item|An Acolyte's Guide to Demon Handling|48112|218408|1
+c2ce8698e82d489c863f9decf70b7215|poi|lore_item|Rasmodel's Diary|34596|227666|1
+b74b02404e952359ccdb63579bae386d|quest|quest_bkf|Dreaming Stone Shard|41687|200924|2
+fc86f1d28f1cd5ecc9eddad63e54b6f5|quest|quest_bkf|Dreaming Stone Shard|68939|204445|1
+b97a504775526564d516f13f9387f587|quest|quest_bkf|Dreaming Stone Shard|60395|211295|1
+8acdcfc47e13981e5320ef42a32f1a81|quest|quest_bkf|Dreaming Stone Shard|36216|225250|2
+a23a8bc626ce7a11bad4159cd01e5eae|quest|quest_bkf|Dreaming Stone Shard|70047|201045|1
+b589780f7386c5e8ddfb2f0b74eb9de5|quest|quest_bkf|Dreaming Stone Shard|37170|260625|1
+6f3a256e8110671e0c7e09d444869230|quest|quest_bkf|Dreaming Stone Shard|21662|237103|1
+e50fe741735e5977fea699b7b64aa4cf|quest|quest_bkf|Dreaming Stone Shard|16173|251417|1
+3da7a4f9e1952e10cbb267670fa9a320|quest|quest_bkf|Dreaming Stone Shard|22915|231067|1
+5e47c36fa610e091f7acb6185fe84d8f|quest|quest_bkf|Dreaming Stone Shard|39934|220039|2
+e9b0900ec7525d2ff83e21e630089b59|quest|quest_bkf|Dreaming Stone Shard|45025|215311|2
+d4413dea91460ca80f4b387b1a733f95|quest|quest_bkf|Dreaming Stone Shard|51510|250690|1
+ca8583e2997dc965dcbbdca168e91d03|quest|quest_bkf|Dreaming Stone Shard|50615|203033|1
+2d42873b895c463b6e294205fdcd9b0a|quest|quest_sq1|Hastily Scrawled Note|51011|213548|1
+463678d391d5cfdf72159eb7cf07e716|quest|quest_sq1|Hastily Scrawled Note|42610|212843|2
+0b3e668fd3624f5205ce6deaee7b46da|quest|quest_sq1|Hastily Scrawled Note|22027|231282|1
+9aa25eb168387ec74754dd546e283d61|quest|quest_bkf|Nexus Tower|53923|232276|1
+adcf74b2748e9ce23f5c8a9c43553bae|quest|quest_bkf|Demon Gate|41707|200934|2
+e52da1cdc2ce8a07ee566123e4fd8e7c|quest|quest_bkf|Demon Gate|36219|225259|2
+0498882915931fa2bc78b3093c27c3c6|quest|quest_bkf|Demon Gate|21654|237094|1
+ab6f45066a3dfdc00d902d0b4335120d|quest|quest_bkf|Dowdun Altar|58024|213589|1
+447698d475f9d02b1b5b58e3c549f069|quest|quest_bkf|Delrom|50449|215248|2
+402001e279ee48ba83ab07f385844904|quest|quest_bkf|Lesser Demon|44176|223208|2
+4ac11f930cf1cc6c3968c025f0e448bc|quest|quest_bkf|Spittletoe|51486|250672|1
+a70cedfe1cb8e1f708e5ed94a53600db|quest|quest_bkf|OffalFoot|39945|220027|2
+30f1e2801a2c128c54226cf7890ddedd|quest|quest_bkf|Valerius|50620|203035|1
+0b71561e4bab0e2a5ba5f369d1af5773|quest|quest_bkf|Dreaming Stone|54470|228490|1
+38c93504740a87180ec00eaf68397e87|quest|quest_bkf|Postie Pete|33090|224019|1
+cf7f856257213986822d632cbc6df2aa|quest|quest_bkf|Shard Fishing Node|40260|220320|2
+7aeb86f63ee43a568df93b01f7d4b70d|quest|quest_bkf|Doric|54540|228062|1
+e130412df367aa21337139c747c2189c|quest|quest_bkf|Wise Old Man|32940|222410|1
+48400be75a564fdea9dc1a5f08725570|quest|quest_bkf|Shardbound Lesser Demon|37164|224632|2
+12f9eda160336795996f8e0f5dd7599e|quest|quest_bkf|Shardbound Lesser Demon|36857|226199|2
+5d0509f401b8d17a67f023da94fe86d1|quest|quest_sq1|Dead Mage (Valerius)|35056|223857|2
+b38885d15d49e6dee4cf3ba238e995d8|quest|quest_sq1|Nodestone (The Menagerie)|54270|182630|1
+0663ad558d5510902a44dce2219ed768|quest|quest_sq1|Nodestone (The Library)|43571|199160|1
+6c03adc9a8dedf3cf4e76f37ffe4e796|quest|quest_sq1|Nodestone (The Cathedral)|50670|213955|1
+7d19fd52f33388ede424c580b4cb0840|quest|quest_sq1|Nodestone (The Demon Gate)|40328|218469|2
+753f5feec5d5c8a8ba8b1aefff59cc9f|quest|quest_sq1|Nodestone (The Courtyard)|37325|218771|1
+db9f68160d7944ecc1b5df62fdf9405d|quest|quest_sq1|Nodestone (The Lake)|44735|223315|2
+26fd3b26824fd8a5ee4dcc6fe66487aa|quest|quest_sq1|Nodestone (The Cathedral)|53995|226894|1
+05fcb922f6b7524cce6d189fc2096a56|quest|quest_sq1|Nodestone (The Courtyard)|54472|227320|1
+bc519a2b96b6af7264dd9a2c40dc4c9a|quest|quest_sq1|Nodestone (The Library)|53773|227564|1
+9bb649d201c8bd9c07ce1cbbcb791848|quest|quest_sq1|Nodestone (The Bastion)|59235|227998|1
+0d88f12bc2162dcbcd7e6c3e8e4f808d|quest|quest_sq1|Nodestone (The Garrison)|53530|228218|1
+d19d29730b75cb202b89abb0cf1560ed|quest|quest_sq1|Nodestone (The Pastures)|53861|228832|1
+d425cd5c52e6d34a42039add2742585a|quest|quest_sq1|Nodestone (The Bastion)|63730|229100|1
+8713996c0eb67084777ee10f6ae67cba|quest|quest_sq1|Nodestone (The Menagerie)|53669|230474|1
+43ab6c82c012a1d438b66196d65a086e|quest|quest_sq1|Nodestone (The Garrison)|21991|230685|1
+df30f9839f3cb4edf4301efac023821b|quest|quest_sq1|Nodestone (The Demon Gate)|55021|231321|1
+5931a664659eba51b194fbe7f525bba8|quest|quest_sq1|Nodestone (The Lake)|54420|231761|1
+69e8b8942c9793bbde14abfba55de570|quest|quest_sq1|Nodestone (The Pastures)|45028|253706|1
+8c11b468d115e09044dc6a0ce7151476|quest|quest_sq2|Vannaka|34222|210295|1
+b48d8eedc5caef77965aa3478ebf436e|quest|quest_sq2|Hound Master's Journal|25986|229883|2
+ea3e38cb68b9c40982c0ea06ade43597|quest|quest_sq2|Summoner's Journal|51970|214487|2
+16f405f57bbcf5ad8736a9fe8f5d43b9|quest|quest_sq2|Rat Master's Journal|64396|199029|1
+3ff586d792be5ee84244e60f77ddd5db|quest|quest_sq3|Putrilius|50007|245542|1
+05c7dcb7f6f113c32f98ec7b20fdc381|quest|quest_sq3|Twilight Lily|42430|221280|2
+204d9f0702c9425c3694af193a7a9159|quest|quest_sq3|Unholy Water|60691|208273|1
+a7a6b94aae3f1948ab5521fff314cf0e|quest|quest_sq3|Zanik|27595|220463|2
+54750c2b07fc0e2214891e51d3b1de16|quest|quest_sq3|Strange Raven|62505|216152|1
+db16888187a05a3540b03f90f0004093|quest|quest_sq3|Strange Raven|53242|220197|1
+56a1befdf6f1e991f6db2cc3cd2cb85f|quest|quest_sq3|Strange Raven|47959|214239|1
+2b97300b6ec7161077e7fd9e21570401|quest|quest_sq3|Strange Raven|30662|221649|1
+80618c37e189ccb0a7f5f5c38e5bb8a7|quest|quest_sq3|Strange Raven|51278|247235|1
+b6a4c2317fc0d391ab5f47afd3b37a47|quest|quest_sq3|Strange Raven|55118|184736|1
+f0fe0ad290a392c90d76c53d402d607a|quest|quest_sq3|Strange Raven|51363|201266|1
+9c4e43af76cd69da2ff3028bd75b87bb|quest|quest_sq3|Strange Raven|16054|254087|1
+cf58952d508b29c0554c196da9cf4c56|quest|quest_sq3|Strange Raven|27542|244634|1
+ec7e1012b861d4bd604fb2f85a66ffaa|quest|quest_sq3|Strange Raven|30457|228035|1
+1b7eaae2923dc94f5a0d59213d30aa15|quest|quest_bkf|Shardbound Lesser Demon|41174|201216|1
+024df0958ce22ca0046660013f22255c|quest|quest_bkf|Shardbound Lesser Demon|41459|201474|1
+03b3517ded822d5a1c242806cecea7ea|poi|lodestone|Dowdun Reach Lodestone|28802|220779|1
+8d9881dab54f7e6b5524d630c5c08842|poi|recipe_book|Recipe: Meat Sandwich|34717|201455|1
+78d2601fe8f23826d324452cd4dcebb7|poi|recipe_book|Recipe: Steak Sandwich|50748|214569|1
+bae71102860983d59a4190b1bc34ad22|poi|recipe_book|Recipe: Meat Twist Sandwich|48558|202923|1
+5ac7b655dde5f0749c24ef07ce0dd9f7|poi|recipe_book|Recipe: Glazed Pumpkin Sandwich|31672|217906|2
+668cda4fb12359f5b56d9969beecde3e|poi|recipe_book|Recipe: Forager's Sandwich|20436|238359|1
+cc6b611ce16f35638ef44f46ed398ec6|poi|misc_strange_raven|Strange Raven|62505|216152|1
+8b87239ab81b6c44045879f989941c15|poi|misc_strange_raven|Strange Raven|53242|220197|1
+d9aed01bf6da00c7d20b9a340b0ae887|poi|misc_strange_raven|Strange Raven|47959|214239|1
+a108e9a78b64545b1485d5a634e8c4be|poi|misc_strange_raven|Strange Raven|30662|221649|1
+bc5fce671ad2aa3a74d98d206007ff4c|poi|misc_strange_raven|Strange Raven|51278|247235|1
+6b961021a4c08da2f266bfbe5f21c94a|poi|misc_strange_raven|Strange Raven|55118|184736|1
+2692ae05f3c7adfda973790d24ef62f5|poi|misc_strange_raven|Strange Raven|51363|201266|1
+28c08b74c3b924b34f378547d49e79e1|poi|misc_strange_raven|Strange Raven|16054|254087|1
+bbdd68a8c48095d571544039aa4e26fa|poi|misc_strange_raven|Strange Raven|27542|244634|1
+b55b6ac3bbe2b5f9b27598d03ad65a5b|poi|misc_strange_raven|Strange Raven|30457|228035|1
+4161f0178c62ac9e567eb6bb7138e8bf|poi|misc_dreamstone_shard|Dreaming Stone Shard|41687|200924|2
+b68f507a45fd078cf38e3fb313a4d99a|poi|misc_dreamstone_shard|Dreaming Stone Shard|68939|204445|1
+97c53a1e12ca5e1b2e1bbbea880387e7|poi|misc_dreamstone_shard|Dreaming Stone Shard|60395|211295|1
+3823975801dce3af18a628bd496bbe3d|poi|misc_dreamstone_shard|Dreaming Stone Shard|36216|225250|2
+557025ae0360fea2b3b9caa0e279c156|poi|misc_dreamstone_shard|Dreaming Stone Shard|70047|201045|1
+bc7c9da8c36c719deaf2c26a22210174|poi|misc_dreamstone_shard|Dreaming Stone Shard|37170|260625|1
+7883899464f4749c8d7af6c076ea199a|poi|misc_dreamstone_shard|Dreaming Stone Shard|21662|237103|1
+2cad8dc87ed97dd7867ee9810be4866d|poi|misc_dreamstone_shard|Dreaming Stone Shard|16173|251417|1
+ca3697a9111f21b8bf70525712b21463|poi|misc_dreamstone_shard|Dreaming Stone Shard|22915|231067|1
+f76c2de7ffe721cd1eef03ef3f9fb85b|poi|misc_dreamstone_shard|Dreaming Stone Shard|39934|220039|2
+9b969026903178d11baffa0b1fd20808|poi|misc_dreamstone_shard|Dreaming Stone Shard|45025|215311|2
+18f121bbb7fd0b5ccf2f8d3fcd585102|poi|misc_dreamstone_shard|Dreaming Stone Shard|51510|250690|1
+adf98a6c481197b98a35a6b373a92fdb|poi|misc_dreamstone_shard|Dreaming Stone Shard|50615|203033|1
+6a8c7c8a5a956f098a3a3763f541fa89|poi|sanguine_urn|Sanguine Urn|63727|194484|1
+485820c05e1fc13199d4878bb594a7cb|poi|sanguine_urn|Sanguine Urn|10909|241211|1
+61a5961eeaec63f869ac0f77c6e19b7b|poi|sanguine_urn|Sanguine Urn|43987|235467|1
+061aae2f3b0fe5c6bd9038c505264135|poi|agility_course|Tower Climb|42939|203059|1
+ba994b4fbc63df9967ef4657c7b8abac|poi|kebbit_burrow|Kebbit Burrow|65320|185303|1
+bb201d54fd9000fa494cb037092af673|poi|kebbit_burrow|Kebbit Burrow|27920|260295|1
