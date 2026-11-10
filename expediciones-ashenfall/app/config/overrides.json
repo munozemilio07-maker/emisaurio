@@ -1,0 +1,58 @@
+{
+  "_doc": [
+    "Correcciones manuales a los datos de MetaForge (SPEC.md §5). Se aplican por markerId en cada regeneración.",
+    "stops: markerId → { title?, kind?, detail?, quest? (reemplaza la misión), note? (aviso visible), layer? }.",
+    "forceInclude: ids que siempre deben ser parada aunque un filtro los descarte.",
+    "rules: mismas correcciones por subcategoría y/o texto del título (subcategory?, titleIncludes?)."
+  ],
+  "forceInclude": [
+    "fa19d1164853f8588de69fa9b7a35b59",
+    "e65b8cd56d81bf783e6039ad61aa36d0"
+  ],
+  "stops": {
+    "fa19d1164853f8588de69fa9b7a35b59": {
+      "title": "The Pride of the Avernic",
+      "quest": "quest_what_remains"
+    },
+    "e65b8cd56d81bf783e6039ad61aa36d0": {
+      "title": "The Binding of Ib",
+      "quest": "quest_what_remains"
+    },
+    "d21c93c7c1f3067d0a245e7dee458450": {
+      "note": "MetaForge lo marca en la superficie, pero el wiki lo ubica en The Lake (subterráneo, bajo The Approach). Si no lo ves arriba, baja al lago."
+    }
+  },
+  "rules": [
+    {
+      "subcategory": "abraxus_the_eternal",
+      "set": {
+        "quest": "quest_what_remains",
+        "detail": "Inicio de What Remains is Written",
+        "note": "MetaForge lo etiqueta como Even More Restless Ghosts, pero Abraxus inicia What Remains is Written."
+      }
+    },
+    {
+      "subcategory": "quest_even_more_ghosts",
+      "titleIncludes": "Abraxus",
+      "set": {
+        "quest": "quest_what_remains",
+        "detail": "Inicio de What Remains is Written",
+        "note": "MetaForge lo etiqueta como Even More Restless Ghosts, pero Abraxus inicia What Remains is Written."
+      }
+    },
+    {
+      "set": {
+        "note": "MetaForge lo marca en The Pastures, pero el wiki lo ubica en el techo del Grand Hall."
+      },
+      "titleIncludes": "Putrilius"
+    },
+    {
+      "subcategory": "vault",
+      "titleIncludes": "Kalphite Queen",
+      "set": {
+        "kind": "jefe",
+        "detail": "Guarida de la Kalphite Queen (vault)"
+      }
+    }
+  ]
+}

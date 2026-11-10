@@ -1,0 +1,172 @@
+{
+  "_doc": [
+    "Qué marcadores de MetaForge se vuelven paradas y cómo se etiquetan.",
+    "kinds: subcategoría → { kind, title?, detail?, quest? }. Si no hay 'title' se usa el instanceName de MetaForge.",
+    "categories: tipo por defecto para categorías completas. exclude: prefijos de subcategoría que nunca son paradas."
+  ],
+  "includeCategories": [
+    "poi",
+    "quest",
+    "npc",
+    "important_mob"
+  ],
+  "exclude": [
+    "anima_vent_",
+    "unique_recipe"
+  ],
+  "categories": {
+    "quest": "mision",
+    "npc": "npc",
+    "important_mob": "jefe"
+  },
+  "kinds": {
+    "treasure_chest": {
+      "kind": "cofre",
+      "title": "Cofre del tesoro"
+    },
+    "lore_item": {
+      "kind": "lore",
+      "fallback": "Objeto de lore"
+    },
+    "vault": {
+      "kind": "vault",
+      "detail": "Dragonkin Vault"
+    },
+    "lodestone": {
+      "kind": "viaje",
+      "detail": "Lodestone"
+    },
+    "teleporter": {
+      "kind": "viaje",
+      "detail": "Portal"
+    },
+    "nodestone": {
+      "kind": "viaje",
+      "detail": "Nodestone",
+      "quest": "quest_sq1"
+    },
+    "kebbit_burrow": {
+      "kind": "secreto",
+      "title": "Madriguera de kebbit"
+    },
+    "spectral_bird": {
+      "kind": "secreto",
+      "title": "Pájaro espectral"
+    },
+    "sanguine_urn": {
+      "kind": "secreto",
+      "title": "Urna sanguina"
+    },
+    "nature_spirit": {
+      "kind": "secreto",
+      "title": "Espíritu de la naturaleza"
+    },
+    "spectral_room": {
+      "kind": "secreto",
+      "prefix": "Sala espectral",
+      "lastWord": true
+    },
+    "statue": {
+      "kind": "secreto",
+      "title": "Estatua de Saradomin",
+      "detail": "Statues of Saradomin"
+    },
+    "standing_stone": {
+      "kind": "secreto",
+      "title": "Piedra erguida"
+    },
+    "reliquary": {
+      "kind": "secreto",
+      "title": "Relicario"
+    },
+    "dragon_tooth": {
+      "kind": "secreto",
+      "title": "Diente de dragón"
+    },
+    "curse_seal": {
+      "kind": "secreto",
+      "title": "Sello de maldición"
+    },
+    "agility_course": {
+      "kind": "secreto",
+      "prefix": "Agilidad:"
+    },
+    "recipe_book": {
+      "kind": "secreto",
+      "title": "Libro de recetas"
+    },
+    "misc_dreamstone_shard": {
+      "kind": "secreto",
+      "title": "Fragmento de Dreaming Stone",
+      "quest": "quest_bkf"
+    },
+    "misc_strange_raven": {
+      "kind": "secreto",
+      "title": "Cuervo extraño",
+      "quest": "quest_sq3"
+    },
+    "garou_artifact": {
+      "kind": "secreto",
+      "title": "Garou Artifact",
+      "detail": "Artefacto garou"
+    },
+    "crucible": {
+      "kind": "secreto",
+      "detail": "Nightmare Crucible"
+    },
+    "anima_crystal_": {
+      "kind": "secreto",
+      "detail": "Raid · Scorned Wilderness"
+    },
+    "black_knight_titan": {
+      "kind": "jefe",
+      "detail": "Enemigo importante",
+      "quest": "quest_bkf"
+    },
+    "houndmaster_rexiton": {
+      "kind": "jefe",
+      "detail": "Enemigo importante",
+      "quest": "quest_sq2"
+    },
+    "summoner_flament": {
+      "kind": "jefe",
+      "detail": "Enemigo importante",
+      "quest": "quest_sq2"
+    },
+    "rat_master_skrexis": {
+      "kind": "jefe",
+      "detail": "Enemigo importante",
+      "quest": "quest_sq2"
+    },
+    "ulgo_the_zogre": {
+      "kind": "jefe",
+      "detail": "Enemigo importante",
+      "quest": "quest_what_remains"
+    },
+    "razlem_the_necromancer": {
+      "kind": "jefe",
+      "detail": "Enemigo importante",
+      "quest": "quest_what_remains"
+    },
+    "blightscale_the_lesser_green_dragon": {
+      "kind": "jefe",
+      "detail": "Enemigo importante",
+      "quest": "quest_what_remains"
+    }
+  },
+  "names": {
+    "ghost": "Fantasma",
+    "lougrims_shrine": "Santuario de Lougrim",
+    "scarecrow": "Espantapájaros",
+    "undead_chicken": "Pollo no-muerto",
+    "undead_tree": "Árbol no-muerto",
+    "green_dragon": "Dragón verde",
+    "blue_dragon": "Dragón azul",
+    "red_dragon": "Dragón rojo",
+    "black_dragon": "Dragón negro",
+    "blightscale_the_lesser_green_dragon": "Blightscale (dragón verde menor)",
+    "tok-xil": "Tok-Xil",
+    "zi": "Zi",
+    "reforged_zi": "Reforged Zi"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "_doc": "Capas de tiles de MetaForge. La fecha de la ruta cambia con cada parche: fetch-metaforge.ts intenta detectarla sola en el bundle de MetaForge y actualiza este archivo; si falla, edítala a mano (SPEC.md §2).",
+  "page": "https://metaforge.app/runescape-dragonwilds/map/ashenfall",
+  "api": "https://api.metaforge.app/runescape-dragonwilds/map?mapId=ashenfall",
+  "tileBase": "https://static.metaforge.app/dragonwilds/maptiles/",
+  "minZoom": 1,
+  "maxZoom": 6,
+  "layers": [
+    { "id": "surface", "name": "Superficie", "zlayer": 1, "match": "WorldMap", "path": "20260915/20260915WorldMap" },
+    { "id": "dowdun", "name": "Dowdun subterráneo", "zlayer": 2, "match": "Downdun", "path": "20260623/20260623Downdun" }
+  ]
+}

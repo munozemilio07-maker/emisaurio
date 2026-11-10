@@ -1,0 +1,321 @@
+{
+  "_doc": [
+    "Misiones: clave de MetaForge → nombre real (wiki), tipo y orden de pasos.",
+    "'order' es una lista de textos: los pasos se ordenan según el primer texto que aparezca en el título de la parada (sin distinguir mayúsculas). '=Texto' exige el título exacto y '*' marca dónde van los pasos que no coinciden con nada (por defecto, al final), ordenados por cercanía.",
+    "Los pasos que no coincidan con ninguno van al final, ordenados por cercanía. 'parent' agrupa las tareas dentro de su misión principal."
+  ],
+  "quests": {
+    "quest_ftue_fishing": {
+      "name": "Shrimp Catcher",
+      "type": "secundaria",
+      "region": "Brynmoor"
+    },
+    "quest_restless_ghosts": {
+      "name": "Restless Ghosts",
+      "type": "secundaria",
+      "region": "Brynmoor"
+    },
+    "quest_cooksassistant": {
+      "name": "Cook's Assistant",
+      "type": "secundaria",
+      "region": "Ghornfell",
+      "order": [
+        "Slopfinger",
+        "Cow",
+        "Advert",
+        "Goblin Stove"
+      ]
+    },
+    "quest_goblin_diplomacy": {
+      "name": "Goblin Diplomacy",
+      "type": "secundaria",
+      "region": "Ghornfell"
+    },
+    "quest_animalmagnetism": {
+      "name": "Animal Magnetism",
+      "type": "secundaria",
+      "region": "Ghornfell",
+      "order": [
+        "Manktongue",
+        "Undead Twig"
+      ]
+    },
+    "quest_scarecrowscavenging": {
+      "name": "Scarecrow Scavenging",
+      "type": "secundaria",
+      "region": "Ghornfell",
+      "order": [
+        "#1",
+        "#2",
+        "#3",
+        "#4",
+        "#5"
+      ]
+    },
+    "quest_greatbodyrobbery": {
+      "name": "The Great Body Robbery",
+      "type": "secundaria",
+      "region": "Brynmoor"
+    },
+    "quest_heartstrings": {
+      "name": "Heartstrings",
+      "type": "secundaria",
+      "region": "Ghornfell"
+    },
+    "quest_eldergarou": {
+      "name": "A Room With A Garou",
+      "type": "secundaria",
+      "region": "Ghornfell"
+    },
+    "quest_dog_days": {
+      "name": "Dog Days",
+      "type": "secundaria",
+      "region": "Ghornfell",
+      "order": [
+        "Vannaka",
+        "Garou Thane"
+      ]
+    },
+    "quest_withering_heights": {
+      "name": "Withering Heights",
+      "type": "secundaria",
+      "region": "Fellhollow",
+      "order": [
+        "Ghost of Cathan (Ghornfell)",
+        "Cathan"
+      ]
+    },
+    "quest_mirror_mirror": {
+      "name": "Mirror Mirror",
+      "type": "secundaria",
+      "region": "Fellhollow"
+    },
+    "quest_letters_dead": {
+      "name": "Letters for the Dead",
+      "type": "secundaria",
+      "region": "Fellhollow",
+      "order": [
+        "Parcel Pete"
+      ]
+    },
+    "quest_even_more_ghosts": {
+      "name": "Even More Restless Ghosts",
+      "type": "secundaria",
+      "region": "Fellhollow"
+    },
+    "quest_what_remains": {
+      "name": "What Remains is Written",
+      "type": "secundaria",
+      "region": "Fellhollow",
+      "order": [
+        "Abraxus",
+        "Pride of the Avernic",
+        "Importance of Chaos",
+        "Aetheric",
+        "Baba Potterington",
+        "Leonard",
+        "Razlem",
+        "Eventide",
+        "Ulgo",
+        "Coclear",
+        "Blightscale",
+        "Binding of Ib"
+      ]
+    },
+    "quest_bkf": {
+      "name": "Black Knight's Fortress",
+      "type": "primaria",
+      "region": "Dowdun Reach",
+      "order": [
+        "Wise Old Man",
+        "Doric",
+        "=Dreaming Stone",
+        "*",
+        "Black Knight Titan"
+      ]
+    },
+    "quest_sq1": {
+      "name": "What's Theirs is Mine!",
+      "type": "secundaria",
+      "region": "Dowdun Reach",
+      "order": [
+        "Doric",
+        "Hastily Scrawled",
+        "Dead Mage",
+        "Valerius",
+        "Nodestone"
+      ]
+    },
+    "quest_sq2": {
+      "name": "Wanted!",
+      "type": "secundaria",
+      "region": "Dowdun Reach",
+      "order": [
+        "Vannaka",
+        "Rat Master",
+        "Hound",
+        "Summoner"
+      ]
+    },
+    "quest_sq3": {
+      "name": "Biohazard",
+      "type": "secundaria",
+      "region": "Dowdun Reach",
+      "order": [
+        "Zanik",
+        "Strange Raven",
+        "Cuervo",
+        "Twilight Lily",
+        "Unholy Water",
+        "Putrilius"
+      ]
+    },
+    "quest_ums_main": {
+      "name": "Icthlarin's Little Helper",
+      "type": "primaria",
+      "region": "Umbral Sands",
+      "order": [
+        "Shangruuh",
+        "Ancamairon",
+        "Icthlarin",
+        "Dúshlánach",
+        "Gaimbín",
+        "Mirror",
+        "Zanik"
+      ]
+    },
+    "quest_ums_tribea_task1": {
+      "name": "Rag and Bone Garou",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Alcarrid"
+    },
+    "quest_ums_tribea_task2": {
+      "name": "Rogue Trader",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Alcarrid",
+      "order": [
+        "Domri",
+        "Moonstone"
+      ]
+    },
+    "quest_ums_tribea_task3": {
+      "name": "The Mirror Crack'd",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Alcarrid"
+    },
+    "quest_ums_tribec_task1": {
+      "name": "Beast in the Sand",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Manafem",
+      "order": [
+        "Manathep",
+        "Dearg Due",
+        "Efina"
+      ]
+    },
+    "quest_ums_tribec_task2": {
+      "name": "Scaling Difficulties",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Manafem",
+      "order": [
+        "Hedric",
+        "Dead Garou Scout",
+        "Scorch"
+      ]
+    },
+    "quest_ums_tribec_task3": {
+      "name": "Song of the Ancients",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Manafem",
+      "order": [
+        "Laguna",
+        "Ancient Garou Statue"
+      ]
+    },
+    "quest_ums_tribeb_task1": {
+      "name": "Saga of the Adventurer",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Uzzer"
+    },
+    "quest_ums_tribeb_task2": {
+      "name": "The Dig Site",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Uzzer",
+      "order": [
+        "Lehran",
+        "Dig Site"
+      ]
+    },
+    "quest_ums_tribeb_task3": {
+      "name": "Mark Day",
+      "type": "tarea",
+      "region": "Umbral Sands",
+      "parent": "quest_ums_main",
+      "clan": "Uzzer",
+      "order": [
+        "Shangruuh",
+        "Brialka",
+        "Chirot",
+        "Alabrais"
+      ]
+    },
+    "quest_ums_brink": {
+      "name": "Brink of Extinction",
+      "type": "secundaria",
+      "region": "Umbral Sands",
+      "order": [
+        "Zi",
+        "Pedestal",
+        "Core"
+      ]
+    },
+    "quest_ums_contact": {
+      "name": "Contact!",
+      "type": "secundaria",
+      "region": "Umbral Sands",
+      "order": [
+        "Zanik",
+        "Avisk",
+        "Vault Guardian"
+      ]
+    },
+    "quest_ums_mapping1": {
+      "name": "Mapping The Sands I",
+      "type": "secundaria",
+      "region": "Umbral Sands"
+    },
+    "quest_ums_mapping2": {
+      "name": "Mapping The Sands II",
+      "type": "secundaria",
+      "region": "Umbral Sands"
+    },
+    "quest_sw_main": {
+      "name": "Regicide",
+      "type": "primaria",
+      "region": "Scorned Wilderness",
+      "order": [
+        "Icthlarin",
+        "Ancamairon",
+        "Dragon Gate",
+        "Commander Zilyana",
+        "Zilyana Teleporter"
+      ]
+    }
+  }
+}

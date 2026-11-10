@@ -1,0 +1,80 @@
+{
+  "_doc": [
+    "Reglas de regiones. Para cada marcador se usa la PRIMERA región de la lista cuya regla coincide (el orden de la lista es la prioridad).",
+    "'order' es el orden de progresión del juego: define la numeración de las expediciones.",
+    "Una regla es un objeto con cualquiera de: zlayer, latMin, latMax, lngMin, lngMax (deben cumplirse todos). 'any' es una lista de reglas (basta una).",
+    "k: número de expediciones de la región, o 'auto' (≈ targetSize paradas por expedición). balance: penalización por desbalance del k-means.",
+    "landmarks: [nombre, lat, lng] para nombrar las expediciones (el más cercano al centroide que no se haya usado). Si no hay uno cerca, se usa la parada más notable.",
+    "Para una región nueva de un parche: agrega una entrada antes de las reglas generales y corre `npm run expeditions`. Los marcadores sin región se listan al final del reporte."
+  ],
+  "targetSize": 24,
+  "dedupeCell": 300,
+  "regions": [
+    {
+      "id": "dowdun-ug", "name": "Dowdun Reach · Subterráneo", "group": "Dowdun Reach", "order": 8, "layer": "dowdun",
+      "any": [{ "zlayer": 2 }],
+      "k": 2, "balance": 1.5e8, "seed": 3, "start": [28802, 220779],
+      "landmarks": [["La Cripta", 33500, 209000], ["El Lago subterráneo", 44735, 223315], ["La Demon Gate", 40328, 218469]]
+    },
+    {
+      "id": "dowdun", "name": "Dowdun Reach", "group": "Dowdun Reach", "order": 7,
+      "any": [{ "latMin": 5000, "latMax": 82000, "lngMin": 160000, "lngMax": 265000 }],
+      "k": 7, "balance": 1.5e8, "seed": 3, "start": [28802, 220779],
+      "landmarks": [["El Lodestone de Dowdun", 28802, 220779], ["The Menagerie", 54270, 182630], ["The Library", 43571, 199160], ["The Cathedral", 50670, 213955], ["The Courtyard", 37325, 218771], ["The Nexus", 54000, 228500], ["The Bastion", 63730, 229100], ["The Garrison", 21991, 230685], ["The Pastures", 45028, 253706]]
+    },
+    {
+      "id": "umbral", "name": "Umbral Sands", "group": "Umbral Sands", "order": 9,
+      "any": [
+        { "latMin": 82000, "lngMin": 160000 },
+        { "latMin": -15000, "lngMin": 265000 }
+      ],
+      "k": "auto", "balance": 1.5e9, "seed": 11, "start": [84449, 238961],
+      "landmarks": [
+        ["Alcarrid Oasis", 112144, 250000], ["Lodestone de Umbral Sands", 96415, 244689],
+        ["Dunes of Uzzer", 118486, 356652], ["Manafem Plains", 183000, 211500],
+        ["The Burning Spire", 248000, 331000], ["Lava Fields", 193923, 279007],
+        ["La colmena de la Kalphite Queen", 28644, 314435], ["La pirámide del norte", 73108, 342637],
+        ["La pirámide del sur", 233060, 222274], ["El Dig Site", 186000, 370000],
+        ["La guarida de Zi", 194362, 306110], ["The Radiant", 213180, 270690],
+        ["Las dunas del oeste", 130000, 208000], ["Las dunas centrales", 150000, 290000],
+        ["El borde norte", 40000, 290000], ["El confín sur", 248549, 235003]
+      ]
+    },
+    {
+      "id": "scorned", "name": "Scorned Wilderness (raid)", "group": "Scorned Wilderness", "order": 10,
+      "any": [{ "latMin": -30000, "latMax": 64000, "lngMax": 100000 }],
+      "k": "auto", "balance": 2e8, "seed": 5, "start": [59442, 72931],
+      "landmarks": [["Rasthin's Rest", 50550, 75103], ["Cataclysm Keep", 5898, -2194], ["Kuldra's Sanctum", -23213, -8539]]
+    },
+    {
+      "id": "fellhollow", "name": "Fellhollow", "group": "Fellhollow", "order": 6,
+      "any": [{ "latMax": 45000 }],
+      "k": 7, "seed": 7, "start": [38672, 133137],
+      "landmarks": [["El Templo Olvidado", 35470, 127610], ["Emberwood", -51139, 29580], ["Lago de las Almas Perdidas", -57714, 144594], ["Skekven Kara", -42244, 197429], ["Coalridge", -74597, 200519], ["Bleakfields", -18830, 139414], ["Hope's Fall", -57991, 131804]]
+    },
+    {
+      "id": "bloodblight", "name": "Brynmoor · Pantano Bloodblight", "group": "Brynmoor", "order": 2,
+      "any": [{ "lngMin": 112000, "latMin": 133000 }],
+      "k": 1, "seed": 7, "start": [144813, 102752],
+      "landmarks": [["Kletterbuja Kara", 168454, 118972], ["Fenkenstrain", 157086, 125148]]
+    },
+    {
+      "id": "brynmoor", "name": "Brynmoor", "group": "Brynmoor", "order": 1,
+      "any": [{ "latMin": 140000 }, { "latMin": 133000, "lngMin": 85000 }],
+      "k": 4, "seed": 7, "start": [189026, 5065],
+      "landmarks": [["Templo (Lodestone)", 189026, 5065], ["Crasorak Kara", 191874, 37458], ["Thishepen Kara", 150931, 26827], ["Bramblemead", 177605, 48500], ["El Castillo del Duque", 160992, 61409], ["Pantano Susurrante", 144813, 102752]]
+    },
+    {
+      "id": "highlands", "name": "Ghornfell · Stormtouched Highlands", "group": "Ghornfell", "order": 3,
+      "any": [{ "lngMax": 50000, "latMax": 110000 }],
+      "k": 1, "seed": 7, "start": [120899, 43673],
+      "landmarks": [["Chaktan Kara", 80494, 16385]]
+    },
+    {
+      "id": "fractured", "name": "Ghornfell · Fractured Plains", "group": "Ghornfell", "order": 4,
+      "any": [{}],
+      "k": 3, "seed": 7, "start": [120899, 43673],
+      "landmarks": [["Takla Kara", 118288, 74800], ["Manktongue", 120899, 43673], ["Ashien's Watch", 77714, 138097], ["La Guarida de Velgar", 100247, 98829]]
+    }
+  ]
+}
