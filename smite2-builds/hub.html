@@ -1,0 +1,685 @@
+<title>Panteón de Builds</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: una columna — buscador arriba, tablero del meta por rol, ficha del dios con 3 builds lado a lado */
+:root {
+  --bg: #eef0f3;          /* mármol frío */
+  --surface: #ffffff;
+  --surface-2: #f5f6f8;
+  --line: #d6d9df;
+  --fg: #1b1f2a;
+  --muted: #5d6474;
+  --accent: #9a6a1f;      /* bronce */
+  --accent-soft: #f3e7d1;
+  --off: #b3402a;         /* ofensiva */
+  --def: #2f6a8f;         /* defensiva */
+  --hyb: #6a4f9a;         /* híbrida */
+  --ok: #2f7d4f;
+  --warn: #9a6a1f;
+  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11141c; --surface: #191d28; --surface-2: #202533; --line: #2f3546;
+    --fg: #e9e6df; --muted: #9aa0ae; --accent: #d9a54a; --accent-soft: #3a2f1c;
+    --off: #e0745c; --def: #6aaed6; --hyb: #a98fe0; --ok: #5fbf86; --warn: #d9a54a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11141c; --surface: #191d28; --surface-2: #202533; --line: #2f3546;
+  --fg: #e9e6df; --muted: #9aa0ae; --accent: #d9a54a; --accent-soft: #3a2f1c;
+  --off: #e0745c; --def: #6aaed6; --hyb: #a98fe0; --ok: #5fbf86; --warn: #d9a54a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+}
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 56px;
+  display: grid; gap: 28px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: .02em; }
+h1 { font-size: clamp(28px, 5vw, 40px); }
+h2 { font-size: 20px; }
+h3 { font-size: 15px; }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 600; }
+
+header.top { display: grid; gap: 10px; }
+header.top .sub { color: var(--muted); max-width: 64ch; }
+.patch { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.patch b { color: var(--accent); font-family: var(--font-display); font-size: 15px; }
+
+.search { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.search input {
+  flex: 1 1 260px; min-width: 0;
+  font: inherit; font-size: 17px; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: 10px;
+  background: var(--surface); color: var(--fg);
+}
+.search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  font: inherit; font-size: 13px; font-weight: 500;
+  padding: 6px 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--fg);
+}
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.chip:focus-visible, .god-btn:focus-visible, .tab:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Tablero de dioses */
+.board { display: grid; gap: 10px; }
+.groups { display: grid; gap: 12px; }
+.grp { font-family: var(--font-body); margin-top: 4px; }
+.grid-gods { display: flex; flex-wrap: wrap; gap: 8px; }
+.tpl-note { font-size: 14px; padding: 10px 12px; border-radius: 8px; background: var(--accent-soft); color: var(--fg); }
+.god-btn {
+  font: inherit; cursor: pointer; text-align: left;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--fg);
+}
+.god-btn:hover { border-color: var(--accent); }
+.god-btn[aria-current="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.god-btn .name { font-weight: 600; }
+.god-btn .roles { font-size: 12px; color: var(--muted); }
+.tier { font-family: var(--font-display); font-size: 12px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+
+/* Ficha */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 18px; }
+.card-head { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: baseline; justify-content: space-between; }
+.card-head h2 { font-size: clamp(24px, 4vw, 32px); }
+.meta-line { color: var(--muted); font-size: 14px; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab { font: inherit; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 8px; cursor: pointer; border: 1px solid var(--line); background: var(--surface-2); color: var(--fg); }
+.tab[aria-selected="true"] { background: var(--fg); color: var(--surface); border-color: var(--fg); }
+
+.basics { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 14px; }
+.basics div { display: grid; gap: 2px; min-width: 0; }
+.basics .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
+
+.builds { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.build { border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 10px; padding: 14px; display: grid; gap: 10px; align-content: start; background: var(--surface-2); min-width: 0; }
+.build.off { --c: var(--off); } .build.def { --c: var(--def); } .build.hyb { --c: var(--hyb); }
+.build-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.build-head h3 { color: var(--c); }
+.build .when { font-size: 13px; color: var(--muted); }
+.build ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; counter-reset: it; }
+.build li { counter-increment: it; display: flex; gap: 10px; align-items: baseline; font-size: 14px; }
+.build li::before { content: counter(it); font-variant-numeric: tabular-nums; font-size: 12px; color: var(--muted); width: 1.2em; text-align: right; flex: none; }
+.build li.def-item .iname::after { content: "defensa"; margin-left: 6px; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--def); font-weight: 600; }
+.build li.swap .iname { border-bottom: 1px dashed var(--muted); }
+.na { color: var(--muted); font-size: 14px; font-style: italic; }
+
+.badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; border: 1px solid currentColor; }
+.badge.data { color: var(--ok); }
+.badge.old { color: var(--warn); }
+.badge.mine { color: var(--muted); }
+
+.copy { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 6px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--fg); justify-self: start; }
+
+.notes { font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
+.notes strong { color: var(--fg); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); align-items: center; }
+.empty { color: var(--muted); padding: 10px 0; }
+
+footer { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+footer ul { margin: 0; padding-left: 18px; }
+
+@media (max-width: 520px) {
+  .card { padding: 16px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: rise .25s ease-out; }
+  @keyframes rise { from { transform: translateY(4px); } to { transform: none; } }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Smite 2 · Conquest Ranked</span>
+    <h1>Panteón de Builds</h1>
+    <p class="sub">Busca a tu dios y elige su build: <b>ofensiva</b> para hacer daño, <b>defensiva</b> para aguantar y <b>híbrida</b> para quedarte en medio. Las builds ofensivas salen de partidas Ranked de Masters o más.</p>
+    <span class="patch">Parche <b>OB47</b> · datos revisados el 10 nov 2026</span>
+  </header>
+
+  <section class="search" aria-label="Buscar dios">
+    <label for="q" class="eyebrow" style="flex-basis:100%">¿Qué dios vas a jugar?</label>
+    <input id="q" type="search" list="gods" placeholder="Ej. Nike, Zeus, Apollo…" autocomplete="off">
+    <datalist id="gods"></datalist>
+    <div class="chips" id="roleChips" role="group" aria-label="Filtrar por rol"></div>
+  </section>
+
+  <section class="board" aria-label="Dioses con build">
+    <div class="legend">
+      <span><span class="tier">S</span> top en win rate del rol (Ranked Masters+, OB47)</span>
+      <span>Toca un dios para ver sus builds</span>
+    </div>
+    <div class="groups" id="godGrid"></div>
+  </section>
+
+  <section id="detail" aria-live="polite"></section>
+
+  <section class="card" aria-label="Cómo leer las builds">
+    <h2>Cómo leer las builds</h2>
+    <div class="notes">
+      <p><span class="badge data">Ranked OB47</span> La build sale de partidas Ranked del parche actual.</p>
+      <p><span class="badge old">Parche anterior</span> El dato es de OB45 u OB46. Probablemente sigue sirviendo, pero no está confirmado para OB47.</p>
+      <p><span class="badge mine">Plantilla de clase</span> Para dioses sin datos propios: es la build ganadora de su clase en el OB47.</p>
+      <p><span class="badge mine">Ajuste sugerido</span> Las versiones defensiva e híbrida toman el núcleo de la build ganadora y cambian 2 o 3 items por protecciones. Los items subrayados con línea punteada son los que cambiaron.</p>
+      <p><strong>Contra quién protegerte:</strong> si el equipo rival tiene más daño mágico, cambia Breastplate of Valor por Genji's Guard. Si tiene más daño físico, al revés.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Fuentes: estadísticas públicas de Ranked de SmiteSource, SmiteBrain y Smite2.live. Los win rates cambian cada día. Antes de una partida importante, revisa la página del dios.</p>
+    <p>El roster tiene <span id="count"></span> dioses. Si falta alguno, escribe su nombre, presiona Enter y elige su clase.</p>
+  </footer>
+</div>
+
+<script>
+// Items que dan protección, para marcarlos en la lista.
+const DEF = new Set([
+  "Breastplate of Valor","Genji's Guard","Spirit Robe","Shifter's Shield","Dwarven Plate",
+  "Berserker's Shield","Kinetic Cuirass","Gladiator's Shield","Mystical Mail","Draconic Scale",
+  "Shell of Rebuke","Amanita Charm","Gauntlet of Thebes","Stampede","Eye of Providence",
+  "Magi's Cloak","Brawler's Beat Stick","Freya's Tears"
+]);
+
+const ROLE_LABEL = { jungle: "Jungla", solo: "Solo", mid: "Mid", carry: "Carry", support: "Support" };
+
+// off/def/hyb: { items, src: "data" | "old" | "mine", swaps: [indices cambiados], note }
+// off: null cuando no aplica (p. ej. tanques de support).
+const GODS = [
+  {
+    name: "Nike", slug: "nike", tier: { jungle: "S", solo: "S" },
+    roles: {
+      jungle: {
+        wr: "63% WR en jungla", starter: "Archmage's Gem", relic: "Purification Beads", aspect: "Transcendence en el núcleo",
+        off: { src: "data", items: ["Jotunn's Revenge","Transcendence","Pendulum Blade","The Crusher","Heartseeker","Titan's Bane"], note: "Variante de jugadores Deity: Arondight o Blinking Abyss en lugar de Pendulum Blade." },
+        def: { src: "mine", items: ["Jotunn's Revenge","Transcendence","The Crusher","Shifter's Shield","Breastplate of Valor","Genji's Guard"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Jotunn's Revenge","Transcendence","The Crusher","Heartseeker","Shifter's Shield","Titan's Bane"], swaps: [4] }
+      },
+      solo: {
+        wr: "Top en solo (OB47)", starter: "Archmage's Gem", relic: "Purification Beads",
+        off: { src: "data", items: ["Jotunn's Revenge","Transcendence","The Crusher","Heartseeker","Titan's Bane","Pendulum Blade"], note: "Mismo núcleo que en jungla." },
+        def: { src: "data", items: ["Jotunn's Revenge","Transcendence","Shifter's Shield","Freya's Tears","Breastplate of Valor","Genji's Guard"], swaps: [4,5], note: "Shifter's Shield y Freya's Tears aparecen en builds Ranked de Nike solo." },
+        hyb: { src: "mine", items: ["Jotunn's Revenge","Transcendence","The Crusher","Shifter's Shield","Freya's Tears","Titan's Bane"], swaps: [3,4] }
+      }
+    }
+  },
+  {
+    name: "Izanami", slug: "izanami", tier: { jungle: "S", mid: "A" },
+    roles: {
+      jungle: {
+        wr: "63–67% WR en jungla", starter: "—", relic: "Purification Beads", aspect: "Aspect of the Sickle (daño mágico)",
+        off: { src: "data", items: ["Rod of Tahuti","Spear of Desolation","Obsidian Shard","Pendulum of the Ages","Chronos' Pendant","Polynomicon"], note: "Con el aspecto, Izanami se juega con poder mágico. Rod of Tahuti es el item más comprado (56% WR)." },
+        def: { src: "mine", items: ["Rod of Tahuti","Spear of Desolation","Pendulum of the Ages","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Rod of Tahuti","Spear of Desolation","Obsidian Shard","Pendulum of the Ages","Spirit Robe","Genji's Guard"], swaps: [4,5] }
+      },
+      carry: {
+        wr: "Opción física de carry", starter: "Sharpshooter's Arrow", relic: "Purification Beads",
+        off: { src: "data", items: ["Tyrfing","Devourer's Gauntlet","Silverbranch Bow","Spear of Desolation","The Executioner","Dominance"], note: "Tyrfing, Devourer's y Silverbranch tienen 55–57% WR en Ranked. Los dos últimos slots varían." },
+        def: { src: "mine", items: ["Tyrfing","Devourer's Gauntlet","Silverbranch Bow","Magi's Cloak","Breastplate of Valor","Genji's Guard"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Tyrfing","Devourer's Gauntlet","Silverbranch Bow","The Executioner","Magi's Cloak","Dominance"], swaps: [4] }
+      }
+    }
+  },
+  {
+    name: "Mordred", slug: "mordred", tier: { jungle: "S", solo: "A" },
+    roles: {
+      jungle: {
+        wr: "62–63% WR en jungla", starter: "Bumba's Cudgel", relic: "Blink Rune",
+        off: { src: "mine", items: ["Devourer's Gauntlet","Hydra's Lament","Transcendence","Jotunn's Revenge","The Crusher","Heartseeker"], swaps: [2,3,4,5], note: "Devourer's Gauntlet y Hydra's Lament son los items más comprados en Mordred. El resto sigue el núcleo de los junglas físicos del meta." },
+        def: { src: "mine", items: ["Devourer's Gauntlet","Hydra's Lament","Shifter's Shield","Breastplate of Valor","Genji's Guard","Dwarven Plate"], swaps: [2,3,4,5] },
+        hyb: { src: "mine", items: ["Devourer's Gauntlet","Hydra's Lament","Transcendence","Shifter's Shield","Breastplate of Valor","Heartseeker"], swaps: [3,4] }
+      },
+      solo: {
+        wr: "Build Ranked OB47", starter: "Bluestone Brooch", relic: "Aegis of Acceleration",
+        off: { src: "mine", items: ["Bluestone Brooch","Devourer's Gauntlet","Hydra's Lament","Brawler's Beat Stick","Shifter's Shield","Breastplate of Valor"], swaps: [1,2], note: "Más daño en solo, sin quedarte de papel." },
+        def: { src: "data", items: ["Shifter's Shield","Genji's Guard","Brawler's Beat Stick","Dwarven Plate","Freya's Tears","Breastplate of Valor"], note: "Esta es la build Ranked de solo, tal cual. Ya es bastante tanque." },
+        hyb: { src: "mine", items: ["Devourer's Gauntlet","Shifter's Shield","Brawler's Beat Stick","Genji's Guard","Freya's Tears","Breastplate of Valor"], swaps: [0] }
+      }
+    }
+  },
+  {
+    name: "Aladdin", slug: "aladdin", tier: { jungle: "A" },
+    roles: {
+      jungle: {
+        wr: "Top 6 en jungla", starter: "Bumba's Cudgel", relic: "Blink Rune",
+        off: { src: "data", items: ["Book of Thoth","The Cosmic Horror","Obsidian Shard","Dreamer's Idol","Rod of Tahuti","Spear of Desolation"], swaps: [4,5], note: "Los primeros 4 son los items más populares en Ranked. El orden no está confirmado." },
+        def: { src: "mine", items: ["Book of Thoth","The Cosmic Horror","Obsidian Shard","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Book of Thoth","The Cosmic Horror","Obsidian Shard","Dreamer's Idol","Spirit Robe","Genji's Guard"], swaps: [4,5] }
+      }
+    }
+  },
+  {
+    name: "Ullr", slug: "ullr", tier: { jungle: "A" },
+    roles: {
+      jungle: {
+        wr: "59.8% WR en jungla", starter: "Bumba's Cudgel + Bifrost Shard", relic: "Purification Beads",
+        off: { src: "data", items: ["Bumba's Hammer","Hydra's Lament","Transcendence","Jotunn's Revenge","Heartseeker","The Crusher"], note: "Si el rival compra mucha protección, cambia The Crusher por Titan's Bane." },
+        def: { src: "mine", items: ["Bumba's Hammer","Hydra's Lament","Transcendence","Shifter's Shield","Breastplate of Valor","Genji's Guard"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Bumba's Hammer","Hydra's Lament","Transcendence","Jotunn's Revenge","Shifter's Shield","Titan's Bane"], swaps: [4] }
+      }
+    }
+  },
+  {
+    name: "Athena", slug: "athena", tier: { jungle: "A", support: "A" },
+    roles: {
+      support: {
+        wr: "Build Ranked OB47 (Deity / Master)", starter: "Bumba's Cudgel", relic: "Blink Rune + Phantom Shell",
+        off: null,
+        def: { src: "data", items: ["Genji's Guard","Shell of Rebuke","Spirit Robe","Freya's Tears","Shifter's Shield","Breastplate of Valor"], swaps: [5], note: "Tanque de iniciación. El último item lo agregué yo." },
+        hyb: { src: "mine", items: ["Shifter's Shield","Genji's Guard","Shell of Rebuke","Freya's Tears","Hydra's Lament","Spirit Robe"], swaps: [4] }
+      },
+      jungle: {
+        wr: "Top 6 en jungla", starter: "Bumba's Cudgel", relic: "Blink Rune o Purification Beads",
+        off: { src: "mine", items: ["Bumba's Hammer","Hydra's Lament","Transcendence","Jotunn's Revenge","Shifter's Shield","The Crusher"], swaps: [2,3,5] },
+        def: { src: "mine", items: ["Bumba's Hammer","Shifter's Shield","Kinetic Cuirass","Freya's Tears","Genji's Guard","Breastplate of Valor"], swaps: [4,5] },
+        hyb: { src: "data", items: ["Hydra's Lament","Bumba's Hammer","Shifter's Shield","Kinetic Cuirass","Freya's Tears","Genji's Guard"], swaps: [5], note: "Esta es la build Ranked de jungla: mitad daño, mitad tanque." }
+      }
+    }
+  },
+  {
+    name: "Loki", slug: "loki", tier: {},
+    roles: {
+      jungle: {
+        wr: "Build Ranked OB47", starter: "Bumba's Cudgel + Gjallarflare", relic: "Aegis of Acceleration",
+        off: { src: "data", items: ["Bumba's Hammer","Barbed Carver","Transcendence","Hydra's Lament","The Crusher","Heartseeker"], note: "Si necesitas otro item de daño, Blinking Abyss es la opción común." },
+        def: { src: "mine", items: ["Bumba's Hammer","Barbed Carver","Transcendence","Shifter's Shield","Magi's Cloak","Genji's Guard"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Bumba's Hammer","Jotunn's Revenge","Transcendence","Hydra's Lament","Shifter's Shield","Titan's Bane"], swaps: [4], note: "Usa el camino con Bifrost Shard que también se ve en Ranked." }
+      }
+    }
+  },
+  {
+    name: "Zeus", slug: "zeus", tier: {},
+    roles: {
+      mid: {
+        wr: "Build Ranked OB47", starter: "—", relic: "—",
+        off: { src: "data", items: ["Bancroft's Talon","Spear of Desolation","Rod of Tahuti","Obsidian Shard","Soul Gem","Dreamer's Idol"], swaps: [5], note: "Bancroft's Talon es el item con mejor resultado ajustado por muestra." },
+        def: { src: "mine", items: ["Bancroft's Talon","Spear of Desolation","Rod of Tahuti","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Bancroft's Talon","Spear of Desolation","Rod of Tahuti","Obsidian Shard","Spirit Robe","Genji's Guard"], swaps: [4,5] }
+      }
+    }
+  },
+  {
+    name: "Eset", slug: "eset", tier: {},
+    roles: {
+      mid: {
+        wr: "Build Ranked OB47", starter: "Archmage's Gem", relic: "Aegis of Acceleration",
+        off: { src: "data", items: ["Spear of Desolation","Ancient Signet","Rod of Tahuti","Dreamer's Idol","Soul Gem","Spear of the Magus"], note: "Freya's Tears tiene el mejor resultado ajustado por muestra en Eset." },
+        def: { src: "mine", items: ["Spear of Desolation","Rod of Tahuti","Freya's Tears","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [2,3,4,5] },
+        hyb: { src: "mine", items: ["Spear of Desolation","Ancient Signet","Rod of Tahuti","Soul Gem","Freya's Tears","Genji's Guard"], swaps: [4,5] }
+      }
+    }
+  },
+  {
+    name: "Scylla", slug: "scylla", tier: {},
+    roles: {
+      mid: {
+        wr: "Build Ranked OB47", starter: "Archmage's Gem", relic: "Aegis of Acceleration",
+        off: { src: "data", items: ["Polynomicon","Spear of Desolation","Rod of Tahuti","Obsidian Shard","Divine Ruin","Ancient Signet"] },
+        def: { src: "mine", items: ["Polynomicon","Spear of Desolation","Rod of Tahuti","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Polynomicon","Spear of Desolation","Rod of Tahuti","Obsidian Shard","Divine Ruin","Genji's Guard"], swaps: [5] }
+      }
+    }
+  },
+  {
+    name: "Ra", slug: "ra", tier: {},
+    roles: {
+      mid: {
+        wr: "Build Ranked OB47", starter: "Pendulum of the Ages", relic: "Aegis of Acceleration",
+        off: { src: "data", items: ["Spear of Desolation","The World Stone","Rod of Tahuti","Nimble Ring","Obsidian Shard","Dreamer's Idol"] },
+        def: { src: "mine", items: ["Spear of Desolation","The World Stone","Rod of Tahuti","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Spear of Desolation","The World Stone","Rod of Tahuti","Nimble Ring","Obsidian Shard","Genji's Guard"], swaps: [5] }
+      }
+    }
+  },
+  {
+    name: "Anubis", slug: "anubis", tier: {},
+    roles: {
+      mid: {
+        wr: "Build Ranked OB47 (11/08–11/09)", starter: "Archmage's Gem", relic: "Aegis of Acceleration o Purification Beads",
+        off: { src: "data", items: ["Rod of Tahuti","Spear of Desolation","Typhon's Heart","Obsidian Shard","Bancroft's Talon","Dreamer's Idol"], swaps: [5] },
+        def: { src: "mine", items: ["Rod of Tahuti","Spear of Desolation","Typhon's Heart","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Rod of Tahuti","Spear of Desolation","Typhon's Heart","Bancroft's Talon","Obsidian Shard","Genji's Guard"], swaps: [5], note: "Bancroft's Talon y Typhon's Heart te dan robo de vida para aguantar en línea." }
+      }
+    }
+  },
+  {
+    name: "Nox", slug: "nox", tier: {},
+    roles: {
+      mid: {
+        wr: "Muestra chica (16 partidas)", starter: "—", relic: "—",
+        off: { src: "data", items: ["Divine Ruin","Spear of Desolation","Spear of the Magus","Rod of Tahuti","Yogi's Necklace","Obsidian Shard"], swaps: [5], note: "Solo hay 16 partidas registradas. Tómala como referencia, no como meta." },
+        def: { src: "mine", items: ["Divine Ruin","Spear of Desolation","Rod of Tahuti","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Divine Ruin","Spear of Desolation","Spear of the Magus","Rod of Tahuti","Spirit Robe","Genji's Guard"], swaps: [4,5] }
+      }
+    }
+  },
+  {
+    name: "Hel", slug: "hel", tier: { support: "S" },
+    roles: {
+      support: {
+        wr: "54.8% WR con Aspect of Divergence", starter: "—", relic: "Aegis of Acceleration", aspect: "Aspect of Divergence (sin el aspecto baja a 37.7%)",
+        off: { src: "data", items: ["Pendulum of the Ages","Spear of Desolation","Book of Thoth","Rod of Tahuti","Lotus Sickle","Genji's Guard"], swaps: [4,5], note: "Es el núcleo que usa Hel en mid. Sirve si tu equipo necesita más daño." },
+        def: { src: "mine", items: ["Pendulum of the Ages","Stampede","Genji's Guard","Shell of Rebuke","Breastplate of Valor","Spirit Robe"], swaps: [4,5] },
+        hyb: { src: "data", items: ["Pendulum of the Ages","Lotus Sickle","Stampede","Genji's Guard","Shell of Rebuke","Freya's Tears"], note: "Build de una partida Deity en OB47: cura, aura y protecciones." }
+      },
+      mid: {
+        wr: "Build Ranked OB47", starter: "—", relic: "—", aspect: "Aspect of Divergence",
+        off: { src: "data", items: ["Pendulum of the Ages","Spear of Desolation","Book of Thoth","Rod of Tahuti","Obsidian Shard","Dreamer's Idol"], swaps: [4,5] },
+        def: { src: "mine", items: ["Pendulum of the Ages","Book of Thoth","Rod of Tahuti","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Pendulum of the Ages","Spear of Desolation","Book of Thoth","Rod of Tahuti","Spirit Robe","Genji's Guard"], swaps: [4,5] }
+      }
+    }
+  },
+  {
+    name: "Aphrodite", slug: "aphrodite", tier: { support: "S" },
+    roles: {
+      support: {
+        wr: "S tier en support", starter: "—", relic: "Purification Beads o Phantom Shell",
+        off: null,
+        def: { src: "data", items: ["Amanita Charm","Shell of Rebuke","Genji's Guard","Breastplate of Valor","Rod of Asclepius","Pendulum of the Ages"], note: "Items populares en Ranked. El orden no está confirmado." },
+        hyb: { src: "data", items: ["Rod of Asclepius","Chandra's Grace","Pendulum of the Ages","Amanita Charm","Genji's Guard","Breastplate of Valor"], note: "Más curación, sin dejar de lado las protecciones." }
+      }
+    }
+  },
+  {
+    name: "Ares", slug: "ares", tier: { support: "S" },
+    roles: {
+      support: {
+        wr: "S tier en support", starter: "Selflessness + Bifrost Shard", relic: "Blink Rune · Ulti: Heroism",
+        off: null,
+        def: { src: "data", items: ["Stampede","Eye of Providence","Genji's Guard","Breastplate of Valor","Freya's Tears","Draconic Scale"] },
+        hyb: { src: "mine", items: ["Stampede","Eye of Providence","Genji's Guard","Breastplate of Valor","Hydra's Lament","Shifter's Shield"], swaps: [4,5], note: "Un poco más de daño para que tus cadenas sí maten." }
+      }
+    }
+  },
+  {
+    name: "Khepri", slug: "khepri", tier: { support: "S" },
+    roles: {
+      support: {
+        wr: "S tier en support", starter: "—", relic: "Purification Beads · Ulti: Heroism",
+        off: null,
+        def: { src: "old", items: ["Gauntlet of Thebes","Amanita Charm","Shell of Rebuke","Genji's Guard","Spirit Robe","Draconic Scale"], note: "Build del parche OB46." },
+        hyb: { src: "mine", items: ["Gauntlet of Thebes","Amanita Charm","Shell of Rebuke","Genji's Guard","Stampede","Spirit Robe"], swaps: [4] }
+      }
+    }
+  },
+  {
+    name: "Apollo", slug: "apollo", tier: {},
+    roles: {
+      carry: {
+        wr: "Build Ranked OB47", starter: "Hunter's Cowl", relic: "Aegis of Acceleration",
+        off: { src: "data", items: ["Devourer's Gauntlet","Odysseus' Bow","The Executioner","Silverbranch Bow","Riptalon","Dominance"], note: "Silverbranch Bow tiene 53.1% WR (1,813 partidas). Odysseus' Bow tiene 52.5% (1,740 partidas)." },
+        def: { src: "mine", items: ["Devourer's Gauntlet","Odysseus' Bow","The Executioner","Magi's Cloak","Breastplate of Valor","Genji's Guard"], swaps: [3,4,5] },
+        hyb: { src: "mine", items: ["Devourer's Gauntlet","Odysseus' Bow","The Executioner","Silverbranch Bow","Magi's Cloak","Dominance"], swaps: [4] }
+      }
+    }
+  },
+  {
+    name: "Hou Yi", slug: "hou-yi", tier: {},
+    roles: {
+      carry: {
+        wr: "Build completa del parche OB46", starter: "Sharpshooter's Arrow", relic: "Purification Beads",
+        off: { src: "old", items: ["Sun Beam Bow","Qin's Blade","Odysseus' Bow","The Executioner","Silverbranch Bow","Avatar's Parashu"], note: "En OB47 los items más comprados son Dagger of Frenzy, Devourer's Gauntlet, Dominance, Riptalon y The Executioner." },
+        def: { src: "mine", items: ["Devourer's Gauntlet","The Executioner","Dominance","Magi's Cloak","Breastplate of Valor","Genji's Guard"], swaps: [3,4,5] },
+        hyb: { src: "data", items: ["Dagger of Frenzy","Devourer's Gauntlet","The Executioner","Dominance","Riptalon","Magi's Cloak"], swaps: [5], note: "Núcleo del OB47 con un item contra control de masas." }
+      }
+    }
+  },
+  {
+    name: "Osiris", slug: "osiris", tier: { solo: "S" },
+    roles: {
+      solo: {
+        wr: "Top 2 en solo", starter: "Death's Toll", relic: "Phantom Shell + Bifrost Shard",
+        off: { src: "old", items: ["Devourer's Gauntlet","Brawler's Beat Stick","Sanguine Lash","Hydra's Lament","Berserker's Shield","Kinetic Cuirass"], swaps: [3], note: "Items de Ranked del OB45. Brawler's Beat Stick tiene 52.4% WR en OB47." },
+        def: { src: "mine", items: ["Brawler's Beat Stick","Berserker's Shield","Kinetic Cuirass","Shell of Rebuke","Genji's Guard","Breastplate of Valor"], swaps: [4,5] },
+        hyb: { src: "old", items: ["Devourer's Gauntlet","Sanguine Lash","Kinetic Cuirass","Berserker's Shield","Shell of Rebuke","Brawler's Beat Stick"], note: "La combinación más jugada en Ranked: daño con robo de vida y protecciones." }
+      }
+    }
+  }
+];
+
+// Plantillas por clase, armadas con los núcleos que más ganan en Ranked OB47.
+const CLASS_ROLE = { A: "jungle", W: "solo", M: "mid", H: "carry", G: "support" };
+const CLASS_LABEL = { A: "Asesino", W: "Guerrero", M: "Mago", H: "Cazador", G: "Guardián" };
+const TEMPLATES = {
+  A: {
+    wr: "Plantilla de asesino (jungla física)", starter: "Bumba's Cudgel", relic: "Blink Rune o Purification Beads",
+    off: { src: "tpl", items: ["Bumba's Hammer","Hydra's Lament","Transcendence","Jotunn's Revenge","The Crusher","Heartseeker"], note: "Es el núcleo que comparten Ullr, Loki y Nike en jungla. Si tu dios escala con poder mágico, usa la plantilla de mago." },
+    def: { src: "tpl", items: ["Bumba's Hammer","Hydra's Lament","Transcendence","Shifter's Shield","Breastplate of Valor","Genji's Guard"], swaps: [3,4,5] },
+    hyb: { src: "tpl", items: ["Bumba's Hammer","Hydra's Lament","Transcendence","Jotunn's Revenge","Shifter's Shield","Titan's Bane"], swaps: [4] }
+  },
+  W: {
+    wr: "Plantilla de guerrero (solo)", starter: "Bluestone Brooch", relic: "Aegis of Acceleration",
+    off: { src: "tpl", items: ["Devourer's Gauntlet","Hydra's Lament","Brawler's Beat Stick","Jotunn's Revenge","Shifter's Shield","Titan's Bane"], swaps: [3,5] },
+    def: { src: "tpl", items: ["Shifter's Shield","Genji's Guard","Brawler's Beat Stick","Dwarven Plate","Freya's Tears","Breastplate of Valor"], note: "Es la build Ranked de Mordred en solo. Sirve para casi cualquier guerrero." },
+    hyb: { src: "tpl", items: ["Devourer's Gauntlet","Shifter's Shield","Brawler's Beat Stick","Genji's Guard","Freya's Tears","Breastplate of Valor"], swaps: [0] }
+  },
+  M: {
+    wr: "Plantilla de mago (mid)", starter: "Archmage's Gem", relic: "Aegis of Acceleration",
+    off: { src: "tpl", items: ["Spear of Desolation","Rod of Tahuti","Obsidian Shard","Book of Thoth","Dreamer's Idol","Divine Ruin"], note: "Spear of Desolation y Rod of Tahuti aparecen en casi todos los magos del meta. Si los rivales se curan mucho, cambia Dreamer's Idol por Divine Ruin antes." },
+    def: { src: "tpl", items: ["Spear of Desolation","Rod of Tahuti","Book of Thoth","Spirit Robe","Genji's Guard","Breastplate of Valor"], swaps: [3,4,5] },
+    hyb: { src: "tpl", items: ["Spear of Desolation","Rod of Tahuti","Bancroft's Talon","Obsidian Shard","Spirit Robe","Genji's Guard"], swaps: [2,4,5] }
+  },
+  H: {
+    wr: "Plantilla de cazador (carry)", starter: "Hunter's Cowl", relic: "Purification Beads",
+    off: { src: "tpl", items: ["Devourer's Gauntlet","Odysseus' Bow","The Executioner","Silverbranch Bow","Riptalon","Dominance"], note: "Es la build Ranked de Apollo. Los items funcionan para cualquier cazador de ataque básico." },
+    def: { src: "tpl", items: ["Devourer's Gauntlet","Odysseus' Bow","The Executioner","Magi's Cloak","Breastplate of Valor","Genji's Guard"], swaps: [3,4,5] },
+    hyb: { src: "tpl", items: ["Devourer's Gauntlet","Odysseus' Bow","The Executioner","Silverbranch Bow","Magi's Cloak","Dominance"], swaps: [4] }
+  },
+  G: {
+    wr: "Plantilla de guardián (support)", starter: "Selflessness + Bifrost Shard", relic: "Blink Rune · Ulti: Heroism",
+    off: null,
+    def: { src: "tpl", items: ["Stampede","Eye of Providence","Genji's Guard","Breastplate of Valor","Shell of Rebuke","Spirit Robe"], note: "Viene de las builds de Ares, Khepri y Athena." },
+    hyb: { src: "tpl", items: ["Gauntlet of Thebes","Amanita Charm","Genji's Guard","Shell of Rebuke","Hydra's Lament","Shifter's Shield"], swaps: [4,5] }
+  }
+};
+
+// Roster con clase principal. Los dioses con build propia (GODS) tienen prioridad.
+const ROSTER = {
+  "Achilles":"W","Agni":"M","Ah Puch":"M","Aladdin":"A","Amaterasu":"W","Anhur":"H","Anubis":"M","Aphrodite":"M",
+  "Apollo":"H","Ares":"G","Artemis":"H","Artio":"G","Athena":"G","Awilix":"A","Baba Yaga":"M","Baron Samedi":"M",
+  "Bastet":"A","Bellona":"W","Cabrakan":"G","Cerberus":"G","Cernunnos":"H","Chaac":"W","Chiron":"H","Cu Chulainn":"W",
+  "Danzaburou":"H","Eset":"M","Fenrir":"A","Geb":"G","Gilgamesh":"W","Guan Yu":"W","Hachiman":"H","Hades":"M",
+  "Hecate":"M","Hel":"M","Hercules":"W","Hou Yi":"H","Hua Mulan":"W","Hun Batz":"A","Ishtar":"H","Ix Chel":"M",
+  "Izanami":"H","Janus":"M","Jing Wei":"H","Kali":"A","Khepri":"G","Kukulkan":"M","Kuzenbo":"G","Loki":"A",
+  "Medusa":"H","Mercury":"A","Merlin":"M","Mordred":"W","Morgan Le Fay":"M","Ne Zha":"A","Neith":"H","Nemesis":"A",
+  "Nike":"W","Nox":"M","Nut":"H","Odin":"W","Osiris":"W","Pele":"A","Poseidon":"M","Ra":"M","Rama":"H",
+  "Ratatoskr":"A","Ravana":"W","Scylla":"M","Sobek":"G","Sol":"M","Sun Wukong":"W","Susano":"A","Sylvanus":"G",
+  "Thanatos":"A","The Morrigan":"M","Thor":"A","Ullr":"H","Vulcan":"M","Yu Huang":"M","Ymir":"G","Zeus":"M"
+};
+const slugify = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function templateGod(name, cls) {
+  return { name, slug: slugify(name), cls, tier: {}, tpl: true, roles: { [CLASS_ROLE[cls]]: TEMPLATES[cls] } };
+}
+{
+  const have = new Set(GODS.map(g => g.name));
+  for (const g of GODS) g.cls = ROSTER[g.name];
+  for (const [name, cls] of Object.entries(ROSTER)) if (!have.has(name)) GODS.push(templateGod(name, cls));
+}
+
+const ROLES = ["jungle","solo","mid","carry","support"];
+const BADGE = { data: ["data","Ranked OB47"], old: ["old","Parche anterior"], mine: ["mine","Ajuste sugerido"], tpl: ["mine","Plantilla de clase"] };
+const WHEN = {
+  off: "Para cuando vas ganando o tu equipo ya tiene tanque.",
+  def: "Para cuando te están matando mucho o eres el frontline.",
+  hyb: "Para partidas parejas: pegas fuerte y aguantas."
+};
+const TITLE = { off: "Ofensiva", def: "Defensiva", hyb: "Híbrida" };
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
+let roleFilter = "all";
+let current = null;     // { god, role }
+
+function bestTier(g) {
+  const t = Object.values(g.tier);
+  return t.includes("S") ? "S" : t.includes("A") ? "A" : "";
+}
+
+function renderChips() {
+  const opts = [["all","Todos"], ...ROLES.map(r => [r, ROLE_LABEL[r]])];
+  $("#roleChips").innerHTML = opts.map(([v,l]) =>
+    `<button class="chip" type="button" data-role="${v}" aria-pressed="${v===roleFilter}">${l}</button>`).join("");
+}
+
+function godBtn(g) {
+  const t = roleFilter === "all" ? bestTier(g) : (g.tier[roleFilter] || "");
+  const sub = g.tpl ? CLASS_LABEL[g.cls] : Object.keys(g.roles).map(r => ROLE_LABEL[r]).join(" · ");
+  const cur = current && current.god === g ? ' aria-current="true"' : "";
+  return `<button class="god-btn" type="button" data-slug="${g.slug}"${cur}>
+    ${t ? `<span class="tier">${t}</span>` : ""}<span class="name">${esc(g.name)}</span><span class="roles">${sub}</span></button>`;
+}
+
+function renderGrid() {
+  const rank = t => t === "S" ? 0 : t === "A" ? 1 : 2;
+  const inRole = g => roleFilter === "all" || g.roles[roleFilter];
+  const own = GODS.filter(g => !g.tpl && inRole(g)).sort((a,b) => {
+    const ta = roleFilter === "all" ? bestTier(a) : (a.tier[roleFilter] || "");
+    const tb = roleFilter === "all" ? bestTier(b) : (b.tier[roleFilter] || "");
+    return rank(ta) - rank(tb) || a.name.localeCompare(b.name);
+  });
+  const tpl = GODS.filter(g => g.tpl && inRole(g)).sort((a,b) => a.name.localeCompare(b.name));
+  $("#godGrid").innerHTML =
+    (own.length ? `<h3 class="eyebrow grp">Con build propia (${own.length})</h3><div class="grid-gods">${own.map(godBtn).join("")}</div>` : "") +
+    (tpl.length ? `<h3 class="eyebrow grp">Con plantilla de su clase (${tpl.length})</h3><div class="grid-gods">${tpl.map(godBtn).join("")}</div>` : "");
+  $("#gods").innerHTML = GODS.map(g => `<option value="${esc(g.name)}">`).join("");
+}
+
+function renderUnknown(text) {
+  const opts = Object.keys(CLASS_LABEL).map(c => `<button class="chip" type="button" data-cls="${c}" aria-pressed="false">${CLASS_LABEL[c]}</button>`).join("");
+  current = null;
+  renderGrid();
+  $("#detail").innerHTML = `<article class="card">
+    <span class="eyebrow">Dios no encontrado</span>
+    <h2>${esc(text)}</h2>
+    <p class="meta-line">Ese nombre no está en mi lista. Puede ser un dios nuevo o que esté escrito distinto. Elige su clase y te doy la plantilla:</p>
+    <div class="chips">${opts}</div>
+  </article>`;
+  $("#detail").dataset.unknown = text;
+}
+
+function buildHTML(kind, b) {
+  if (!b) {
+    return `<article class="build ${kind}"><div class="build-head"><h3>${TITLE[kind]}</h3></div>
+      <p class="na">No aplica. Este dios se juega como tanque de support. Usa la defensiva o la híbrida.</p></article>`;
+  }
+  const [cls, label] = BADGE[b.src];
+  const swaps = new Set(b.swaps || []);
+  const items = b.items.map((it, i) => {
+    const c = [DEF.has(it) ? "def-item" : "", swaps.has(i) ? "swap" : ""].join(" ").trim();
+    return `<li${c ? ` class="${c}"` : ""}><span class="iname">${esc(it)}</span></li>`;
+  }).join("");
+  return `<article class="build ${kind}">
+    <div class="build-head"><h3>${TITLE[kind]}</h3><span class="badge ${cls}">${label}</span></div>
+    <p class="when">${WHEN[kind]}</p>
+    <ol>${items}</ol>
+    ${b.note ? `<p class="when">${esc(b.note)}</p>` : ""}
+    <button class="copy" type="button" data-copy="${esc(b.items.join(" > "))}">Copiar lista</button>
+  </article>`;
+}
+
+function renderDetail() {
+  const el = $("#detail");
+  if (!current) { el.innerHTML = ""; return; }
+  const { god, role } = current;
+  const r = god.roles[role];
+  const tabs = Object.keys(god.roles).map(k =>
+    `<button class="tab" type="button" role="tab" data-tab="${k}" aria-selected="${k===role}">${ROLE_LABEL[k]}${god.tier[k] ? ` · ${god.tier[k]}` : ""}</button>`).join("");
+  el.innerHTML = `<article class="card">
+    <div class="card-head">
+      <div style="display:grid;gap:4px;min-width:0">
+        <span class="eyebrow">${ROLE_LABEL[role]}</span>
+        <h2>${esc(god.name)}</h2>
+        <span class="meta-line">${esc(r.wr)}</span>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Rol">${tabs}</div>
+    </div>
+    <div class="basics">
+      <div><span class="lbl">Inicio</span><span>${esc(r.starter)}</span></div>
+      <div><span class="lbl">Reliquia</span><span>${esc(r.relic)}</span></div>
+      ${r.aspect ? `<div><span class="lbl">Aspecto</span><span>${esc(r.aspect)}</span></div>` : ""}
+    </div>
+    ${god.tpl ? `<p class="tpl-note">Todavía no tengo datos Ranked propios de ${esc(god.name)}. Esta es la plantilla de ${CLASS_LABEL[god.cls].toLowerCase()}, armada con los items que más ganan en el OB47. Ajusta según su kit y revisa sus stats en vivo abajo.</p>` : ""}
+    <div class="builds">${buildHTML("off", r.off)}${buildHTML("def", r.def)}${buildHTML("hyb", r.hyb)}</div>
+    <p class="meta-line">Stats en vivo: <a href="https://smitesource.com/god/${god.slug}" target="_blank" rel="noopener">SmiteSource</a> · <a href="https://smitebrain.com/gods/${god.slug}/builds" target="_blank" rel="noopener">SmiteBrain</a></p>
+  </article>`;
+}
+
+function select(god, role) {
+  if (!god) return;
+  const r = role && god.roles[role] ? role
+    : (roleFilter !== "all" && god.roles[roleFilter]) ? roleFilter
+    : Object.keys(god.roles)[0];
+  current = { god, role: r };
+  try { if (location.hash !== "#" + god.slug) history.replaceState(null, "", "#" + god.slug); } catch (e) {}
+  renderGrid(); renderDetail();
+}
+
+function findGod(text) {
+  const n = norm(text);
+  if (!n) return null;
+  return GODS.find(g => norm(g.name) === n) || GODS.find(g => norm(g.name).startsWith(n)) || GODS.find(g => norm(g.name).includes(n));
+}
+
+document.addEventListener("click", e => {
+  const clsBtn = e.target.closest("[data-cls]");
+  if (clsBtn) {
+    const name = $("#detail").dataset.unknown || "Tu dios";
+    current = { god: templateGod(name, clsBtn.dataset.cls), role: CLASS_ROLE[clsBtn.dataset.cls] };
+    renderDetail();
+    return;
+  }
+  const chip = e.target.closest(".chip");
+  if (chip) { roleFilter = chip.dataset.role; renderChips(); renderGrid(); return; }
+  const gb = e.target.closest(".god-btn");
+  if (gb) { select(GODS.find(g => g.slug === gb.dataset.slug)); $("#detail").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+  const tab = e.target.closest(".tab");
+  if (tab && current) { select(current.god, tab.dataset.tab); return; }
+  const cp = e.target.closest(".copy");
+  if (cp) {
+    const done = () => { cp.textContent = "Copiada"; setTimeout(() => cp.textContent = "Copiar lista", 1500); };
+    try {
+      navigator.clipboard.writeText(cp.dataset.copy).then(done, () => { cp.textContent = cp.dataset.copy; });
+    } catch (err) { cp.textContent = cp.dataset.copy; }
+  }
+});
+
+$("#q").addEventListener("input", e => { const g = findGod(e.target.value); if (g && norm(e.target.value).length >= 2) select(g); });
+$("#q").addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  const v = e.target.value.trim();
+  const g = findGod(v);
+  if (g) select(g); else if (v) renderUnknown(v);
+});
+
+function fromHash() {
+  const slug = (location.hash || "").slice(1);
+  const g = GODS.find(x => x.slug === slug);
+  select(g || GODS[0]);
+}
+window.addEventListener("hashchange", fromHash);
+
+$("#count").textContent = GODS.length;
+renderChips();
+renderGrid();
+fromHash();
+</script>
