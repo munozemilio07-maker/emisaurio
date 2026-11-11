@@ -1,7 +1,7 @@
 # Base de conocimiento – Dragonwilds (para el chat de la app)
 
 ## Perfil del jugador
-Juega melee, completó PL5 y está en Dowdun Reach. Equipo: Granite Maul legendario, báculo de vault, cota de Steel, grebas de Paladin, Wolfbane Dagger, Dragonblight Shield, herramientas de Steel.
+Juega melee. Ya completó PL1–5 y Dowdun Reach (venció al Black Knight Titan) y ahora va en Umbral Sands (expediciones 26–35). Equipo: Granite Maul legendario, báculo de vault, cota de Steel, grebas de Paladin, Wolfbane Dagger, Dragonblight Shield, herramientas de Steel.
 
 # Guía de misiones secundarias activas (resumen)
 Orden recomendado: Goblin Diplomacy (Bramblemead/Whispering Swamp) → Animal Magnetism (SO de Fractured Plains) → The Great Body Robbery (Bloodblight Swamp) → A Melody Remembered (Stormtouched Highlands) → Heartstrings (Fractured Plains, oeste a este) → Even More Restless Ghosts (Fellhollow).
@@ -327,8 +327,7 @@ Misiones:
 - Black Knight's Fortress (principal): se empieza hablando con Death en el Forgotten Temple. Pines: Dreaming Stone Shards por toda la zona, Demon Gates, Dowdun Altar, Delrom, Nexus Tower, Shardbound Lesser Demons, Dreaming Stone. Recompensa: Titan's Wrath (arma) y Maple Toastie.
 - Biohazard (secundaria): ataca y recoge el botín del cuervo corrupto en The Courtyard. Pines: Strange Ravens, Putrilius, Twilight Lily, Unholy Water, Zanik. Recompensa: Zamorak Cape.
 - Wanted! (secundaria): habla con Vannaka en The Courtyard. Pines: diarios del Hound Master, Summoner y Rat Master (jefes Houndmaster Rexiton, Summoner Flament, Rat Master Skrexis). Recompensa: Unholy Symbol.
-- What's Theirs is Mine! (secundaria): habla con Doric junto a la Dreaming Stone en The Nexus. Recompensa: Zamorak Staff.
-- Misión de Nodestones (Valerius): Hastily Scrawled Notes, Dead Mage (Valerius) y nodestones en cada sub-zona (cada una tiene su par en The Nexus). En la app aparece como "Nodestones (Valerius)"; el nombre exacto de la misión no está confirmado.
+- What's Theirs is Mine! (secundaria; internamente "Thinking With Portals"): habla con Doric junto a la Dreaming Stone en The Nexus. Es la misión de los nodestones: sigue al mago de túnica roja por los nodestones, encuentra las Hastily Scrawled Notes y el Dead Mage (Valerius), toma el esquema y regresa con Doric. Recompensa: receta del Zamorak Staff. Extra: activa los 9 nodestones (cada uno tiene su par en The Nexus; uno está tras la barrera, así que primero repara la Dreaming Stone) y Doric te da un portal reward pack con tomos Vol. 2 de Artisan, Construction, Magic y Mining.
 Acertijo de la Biblioteca (Notas de Alric, en The Library junto al pasaje sellado): lee las Notas de Alric y luego interactúa en orden con The Empty Throne → The Eye of Oculus → Taking the Crown → Zamorak's Rebellion, terminando cada diálogo. Un libro equivocado reinicia el acertijo. Al cuarto se cae la barrera.
 Jefes de la zona: dragones azules, Black Knight Titan, Stormpact Demon, Sergeant Blister, Zogres.
 
@@ -367,3 +366,148 @@ Jefes de la zona: dragones azules, Black Knight Titan, Stormpact Demon, Sergeant
 
 ## Tienda de Dowdun: Postie Pete (The Courtyard), moneda Infernal Fragments
 - Vestigios armadura negra 200/300/400; vestigios de armas 300 c/u: Bloodstained Hilt → Black Greataxe (PL6, 2 manos, Slash 146–256, especial Decimate; recomendado para melee), Shattered Black Blade → Black Sword (PL6, 1 mano, +15% vs magos), Battle-Scarred Black Metal → Black Shield, Sinister Mechanism → Shadow Crossbow, Demonic Metal Rod → Subjugation Staff. Capas 150, banderas 250, monturas 2,000.
+
+# Umbral Sands (expediciones 26–35)
+Investigado en el wiki oficial (dragonwilds.runescape.wiki) en noviembre de 2026. Las fuentes están al final de la sección. Lo que el wiki no publica se dice explícitamente; no lo completes de memoria.
+
+## Qué es y cómo se entra
+- Desierto PL7 al sureste de The Bastion y al este de Ghornfell, gobernado por el dragón rojo Fuzan. Se entra por la puerta a Umbral Sands dentro de The Bastion, que se abre al terminar Black Knight's Fortress. El wiki recomienda cruzarla de noche y con descanso completo.
+- Sub-zonas: Alcarrid Oasis (norte; primera a la que llegas, ahí están Icthlarin y el clan Alcarrid), Dunes of Uzzer (noreste, clan Uzzer), Manafem Plains (oeste, clan Manafem) y The Burning Spire (sur; el volcán de Fuzan, con la Cave of Screams).
+- Lodestone: Umbral Sands Lodestone, en Alcarrid Oasis (Expedición 26).
+- Recursos: adamantite, carbón, gypsum, sandstone, rune essence, yew, barrel cactus, bunny cactus, pipe cactus y desert weed. Aquí salen los materiales del equipo Adamant, Red Dragonhide e Infinity.
+- Enemigos: kalphites (worker, soldier, guardian), KotHaar (Hur, Ket, Xil, Kal), dragones rojos, cabras, wild jade/ruby vines. No agresivos: buitres y desert devil kebbits.
+
+Expediciones de la región en la app:
+- Expedición 26 · Alcarrid Oasis: 25 paradas
+- Expedición 27 · Lava Fields: 33 paradas
+- Expedición 28 · La isla de Zi: 36 paradas
+- Expedición 29 · El Dig Site: 20 paradas
+- Expedición 30 · Dunes of Uzzer: 23 paradas
+- Expedición 31 · The Radiant: 34 paradas
+- Expedición 32 · Manafem Kara: 19 paradas
+- Expedición 33 · Manafem Plains: 17 paradas
+- Expedición 34 · La colmena de la Kalphite Queen: 25 paradas
+- Expedición 35 · Uzzer Kara: 19 paradas
+
+## Scorch (el sol) y cómo aguantarlo
+- Scorch se acumula bajo el sol directo y baja en la sombra o de noche. Con el medidor lleno pierdes 1 de vida y 1.5 de hidratación por segundo.
+- Fuentes de resistencia (se suman): la perk Frosted Flavours (cactus water), las infusiones Cooling, monkfish skewers, Umbral kebab, y las tres piezas Desert (desert hood, desert robes, desert robe legs). La armadura protege un poco más que las perks.
+- Tiempo al sol según cuántas fuentes llevas: 0 → 80 s · 1 → 105 s · 2 → 160 s · 3 → 330 s · 4 → 480 s · 5 → protección total.
+- Cerca del amanecer (~7:30) y del atardecer (~20:00) el Scorch sube a la mitad.
+- De noche no hay Scorch, pero Fuzan caza: puede pasar volando y soltarte un Red Dragon.
+- Para melee: las Desert Robes son armadura de mago sin defensa útil. Lo práctico es llevar el set Adamant y cubrir el sol con consumibles (cactus water + Cooling infusion + comida) y moverte de sombra en sombra o de noche.
+
+## Magic carpet
+- Se desbloquea al terminar la primera parte de Icthlarin's Little Helper (ganarte al clan Alcarrid). Es mucho más rápida en el desierto que el terrorbird, pesa menos (menos daño de caída, saltos más altos), pero no da peso extra.
+- Se monta manteniendo ALT (Y en Xbox). Si te pegan o acumulas Wither, la montura desaparece.
+
+## Misión principal: Icthlarin's Little Helper
+Octava misión principal. Requiere Black Knight's Fortress. Es requisito de Regicide. En la app está en la pestaña Misiones con sus 9 tareas.
+1. Al llegar habla con Shangruuh - Alcarrid Envoy; en el campamento, con Ancamairon - Alcarrid Elder (junto a Icthlarin). Icthlarin necesita las lentes de espejo de los tres clanes para romper el sello de la torre de Fuzan.
+2. Clan Alcarrid (3 tareas, en cualquier orden):
+   - Rogue Trader (Domri - The Merchant): encuentra 3 nodos de moonstone escondidos bajo montones de gypsum en zonas rocosas o cuevas del oeste. Abre su tienda.
+   - The Mirror Crack'd (Valas - The Blacksmith): entrégale las barras que pide. Da 200 garou chit.
+   - Rag and Bone Garou (Lagra - The Butcher): 3 raw farm meat (buitres o cabras), 3 kalphite shell fragments y 3 cactus steaks (bunny cactus; necesita hacha Adamant o mejor). Da 200 garou chit.
+   - Regresa con Ancamairon. Recompensa: Moon Garou pack y la montura Magic Carpet.
+3. Clan Manafem (Manafem Plains; habla con Dúshlánach - Manafem Elder):
+   - Song of the Ancients (Laguna - The Bard): entra al vault al sur del campamento (Manafem Kara) y copia 3 Ancient Garou Statues. Toma el Scarab Staff: da 25 m de zona segura contra los escarabajos, pero no puedes saltar ni pelear con él en la mano; déjalo en suelo plano. La 1ª estatua está a la derecha al tomar el báculo; la 2ª al este de la primera palanca; la 3ª sobre una plataforma (Windstep). Las dos palancas siguientes abren el paso a la Kalphite Queen (opcional).
+   - Scaling Difficulties (Hedric - The Hunter): al este del campamento hay 3 pistas (2 Dead Garou Scouts y unas Scorch marks). Más al este, mata al dragón rojo (The Radiant) y toma su corazón. Da 200 garou chit.
+   - Beast in the Sand (Manathep - The Bereaved): al oeste de la pirámide, sigue a la Dearg Due por la tormenta de arena hasta Efina - The Lost y dale clean water. No hay pelea. Da 200 garou chit.
+   - Regresa con Dúshlánach. Recompensa: reputación nivel 4 con Beartach - The Merchant, 1 mirror lens y un Moon Garou pack.
+4. Clan Uzzer (Dunes of Uzzer; habla con Gaimbín - Uzzer Elder):
+   - The Dig Site (Lehran - The Archaeologist): en las ruinas del sur, cava (con pala) los 4 Forbidden Scrolls: The Schism, Sun Demon, Old Kingdom y Moon Goddess. Dos están tras rejas cerradas; hay KotHaar y cabras. Da 200 garou chit y la saga.
+   - Saga of the Adventurer (Laguna - The Bard): copia las Ancient Garou Stone Slabs de las 4 agujas rocosas alrededor de la pirámide; algunas están en cuevas tapadas por sandstone. La última, con la saga completa, está en la aguja de la entrada al Nightmare Crucible of Humiliation. Da un Crucible Engram of Humiliation.
+   - Mark Day (Shangruuh - Alcarrid Envoy): convence a los 3 concejales: Brialka - Historian Councillor (norte del campamento), Chirot - Broker Councillor y Alabrais - Science Councillor (sur).
+   - Regresa con Gaimbín. Recompensa: Moon Garou pack, mirror lens y nivel 4 con Iasadair - The Merchant.
+5. Fuzan Trials: habla con Icthlarin, repara los Mirrors del oasis (3 pines en la app) y ve a The Burning Spire. Entra a la Fight Cave por el portal volcánico, activa el podio y sobrevive las 10 oleadas de Trials of Fuzan; luego la puerta a Fuzan's Lair. Mata a Fuzan, toma su cabeza y regresa con Icthlarin.
+- Recompensas: Icthlarin's Little Helper reward pack, receta del anti-dragon masterwork shield, dragonfire shield, Tome of Volcano, smouldering draconic visage, 3 Moon Garou packs y acceso completo a la Fight Cave y al Nightmare Crucible.
+
+## Misiones secundarias de Umbral Sands
+- Mapping The Sands I: habla con Moon Sprite Shaman - Anamcara, junto al estanque del campamento Alcarrid. Recompensa: Blue desert cape. Es requisito de la II. El wiki no detalla sus pasos; en la app están sus pines de Moon Sprites.
+- Mapping The Sands II: misma NPC. Visita las 8 ubicaciones de Moon Sprites (están en la app) y regresa. Recompensa: receta del Bow of Elidinis (arco largo PL7 que añade daño de agua; no le sirve a un build melee).
+- Contact!: habla con el Avisk Crystal. En una cueva cercana está Vault Guardian Prime, que pide 3 restos de crystal helix: (1) Damaged vault guardian: de espaldas a Prime, sigue las luces rojas por los túneles; en la cueva grande, a la izquierda. (2) Dead vault guardian: entre los huevos de kalphite, afuera a la derecha de la entrada; falta su helix, así que habla con Zanik en el campamento del oasis al este de los kalphites. (3) Buried vault guardian: en un edificio en ruinas; cava con pala y reactívalo con 4 vault shards. Entrega los fragmentos a Prime, cruza la barrera, habla con Zanik, rompe los cristales de Avisk con pico, toca cada Vein of Consciousness y habla con Zanik. Recompensa: receta del Pharaoh's Sceptre (báculo PL7) y el vestigio Icthlarian Fetish.
+- Brink of Extinction: habla con Zi, en una isla en forma de L al sureste de la Sunken Pyramid, al NO de The Burning Spire. (1) Llévale 3 raw beltfish y 1 cactus steak. (2) Toca los 4 Pedestals (bloques negros con fuego) alrededor de la Sunken Pyramid: este (sobre una roca grande), norte (detrás de Zi), oeste y sur. (3) Ve a la Cave of Screams (esquina NO de The Burning Spire). Al KotHaar Bouncer elígele cualquier opción hasta recibir el pergamino "KotHaar numbering for dummies"; léelo y responde "Two triangles separated by a line?". (4) Adentro mata a 2 KotHaar-Xil y a Reforged Zi; toma Zi's Core y vuelve con el Bouncer. Recompensa: plate of pure obsidian, que desbloquea la Obsidian Cape (+4 a las tres defensas; no cuesta materiales).
+
+## Dragonkin Vaults de Umbral Sands
+MetaForge los muestra como "Vault Door"; en la app ya salen con su nombre.
+|Vault |PL |Dónde |Enemigos |Jefe |Botín clave |
+|---|---|---|---|---|---|
+|Uzzer Kara |7 |Noreste, la pirámide de Dunes of Uzzer |El wiki no los lista |El wiki no lo lista |El wiki no lo lista |
+|Manafem Kara |7 |Suroeste, la pirámide al sur del campamento Manafem |Kalphite workers y soldiers, escarabajos (usa el Scarab Staff) |Kalphite Queen |Corroded Curved Blade en el cofre final (receta de la daga Keris) |
+
+## Jefes y mini-jefes de Umbral Sands
+- Kalphite Queen (PL7, 5,500 de vida; reaparece cada 2 días). Cambia de color y cada color anula un estilo: rojo anula melee, azul anula magia (incluidas armas con Enchant Weapon, Fire Arrows o el Bow of Elidinis), verde anula Ranged. Tiene dos formas: escarabajo y avispa voladora; si mueres después de la primera, vuelve a empezar. Para melee: pega en azul y verde, y en rojo espera o usa un arma de respaldo; no lleves el arma encantada. Botín: Greater Kalphite Wing, Kalphite Shell, Kalphite Ichor, Poison Ichor; 5% Ornate Golden Scarab; engramas de Crucible (1/40 cada uno).
+- Kalphites en general: de pie resisten todo menos fuego; tumbados (con parry o suficiente daño) reciben mucho más daño. La Keris hace +25% contra ellos. Kalphite Guardian: PL7, 2,475 de vida, resiste Crush, Slash, Stab, Ranged, Aire y Agua.
+- Tok-Xil (PL7, 7,000 de vida; débil a Agua, resiste Ranged, inmune a fuego). Mini-jefe KotHaar, 8 en el mapa, reaparece cada día. Botín: 3 Kot Pack; 1/20 Unyielding Obsidian Construct (vestigio del toktz-ket-xil).
+- The Radiant (PL7, 5,000 de vida; débil a Agua, resiste Fuego, inmune a quemadura y sangrado; reaparece cada 4–5 días). Dragón rojo con nombre al SE de Manafem Plains. Ataques: embestida, coletazo si estás detrás, zarpazo de fuego, bola de fuego, aliento en barrido, aletazo (el segundo hace daño) y, al volar, aliento en línea que aturde y torbellino con 6 bolas que dejan lava. Botín: The Radiant's Heart, 6–8 Red Dragon Hide, 8 Dragon Blood, 3–5 Dragon Tooth.
+- Red Dragon (PL7): mismos ataques. Hay 5 en el mapa; el del noreste parece salir solo de noche.
+- Reforged Zi (PL7, 7,000 de vida; débil a Agua, resiste Ranged, inmune a fuego). En la Cave of Screams, parte de Brink of Extinction.
+- KotHaar-Kal (PL7, 2,475 de vida; débil a Agua, resiste Ranged, inmune a fuego).
+- Fuzan (PL7, 16,000 de vida; resiste Fuego; inmune a veneno, sangrado y quemadura). La ficha del wiki dice "sin debilidad" y la guía de estrategia dice que es débil a agua: no cuentes con la debilidad. Ataques: zarpazo hacia atrás, pisotones con púas de lava, Lava Stomp (charco bajo sus pies que impide el melee un momento), aliento que cruza toda la arena y lluvia de 4 bolas de fuego. Tiene 8 fases; entre fases prende el suelo y sale volando, invoca KotHaar Thralls (PL6) y cae en el centro con una explosión. El centro es lo más seguro mientras gira el suelo caliente; corre cuando lo veas caer. La arena siempre tiene sol: cuida el Scorch.
+  - Preset melee sugerido por el wiki: Adamant Mace + Dragoncurse Shield, Adamant Helmet/Platebody/Platelegs, Goblin War Banner, Amulet of Glory, 20+ Cooling Ferocious Infusion, 20+ Stuffed Catfish (cura 200), 20+ Super Antifire Potion. Opcional: Whetstone (+2 al arma 10 min), Lesser Attack Potion, y los hechizos Surge, Tempest Shield y Enchant Weapon: Air. Pon un Lodestone en la entrada de la Fight Cave. Junta Sanguine Urns antes.
+
+## Actividades
+- Fight Cave (The Burning Spire): durante la misión solo existe Trials of Fuzan (10 oleadas y luego Fuzan). Al terminar la misión se abre la versión completa de 30 oleadas (la última con 2 Tok-Xil) antes de Fuzan; da la Fire Cape (+4 a las tres defensas; al recibir o bloquear daño puede quemar al atacante, y matar en melee a enemigos quemándose rellena la stamina). No es segura: al morir pierdes los objetos y reapareces en tu cama. Oleadas 1–10: 8 Hur · 3 Hur + 3 Xil · 2 Xil · 5 Hur + 5 Xil · 6 Hur + 1 Ket · 4 Ket · 1 Kal · 9 Hur · 1 de cada uno · 1 Ket.
+- Nightmare Crucible: 4 arenas que se abren con un Engram de un solo uso; al limpiar la arena, el pedestal da 1 ascension core PL7. Los enemigos no sueltan nada. Si mueres, tu tumba queda afuera.
+  - Helplessness (Alcarrid Oasis, NO): 2 garou thane + 1 green dragon.
+  - Humiliation (Dunes of Uzzer, NE): 1 blue + 1 green + 1 red dragon. El engrama lo da Saga of the Adventurer.
+  - the Hounded (Manafem Plains, SO): 2 zogres (débiles a Crush: la más fácil para el Granite Maul).
+  - Betrayal (The Burning Spire, SE): Black Knight Titan + 1 green dragon o abyssal demon.
+  - Los engramas también caen de Kalphite Queen (1/40), Tok-Xil y The Radiant (1/400).
+
+## Recetas y equipo de Umbral Sands (PL7)
+- Adamant Bar: 3 adamantite ore + 3 coal en el blast furnace.
+- Set Adamant (melee; defensa total 106 melee / 94 ranged / 90 magia; bonos de set: −33% de stamina al bloquear, +50% de crítico tras bloquear, +25% de daño a enemigos aturdidos). Adamant Platebody en el armour bench: 10 adamant bar, 8 scorch leather, 3 desert cloth, 3 refined obsidian, 3 gypsum wax, 3 garou weave. El wiki no publica la receta del casco ni de las grebas.
+- Armas Adamant (daño base): Dagger 59–152 (Stab), Scimitar 76–160 (Slash), Sword 93–168 (Slash), Mace 114–202 (Crush), Greatsword 126–219 (Slash), Warhammer 156–244 (Crush), Greataxe 168–294 (Slash). Adamant Shield: bloqueo 65.
+- Keris (daga PL7): receta del vestigio Corroded Curved Blade, en el cofre tras la Kalphite Queen de Manafem Kara. +25% de daño a kalphites.
+- Infinity Robes (magia PL7; total 12 infinity cloth, 6 scorch leather, 6 adamant bar, 6 refined obsidian, 6 gypsum wax, 12 garou weave) y Red Dragonhide (Ranged PL7): no son para melee.
+- Desert Robes (dan resistencia a Scorch): 12 garou weave, 3 scorch leather, 3 refined obsidian, 3 gypsum wax. Recetas por vestigios Sun-Bleached: Head Wrap (Domri, 2,500 garou chits), Vest (Beartach, 7,500) y Leggings (Iasadair, 5,000).
+- Garou Artifacts: hay 70 pines en la app. Se venden a Domri, Beartach e Iasadair por 500 garou chits cada uno, o se usan para las Lunar Robes. Son la forma más rápida de juntar chits para los vestigios.
+- Otros vestigios: Elongated Obsidian Construct (2% de KotHaar-Hur), Bludgeoning Obsidian Construct (2% de KotHaar-Ket), Shattered Black Blade (2% de KotHaar-Kal), Ornate Golden Scarab (Kalphite Queen).
+
+Fuentes (wiki oficial): https://dragonwilds.runescape.wiki/w/Umbral_Sands · /w/Icthlarin's_Little_Helper · /w/Brink_of_Extinction · /w/Contact! · /w/Mapping_The_Sands_I · /w/Mapping_The_Sands_II · /w/Scorch · /w/Mounts · /w/Dragonkin_Vault · /w/Kalphite_Queen · /w/Tok-Xil · /w/The_Radiant · /w/Red_Dragon · /w/Reforged_Zi · /w/Fuzan · /w/Fuzan/Strategies · /w/Fight_Cave · /w/Nightmare_Crucible · /w/Adamant_equipment · /w/Adamant_Platebody · /w/Adamant_Bar · /w/Keris · /w/Infinity_Robes · /w/Desert_Robes · /w/Scarab_Staff · /w/Vestige · /w/Garou_Artifact · /w/Obsidian_Cape · /w/Fire_Cape · /w/Pharaoh's_Sceptre · /w/Bow_of_Elidinis
+
+# Scorned Wilderness y Regicide (expediciones 36–37)
+- Es el primer raid del juego y el final de la historia de Kuldra. Requiere terminar Icthlarin's Little Helper y empezar Regicide (novena misión principal).
+- Entrada: una Dragon Gate al noroeste de Velgar's Rise, en Fractured Plains. Dentro, habla con Commander Zilyana en Rasthin's Rest: es la única zona donde se puede construir, no sufre Warband Raids y, si mueres en el raid, tu tumba aparece junto a Zilyana.
+- Orden del raid: Dragontail Vines (runite, luminite y magic trees; un black dragon, zombies y esqueletos) → Fragments of Ghornfell (Zilyana Teleporter; garou, goblins, Plague King y Abyssal Demon; 2 Sanguine Urns) → The Shattered Stronghold (otro teleporter) → Cataclysm Keep (black dragon, wild jade vines, 2 vault guardians, 1 Sanguine Urn) → Kuldra's Sanctum (Dragon Gate hacia Kuldra).
+- Los enemigos sueltan discordant residue, material del equipo PL8.
+- Kuldra (PL9, 240,000 de vida): no se le pega directo; se le daña con el Anima Cannon. 4 fases; en las tres primeras hay que acertarle 6 disparos. Al final se entra a su cuerpo para atacar el corazón. Lleva Super Antifire y Antipoison.
+- Recompensas de Regicide: Dragon Kiteshield, Dragonslayer's Cape, Queenslayer's Reward Pack, Lougrim's Staff y acceso completo al raid. Después, lleva Lougrim's Staff a Ancamairon - Alcarrid Elder para el Lougrim Memorial Shrine.
+
+Expediciones del raid en la app:
+- Expedición 36 · Rasthin's Rest: 20 paradas
+- Expedición 37 · Cataclysm Keep: 34 paradas
+
+Fuentes: https://dragonwilds.runescape.wiki/w/Scorned_Wilderness · /w/Regicide · /w/Kuldra · /w/Kuldra/Strategies · /w/Black_Dragon
+
+# Fichas de jefes (todas las regiones)
+PL, vida, debilidades y resistencias tomadas de las fichas del wiki oficial. "—" significa que el wiki no lo publica.
+|Jefe |PL |Vida |Débil a |Resiste / inmune |Dónde |
+|---|---|---|---|---|---|
+|Plague King |2 |300 (Whispering Swamp) |Crush |Stab, inmune a veneno |Whispering Swamp, Bloodblight Swamp y vault Vertentis Kara |
+|Rat King |2 / 5 / 9 |280 / 805 / 1,505 |Stab |Crush |Vault Vertentis Kara (PL2), Kalistrakthen Kara (PL5) y Scorned Wilderness (PL9) |
+|Garou King |5 |1,035 |Crush, Tierra |Stab |Highlands Castle, Stormtouched Highlands |
+|Velgar |4 |6,000 |ninguna |inmune a veneno y quemadura |Velgar's Rise, Fractured Plains (Dragon Slayer) |
+|Abyssal Demon |4 / 7 / 9 |1,500 / — / 6,250 |Slash |Aire |Whispering Swamp (PL4), Nightmare Crucible (PL7) y Scorned Wilderness (PL9) |
+|Green Dragon |5 |2,800 |Agua |Fuego, inmune a quemadura y veneno |Fellhollow (varios) |
+|Blightscale |5 |2,800 |Agua |Fuego, inmune a quemadura y veneno |Sur de los acantilados de Silverthorn Keep, NE del portal ominoso |
+|Ulgo the Zogre |5 |4,200 |Crush |Slash, Stab, Aire |Coalridge Pass, al norte del rótulo del mapa |
+|Razlem the Necromancer |5 |862 |Crush |Aire, Fuego |Ruina al este del portal ominoso |
+|Zogre |5 / 6 |4,200 / 6,000 |Crush |Slash, Stab, Aire |Hope's Fall, Vekchenven Kara, Silverthorn Keep (PL5) y Dowdun Reach (PL6) |
+|Imaru |5 |14,000 |ninguna |inmune a veneno, quemadura y sangrado |Hope's Fall (misión principal de Fellhollow) |
+|Blue Dragon |6 |4,000 |Agua |Fuego, Ranged, inmune a quemadura |Dowdun Reach (varios); uno cuida la entrada a The Menagerie |
+|Stormpact Demon |6 |2,750 |Stab, Agua |Crush, Fuego, Aire, inmune a quemadura |Dowdun Reach |
+|Sergeant Blister |7 |1,072 |Crush, Tierra |Slash, Stab |The Garrison este (subterráneo), con 2 hellhounds |
+|Houndmaster Rexiton |6 |150 |Crush, Tierra |Slash, Stab |The Garrison, pisos inferiores del edificio delantero |
+|Summoner Flament |6 |840 |Slash, Ranged |Aire, Fuego |Criptas bajo The Cathedral, junto a The Lake |
+|Rat Master Skrexis |6 |840 |Slash, Ranged |Aire, Fuego |The Menagerie, saliente al final del camino inferior |
+|Black Knight Titan |6 |14,000 |Crush, Agua, Tierra |Fuego, Slash, inmune a quemadura, sangrado y veneno |The Bastion, al final de Black Knight's Fortress |
+|Kalphite Queen |7 |5,500 |ninguna |Cambia de inmunidad según su color |Final del vault Manafem Kara (pirámide del suroeste) y colmena del norte |
+|Tok-Xil |7 |7,000 |Agua |Ranged, inmune a fuego y quemadura |8 repartidos por Umbral Sands; dos cierran la Fight Cave |
+|The Radiant |7 |5,000 |Agua |Fuego, inmune a quemadura y sangrado |Sureste de Manafem Plains |
+|Red Dragon |7 |— |ninguna |— |5 en Umbral Sands; de noche Fuzan puede soltarte uno encima |
+|Reforged Zi |7 |7,000 |Agua |Ranged, inmune a fuego y quemadura |Cave of Screams, NO de The Burning Spire |
+|Fuzan |7 |16,000 |ninguna |Fuego, inmune a veneno, sangrado y quemadura |Fuzan's Lair, tras la Fight Cave de The Burning Spire |
+|Black Dragon |8 |6,000 |Agua |inmune a fuego |Dragontail Vines y Cataclysm Keep (raid) |
+|Kuldra |9 |240,000 |ninguna |— |Kuldra's Sanctum, tras la Dragon Gate final del raid |

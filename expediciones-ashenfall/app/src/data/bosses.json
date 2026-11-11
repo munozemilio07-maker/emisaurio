@@ -1,1 +1,642 @@
-[]
+[
+ {
+  "id": "plague-king",
+  "name": "Plague King",
+  "region": "Brynmoor",
+  "where": "Whispering Swamp, Bloodblight Swamp y vault Vertentis Kara",
+  "pl": "2",
+  "hp": "300 (Whispering Swamp)",
+  "weak": [
+   "Crush"
+  ],
+  "resist": [
+   "Stab",
+   "inmune a veneno"
+  ],
+  "tips": [
+   "Con maza, warhammer o Granite Maul cae rápido: Crush es su debilidad.",
+   "No gastes veneno: es inmune.",
+   "Reaparece más fuerte en el raid de Scorned Wilderness."
+  ],
+  "match": [
+   "Plague King"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Plague_King"
+ },
+ {
+  "id": "rat-king",
+  "name": "Rat King",
+  "region": "Brynmoor",
+  "where": "Vault Vertentis Kara (PL2), Kalistrakthen Kara (PL5) y Scorned Wilderness (PL9)",
+  "pl": "2 / 5 / 9",
+  "hp": "280 / 805 / 1,505",
+  "weak": [
+   "Stab"
+  ],
+  "resist": [
+   "Crush"
+  ],
+  "tips": [
+   "Es de los pocos jefes que resisten Crush: cambia el maul por una daga (Wolfbane o Dragonbone Dagger)."
+  ],
+  "match": [
+   "Rat King"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Rat_King"
+ },
+ {
+  "id": "garou-king",
+  "name": "Garou King",
+  "region": "Ghornfell",
+  "where": "Highlands Castle, Stormtouched Highlands",
+  "pl": "5",
+  "hp": "1,035",
+  "weak": [
+   "Crush",
+   "Tierra"
+  ],
+  "resist": [
+   "Stab"
+  ],
+  "tips": [
+   "Presa fácil con Granite Maul.",
+   "De paso se sube por la Stormtouched Cape."
+  ],
+  "match": [],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Garou_King"
+ },
+ {
+  "id": "velgar",
+  "name": "Velgar",
+  "region": "Ghornfell",
+  "where": "Velgar's Rise, Fractured Plains (Dragon Slayer)",
+  "pl": "4",
+  "hp": "6,000",
+  "resist": [
+   "inmune a veneno y quemadura"
+  ],
+  "tips": [
+   "Sin debilidades: cualquier arma melee de tu nivel sirve.",
+   "Sus pisotones lanzan púas por el suelo; esquiva de lado.",
+   "Escupe charcos de veneno alrededor de la arena."
+  ],
+  "match": [],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Velgar"
+ },
+ {
+  "id": "abyssal-demon",
+  "name": "Abyssal Demon",
+  "region": "Brynmoor",
+  "where": "Whispering Swamp (PL4), Nightmare Crucible (PL7) y Scorned Wilderness (PL9)",
+  "pl": "4 / 7 / 9",
+  "hp": "1,500 / — / 6,250",
+  "weak": [
+   "Slash"
+  ],
+  "resist": [
+   "Aire"
+  ],
+  "tips": [
+   "Usa espada, scimitar o greataxe: es débil a Slash.",
+   "Siempre suelta Abyssal Remains (vestigio del Abyssal Whip).",
+   "El wiki marca como \"bugged\" la vida de la versión de Nightmare Crucible (64,350)."
+  ],
+  "drops": [
+   "Abyssal Remains"
+  ],
+  "match": [
+   "Abyssal Demon"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Abyssal_Demon"
+ },
+ {
+  "id": "green-dragon",
+  "name": "Green Dragon",
+  "region": "Fellhollow",
+  "where": "Fellhollow (varios)",
+  "pl": "5",
+  "hp": "2,800",
+  "weak": [
+   "Agua"
+  ],
+  "resist": [
+   "Fuego",
+   "inmune a quemadura y veneno"
+  ],
+  "tips": [
+   "Escupe veneno y tiene aliento de fuego frontal; el coletazo pega si estás detrás.",
+   "En melee quédate a un costado, nunca de frente ni detrás.",
+   "Lleva hechizos de agua en el báculo para rematar."
+  ],
+  "match": [
+   "Dragón verde"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Green_Dragon"
+ },
+ {
+  "id": "blightscale",
+  "name": "Blightscale",
+  "region": "Fellhollow",
+  "where": "Sur de los acantilados de Silverthorn Keep, NE del portal ominoso",
+  "pl": "5",
+  "hp": "2,800",
+  "weak": [
+   "Agua"
+  ],
+  "resist": [
+   "Fuego",
+   "inmune a quemadura y veneno"
+  ],
+  "tips": [
+   "Es un dragón verde con nombre: mismas mecánicas.",
+   "Al morir, el pergamino The Binding of Ib está junto a unos huesos en el claro."
+  ],
+  "quest": "quest_what_remains",
+  "match": [
+   "Blightscale"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Blightscale"
+ },
+ {
+  "id": "ulgo",
+  "name": "Ulgo the Zogre",
+  "region": "Fellhollow",
+  "where": "Coalridge Pass, al norte del rótulo del mapa",
+  "pl": "5",
+  "hp": "4,200",
+  "weak": [
+   "Crush"
+  ],
+  "resist": [
+   "Slash",
+   "Stab",
+   "Aire"
+  ],
+  "tips": [
+   "Ideal para el Granite Maul; con espada o daga casi no le haces daño.",
+   "El pergamino Coclear Malificarum está junto al cofre de su guarida."
+  ],
+  "quest": "quest_what_remains",
+  "match": [
+   "Ulgo"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Ulgo_the_Zogre"
+ },
+ {
+  "id": "razlem",
+  "name": "Razlem the Necromancer",
+  "region": "Fellhollow",
+  "where": "Ruina al este del portal ominoso",
+  "pl": "5",
+  "hp": "862",
+  "weak": [
+   "Crush"
+  ],
+  "resist": [
+   "Aire",
+   "Fuego"
+  ],
+  "tips": [
+   "Poca vida: entra directo con el maul antes de que invoque.",
+   "El pergamino Eventide – A New Spawn está en el escritorio junto a él."
+  ],
+  "quest": "quest_what_remains",
+  "match": [
+   "Razlem"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Razlem_the_Necromancer"
+ },
+ {
+  "id": "zogre",
+  "name": "Zogre",
+  "region": "Fellhollow",
+  "where": "Hope's Fall, Vekchenven Kara, Silverthorn Keep (PL5) y Dowdun Reach (PL6)",
+  "pl": "5 / 6",
+  "hp": "4,200 / 6,000",
+  "weak": [
+   "Crush"
+  ],
+  "resist": [
+   "Slash",
+   "Stab",
+   "Aire"
+  ],
+  "tips": [
+   "Solo Crush le entra bien.",
+   "El de Vekchenven Kara aguanta más que Velgar: lleva comida de sobra.",
+   "Dos Zogres juntos forman el Nightmare Crucible of the Hounded."
+  ],
+  "match": [
+   "Zogre"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Zogre"
+ },
+ {
+  "id": "imaru",
+  "name": "Imaru",
+  "region": "Fellhollow",
+  "where": "Hope's Fall (misión principal de Fellhollow)",
+  "pl": "5",
+  "hp": "14,000",
+  "resist": [
+   "inmune a veneno, quemadura y sangrado"
+  ],
+  "tips": [
+   "Sin debilidades y con mucha vida: es una pelea de aguante.",
+   "Su aliento de fuego cruza toda la arena.",
+   "Comparte los pisotones con púas de Velgar."
+  ],
+  "match": [],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Imaru"
+ },
+ {
+  "id": "blue-dragon",
+  "name": "Blue Dragon",
+  "region": "Dowdun Reach",
+  "where": "Dowdun Reach (varios); uno cuida la entrada a The Menagerie",
+  "pl": "6",
+  "hp": "4,000",
+  "weak": [
+   "Agua"
+  ],
+  "resist": [
+   "Fuego",
+   "Ranged",
+   "inmune a quemadura"
+  ],
+  "tips": [
+   "Resiste flechas: en melee es de hecho más cómodo que a distancia.",
+   "Suelta la sangre de dragón que pide Biohazard."
+  ],
+  "match": [
+   "Dragón azul"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Blue_Dragon"
+ },
+ {
+  "id": "stormpact",
+  "name": "Stormpact Demon",
+  "region": "Dowdun Reach",
+  "where": "Dowdun Reach",
+  "pl": "6",
+  "hp": "2,750",
+  "weak": [
+   "Stab",
+   "Agua"
+  ],
+  "resist": [
+   "Crush",
+   "Fuego",
+   "Aire",
+   "inmune a quemadura"
+  ],
+  "tips": [
+   "Resiste Crush: guarda el maul y saca la Wolfbane Dagger o una daga de tu nivel."
+  ],
+  "match": [
+   "Stormpact"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Stormpact_Demon"
+ },
+ {
+  "id": "blister",
+  "name": "Sergeant Blister",
+  "region": "Dowdun Reach",
+  "where": "The Garrison este (subterráneo), con 2 hellhounds",
+  "pl": "7",
+  "hp": "1,072",
+  "weak": [
+   "Crush",
+   "Tierra"
+  ],
+  "resist": [
+   "Slash",
+   "Stab"
+  ],
+  "tips": [
+   "Maul o maza. Limpia primero a los hellhounds.",
+   "Da uno de los 13 Dreaming Stone Shards."
+  ],
+  "quest": "quest_bkf",
+  "match": [
+   "Sergeant Blister"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Sergeant_Blister"
+ },
+ {
+  "id": "rexiton",
+  "name": "Houndmaster Rexiton",
+  "region": "Dowdun Reach",
+  "where": "The Garrison, pisos inferiores del edificio delantero",
+  "pl": "6",
+  "hp": "150",
+  "weak": [
+   "Crush",
+   "Tierra"
+  ],
+  "resist": [
+   "Slash",
+   "Stab"
+  ],
+  "tips": [
+   "Él casi no tiene vida: el peligro es la jauría de hellhounds. Ve directo por él.",
+   "Su diario queda en la mesa de la perrera central."
+  ],
+  "quest": "quest_sq2",
+  "match": [
+   "Rexiton"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Houndmaster_Rexiton"
+ },
+ {
+  "id": "flament",
+  "name": "Summoner Flament",
+  "region": "Dowdun Reach",
+  "where": "Criptas bajo The Cathedral, junto a The Lake",
+  "pl": "6",
+  "hp": "840",
+  "weak": [
+   "Slash",
+   "Ranged"
+  ],
+  "resist": [
+   "Aire",
+   "Fuego"
+  ],
+  "tips": [
+   "Lo acompaña Delrom, su demonio, que pega fuerte: mata primero al invocador.",
+   "Su diario está en el plinto del fondo, bajo la gárgola."
+  ],
+  "quest": "quest_sq2",
+  "match": [
+   "Flament"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Summoner_Flament"
+ },
+ {
+  "id": "skrexis",
+  "name": "Rat Master Skrexis",
+  "region": "Dowdun Reach",
+  "where": "The Menagerie, saliente al final del camino inferior",
+  "pl": "6",
+  "hp": "840",
+  "weak": [
+   "Slash",
+   "Ranged"
+  ],
+  "resist": [
+   "Aire",
+   "Fuego"
+  ],
+  "tips": [
+   "Está rodeado de hellrats. Usa un arma de Slash con barrido.",
+   "Su diario está en una roca detrás de él, a la izquierda de la estatua."
+  ],
+  "quest": "quest_sq2",
+  "match": [
+   "Skrexis"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Rat_Master_Skrexis"
+ },
+ {
+  "id": "titan",
+  "name": "Black Knight Titan",
+  "region": "Dowdun Reach",
+  "where": "The Bastion, al final de Black Knight's Fortress",
+  "pl": "6",
+  "hp": "14,000",
+  "weak": [
+   "Crush",
+   "Agua",
+   "Tierra"
+  ],
+  "resist": [
+   "Fuego",
+   "Slash",
+   "inmune a quemadura, sangrado y veneno"
+  ],
+  "tips": [
+   "Tu Granite Maul es la mejor arma aquí: débil a Crush.",
+   "No uses greataxe ni espada: resiste Slash.",
+   "Se puede repetir tocando el símbolo de la sala.",
+   "Reaparece en el Nightmare Crucible of Betrayal."
+  ],
+  "drops": [
+   "Titan's Wrath (receta)",
+   "Tome of the Titan"
+  ],
+  "quest": "quest_bkf",
+  "match": [
+   "Black Knight Titan"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Black_Knight_Titan"
+ },
+ {
+  "id": "kalphite-queen",
+  "name": "Kalphite Queen",
+  "region": "Umbral Sands",
+  "where": "Final del vault Manafem Kara (pirámide del suroeste) y colmena del norte",
+  "pl": "7",
+  "hp": "5,500",
+  "resist": [
+   "Cambia de inmunidad según su color"
+  ],
+  "tips": [
+   "Sombra roja: bloquea TODO el daño melee. Espera a que cambie o lleva arco o báculo de respaldo.",
+   "Sombra azul: bloquea magia (y armas encantadas con elementos). Sombra verde: bloquea Ranged. En azul y verde, pega con melee.",
+   "No encantes tu arma con Enchant Weapon: en sombra azul ese golpe cuenta como magia y se anula.",
+   "Tiene dos formas: escarabajo y luego avispa voladora. Si mueres tras la primera, reaparece completa.",
+   "La daga Keris hace +25% a kalphites. Tumbarlos (parry o daño suficiente) los vuelve vulnerables.",
+   "Reaparece cada 2 días del juego."
+  ],
+  "drops": [
+   "Greater Kalphite Wing",
+   "Kalphite Shell",
+   "Kalphite Ichor",
+   "Ornate Golden Scarab (5%)",
+   "Corroded Curved Blade en el cofre del vault (receta de Keris)"
+  ],
+  "match": [
+   "Kalphite Queen"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Kalphite_Queen"
+ },
+ {
+  "id": "tok-xil",
+  "name": "Tok-Xil",
+  "region": "Umbral Sands",
+  "where": "8 repartidos por Umbral Sands; dos cierran la Fight Cave",
+  "pl": "7",
+  "hp": "7,000",
+  "weak": [
+   "Agua"
+  ],
+  "resist": [
+   "Ranged",
+   "inmune a fuego y quemadura"
+  ],
+  "tips": [
+   "Artillería KotHaar: acércate, en melee no puede bombardearte igual.",
+   "Resiste Ranged, así que melee es la opción buena.",
+   "Suelta 3 Kot Pack siempre y, 1 de cada 20, el vestigio Unyielding Obsidian Construct (toktz-ket-xil).",
+   "Reaparece cada día del juego."
+  ],
+  "drops": [
+   "Kot Pack ×3",
+   "Unyielding Obsidian Construct (1/20)"
+  ],
+  "match": [
+   "Tok-Xil"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Tok-Xil"
+ },
+ {
+  "id": "radiant",
+  "name": "The Radiant",
+  "region": "Umbral Sands",
+  "where": "Sureste de Manafem Plains",
+  "pl": "7",
+  "hp": "5,000",
+  "weak": [
+   "Agua"
+  ],
+  "resist": [
+   "Fuego",
+   "inmune a quemadura y sangrado"
+  ],
+  "tips": [
+   "Es un Red Dragon con nombre. Pégale de costado: zarpazo al frente, coletazo atrás.",
+   "Cuando despega, corre perpendicular a la línea de fuego: el aliento en línea te aturde y te encadena el daño.",
+   "El torbellino de fuego deja charcos de lava: sal del centro.",
+   "Suelta The Radiant's Heart (lo pide Hedric en Scaling Difficulties)."
+  ],
+  "drops": [
+   "The Radiant's Heart",
+   "Red Dragon Hide ×6–8",
+   "Dragon Blood ×8"
+  ],
+  "quest": "quest_ums_tribec_task2",
+  "match": [
+   "The Radiant"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/The_Radiant"
+ },
+ {
+  "id": "red-dragon",
+  "name": "Red Dragon",
+  "region": "Umbral Sands",
+  "where": "5 en Umbral Sands; de noche Fuzan puede soltarte uno encima",
+  "pl": "7",
+  "tips": [
+   "Mismos ataques que The Radiant.",
+   "Viajar de noche puede provocar un encuentro: Fuzan pasa y deja un dragón rojo.",
+   "Dan Red Dragon Hide para la armadura Red Dragonhide (Ranged)."
+  ],
+  "match": [
+   "Dragón rojo"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Red_Dragon"
+ },
+ {
+  "id": "reforged-zi",
+  "name": "Reforged Zi",
+  "region": "Umbral Sands",
+  "where": "Cave of Screams, NO de The Burning Spire",
+  "pl": "7",
+  "hp": "7,000",
+  "weak": [
+   "Agua"
+  ],
+  "resist": [
+   "Ranged",
+   "inmune a fuego y quemadura"
+  ],
+  "tips": [
+   "Entras tras resolver la contraseña del Bouncer (\"Two triangles separated by a line?\").",
+   "Lo acompañan 2 KotHaar-Xil hostiles: límpialos primero.",
+   "Al morir suelta Zi's Core: llévaselo al Bouncer para terminar Brink of Extinction."
+  ],
+  "drops": [
+   "Zi's Core"
+  ],
+  "quest": "quest_ums_brink",
+  "match": [
+   "Reforged Zi"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Reforged_Zi"
+ },
+ {
+  "id": "fuzan",
+  "name": "Fuzan",
+  "region": "Umbral Sands",
+  "where": "Fuzan's Lair, tras la Fight Cave de The Burning Spire",
+  "pl": "7",
+  "hp": "16,000",
+  "resist": [
+   "Fuego",
+   "inmune a veneno, sangrado y quemadura"
+  ],
+  "tips": [
+   "Primero hay que pasar las 10 oleadas de Trials of Fuzan. No es zona segura: si mueres pierdes los objetos y reapareces en tu cama.",
+   "Pon un Lodestone en la entrada de la Fight Cave.",
+   "Preset melee del wiki: Adamant Mace + Dragoncurse Shield, set Adamant, Cooling Ferocious Infusion, Stuffed Catfish y Super Antifire Potion.",
+   "8 fases. Entre fases incendia el suelo y despega: el centro es lo más seguro hasta que lo veas caer; entonces corre.",
+   "La arena siempre tiene sol: vigila el medidor de Scorch y busca sombra.",
+   "El wiki se contradice sobre su debilidad (la ficha dice \"ninguna\", la guía dice agua). No cuentes con ella."
+  ],
+  "drops": [
+   "Recompensas de la misión: cabeza de Fuzan",
+   "Dragonfire Shield",
+   "Tome of Volcano",
+   "Smouldering Draconic Visage"
+  ],
+  "quest": "quest_ums_main",
+  "match": [],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Fuzan/Strategies"
+ },
+ {
+  "id": "black-dragon",
+  "name": "Black Dragon",
+  "region": "Scorned Wilderness",
+  "where": "Dragontail Vines y Cataclysm Keep (raid)",
+  "pl": "8",
+  "hp": "6,000",
+  "weak": [
+   "Agua"
+  ],
+  "resist": [
+   "inmune a fuego"
+  ],
+  "tips": [
+   "Primer enemigo serio del raid. Mismo patrón que los demás dragones.",
+   "Reaparece en cada reinicio del raid."
+  ],
+  "match": [
+   "Dragón negro"
+  ],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Black_Dragon"
+ },
+ {
+  "id": "kuldra",
+  "name": "Kuldra",
+  "region": "Scorned Wilderness",
+  "where": "Kuldra's Sanctum, tras la Dragon Gate final del raid",
+  "pl": "9",
+  "hp": "240,000",
+  "tips": [
+   "No se le puede pegar directamente: se le daña con el Anima Cannon.",
+   "4 fases; en las tres primeras hay que acertarle 6 disparos del cañón para avanzar. Al final se entra a su cuerpo para atacar el corazón.",
+   "En melee tu trabajo es matar a los Dragon Hatchlings y cargar el cañón.",
+   "Lleva Super Antifire para su aliento de energía y Antipoison para la fase final.",
+   "Si mueres, tu tumba aparece junto a Zilyana en Rasthin's Rest."
+  ],
+  "drops": [
+   "Recompensas de Regicide: Dragon Kiteshield",
+   "Dragonslayer's Cape",
+   "Lougrim's Staff"
+  ],
+  "quest": "quest_sw_main",
+  "match": [],
+  "wiki": "https://dragonwilds.runescape.wiki/w/Kuldra/Strategies"
+ }
+]

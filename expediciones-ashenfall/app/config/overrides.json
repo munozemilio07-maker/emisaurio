@@ -20,6 +20,14 @@
     },
     "d21c93c7c1f3067d0a245e7dee458450": {
       "note": "MetaForge lo marca en la superficie, pero el wiki lo ubica en The Lake (subterráneo, bajo The Approach). Si no lo ves arriba, baja al lago."
+    },
+    "7e436721e82c43a65550b8a59574a255": {
+      "title": "Manafem Kara",
+      "detail": "Dragonkin Vault · PL7 · Kalphite Queen"
+    },
+    "e915da58508e1bec95daf64e2abaac92": {
+      "title": "Uzzer Kara",
+      "detail": "Dragonkin Vault · PL7"
     }
   },
   "rules": [
@@ -51,7 +59,7 @@
       "titleIncludes": "Kalphite Queen",
       "set": {
         "kind": "jefe",
-        "detail": "Guarida de la Kalphite Queen (vault)"
+        "detail": "Colmena de la Kalphite Queen"
       }
     }
   ]

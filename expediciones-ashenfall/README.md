@@ -13,3 +13,6 @@
 | `assets/*.webp` | Mapa del mundo (z5) y Dowdun subterráneo (z6), ya cosidos |
 | `reference/expediciones-v4.html` | La versión actual que funciona, de un solo archivo |
 | `scripts/*.py` | Scripts originales de clustering y rutas |
+| `app/` | **La app nueva** (Vite + React + Leaflet, PWA, Worker para el chat). Instrucciones en `app/README.md` |
+
+`data/knowledge-base.md` y `app/data/knowledge-base.md` son la misma guía; la que usa el chat es la de `app/`.
