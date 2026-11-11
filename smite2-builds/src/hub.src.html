@@ -1,0 +1,505 @@
+<title>Panteón de Builds</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: templo nocturno. Cielo de tormenta arriba, friso de dioses, y la sala del dios con su estatua a la izquierda y sus tres builds como tablillas. Un solo mundo visual, oscuro a propósito. */
+:root {
+  color-scheme: dark;
+  --void: #06070c;
+  --night: #0c0f1d;
+  --stone: #141829;
+  --stone-2: #1b2036;
+  --line: #2c3352;
+  --gold: #ecc670;
+  --gold-hi: #fff1c4;
+  --gold-deep: #9c7128;
+  --ink: #f4eddc;
+  --muted: #a9a593;
+  --ember: #ff7d45;     /* ofensiva */
+  --ice: #7cc6ff;       /* defensiva */
+  --amethyst: #bda2ff;  /* híbrida */
+  --ok: #7fd69a;
+  --font-title: "Cinzel Decorative", "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-head: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-body: "Alegreya Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --meander: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16' viewBox='0 0 32 16'%3E%3Cpath d='M0 14h28V2H8v8h12V6h-8' fill='none' stroke='%239c7128' stroke-width='1.6'/%3E%3C/svg%3E");
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--void); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.45; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--void); }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-family: var(--font-head); text-wrap: balance; letter-spacing: .04em; }
+button, input { font: inherit; color: inherit; }
+a { color: var(--gold); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.gut { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-family: var(--font-head); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+.muted { color: var(--muted); }
+.frieze { height: 16px; background: var(--meander) repeat-x center; opacity: .8; }
+
+/* ---------- Héroe ---------- */
+.hero { position: relative; overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, #1b2450 0%, #0d1126 45%, var(--void) 100%); border-bottom: 1px solid var(--gold-deep); }
+#sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .rays { position: absolute; inset: -20% -10% auto; height: 120%; background: conic-gradient(from 180deg at 50% -10%, transparent 40%, rgba(236,198,112,.10) 46%, transparent 50%, rgba(236,198,112,.07) 54%, transparent 58%, rgba(236,198,112,.05) 62%, transparent 66%); pointer-events: none; }
+.hero-in { position: relative; padding-block: clamp(36px, 7vw, 76px) 28px; display: grid; gap: 18px; justify-items: center; text-align: center; }
+.hero h1 { font-family: var(--font-title); font-weight: 900; font-size: clamp(34px, 8.4vw, 92px); line-height: .98; letter-spacing: .03em;
+  background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 42%, var(--gold-deep) 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.6)) drop-shadow(0 0 28px rgba(236,198,112,.35)); }
+.hero h1 small { display: block; font-family: var(--font-head); font-weight: 500; font-size: .2em; letter-spacing: .5em; margin-bottom: .7em; padding-left: .5em; }
+.hero .sub { max-width: 60ch; font-size: 18px; color: #d9d3c2; }
+.patch { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; font-size: 14px; color: var(--muted); }
+.patch b { font-family: var(--font-head); color: var(--gold); border: 1px solid var(--gold-deep); padding: 2px 10px; border-radius: 2px; letter-spacing: .1em; }
+.oracle { width: min(640px, 100%); display: grid; gap: 8px; }
+.oracle label { justify-self: center; }
+.oracle input { width: 100%; padding: 16px 20px; font-size: 20px; text-align: center; background: rgba(8,10,20,.78); border: 1px solid var(--gold-deep); border-radius: 2px; box-shadow: 0 0 0 4px rgba(236,198,112,.08), inset 0 0 24px rgba(0,0,0,.6); }
+.oracle input::placeholder { color: #7f7b6c; }
+.oracle input:focus-visible { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(236,198,112,.22), 0 0 40px rgba(236,198,112,.18); }
+
+/* ---------- Friso de dioses ---------- */
+.pantheon { padding-block: 26px 10px; display: grid; gap: 16px; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { cursor: pointer; padding: 7px 14px; font-family: var(--font-head); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; background: var(--stone); border: 1px solid var(--line); border-radius: 2px; color: var(--ink); }
+.chip:hover { border-color: var(--gold-deep); }
+.chip[aria-pressed="true"] { background: linear-gradient(180deg, var(--gold), var(--gold-deep)); border-color: var(--gold); color: #1a1305; font-weight: 700; }
+.gods { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 12px 8px; max-height: 352px; overflow-y: auto; padding: 8px 8px 12px; background: rgba(12,15,29,.6); border: 1px solid var(--line); scrollbar-color: var(--gold-deep) transparent; }
+.god { cursor: pointer; background: none; border: 0; padding: 0; display: grid; gap: 5px; justify-items: center; text-align: center; min-width: 0; }
+.god .face { position: relative; width: 100%; max-width: 84px; aspect-ratio: 1; border: 1px solid var(--gold-deep); outline: 1px solid rgba(0,0,0,.8); box-shadow: 0 6px 16px rgba(0,0,0,.55); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.god .nm { font-size: 13px; line-height: 1.15; color: #d7d1bf; overflow-wrap: anywhere; }
+.god:hover .face, .god[aria-current="true"] .face { transform: translateY(-3px); border-color: var(--gold-hi); box-shadow: 0 0 0 2px var(--gold), 0 10px 26px rgba(236,198,112,.28); }
+.god[aria-current="true"] .nm { color: var(--gold); }
+.spr-g { background-image: url("img/gods.webp"); background-size: calc(var(--gc) * 100%) calc(var(--gr) * 100%); background-color: var(--stone); }
+.spr-i { background-image: url("img/items.webp"); background-size: calc(var(--ic) * 100%) calc(var(--ir) * 100%); background-color: var(--stone); }
+.tier { position: absolute; right: -5px; bottom: -5px; min-width: 20px; height: 20px; padding: 0 4px; display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; font-size: 12px; background: var(--void); border: 1px solid var(--gold-deep); color: var(--gold); }
+.tier.tS { background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: #1a1305; border-color: var(--gold-hi); }
+.tier.tA { color: var(--gold-hi); }
+.tier.tD, .tier.tF { color: var(--muted); border-color: var(--line); }
+.empty { color: var(--muted); padding: 8px 0; }
+
+/* ---------- Sala del dios ---------- */
+.hall { padding-block: 22px 12px; display: grid; gap: 22px; }
+.shrine { position: relative; display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 0; background: linear-gradient(180deg, var(--stone) 0%, var(--night) 100%); border: 1px solid var(--gold-deep); box-shadow: 0 0 0 1px #000, 0 0 0 5px var(--night), 0 0 0 6px var(--gold-deep), 0 30px 80px rgba(0,0,0,.6); }
+.statue { position: relative; min-height: 300px; background: #05060a; overflow: hidden; }
+.statue img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 12%; }
+.statue::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 55%, var(--stone) 100%), linear-gradient(0deg, rgba(6,7,12,.85) 0%, transparent 34%); }
+.shrine-body { padding: clamp(18px, 3vw, 30px); display: grid; gap: 16px; align-content: start; min-width: 0; }
+.name h2 { font-family: var(--font-title); font-weight: 700; font-size: clamp(30px, 5.4vw, 58px); line-height: 1; color: var(--gold); text-shadow: 0 0 30px rgba(236,198,112,.25); overflow-wrap: anywhere; }
+.name .en { font-size: 15px; color: var(--muted); margin-top: 6px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab { cursor: pointer; padding: 9px 14px; background: var(--void); border: 1px solid var(--line); border-radius: 2px; font-family: var(--font-head); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; display: inline-flex; gap: 8px; align-items: center; }
+.tab b { color: var(--gold); }
+.tab[aria-selected="true"] { border-color: var(--gold); background: linear-gradient(180deg, rgba(236,198,112,.2), rgba(236,198,112,.04)); box-shadow: inset 0 -2px 0 var(--gold); }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: 15px; }
+.facts .v { font-family: var(--font-head); font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.facts .l { display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.kit > div { background: rgba(6,7,12,.55); border: 1px solid var(--line); padding: 10px 12px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.kit .l { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-family: var(--font-head); }
+
+/* ---------- Item ---------- */
+.it { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: start; }
+.it .ic { width: 44px; height: 44px; border: 1px solid var(--gold-deep); box-shadow: 0 2px 6px rgba(0,0,0,.6); }
+.it .n { font-weight: 700; font-size: 16px; line-height: 1.15; }
+.it .e { font-size: 13px; color: var(--muted); font-style: italic; }
+.it .d { font-size: 14px; color: #cfc9b8; margin-top: 3px; }
+.it .s { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+.it .pk { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); border: 1px solid var(--line); padding: 1px 6px; white-space: nowrap; }
+.it .pk.sug { color: var(--gold); border-color: var(--gold-deep); }
+.it.small { grid-template-columns: 34px minmax(0, 1fr) auto; }
+.it.small .ic { width: 34px; height: 34px; }
+.it.small .n { font-size: 15px; }
+
+/* ---------- Tablillas de build ---------- */
+.sec-head { display: grid; gap: 6px; }
+.sec-head h2 { font-size: clamp(20px, 3vw, 28px); color: var(--gold); }
+.sec-head p { color: var(--muted); max-width: 72ch; }
+.builds { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.build { --c: var(--gold); position: relative; background: linear-gradient(180deg, var(--stone-2), var(--stone)); border: 1px solid var(--line); border-top: 3px solid var(--c); padding: 16px; display: grid; gap: 12px; align-content: start; min-width: 0; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+.build.off { --c: var(--ember); } .build.def { --c: var(--ice); } .build.hyb { --c: var(--amethyst); }
+.build.meta { border-color: var(--gold-deep); box-shadow: 0 0 0 1px var(--gold-deep), 0 0 50px rgba(236,198,112,.12), 0 16px 40px rgba(0,0,0,.45); }
+.build header { display: grid; gap: 4px; }
+.build h3 { font-size: 20px; color: var(--c); display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+.crown { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #1a1305; background: linear-gradient(180deg, var(--gold-hi), var(--gold)); padding: 2px 8px; }
+.build .when { font-size: 14px; color: var(--muted); }
+.build ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.build .na { color: var(--muted); font-style: italic; }
+.copy { cursor: pointer; justify-self: start; font-size: 13px; padding: 5px 12px; background: transparent; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); }
+.copy:hover { border-color: var(--gold-deep); color: var(--ink); }
+
+/* ---------- Según el rival ---------- */
+.rival { background: linear-gradient(180deg, #14101c, var(--night)); border: 1px solid var(--line); padding: clamp(16px, 2.6vw, 26px); display: grid; gap: 16px; }
+.picker { display: grid; gap: 10px; }
+.picker-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.picker input { flex: 1 1 220px; min-width: 0; padding: 10px 14px; background: var(--void); border: 1px solid var(--line); border-radius: 2px; }
+.foes { display: flex; flex-wrap: wrap; gap: 8px; }
+.foe { display: inline-flex; align-items: center; gap: 8px; padding: 4px 6px 4px 4px; background: var(--void); border: 1px solid var(--gold-deep); cursor: pointer; }
+.foe .face { width: 30px; height: 30px; }
+.foe .x { color: var(--muted); font-size: 18px; line-height: 1; padding: 0 4px; }
+.sits { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+.sit { background: rgba(6,7,12,.6); border: 1px solid var(--line); padding: 14px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.sit.hot { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold-deep), 0 0 34px rgba(236,198,112,.14); }
+.sit h3 { font-size: 16px; color: var(--ink); display: flex; gap: 10px; align-items: center; }
+.sit h3 svg { width: 22px; height: 22px; flex: none; color: var(--gold); }
+.sit .why { font-size: 14px; color: var(--muted); }
+.sit .because { font-size: 13px; font-weight: 700; color: var(--gold); }
+.sit .list { display: grid; gap: 10px; }
+.rule { font-size: 14.5px; color: #d7d1bf; border-left: 2px solid var(--gold-deep); padding-left: 12px; max-width: 80ch; }
+
+footer { padding-block: 26px 48px; display: grid; gap: 8px; font-size: 14px; color: var(--muted); }
+footer p { max-width: 90ch; }
+
+@media (max-width: 720px) {
+  .shrine { grid-template-columns: minmax(0, 1fr); }
+  .statue { min-height: 0; height: 230px; }
+  .statue::after { background: linear-gradient(0deg, var(--stone) 0%, transparent 60%); }
+  .statue img { object-position: 50% 14%; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shrine { animation: rise .45s cubic-bezier(.2,.7,.2,1); }
+  @keyframes rise { from { transform: translateY(10px); box-shadow: 0 0 0 1px #000, 0 0 0 5px var(--night), 0 0 0 6px var(--gold-hi), 0 0 90px rgba(236,198,112,.35); } }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .god .face { transition: none; } }
+</style>
+
+<header class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="rays" aria-hidden="true"></div>
+  <div class="gut hero-in">
+    <h1><small>Smite 2 · Conquista</small>Panteón de Builds</h1>
+    <p class="sub">Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.</p>
+    <p class="patch"><b id="patch">OB47</b><span>Datos de partidas Ranked · actualizado el 11 nov 2026</span></p>
+    <div class="oracle">
+      <label class="eyebrow" for="q">¿A quién invocas?</label>
+      <input id="q" type="search" list="godlist" placeholder="Zeus, Atenea, Anubis…" autocomplete="off">
+      <datalist id="godlist"></datalist>
+    </div>
+  </div>
+  <div class="frieze" aria-hidden="true"></div>
+</header>
+
+<main>
+  <section class="gut pantheon" aria-label="Todos los dioses">
+    <div class="bar">
+      <h2 class="eyebrow" id="count">Los dioses</h2>
+      <div class="chips" id="roleChips" role="group" aria-label="Filtrar por rol"></div>
+    </div>
+    <div class="gods" id="gods"></div>
+  </section>
+
+  <div class="gut"><div class="frieze" aria-hidden="true"></div></div>
+
+  <section class="gut hall" id="hall" aria-live="polite"></section>
+</main>
+
+<footer class="gut">
+  <div class="frieze" aria-hidden="true"></div>
+  <p>Las builds salen de las estadísticas públicas de Ranked de SmiteBrain (qué compran los jugadores en cada casilla y cuánto ganan). El catálogo de objetos y las imágenes vienen de Smite2.live.</p>
+  <p>Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.</p>
+</footer>
+
+<script>
+const DATA = /*__DATA__*/null;
+</script>
+<script>
+const ROLE = { solo: "Solo", jungle: "Jungla", mid: "Medio", carry: "Carry", support: "Soporte" };
+const ROLE_ORDER = ["solo", "jungle", "mid", "carry", "support"];
+const KIND = {
+  off: { t: "Ofensiva", w: "Todo al daño. Úsala si vas ganando o tu equipo ya tiene quien aguante." },
+  hyb: { t: "Híbrida", w: "Daño y aguante. Para partidas parejas o si te enfocan de vez en cuando." },
+  def: { t: "Defensiva", w: "Aguantar y seguir peleando. Úsala si te matan mucho o eres el frente." }
+};
+const PROF = { mage: "mago", phys: "luchador de habilidades", aa: "carry de ataque básico", tank: "tanque" };
+
+const SVG = {
+  heal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M4 12h16"/></svg>',
+  tank: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>',
+  magic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></svg>',
+  phys: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l5-5M7 13l4 4M20 4l-9 9M20 4h-5M20 4v5"/></svg>',
+  aa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 19C5 9 9 5 19 5M5 19l14-14M19 5v5M19 5h-5"/></svg>',
+  cc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
+  burst: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L5 13h6l-1 9 8-12h-6z"/></svg>'
+};
+
+// Qué comprar según el rival. Cada lista depende de cómo pega tu dios en ese rol.
+const SITS = [
+  { id: "heal", t: "Se curan mucho", why: "Curanderos o mucho robo de vida. El antiheal les baja 40% toda la curación; con uno en el equipo basta, pero que alguien lo lleve.",
+    picks: { mage: ["divine-ruin"], phys: ["brawlers-beat-stick"], aa: ["toxic-blade"], tank: ["stygian-anchor", "brawlers-beat-stick", "contagion"], any: ["sundering-arc"] } },
+  { id: "tank", t: "Tanques y mucha vida", why: "Si no les bajas la vida, compra daño por porcentaje de vida o penetración.",
+    picks: { mage: ["soul-reaver", "obsidian-shard"], phys: ["heartseeker", "titans-bane"], aa: ["qins-blade", "the-executioner", "dominance"], tank: ["void-shield", "void-stone", "stone-of-binding"] } },
+  { id: "magic", t: "Mucho daño mágico", why: "Tres o más rivales pegan con magia, o el mago rival va muy adelantado.",
+    picks: { mage: ["genjis-guard", "sphere-of-negation"], phys: ["genjis-guard", "wyrmskin-hide"], aa: ["genjis-guard", "magis-cloak"], tank: ["genjis-guard", "oni-hunters-garb", "void-stone"] } },
+  { id: "phys", t: "Mucho daño físico", why: "Tres o más rivales pegan físico, o su jungla y su carry van adelantados.",
+    picks: { mage: ["breastplate-of-valor", "prophetic-cloak"], phys: ["breastplate-of-valor", "shifters-shield"], aa: ["prophetic-cloak", "freyas-tears"], tank: ["breastplate-of-valor", "leviathans-hide", "helm-of-radiance"] } },
+  { id: "aa", t: "Carries de ataque básico y críticos", why: "Su carry te derrite a golpes. Estos objetos castigan o frenan los ataques básicos.",
+    picks: { mage: ["hide-of-the-nemean-lion"], phys: ["hide-of-the-nemean-lion", "spectral-armor"], aa: ["spectral-armor"], tank: ["spectral-armor", "midgardian-mail", "hide-of-the-nemean-lion", "pharaohs-curse"], any: ["phantom-shell"] } },
+  { id: "cc", t: "Mucho control", why: "Aturdimientos, raíces y agarres en cadena. Si te atrapan, mueres sin jugar.",
+    picks: { mage: ["magis-cloak"], phys: ["magis-cloak", "spirit-robe"], aa: ["magis-cloak"], tank: ["spirit-robe", "talisman-of-purification", "resolute-mantle", "hussars-wings"], any: ["purification-beads"] } },
+  { id: "shield", t: "Usan escudos", why: "Dioses que se escudan a sí mismos o a su equipo. Rómpeles el escudo antes de gastar tu daño.",
+    picks: { mage: ["divine-ruin"], phys: ["shield-splitter"], aa: ["lernaean-bow"], tank: ["erosion", "mystical-mail", "pharaohs-curse"] },
+    note: { mage: "Los magos no tienen rompeescudos propio: pídele Erosión a tu tanque y guarda tu daño para cuando el escudo se acabe." }, skip: { mage: true } },
+  { id: "burst", t: "Asesinos que te saltan encima", why: "Te borran en un combo. Necesitas un segundo de vida extra para que tu equipo responda.",
+    picks: { mage: ["time-lock-aegis", "magis-cloak"], phys: ["shifters-shield", "mantle-of-discord"], aa: ["mantle-of-discord", "magis-cloak"], tank: ["draconic-scale", "prophetic-cloak"], any: ["aegis-of-acceleration"] } }
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+const G = DATA.gods, IT = DATA.items;
+document.documentElement.style.setProperty("--gc", DATA.gc);
+document.documentElement.style.setProperty("--gr", DATA.gr);
+document.documentElement.style.setProperty("--ic", DATA.ic);
+document.documentElement.style.setProperty("--ir", DATA.ir);
+
+const pos = (i, cols, rows) => `background-position:${(i % cols) / (cols - 1) * 100}% ${Math.floor(i / cols) / Math.max(1, rows - 1) * 100}%`;
+const face = g => `<span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"></span>`;
+
+let roleFilter = "all";
+let cur = null;          // { god, role }
+let foes = [];           // slugs
+try { foes = JSON.parse(localStorage.getItem("foes") || "[]").filter(s => G.some(g => g.s === s)).slice(0, 5); } catch (e) {}
+
+function itemRow(id, opts = {}) {
+  const it = IT[id];
+  if (!it) return "";
+  const pk = opts.sug ? `<span class="pk sug">sugerido</span>` : opts.pick != null ? `<span class="pk" title="Jugadores que lo compran">${opts.pick}%</span>` : opts.tag ? `<span class="pk">${opts.tag}</span>` : "";
+  return `<div class="it${opts.small ? " small" : ""}">
+    <span class="ic spr-i" style="${pos(it.i, DATA.ic, DATA.ir)}" role="img" aria-label="${esc(it.e)}"></span>
+    <div><div class="n">${esc(it.n)}</div>${it.n !== it.e ? `<div class="e">${esc(it.e)}</div>` : ""}
+      ${opts.noDesc || !it.d ? "" : `<div class="d">${esc(it.d)}</div>`}
+      ${opts.stats && it.s.length ? `<div class="s">${esc(it.s.join(" · "))}</div>` : ""}</div>
+    ${pk}</div>`;
+}
+
+function buildHTML(kind, r) {
+  const b = r.b[kind], isMeta = r.meta === kind;
+  if (!b) {
+    return `<article class="build ${kind}"><header><h3>${KIND[kind].t}</h3></header>
+      <p class="na">No aplica en este rol: con lo que compran los jugadores, esta versión queda igual que la ${KIND[r.meta].t.toLowerCase()}.</p></article>`;
+  }
+  const rows = b.map(([id, pick, flag]) => `<li>${itemRow(id, { pick, sug: flag === 2, stats: true })}</li>`).join("");
+  const txt = b.map(([id]) => `${IT[id].n} (${IT[id].e})`).join(" > ");
+  return `<article class="build ${kind}${isMeta ? " meta" : ""}">
+    <header><h3>${KIND[kind].t}${isMeta ? `<span class="crown">La más jugada</span>` : ""}</h3>
+    <p class="when">${KIND[kind].w}</p></header>
+    <ol>${rows}</ol>
+    <button class="copy" type="button" data-copy="${esc(txt)}">Copiar lista</button>
+  </article>`;
+}
+
+function analyse() {
+  const E = foes.map(s => G.find(g => g.s === s)).filter(Boolean);
+  const who = t => E.filter(g => g.tr.includes(t)).map(g => g.n);
+  const M = E.filter(g => g.dmg === "M").map(g => g.n), P = E.filter(g => g.dmg === "P").map(g => g.n);
+  const need = Math.max(2, Math.ceil(E.length * 0.6));
+  const out = {};
+  for (const t of ["heal", "tank", "aa", "shield", "burst"]) if (who(t).length) out[t] = who(t);
+  if (who("cc").length >= 2) out.cc = who("cc");
+  if (M.length >= need) out.magic = M;
+  if (P.length >= need) out.phys = P;
+  return { E, out };
+}
+
+function rivalHTML(r) {
+  const { E, out } = analyse();
+  const have = new Set(Object.values(r.b).filter(Boolean).flat().map(x => x[0]));
+  const order = [...SITS].sort((a, b) => (out[b.id] ? 1 : 0) - (out[a.id] ? 1 : 0));
+  const cards = order.map(s => {
+    const ids = [...(s.picks[r.prof] || []), ...(s.picks.any || [])];
+    const note = s.note && s.note[r.prof];
+    const list = (s.skip && s.skip[r.prof]) ? "" : ids.map(id => itemRow(id, { small: true, tag: IT[id].c === "x" ? "reliquia" : have.has(id) ? "ya en tu build" : "" })).join("");
+    const hot = out[s.id];
+    return `<article class="sit${hot ? " hot" : ""}">
+      <h3>${SVG[s.id]}${s.t}</h3>
+      ${hot ? `<p class="because">Aplica contra: ${esc(hot.join(", "))}</p>` : ""}
+      <p class="why">${s.why}</p>
+      ${note ? `<p class="why">${note}</p>` : ""}
+      <div class="list">${list}</div>
+    </article>`;
+  }).join("");
+  const chips = E.map(g => `<button class="foe" type="button" data-foe="${g.s}" aria-label="Quitar a ${esc(g.n)}">${face(g)}<span>${esc(g.n)}</span><span class="x" aria-hidden="true">×</span></button>`).join("");
+  const n = Object.keys(out).length;
+  const verdict = !E.length ? "Sin rivales elegidos se muestran todas las situaciones."
+    : n ? `Contra este equipo te aplican ${n} ${n === 1 ? "situación" : "situaciones"}, marcadas en dorado.`
+    : "Contra este equipo no hay nada urgente: sigue tu build normal.";
+  return `<section class="rival">
+    <div class="sec-head"><span class="eyebrow">Según el rival</span><h2>¿Contra quién juegas?</h2>
+      <p>Ninguna build es fija. Agrega a los dioses del equipo contrario y te marco qué cambiar. Las sugerencias están pensadas para un ${PROF[r.prof]}, que es como se juega este dios en ${ROLE[cur.role].toLowerCase()}.</p></div>
+    <div class="picker">
+      <div class="picker-row">
+        <input id="foeQ" type="search" list="godlist" placeholder="Agregar rival (hasta 5)…" autocomplete="off" aria-label="Agregar dios rival">
+        ${E.length ? `<button class="chip" type="button" id="foeClear">Limpiar</button>` : ""}
+      </div>
+      ${E.length ? `<div class="foes">${chips}</div>` : ""}
+      <p class="muted" id="verdict">${verdict}</p>
+    </div>
+    <p class="rule">Regla práctica: no vendas tu núcleo. Cambia el quinto o sexto objeto, o compra el situacional en cuanto termines tus dos primeros. El antiheal sirve más mientras antes lo tengas.</p>
+    <div class="sits">${cards}</div>
+  </section>`;
+}
+
+function renderHall() {
+  const el = $("#hall");
+  if (!cur) { el.innerHTML = ""; return; }
+  const { god: g, role } = cur, r = g.roles[role];
+  const tabs = Object.keys(g.roles).map(k => `<button class="tab" role="tab" type="button" data-tab="${k}" aria-selected="${k === role}">${ROLE[k]}<b>${g.roles[k].t}</b></button>`).join("");
+  const kitList = (arr, tag) => arr.length ? arr.map(([id, p]) => itemRow(id, { small: true, pick: p, noDesc: false })).join("") : `<span class="muted">Sin datos suficientes.</span>`;
+  let asp = "";
+  if (r.asp) {
+    const a = r.asp, rec = a.p >= 50 || (a.w - a.nw >= 5 && a.p >= 20);
+    asp = `<div><span class="l">Aspecto</span><div><div class="n" style="font-weight:700">${esc(a.n)}</div>
+      <div class="d muted" style="font-size:14px">${rec ? "Recomendado" : "Opcional"}: lo usa el ${a.p}% y gana el ${a.w}%. Sin aspecto ganan el ${a.nw}%.</div></div></div>`;
+  }
+  const small = r.n < 120 ? ` · muestra chica` : "";
+  el.innerHTML = `
+    <article class="shrine">
+      <div class="statue"><img src="cards/${g.s}.webp" alt="${esc(g.n)}" loading="eager"></div>
+      <div class="shrine-body">
+        <div class="name"><span class="eyebrow">Panteón ${esc(g.p.toLowerCase())}</span>
+          <h2>${esc(g.n)}</h2>${g.n !== g.e ? `<p class="en">${esc(g.e)} en inglés</p>` : ""}</div>
+        <div class="tabs" role="tablist" aria-label="Rol">${tabs}</div>
+        <div class="facts">
+          <div><span class="v">${r.t}</span><span class="l">Tier en ${ROLE[role].toLowerCase()}</span></div>
+          <div><span class="v">${String(r.wr).replace(".", ",")}%</span><span class="l">Victorias</span></div>
+          <div><span class="v">${r.n.toLocaleString("es-MX")}</span><span class="l">Partidas${small}</span></div>
+        </div>
+        <div class="kit">
+          <div><span class="l">Objeto inicial</span>${kitList(r.st)}</div>
+          <div><span class="l">Reliquia</span>${kitList(r.re)}</div>
+          ${asp}
+        </div>
+      </div>
+    </article>
+    <div class="sec-head"><span class="eyebrow">Las tres builds</span><h2>${esc(g.n)} en ${ROLE[role].toLowerCase()}</h2>
+      <p>El porcentaje es cuántos jugadores Ranked compran ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.</p></div>
+    <div class="builds">${buildHTML("off", r)}${buildHTML("hyb", r)}${buildHTML("def", r)}</div>
+    ${rivalHTML(r)}`;
+}
+
+function renderGods() {
+  const rank = { S: 0, A: 1, B: 2, C: 3, D: 4, F: 5 };
+  const list = G.filter(g => roleFilter === "all" || g.roles[roleFilter]);
+  if (roleFilter !== "all") list.sort((a, b) => rank[a.roles[roleFilter].t] - rank[b.roles[roleFilter].t] || a.n.localeCompare(b.n, "es"));
+  else list.sort((a, b) => a.n.localeCompare(b.n, "es"));
+  $("#gods").innerHTML = list.map(g => {
+    const t = roleFilter === "all" ? Object.values(g.roles)[0].t : g.roles[roleFilter].t;
+    return `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)}">
+      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"><span class="tier t${t}">${t}</span></span><span class="nm">${esc(g.n)}</span></button>`;
+  }).join("") || `<p class="empty">Ningún dios con ese rol.</p>`;
+  $("#count").textContent = roleFilter === "all" ? `Los ${G.length} dioses` : `${list.length} dioses en ${ROLE[roleFilter].toLowerCase()}, del mejor al peor`;
+}
+
+function renderChips() {
+  $("#roleChips").innerHTML = [["all", "Todos"], ...ROLE_ORDER.map(r => [r, ROLE[r]])]
+    .map(([v, l]) => `<button class="chip" type="button" data-role="${v}" aria-pressed="${v === roleFilter}">${l}</button>`).join("");
+}
+
+function findGod(text) {
+  const n = norm(text);
+  if (n.length < 2) return null;
+  const names = g => [norm(g.n), norm(g.e)];
+  return G.find(g => names(g).includes(n)) || G.find(g => names(g).some(x => x.startsWith(n))) || (n.length >= 4 ? G.find(g => names(g).some(x => x.includes(n))) : null);
+}
+
+function select(g, role, scroll) {
+  if (!g) return;
+  const r = role && g.roles[role] ? role : (roleFilter !== "all" && g.roles[roleFilter]) ? roleFilter : Object.keys(g.roles)[0];
+  cur = { god: g, role: r };
+  try { if (location.hash !== "#" + g.s) history.replaceState(null, "", "#" + g.s); } catch (e) {}
+  renderGods(); renderHall();
+  if (scroll) $("#hall").scrollIntoView({ block: "start" });
+}
+
+function setFoes(next) {
+  foes = next.slice(0, 5);
+  try { localStorage.setItem("foes", JSON.stringify(foes)); } catch (e) {}
+  const y = window.scrollY;
+  renderHall();
+  window.scrollTo(0, y);
+}
+
+document.addEventListener("click", e => {
+  const t = e.target;
+  const chip = t.closest("[data-role]");
+  if (chip) { roleFilter = chip.dataset.role; renderChips(); renderGods(); return; }
+  const gb = t.closest(".god");
+  if (gb) { select(G.find(g => g.s === gb.dataset.slug), null, true); return; }
+  const tab = t.closest(".tab");
+  if (tab && cur) { const y = window.scrollY; select(cur.god, tab.dataset.tab); window.scrollTo(0, y); return; }
+  const foe = t.closest("[data-foe]");
+  if (foe) { setFoes(foes.filter(s => s !== foe.dataset.foe)); return; }
+  if (t.closest("#foeClear")) { setFoes([]); return; }
+  const cp = t.closest(".copy");
+  if (cp) {
+    const done = () => { cp.textContent = "Copiada"; setTimeout(() => { cp.textContent = "Copiar lista"; }, 1500); };
+    try { navigator.clipboard.writeText(cp.dataset.copy).then(done, () => { cp.textContent = cp.dataset.copy; }); }
+    catch (err) { cp.textContent = cp.dataset.copy; }
+  }
+});
+
+function tryAddFoe(inp, force) {
+  const v = inp.value.trim();
+  const exact = G.find(g => norm(g.n) === norm(v) || norm(g.e) === norm(v));
+  const g = exact || (force ? findGod(v) : null);
+  if (!g) return;
+  if (!foes.includes(g.s) && foes.length < 5) setFoes([...foes, g.s]); else { inp.value = ""; return; }
+  const again = $("#foeQ"); if (again) again.focus();
+}
+document.addEventListener("input", e => {
+  if (e.target.id === "q") { const g = findGod(e.target.value); if (g) select(g); }
+  if (e.target.id === "foeQ") tryAddFoe(e.target, false);
+});
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  if (e.target.id === "q") { const g = findGod(e.target.value); if (g) select(g, null, true); }
+  if (e.target.id === "foeQ") tryAddFoe(e.target, true);
+});
+
+function fromHash() {
+  const g = G.find(x => x.s === (location.hash || "").slice(1));
+  select(g || G.find(x => x.e === "Zeus") || G[0]);
+}
+window.addEventListener("hashchange", fromHash);
+
+$("#patch").textContent = DATA.patch;
+$("#godlist").innerHTML = G.map(g => `<option value="${esc(g.n)}">${g.n !== g.e ? `<option value="${esc(g.e)}">` : ""}`).join("");
+renderChips();
+fromHash();
+
+// Cielo: estrellas, brasas que suben y relámpagos lejanos.
+(function sky() {
+  const c = $("#sky"), x = c.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0, stars = [], embers = [], flash = 0, next = 3 + Math.random() * 5, last = 0, raf = 0;
+  function size() {
+    const r = c.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+    W = r.width; H = r.height; c.width = W * d; c.height = H * d; x.setTransform(d, 0, 0, d, 0, 0);
+    stars = Array.from({ length: Math.round(W * H / 5200) }, () => ({ x: Math.random() * W, y: Math.random() * H * .9, r: Math.random() * 1.2 + .2, p: Math.random() * 6.28 }));
+    embers = Array.from({ length: Math.round(W / 26) }, () => spawn(true));
+    draw(0);
+  }
+  function spawn(any) { return { x: Math.random() * W, y: any ? Math.random() * H : H + 10, v: 8 + Math.random() * 22, r: Math.random() * 1.6 + .5, s: Math.random() * 6.28 }; }
+  function draw(t) {
+    x.clearRect(0, 0, W, H);
+    if (flash > 0) { const g = x.createRadialGradient(W * .5, -H * .1, 0, W * .5, -H * .1, Math.max(W, H)); g.addColorStop(0, `rgba(190,205,255,${.35 * flash})`); g.addColorStop(1, "rgba(190,205,255,0)"); x.fillStyle = g; x.fillRect(0, 0, W, H); }
+    for (const s of stars) { x.globalAlpha = .35 + .45 * Math.sin(s.p + t * .0012); x.fillStyle = "#dfe6ff"; x.beginPath(); x.arc(s.x, s.y, s.r, 0, 6.28); x.fill(); }
+    for (const e of embers) { x.globalAlpha = Math.max(0, Math.min(1, e.y / H)) * .8; x.fillStyle = "#ffd58a"; x.shadowColor = "#ff9a3c"; x.shadowBlur = 8; x.beginPath(); x.arc(e.x + Math.sin(e.s + t * .001) * 8, e.y, e.r, 0, 6.28); x.fill(); }
+    x.shadowBlur = 0; x.globalAlpha = 1;
+  }
+  function tick(t) {
+    const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
+    for (let i = 0; i < embers.length; i++) { embers[i].y -= embers[i].v * dt; if (embers[i].y < -10) embers[i] = spawn(false); }
+    next -= dt; if (next <= 0) { flash = 1; next = 5 + Math.random() * 9; }
+    flash = Math.max(0, flash - dt * 2.2);
+    draw(t); raf = requestAnimationFrame(tick);
+  }
+  new ResizeObserver(size).observe(c);
+  if (!still) {
+    raf = requestAnimationFrame(tick);
+    document.addEventListener("visibilitychange", () => { cancelAnimationFrame(raf); if (!document.hidden) { last = 0; raf = requestAnimationFrame(tick); } });
+  }
+})();
+</script>
