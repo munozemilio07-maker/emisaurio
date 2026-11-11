@@ -59,8 +59,22 @@ a { color: var(--gold); }
 .slot { width: 34px; height: 34px; display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--gold); border: 1px solid var(--gold-deep); background: var(--void); }
 .abil .n { font-weight: 700; font-size: 16px; line-height: 1.2; }
 .abil .fxs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.abil .short { font-size: 14.5px; color: #e6dfcc; margin-top: 5px; }
 .abil .d { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
 .pend { font-size: 11px; color: var(--ember); border: 1px solid var(--ember); padding: 0 6px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
+.seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
+.step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
+.step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
+.step small { font-size: 11px; color: var(--muted); max-width: 96px; text-align: center; line-height: 1.15; }
+.step.key { border-color: var(--gold-deep); box-shadow: inset 0 -3px 0 var(--gold-deep); }
+.step.key b { color: var(--gold); }
+.step.basic b { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.arrow { color: var(--gold-deep); font-size: 18px; }
+.diff { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 1px 8px; border: 1px solid currentColor; }
+.d-facil { color: var(--ok); } .d-media { color: var(--gold); } .d-dificil { color: var(--ember); }
+.combo h3 { flex-wrap: wrap; }
+.panel > .who { cursor: pointer; background: none; border: 0; padding: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; font-family: var(--font-head); font-size: 20px; color: var(--gold); justify-self: start; }
+.panel > .who .face { width: 44px; height: 44px; border: 1px solid var(--gold-deep); }
 .res { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
 .res-god { background: linear-gradient(180deg, var(--stone-2), var(--stone)); border: 1px solid var(--line); padding: 14px; display: grid; gap: 12px; align-content: start; min-width: 0; }
 .res-god .who { cursor: pointer; background: none; border: 0; padding: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; font-family: var(--font-head); font-size: 17px; color: var(--gold); letter-spacing: .04em; }
@@ -249,6 +263,7 @@ footer p { max-width: 90ch; }
  </div>
 
  <section class="gut hall" id="v-habilidades" hidden></section>
+ <section class="gut hall" id="v-combos" hidden></section>
 </main>
 
 <footer class="gut">
@@ -529,12 +544,24 @@ const abilsOf = g => ABILS.filter(a => a.dios === g.s).sort((a, b) => SLOT_ORDER
 const fxName = k => FX[k] ? L(FX[k].nombre, FX[k].nombre_en || FX[k].nombre) : k;
 let fxSel = [], fxMode = "misma";
 
+const FX_VERB = { stun: ["aturde", "stuns"], root: ["enraíza", "roots"], silencio: ["silencia", "silences"], slow: ["ralentiza", "slows"], area: ["hace daño en área", "deals area damage"],
+  curacion: ["cura", "heals"], escudo: ["da escudo", "shields"], movilidad: ["te mueve de lugar", "moves you"], inmunidad: ["te hace inmune al control mientras dura", "makes you CC immune while it lasts"] };
+function fxSentence(a) {
+  const parts = a.efectos.map(k => k === "desplaza" ? L(((a.detalle || {}).desplaza || "desplaza").toLowerCase(), "displaces")
+    : k === "otro_control" ? L(((a.detalle || {}).otro_control || "aplica otro control").toLowerCase(), "applies other crowd control")
+    : FX_VERB[k] ? L(FX_VERB[k][0], FX_VERB[k][1]) : null).filter(Boolean);
+  if (!parts.length) return "";
+  const txt = parts.length > 1 ? parts.slice(0, -1).join(", ") + L(" y ", " and ") + parts[parts.length - 1] : parts[0];
+  return L("En corto: ", "In short: ") + txt + ".";
+}
+
 function abilHTML(a, hot) {
   const chips = a.efectos.map(k => `<span class="fx${hot && hot.includes(k) ? " on" : ""}" title="${esc(FX[k] ? FX[k].descripcion : "")}">${esc(fxName(k))}${a.detalle && a.detalle[k] && lang === "es" ? `: ${esc(a.detalle[k].toLowerCase())}` : ""}</span>`).join("");
   const slot = a.ranura === "otra" ? "+" : a.ranura;
   return `<div class="abil"><span class="slot" title="${a.ranura === "P" ? L("Pasiva", "Passive") : a.ranura === "otra" ? L("Variante o habilidad extra", "Variant or extra ability") : L("Habilidad", "Ability") + " " + a.ranura}">${slot}</span>
     <div><div class="n">${esc(a.nombre)}${a.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : ""}</div>
     ${chips ? `<div class="fxs">${chips}</div>` : ""}
+    ${fxSentence(a) ? `<div class="short">${esc(fxSentence(a))}</div>` : ""}
     ${a.texto_en ? `<div class="d">${esc(a.texto_en)}</div>` : ""}</div></div>`;
 }
 
@@ -580,8 +607,45 @@ function renderHabilidades() {
     <div class="res">${out}</div>`;
 }
 
+// ---------- Combos por dios (src/curado/combos.json) ----------
+const COMBOS = (CURADO.combos || {}).combos || [];
+const DIFF = { facil: ["Fácil", "Easy"], media: ["Media", "Medium"], dificil: ["Difícil", "Hard"] };
+const safeUrl = u => /^https:\/\//i.test(u || "") ? u : "";
+function stepHTML(g, st) {
+  const k = String(st).trim(), up = k.toUpperCase();
+  const ab = ABILS.find(a => a.dios === g.s && a.ranura === k);
+  const label = up === "B" ? L("Básico", "Basic") : up === "R" ? L("Reliquia", "Relic") : k;
+  const title = ab ? ab.nombre : up === "B" ? L("Ataque básico", "Basic attack") : up === "R" ? L("Reliquia", "Relic") : k;
+  const kind = /^[1-4]$/.test(k) ? " key" : up === "B" ? " basic" : "";
+  return `<span class="step${kind}" title="${esc(title)}"><b>${esc(label)}</b>${ab ? `<small>${esc(ab.nombre)}</small>` : ""}</span>`;
+}
+function comboCard(g, c) {
+  const d = DIFF[c.dificultad] || null, url = safeUrl(c.media_url);
+  return `<article class="sit combo">
+    <h3>${esc(c.nombre || L("Combo", "Combo"))}${d ? `<span class="diff d-${esc(c.dificultad)}">${L(d[0], d[1])}</span>` : ""}${c.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : ""}</h3>
+    <div class="seq" role="list" aria-label="${L("Secuencia", "Sequence")}">${(c.secuencia || []).map(st => `<span role="listitem">${stepHTML(g, st)}</span>`).join(`<span class="arrow" aria-hidden="true">→</span>`)}</div>
+    ${c.logra ? `<p class="why"><b>${L("Qué logra", "What it does")}:</b> ${esc(c.logra)}</p>` : ""}
+    ${c.notas ? `<p class="why">${esc(c.notas)}</p>` : ""}
+    ${url ? `<a class="yt" href="${esc(url)}" target="_blank" rel="noopener">${L("Ver el combo en video", "Watch the combo")}</a>` : ""}
+  </article>`;
+}
+function godCombosHTML(g) {
+  const list = COMBOS.filter(c => c.dios === g.s);
+  if (!list.length) return "";
+  return `<section class="panel"><div class="sec-head"><span class="eyebrow">Combos</span><h2>${L(`Combos de ${esc(N(g))}`, `${esc(N(g))} combos`)}</h2>
+    <p>${L("Presiona las teclas en ese orden. Pasa el cursor o toca un paso para ver qué habilidad es.", "Press the keys in that order. Hover or tap a step to see which ability it is.")}</p></div>
+    <div class="sits">${list.map(c => comboCard(g, c)).join("")}</div></section>`;
+}
+function renderCombos() {
+  const el = $("#v-combos");
+  const gods = G.filter(g => COMBOS.some(c => c.dios === g.s)).sort((a, b) => N(a).localeCompare(N(b), lang));
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">Combos</span><h2>${L("Combos por dios", "Combos by god")}</h2>
+    <p>${L(`Hay combos para ${gods.length} de ${G.length} dioses. Se agregan a mano en src/curado/combos.json.`, `There are combos for ${gods.length} of ${G.length} gods. They are added by hand in src/curado/combos.json.`)}</p></div>
+    ${gods.map(g => `<section class="panel"><button class="who" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button><div class="sits">${COMBOS.filter(c => c.dios === g.s).map(c => comboCard(g, c)).join("")}</div></section>`).join("") || `<p class="empty">${L("Todavía no hay combos.", "No combos yet.")}</p>`}`;
+}
+
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
@@ -591,6 +655,7 @@ function setView(v, keepHash) {
   view = VIEWS.some(x => x[0] === v) ? v : "dioses";
   renderViews();
   if (view === "habilidades") renderHabilidades();
+  if (view === "combos") renderCombos();
   if (!keepHash) { try { history.replaceState(null, "", "#" + (view === "dioses" && cur ? cur.god.s : view)); } catch (e) {} }
 }
 
@@ -641,6 +706,7 @@ function renderHall() {
     <div class="sec-head"><span class="eyebrow">${t("Las tres builds")}</span><h2>${L(`${esc(g.n)} en Joust`, `${esc(g.e)} in Joust`)}</h2>
       <p>${L(`El porcentaje es en cuántas partidas de Joust compraron ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.`, `The percentage is how many Joust games that item was bought in with ${esc(g.e)}. Items marked "suggested" are rarely bought on this god: they are added to complete that version.`)}</p></div>
     <div class="builds">${buildHTML("off", r)}${buildHTML("hyb", r)}${buildHTML("def", r)}</div>
+    ${godCombosHTML(g)}
     ${godAbilsHTML(g)}
     ${comboHTML(g)}
     ${rivalHTML(r)}`;

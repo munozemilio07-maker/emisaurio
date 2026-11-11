@@ -1,0 +1,29 @@
+{
+ "_como_editar": "Un registro por combo. 'dios' es el slug de data.json (el mismo de cards/<slug>.webp). 'secuencia' es una lista de pasos: \"1\", \"2\", \"3\", \"4\" (habilidades), \"B\" (ataque básico), \"R\" (reliquia) o cualquier texto corto. 'dificultad': facil, media o dificil. 'media_url' es opcional (YouTube, clip o GIF, con https); si está vacío no se muestra nada.",
+ "combos": [
+  {
+   "dios": "susano",
+   "nombre": "Kata completa y jalón",
+   "secuencia": ["1", "B", "1", "B", "2"],
+   "logra": "Metes básicos entre los golpes del 1 para cargar la pasiva y cierras con el 2, que jala a los enemigos hacia ti.",
+   "dificultad": "media",
+   "media_url": "",
+   "notas": "La fuente confirma que el 1 (Storm Kata) son tres golpes seguidos, que cada habilidad carga la pasiva en el siguiente básico y que el 2 (Wind Siphon) jala. El orden exacto de la secuencia es una plantilla nuestra y falta probarlo en el parche actual.",
+   "parche_verificado": "OB47",
+   "fuente": "Secuencia: plantilla propia. Habilidades: https://smite2.live/god/Susano/info",
+   "pendiente_verificar": true
+  },
+  {
+   "dios": "neith",
+   "nombre": "Tejido y flecha",
+   "secuencia": ["2", "1"],
+   "logra": "El 2 deja un Tejido y te cura; el 1 lo detona: daño extra y enraíza a los que estén cerca.",
+   "dificultad": "facil",
+   "media_url": "",
+   "notas": "El 2 (Unravel) crea un Weave y el 1 (Spirit Arrow) detona los Weaves que toca; detonarlos hace daño y enraíza.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/god/Neith/info",
+   "pendiente_verificar": false
+  }
+ ]
+}
