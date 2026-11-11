@@ -47,6 +47,29 @@ a { color: var(--gold); }
 .lang { position: absolute; z-index: 2; top: calc(12px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); display: flex; border: 1px solid var(--gold-deep); background: rgba(6,7,12,.7); }
 .lang button { cursor: pointer; border: 0; background: none; padding: 8px 14px; font-family: var(--font-head); font-size: 13px; letter-spacing: .14em; color: var(--muted); }
 .lang button[aria-pressed="true"] { background: linear-gradient(180deg, var(--gold), var(--gold-deep)); color: #1a1305; font-weight: 700; }
+.views { background: var(--night); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
+.views-in { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.views-in::-webkit-scrollbar { display: none; }
+.view-btn { cursor: pointer; flex: none; background: none; border: 0; border-bottom: 2px solid transparent; padding: 14px 14px 12px; font-family: var(--font-head); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.view-btn:hover { color: var(--ink); }
+.view-btn[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
+.fx { display: inline-block; font-size: 12px; padding: 1px 7px; border: 1px solid var(--line); color: #d7d1bf; white-space: nowrap; }
+.fx.on { border-color: var(--gold-deep); color: var(--gold); }
+.abil { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start; }
+.slot { width: 34px; height: 34px; display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--gold); border: 1px solid var(--gold-deep); background: var(--void); }
+.abil .n { font-weight: 700; font-size: 16px; line-height: 1.2; }
+.abil .fxs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.abil .d { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+.pend { font-size: 11px; color: var(--ember); border: 1px solid var(--ember); padding: 0 6px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
+.res { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.res-god { background: linear-gradient(180deg, var(--stone-2), var(--stone)); border: 1px solid var(--line); padding: 14px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.res-god .who { cursor: pointer; background: none; border: 0; padding: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; font-family: var(--font-head); font-size: 17px; color: var(--gold); letter-spacing: .04em; }
+.res-god .who .face { width: 44px; height: 44px; border: 1px solid var(--gold-deep); }
+.panel { background: linear-gradient(180deg, #14101c, var(--night)); border: 1px solid var(--line); padding: clamp(16px, 2.6vw, 26px); display: grid; gap: 14px; }
+.seg { display: inline-flex; border: 1px solid var(--line); }
+.seg button { cursor: pointer; border: 0; background: var(--stone); padding: 7px 12px; font-size: 13.5px; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--gold-deep); color: #fff; }
+.abils { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px 18px; }
 .hero-in { position: relative; padding-block: clamp(36px, 7vw, 76px) 28px; display: grid; gap: 18px; justify-items: center; text-align: center; }
 .hero h1 { font-family: var(--font-title); font-weight: 900; font-size: clamp(34px, 8.4vw, 92px); line-height: .98; letter-spacing: .03em;
   background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 42%, var(--gold-deep) 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -199,7 +222,10 @@ footer p { max-width: 90ch; }
   <div class="frieze" aria-hidden="true"></div>
 </header>
 
+<nav class="views" aria-label="Secciones"><div class="gut views-in" id="views"></div></nav>
+
 <main>
+ <div id="v-dioses">
   <section class="gut pantheon" aria-label="Todos los dioses">
     <div class="bar">
       <h2 class="eyebrow" id="count">Los dioses</h2>
@@ -220,6 +246,9 @@ footer p { max-width: 90ch; }
   <div class="gut"><div class="frieze" aria-hidden="true"></div></div>
 
   <section class="gut hall" id="hall" aria-live="polite"></section>
+ </div>
+
+ <section class="gut hall" id="v-habilidades" hidden></section>
 </main>
 
 <footer class="gut">
@@ -230,6 +259,7 @@ footer p { max-width: 90ch; }
 
 <script>
 const DATA = /*__DATA__*/null;
+const CURADO = /*__CURADO__*/null || {};
 </script>
 <script>
 const STYLE = { mage: "Magos", aa: "Carries", phys: "Luchadores", tank: "Tanques" };
@@ -491,6 +521,79 @@ function comboHTML(g) {
     <div class="combos">${groups.map(([h, why, rows]) => `<article class="sit"><h3>${t(h)}</h3><p class="why">${esc(why)}</p><div class="list cols">${rows.join("")}</div></article>`).join("")}</div></section>`;
 }
 
+// ---------- Habilidades y efectos (src/curado/efectos_habilidades.json) ----------
+const FX = (CURADO.efectos_habilidades || {}).etiquetas || {};
+const ABILS = (CURADO.efectos_habilidades || {}).habilidades || [];
+const SLOT_ORDER = ["P", "1", "2", "3", "4", "otra"];
+const abilsOf = g => ABILS.filter(a => a.dios === g.s).sort((a, b) => SLOT_ORDER.indexOf(a.ranura) - SLOT_ORDER.indexOf(b.ranura));
+const fxName = k => FX[k] ? L(FX[k].nombre, FX[k].nombre_en || FX[k].nombre) : k;
+let fxSel = [], fxMode = "misma";
+
+function abilHTML(a, hot) {
+  const chips = a.efectos.map(k => `<span class="fx${hot && hot.includes(k) ? " on" : ""}" title="${esc(FX[k] ? FX[k].descripcion : "")}">${esc(fxName(k))}${a.detalle && a.detalle[k] && lang === "es" ? `: ${esc(a.detalle[k].toLowerCase())}` : ""}</span>`).join("");
+  const slot = a.ranura === "otra" ? "+" : a.ranura;
+  return `<div class="abil"><span class="slot" title="${a.ranura === "P" ? L("Pasiva", "Passive") : a.ranura === "otra" ? L("Variante o habilidad extra", "Variant or extra ability") : L("Habilidad", "Ability") + " " + a.ranura}">${slot}</span>
+    <div><div class="n">${esc(a.nombre)}${a.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : ""}</div>
+    ${chips ? `<div class="fxs">${chips}</div>` : ""}
+    ${a.texto_en ? `<div class="d">${esc(a.texto_en)}</div>` : ""}</div></div>`;
+}
+
+function godAbilsHTML(g) {
+  const list = abilsOf(g);
+  if (!list.length) return "";
+  return `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Habilidades", "Abilities")}</span><h2>${L(`Qué hace ${esc(N(g))}`, `What ${esc(N(g))} does`)}</h2>
+    <p>${L("Nombre y texto de cada habilidad tal como salen en el juego (en inglés), con sus efectos marcados.", "Each ability's in-game name and text, with its effects tagged.")}</p></div>
+    <div class="abils">${list.map(a => abilHTML(a)).join("")}</div></section>`;
+}
+
+function renderHabilidades() {
+  const el = $("#v-habilidades");
+  if (!ABILS.length) { el.innerHTML = `<p class="empty">${L("Todavía no hay datos de habilidades: falta src/curado/efectos_habilidades.json.", "No ability data yet: src/curado/efectos_habilidades.json is missing.")}</p>`; return; }
+  const chips = Object.keys(FX).map(k => `<button class="chip" type="button" data-fx="${k}" aria-pressed="${fxSel.includes(k)}" title="${esc(FX[k].descripcion || "")}">${esc(fxName(k))}</button>`).join("");
+  let out = "", count = 0, nab = 0;
+  if (fxSel.length) {
+    const rows = [];
+    for (const g of [...G].sort((a, b) => N(a).localeCompare(N(b), lang))) {
+      const all = abilsOf(g);
+      let hit;
+      if (fxMode === "misma") hit = all.filter(a => fxSel.every(k => a.efectos.includes(k)));
+      else hit = fxSel.every(k => all.some(a => a.efectos.includes(k))) ? all.filter(a => fxSel.some(k => a.efectos.includes(k))) : [];
+      if (hit.length) { rows.push(`<article class="res-god"><button class="who" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>${hit.map(a => abilHTML(a, fxSel)).join("")}</article>`); count++; nab += hit.length; }
+    }
+    out = rows.join("") || `<p class="empty">${L("Ningún dios cumple esa combinación. Prueba con «Cualquier habilidad del dios».", "No god matches that combination. Try \"Any of the god's abilities\".")}</p>`;
+  }
+  const summary = !fxSel.length ? L("Elige uno o más efectos para ver qué dioses los tienen y con qué habilidad.", "Pick one or more effects to see which gods have them and on which ability.")
+    : L(`${count} dioses, ${nab} habilidades`, `${count} gods, ${nab} abilities`);
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Habilidades por efecto", "Abilities by effect")}</span><h2>${L("¿Quién aturde, silencia o jala?", "Who stuns, silences or pulls?")}</h2>
+      <p>${L("Los efectos salen de la ficha de cada habilidad en Smite2.live (parche OB47). El nombre y el texto de la habilidad están en inglés, como en el juego.", "Effects come from each ability's page on Smite2.live (patch OB47).")}</p></div>
+    <div class="panel">
+      <div class="chips" role="group" aria-label="${L("Efectos", "Effects")}">${chips}</div>
+      <div class="bar">
+        <div class="seg" role="group" aria-label="${L("Cómo combinar", "How to combine")}">
+          <button type="button" data-fxmode="misma" aria-pressed="${fxMode === "misma"}">${L("Todo en la misma habilidad", "All on the same ability")}</button>
+          <button type="button" data-fxmode="dios" aria-pressed="${fxMode === "dios"}">${L("Cualquier habilidad del dios", "Any of the god's abilities")}</button>
+        </div>
+        ${fxSel.length ? `<button class="chip" type="button" id="fxClear">${L("Limpiar", "Clear")}</button>` : ""}
+      </div>
+      <p class="muted" id="fxSummary">${summary}</p>
+    </div>
+    <div class="res">${out}</div>`;
+}
+
+// ---------- Vistas ----------
+const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"]];
+let view = "dioses";
+function renderViews() {
+  $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
+  for (const [id] of VIEWS) { const el = $("#v-" + id); if (el) el.hidden = id !== view; }
+}
+function setView(v, keepHash) {
+  view = VIEWS.some(x => x[0] === v) ? v : "dioses";
+  renderViews();
+  if (view === "habilidades") renderHabilidades();
+  if (!keepHash) { try { history.replaceState(null, "", "#" + (view === "dioses" && cur ? cur.god.s : view)); } catch (e) {} }
+}
+
 function renderHall() {
   const el = $("#hall");
   if (!cur) { el.innerHTML = ""; return; }
@@ -538,6 +641,7 @@ function renderHall() {
     <div class="sec-head"><span class="eyebrow">${t("Las tres builds")}</span><h2>${L(`${esc(g.n)} en Joust`, `${esc(g.e)} in Joust`)}</h2>
       <p>${L(`El porcentaje es en cuántas partidas de Joust compraron ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.`, `The percentage is how many Joust games that item was bought in with ${esc(g.e)}. Items marked "suggested" are rarely bought on this god: they are added to complete that version.`)}</p></div>
     <div class="builds">${buildHTML("off", r)}${buildHTML("hyb", r)}${buildHTML("def", r)}</div>
+    ${godAbilsHTML(g)}
     ${comboHTML(g)}
     ${rivalHTML(r)}`;
 }
@@ -602,7 +706,8 @@ function applyLang() {
   const pans = [...new Map(G.map(g => [g.p, g.pe])).entries()].sort((a, b) => L(a[0], a[1]).localeCompare(L(b[0], b[1]), lang));
   pan.innerHTML = `<option value="all">${t("Todos")}</option>` + pans.map(([es, en]) => `<option value="${esc(es)}">${esc(L(es, en))}</option>`).join("");
   pan.value = keep;
-  renderChips(); renderGods(); renderHall();
+  renderChips(); renderGods(); renderHall(); renderViews();
+  if (view !== "dioses") setView(view, true);
 }
 
 document.addEventListener("click", e => {
@@ -615,6 +720,15 @@ document.addEventListener("click", e => {
   if (tc) { fTier = tc.dataset.tier; renderChips(); renderGods(); return; }
   const tab = t.closest(".tab");
   if (tab && cur) { const y = window.scrollY; select(cur.god, tab.dataset.tab); window.scrollTo(0, y); return; }
+  const vb = t.closest("[data-view]");
+  if (vb) { setView(vb.dataset.view); window.scrollTo(0, $(".views").offsetTop); return; }
+  const fx = t.closest("[data-fx]");
+  if (fx) { const k = fx.dataset.fx; fxSel = fxSel.includes(k) ? fxSel.filter(x => x !== k) : [...fxSel, k]; renderHabilidades(); return; }
+  const fm = t.closest("[data-fxmode]");
+  if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
+  if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
+  const go = t.closest('[data-go="god"]');
+  if (go) { setView("dioses", true); select(G.find(g => g.s === go.dataset.slug), null, true); return; }
   const mate = t.closest(".mate");
   if (mate) { select(G.find(g => g.s === mate.dataset.slug), null, true); return; }
   const gb = t.closest(".god");
@@ -643,7 +757,7 @@ document.addEventListener("change", e => {
   if (e.target.id === "fSort") { fSort = e.target.value; renderGods(); }
 });
 document.addEventListener("input", e => {
-  if (e.target.id === "q") { const g = findGod(e.target.value); if (g) select(g); }
+  if (e.target.id === "q") { const g = findGod(e.target.value); if (g) { if (view !== "dioses") setView("dioses", true); select(g); } }
   if (e.target.id === "foeQ") tryAddFoe(e.target, false);
 });
 document.addEventListener("keydown", e => {
@@ -653,7 +767,14 @@ document.addEventListener("keydown", e => {
 });
 
 function fromHash() {
-  const g = G.find(x => x.s === (location.hash || "").slice(1));
+  const h = (location.hash || "").slice(1);
+  if (VIEWS.some(x => x[0] === h) && h !== "dioses") {
+    if (!cur) cur = { god: G.find(x => x.e === "Zeus") || G[0], role: null }, cur.role = Object.keys(cur.god.roles)[0];
+    renderGods(); renderHall(); setView(h, true);
+    return;
+  }
+  const g = G.find(x => x.s === h);
+  setView("dioses", true);
   select(g || G.find(x => x.e === "Zeus") || G[0]);
 }
 window.addEventListener("hashchange", fromHash);
