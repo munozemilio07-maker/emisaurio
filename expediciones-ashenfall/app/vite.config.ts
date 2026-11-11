@@ -24,9 +24,9 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // App, datos, fuentes y los zooms bajos del mapa quedan precacheados;
-        // los zooms altos se guardan al verlos o con "Descargar mapa" en Ajustes.
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}', 'tiles/*/{1,2,3,4}/**/*.webp'],
+        // App, datos, fuentes y los zooms 1–5 del mapa quedan precacheados (~15 MB);
+        // el zoom 6 se guarda al verlos o con "Descargar mapa" en Ajustes.
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2}', 'tiles/*/{1,2,3,4,5}/**/*.webp'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [

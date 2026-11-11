@@ -18,7 +18,7 @@ function makeTiles(id: LayerId, opts: L.TileLayerOptions) {
   const table = TILES.layers[id]?.tiles ?? {};
   const layer = L.tileLayer('', {
     tileSize: 256, minZoom: TILES.minZoom, maxNativeZoom: TILES.maxZoom, maxZoom: TILES.maxZoom + 1,
-    noWrap: true, bounds: WORLD_BOUNDS, keepBuffer: 3, ...opts,
+    noWrap: true, bounds: WORLD_BOUNDS, keepBuffer: 3, errorTileUrl: BLANK, ...opts,
   });
   layer.getTileUrl = (c: L.Coords) =>
     table[c.z]?.[c.x]?.includes(c.y) ? `${import.meta.env.BASE_URL}tiles/${id}/${c.z}/${c.x}/${c.y}.webp` : BLANK;
@@ -49,10 +49,13 @@ function Layers() {
   const refs = useRef<{ surface: L.TileLayer; dowdun: L.TileLayer } | null>(null);
 
   useEffect(() => {
+    // Base borrosa (zoom 4, siempre precacheada): el mapa nunca queda en negro
+    // mientras cargan los tiles nítidos, ni sin conexión.
+    const base = makeTiles('surface', { className: 'tiles-surface', zIndex: 0, maxNativeZoom: 4, keepBuffer: 1 }).addTo(map);
     const surface = makeTiles('surface', { className: 'tiles-surface', zIndex: 1 }).addTo(map);
     const dowdun = makeTiles('dowdun', { className: 'tiles-dowdun', zIndex: 2 });
     refs.current = { surface, dowdun };
-    return () => { surface.remove(); dowdun.remove(); };
+    return () => { base.remove(); surface.remove(); dowdun.remove(); };
   }, [map]);
 
   useEffect(() => {

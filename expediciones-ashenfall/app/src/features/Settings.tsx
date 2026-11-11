@@ -137,7 +137,7 @@ export function Settings() {
 
         <section>
           <h3>Sin conexión</h3>
-          <p className="hint">La app, los datos y los zooms bajos del mapa ya se guardan solos. Los zooms altos se guardan al verlos, o todos de una vez con este botón (unos 32 MB).</p>
+          <p className="hint">La app, los datos y el mapa hasta el zoom 5 se guardan solos al instalarla. El zoom más nítido (6) se guarda al verlo, o completo con este botón (unos 20 MB más).</p>
           <button type="button" className="btn" onClick={() => void downloadMap()} disabled={!!dl}>
             {dl ? `Guardando mapa… ${dl.n}/${dl.total}` : 'Descargar el mapa completo'}
           </button>

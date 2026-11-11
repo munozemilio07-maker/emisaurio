@@ -2,6 +2,8 @@ import { useSyncExternalStore } from 'react';
 import { useStore } from './store';
 import { sameProgress, type Progress } from './progress';
 
+const password = () => { try { return localStorage.getItem('ashenfall-app-password') ?? ''; } catch { return ''; } };
+
 /**
  * Sincronización opcional contra el Worker (/api/sync/:code).
  * El cliente manda su progreso, el servidor lo fusiona con lo guardado y
@@ -34,9 +36,9 @@ export async function syncNow(): Promise<void> {
     const s = useStore.getState();
     const sent: Progress = { done: s.done, undone: s.undone };
     const r = await fetch(`/api/sync/${encodeURIComponent(syncCode)}`, {
-      method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify(sent),
+      method: 'PUT', headers: { 'content-type': 'application/json', ...(password() ? { 'x-app-password': password() } : {}) }, body: JSON.stringify(sent),
     });
-    if (!r.ok) throw new Error(r.status === 404 ? 'el servidor de sincronización no está desplegado' : r.status === 400 ? 'código inválido (mínimo 12 caracteres)' : `error ${r.status}`);
+    if (!r.ok) throw new Error(r.status === 401 ? 'contraseña de la app incorrecta (escríbela en el chat)' : r.status === 404 ? 'el servidor de sincronización no está desplegado' : r.status === 400 ? 'código inválido (mínimo 12 caracteres)' : `error ${r.status}`);
     const merged = (await r.json()) as Progress;
     if (!merged || typeof merged.done !== 'object') throw new Error('respuesta inesperada');
     lastSynced = merged;
