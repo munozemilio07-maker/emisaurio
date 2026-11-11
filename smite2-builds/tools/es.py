@@ -133,6 +133,7 @@ ES = {
  'lernaean-bow': ("Arco de Lerna", "Activo: 3 flechas que atraviesan enemigos y rompen 50% de sus escudos."),
  'wyrmskin-hide': ("Piel de Sierpe", "Protección mágica con algo de Fuerza: reduces el daño del dios al que le pegas."),
  'scepter-of-dominion': ("Cetro del Dominio", "Activo: crea una zona que deja en estasis 2 s a los dioses que estén dentro."),
+ 'jade-scepter': ("Cetro de Jade", "Activo: una corriente que estalla tras 1 s y avienta a los enemigos hacia ti."),
  # Reliquias
  'purification-beads': ("Cuentas de Purificación", "Reliquia: inmune a control por 2 s."),
  'aegis-of-acceleration': ("Égida de Aceleración", "Reliquia: inmune al daño 1.5 s (solo puedes moverte)."),

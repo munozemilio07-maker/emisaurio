@@ -65,6 +65,14 @@ a { color: var(--gold); }
 .chip { cursor: pointer; padding: 7px 14px; font-family: var(--font-head); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; background: var(--stone); border: 1px solid var(--line); border-radius: 2px; color: var(--ink); }
 .chip:hover { border-color: var(--gold-deep); }
 .chip[aria-pressed="true"] { background: linear-gradient(180deg, var(--gold), var(--gold-deep)); border-color: var(--gold); color: #1a1305; font-weight: 700; }
+.selects { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; color: var(--muted); }
+.selects select { margin-left: 6px; padding: 7px 10px; background: var(--stone); color: var(--ink); border: 1px solid var(--line); border-radius: 2px; font: inherit; max-width: 100%; }
+.aspect { background: rgba(236,198,112,.07); border: 1px solid var(--gold-deep); padding: 10px 14px; display: grid; gap: 3px; }
+.aspect .n { font-family: var(--font-head); color: var(--gold); letter-spacing: .06em; }
+.aspect .e { font-size: 13px; color: var(--muted); font-style: italic; }
+.yt { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); background: var(--void); text-decoration: none; color: var(--ink); font-size: 14px; }
+.yt:hover { border-color: var(--gold-deep); }
+.yt svg { width: 18px; height: 18px; color: #ff5a4e; }
 .gods { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 12px 8px; max-height: 352px; overflow-y: auto; padding: 8px 8px 12px; background: rgba(12,15,29,.6); border: 1px solid var(--line); scrollbar-color: var(--gold-deep) transparent; }
 .god { cursor: pointer; background: none; border: 0; padding: 0; display: grid; gap: 5px; justify-items: center; text-align: center; min-width: 0; }
 .god .face { position: relative; width: 100%; max-width: 84px; aspect-ratio: 1; border: 1px solid var(--gold-deep); outline: 1px solid rgba(0,0,0,.8); box-shadow: 0 6px 16px rgba(0,0,0,.55); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
@@ -146,6 +154,12 @@ a { color: var(--gold); }
 .sit .why { font-size: 14px; color: var(--muted); }
 .sit .because { font-size: 13px; font-weight: 700; color: var(--gold); }
 .sit .list { display: grid; gap: 10px; }
+.mate { cursor: pointer; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; background: none; border: 0; padding: 2px; font-size: 14.5px; color: #d7d1bf; }
+.mate .face { width: 40px; height: 40px; border: 1px solid var(--gold-deep); }
+.mate b { color: var(--ink); }
+.mate:hover b { color: var(--gold); }
+.combos { display: grid; gap: 14px; }
+.list.cols { grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 8px 18px; }
 .rule { font-size: 14.5px; color: #d7d1bf; border-left: 2px solid var(--gold-deep); padding-left: 12px; max-width: 80ch; }
 
 footer { padding-block: 26px 48px; display: grid; gap: 8px; font-size: 14px; color: var(--muted); }
@@ -184,7 +198,16 @@ footer p { max-width: 90ch; }
   <section class="gut pantheon" aria-label="Todos los dioses">
     <div class="bar">
       <h2 class="eyebrow" id="count">Los dioses</h2>
-      <div class="chips" id="roleChips" role="group" aria-label="Filtrar por estilo"></div>
+      <div class="selects">
+        <label for="fPan">Panteón <select id="fPan"></select></label>
+        <label for="fSort">Ordenar por <select id="fSort">
+          <option value="name">Nombre</option><option value="tier">Tier (mejor primero)</option><option value="wr">% de victorias</option><option value="n">Más jugados</option>
+        </select></label>
+      </div>
+    </div>
+    <div class="bar">
+      <div class="chips" id="roleChips" role="group" aria-label="Filtrar por clase"></div>
+      <div class="chips" id="tierChips" role="group" aria-label="Filtrar por tier"></div>
     </div>
     <div class="gods" id="gods"></div>
   </section>
@@ -245,6 +268,30 @@ const SITS = [
   { id: "burst", t: "Asesinos que te saltan encima", why: "Te borran en un combo. Necesitas un segundo de vida extra para que tu equipo responda.",
     picks: { mage: ["time-lock-aegis", "magis-cloak"], phys: ["shifters-shield", "mantle-of-discord"], aa: ["mantle-of-discord", "magis-cloak"], tank: ["draconic-scale", "prophetic-cloak"], any: ["aegis-of-acceleration"] } }
 ];
+
+// Combos por habilidades (no salen de estadísticas): quién prepara la jugada, quién la remata y quién cuida a quién.
+const SETUP = {
+  "Sobek": "los jala con su gancho y los avienta hacia tu equipo", "Ares": "los encadena y los jala a todos con su ulti", "Ymir": "los congela en área",
+  "Athena": "los obliga a pegarle con su provocación", "Cabrakan": "los aturde y los encierra con sus muros", "Hun Batz": "los pone a bailar con su ulti",
+  "Odin": "los encierra en su anillo", "Xing Tian": "los agarra a todos y los azota con su ulti", "Sylvanus": "los jala y los enraíza",
+  "Atlas": "los jala hacia él", "Bacchus": "los levanta y los deja mareados", "Cerberus": "los jala a todos con su ulti", "Hades": "los atrae y los retiene con su ulti",
+  "Khepri": "agarra a uno y lo arrastra", "Fenrir": "se lleva a uno en el hocico hasta tu equipo", "Geb": "los aturde en área con su ulti",
+  "Kuzenbo": "los empuja contra la pared", "Ganesha": "los silencia y los encierra con sus pilares", "Medusa": "los petrifica con su ulti",
+  "Nox": "los enraíza y los silencia", "Nike": "los levanta con su barrera", "Poseidon": "los atrae con su remolino"
+};
+const PAYOFF = {
+  "Janus": "les tira el portal o la ulti justo donde van a caer", "Zeus": "les detona las cargas a todos juntos", "Poseidon": "les suelta el Kraken encima",
+  "Anubis": "los derrite con su ulti mientras no se pueden mover", "Kukulkan": "les pone el tornado y el dragón encima", "Scylla": "les revienta su ulti",
+  "Agni": "les llueve fuego y meteoros", "Ra": "les acomoda su rayo de ulti", "Vulcan": "les cae con el misil de su ulti", "Merlin": "les descarga sus hechizos de área",
+  "Sol": "les tira su ulti en línea", "Nu Wa": "les pega su ulti a todos", "Ah Puch": "les explota los cadáveres encima", "Neith": "los remata con su ulti desde lejos",
+  "Baron Samedi": "los mete en su ulti", "Thor": "les cae del cielo con su ulti", "Morgan Le Fay": "les detona sus marcas"
+};
+const PROTECT = {
+  "Aphrodite": "lo cura y lo vuelve inmune con su ulti", "Hel": "lo cura y le quita el control", "Ra": "lo cura dentro de su zona", "Geb": "le pone escudo y le quita el control",
+  "Khepri": "lo revive con su ulti", "Sylvanus": "lo cura con sus semillas", "Yemoja": "lo cura y lo escuda", "Baron Samedi": "lo cura en área", "Horus": "lo cura y lo protege",
+  "Ix Chel": "lo cura"
+};
+const NEEDS_CARE = new Set(["Kali", "Mercury", "Chronos", "Sol"]);
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -342,53 +389,94 @@ function rivalHTML(r) {
   </section>`;
 }
 
+function comboHTML(g) {
+  const byTier = (a, b) => "SABCD".indexOf(a.tier) - "SABCD".indexOf(b.tier) || b.wr - a.wr;
+  const pick = (map, n = 30) => G.filter(x => x !== g && map[x.e]).sort(byTier).slice(0, n);
+  const row = (x, txt) => `<button class="mate" type="button" data-slug="${x.s}">${face(x)}<span><b>${esc(x.n)}</b> ${esc(txt)}.</span></button>`;
+  const hunter = g.cls === "Cazador", carry = hunter || NEEDS_CARE.has(g.e);
+  const groups = [];
+  if (SETUP[g.e]) groups.push(["Tú preparas, ellos rematan", `${g.n} ${SETUP[g.e]}. Júntalo con alguien que tenga mucho daño en área:`, pick(PAYOFF).map(x => row(x, PAYOFF[x.e]))]);
+  if (PAYOFF[g.e] || hunter) groups.push(["Ellos preparan, tú rematas", PAYOFF[g.e] ? `${g.n} ${PAYOFF[g.e]}. Le falta alguien que los junte o los deje quietos:` : `${g.n} hace su daño con ataques básicos: le conviene alguien que deje quietos a los rivales.`, pick(SETUP).map(x => row(x, SETUP[x.e]))]);
+  if (PROTECT[g.e]) groups.push(["A quién cuidar", `${g.n} ${PROTECT[g.e].replace(/^lo /, "cuida a su compañero: lo ")}. Rinde más con un carry que haga todo el daño:`, G.filter(x => x !== g && (x.cls === "Cazador" || NEEDS_CARE.has(x.e))).sort(byTier).slice(0, 12).map(x => row(x, "hace muchísimo daño si lo mantienes vivo"))]);
+  if (carry) groups.push(["Quién te cuida", `${g.n} es frágil y hace su daño peleando un rato. Con alguien que lo mantenga vivo gana las peleas largas:`, pick(PROTECT).map(x => row(x, PROTECT[x.e]))]);
+  if (!groups.length) return "";
+  return `<section class="rival"><div class="sec-head"><span class="eyebrow">Con quién combina</span><h2>Duplas para ${esc(g.n)}</h2>
+    <p>Son combos por cómo encajan las habilidades, no por estadísticas. Los compañeros salen ordenados por su tier en Joust; toca uno para ver su build.</p></div>
+    <div class="combos">${groups.map(([t, why, rows]) => `<article class="sit"><h3>${t}</h3><p class="why">${esc(why)}</p><div class="list cols">${rows.join("")}</div></article>`).join("")}</div></section>`;
+}
+
 function renderHall() {
   const el = $("#hall");
   if (!cur) { el.innerHTML = ""; return; }
   const { god: g, role } = cur, r = g.roles[role];
   const kitList = (arr, tag) => arr.length ? arr.map(([id, p]) => itemRow(id, { small: true, pick: p, noDesc: false })).join("") : `<span class="muted">Sin datos suficientes.</span>`;
+  const keys = Object.keys(g.roles);
+  const tabLabel = k => g.roles[k].var.k === "asp" ? `Aspecto: ${esc(g.roles[k].var.es)}` : "Sin aspecto";
+  const tabs = keys.length > 1 ? `<div class="tabs" role="tablist" aria-label="Variante">${keys.map(k => `<button class="tab" role="tab" type="button" data-tab="${k}" aria-selected="${k === role}">${tabLabel(k)}<b>${g.roles[k].n}</b></button>`).join("")}</div>` : "";
   let asp = "";
-  if (r.asp) {
+  if (r.var) {
+    asp = r.var.k === "asp"
+      ? `<div class="aspect"><span class="n">Aspecto: ${esc(r.var.es)}</span><span class="e">Aspect of ${esc(r.var.e)}</span><span>${esc(r.var.d)}</span><span class="muted">Estas builds son de partidas jugadas con el aspecto activado.</span></div>`
+      : `<div class="aspect"><span class="n">Sin aspecto</span><span class="muted">Estas builds son de partidas sin el aspecto. Si lo activas (${esc(r.var.es)}), mira la otra pestaña: cambia qué conviene comprar.</span></div>`;
+  } else if (r.asp) {
     const a = r.asp, rec = a.p >= 50 || (a.w - a.nw >= 5 && a.p >= 20);
-    asp = `<div><span class="l">Aspecto</span><div><div class="n" style="font-weight:700">${esc(a.n)}</div>
-      <div class="d muted" style="font-size:14px">${rec ? "Recomendado" : "Opcional"}: lo usa el ${a.p}% y gana el ${a.w}%. Sin aspecto ganan el ${a.nw}%.</div></div></div>`;
+    asp = `<div class="aspect"><span class="n">Aspecto: ${esc(a.es || a.n)}</span><span class="e">Aspect of ${esc(a.e || a.n)}</span>${a.d ? `<span>${esc(a.d)}</span>` : ""}
+      <span class="muted">${rec ? "Recomendado" : "Poco usado en Joust"}: lo llevan en el ${a.p}% de las partidas y ganan el ${a.w}%. Sin aspecto ganan el ${a.nw}%.</span></div>`;
   }
+  const yt = "https://www.youtube.com/results?search_query=" + encodeURIComponent(`Smite 2 ${g.e} Joust build`);
   const small = r.n < 80 ? ` · muestra chica` : "";
   el.innerHTML = `
     <article class="shrine">
       <div class="statue"><img src="cards/${g.s}.webp" alt="${esc(g.n)}" loading="eager"></div>
       <div class="shrine-body">
         <div class="name"><span class="eyebrow">Panteón ${esc(g.p.toLowerCase())}</span>
-          <h2>${esc(g.n)}</h2>${g.n !== g.e ? `<p class="en">${esc(g.e)} en inglés</p>` : ""}</div>
+          <h2>${esc(g.n)}</h2><p class="en">${g.n !== g.e ? `${esc(g.e)} en inglés · ` : ""}${g.cls}</p></div>
+        ${tabs}
         <div class="facts">
-          <div><span class="v">${Math.round(r.wr)}%</span><span class="l">Victorias en Joust</span></div>
+          <div><span class="v">${g.tier}</span><span class="l">Tier en Joust</span></div>
+          <div><span class="v">${Math.round(r.wr)}%</span><span class="l">Victorias</span></div>
           <div><span class="v">${r.n}</span><span class="l">Partidas analizadas${small}</span></div>
           <div><span class="v">${PROF_SHORT[r.prof]}</span><span class="l">Así lo juegan</span></div>
         </div>
-        ${r.old ? `<p class="muted">Hay pocas partidas de este parche con ${esc(g.n)}, así que incluí las del parche anterior.</p>` : ""}
+        ${r.old ? `<p class="muted">Hay pocas partidas de este parche con ${esc(g.n)}, así que incluí las de parches anteriores.</p>` : ""}
         <div class="kit">
           <div><span class="l">Objeto inicial</span>${kitList(r.st)}</div>
           <div><span class="l">Reliquia</span>${kitList(r.re)}</div>
-          ${asp}
         </div>
+        ${asp}
+        <a class="yt" href="${yt}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5a3 3 0 00-2.1-2.1C19 5 12 5 12 5s-7 0-8.900.4A3 3 0 001 7.5 31 31 0 001 12a31 31 0 00.1 4.500 3 3 0 002.100 2.100C5 19 12 19 12 19s7 0 8.900-.4a3 3 0 002.100-2.100A31 31 0 0023 12a31 31 0 000-4.500zM10 15V9l5.200 3z"/></svg>Buscar builds de ${esc(g.n)} en YouTube</a>
       </div>
     </article>
     <div class="sec-head"><span class="eyebrow">Las tres builds</span><h2>${esc(g.n)} en Joust</h2>
       <p>El porcentaje es en cuántas partidas de Joust compraron ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.</p></div>
     <div class="builds">${buildHTML("off", r)}${buildHTML("hyb", r)}${buildHTML("def", r)}</div>
+    ${comboHTML(g)}
     ${rivalHTML(r)}`;
 }
 
+const first = g => Object.values(g.roles)[0];
+const TIERS = ["S", "A", "B", "C", "D"];
+const CLASSES = ["Mago", "Cazador", "Asesino", "Guerrero", "Guardián"];
+const CLASS_PL = { Mago: "Magos", Cazador: "Cazadores", Asesino: "Asesinos", Guerrero: "Guerreros", "Guardián": "Guardianes" };
+let fTier = "all", fPan = "all", fSort = "name";
+
 function renderGods() {
-  const list = G.filter(g => roleFilter === "all" || g.roles.joust.prof === roleFilter).sort((a, b) => a.n.localeCompare(b.n, "es"));
-  $("#gods").innerHTML = list.map(g => `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)}">
-      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"></span><span class="nm">${esc(g.n)}</span></button>`).join("") || `<p class="empty">Ningún dios con ese estilo.</p>`;
-  $("#count").textContent = roleFilter === "all" ? `Los ${G.length} dioses` : `${list.length} dioses que en Joust se arman como ${STYLE[roleFilter].toLowerCase()}`;
+  const rank = t => TIERS.indexOf(t);
+  const list = G.filter(g => (roleFilter === "all" || g.cls === roleFilter) && (fTier === "all" || g.tier === fTier) && (fPan === "all" || g.p === fPan));
+  const byName = (a, b) => a.n.localeCompare(b.n, "es");
+  list.sort(fSort === "tier" ? (a, b) => rank(a.tier) - rank(b.tier) || b.wr - a.wr || byName(a, b)
+    : fSort === "wr" ? (a, b) => b.wr - a.wr || byName(a, b)
+    : fSort === "n" ? (a, b) => b.tn - a.tn || byName(a, b) : byName);
+  $("#gods").innerHTML = list.map(g => `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)} · ${g.cls} · ${g.wr}% de victorias">
+      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"><span class="tier t${g.tier}">${g.tier}</span></span><span class="nm">${esc(g.n)}</span></button>`).join("") || `<p class="empty">Ningún dios cumple esos filtros.</p>`;
+  $("#count").textContent = list.length === G.length ? `Los ${G.length} dioses` : `${list.length} de ${G.length} dioses`;
 }
 
 function renderChips() {
-  $("#roleChips").innerHTML = [["all", "Todos"], ...STYLE_ORDER.map(r => [r, STYLE[r]])]
+  $("#roleChips").innerHTML = [["all", "Todos"], ...CLASSES.map(c => [c, CLASS_PL[c]])]
     .map(([v, l]) => `<button class="chip" type="button" data-role="${v}" aria-pressed="${v === roleFilter}">${l}</button>`).join("");
+  $("#tierChips").innerHTML = [["all", "Tier"], ...TIERS.map(t => [t, t])]
+    .map(([v, l]) => `<button class="chip" type="button" data-tier="${v}" aria-pressed="${v === fTier}">${l}</button>`).join("");
 }
 
 function findGod(text) {
@@ -400,7 +488,7 @@ function findGod(text) {
 
 function select(g, role, scroll) {
   if (!g) return;
-  cur = { god: g, role: "joust" };
+  cur = { god: g, role: role && g.roles[role] ? role : Object.keys(g.roles)[0] };
   try { if (location.hash !== "#" + g.s) history.replaceState(null, "", "#" + g.s); } catch (e) {}
   renderGods(); renderHall();
   if (scroll) $("#hall").scrollIntoView({ block: "start" });
@@ -418,6 +506,12 @@ document.addEventListener("click", e => {
   const t = e.target;
   const chip = t.closest("[data-role]");
   if (chip) { roleFilter = chip.dataset.role; renderChips(); renderGods(); return; }
+  const tc = t.closest("[data-tier]");
+  if (tc) { fTier = tc.dataset.tier; renderChips(); renderGods(); return; }
+  const tab = t.closest(".tab");
+  if (tab && cur) { const y = window.scrollY; select(cur.god, tab.dataset.tab); window.scrollTo(0, y); return; }
+  const mate = t.closest(".mate");
+  if (mate) { select(G.find(g => g.s === mate.dataset.slug), null, true); return; }
   const gb = t.closest(".god");
   if (gb) { select(G.find(g => g.s === gb.dataset.slug), null, true); return; }
   const foe = t.closest("[data-foe]");
@@ -439,6 +533,10 @@ function tryAddFoe(inp, force) {
   if (!foes.includes(g.s) && foes.length < 3) setFoes([...foes, g.s]); else { inp.value = ""; return; }
   const again = $("#foeQ"); if (again) again.focus();
 }
+document.addEventListener("change", e => {
+  if (e.target.id === "fPan") { fPan = e.target.value; renderGods(); }
+  if (e.target.id === "fSort") { fSort = e.target.value; renderGods(); }
+});
 document.addEventListener("input", e => {
   if (e.target.id === "q") { const g = findGod(e.target.value); if (g) select(g); }
   if (e.target.id === "foeQ") tryAddFoe(e.target, false);
@@ -457,6 +555,7 @@ window.addEventListener("hashchange", fromHash);
 
 $("#patch").textContent = DATA.patch;
 $("#godlist").innerHTML = G.map(g => `<option value="${esc(g.n)}">${g.n !== g.e ? `<option value="${esc(g.e)}">` : ""}`).join("");
+$("#fPan").innerHTML = `<option value="all">Todos</option>` + [...new Set(G.map(g => g.p))].sort((a, b) => a.localeCompare(b, "es")).map(p => `<option>${esc(p)}</option>`).join("");
 renderChips();
 fromHash();
 
