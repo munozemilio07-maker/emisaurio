@@ -60,6 +60,15 @@ a { color: var(--gold); }
 .abil .n { font-weight: 700; font-size: 16px; line-height: 1.2; }
 .abil .fxs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .abil .short { font-size: 14.5px; color: #e6dfcc; margin-top: 5px; }
+.nums { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.nums caption { text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-bottom: 4px; }
+.nums th { text-align: left; font-weight: 400; color: var(--muted); padding: 3px 10px 3px 0; vertical-align: top; width: 46%; }
+.nums td { color: #e6dfcc; padding: 3px 0; overflow-wrap: anywhere; }
+.nums tr { border-top: 1px solid rgba(255,255,255,.06); }
+.nums tr.sc th { color: var(--gold); } .nums tr.sc td { font-weight: 700; color: var(--ink); }
+.orig { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.orig summary { cursor: pointer; }
+.orig p { margin-top: 4px; }
 .abil .d { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
 .pend { font-size: 11px; color: var(--ember); border: 1px solid var(--ember); padding: 0 6px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
@@ -71,6 +80,7 @@ a { color: var(--gold); }
 .step.basic b { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
 .arrow { color: var(--gold-deep); font-size: 18px; }
 .diff { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 1px 8px; border: 1px solid currentColor; }
+.o-guia { color: var(--ok); } .o-derivado { color: var(--muted); } .o-usuario { color: var(--amethyst); }
 .d-facil { color: var(--ok); } .d-media { color: var(--gold); } .d-dificil { color: var(--ember); }
 .combo h3 { flex-wrap: wrap; }
 .panel > .who { cursor: pointer; background: none; border: 0; padding: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; font-family: var(--font-head); font-size: 20px; color: var(--gold); justify-self: start; }
@@ -555,21 +565,51 @@ function fxSentence(a) {
   return L("En corto: ", "In short: ") + txt + ".";
 }
 
+const GLOS = (CURADO.efectos_habilidades || {}).glosario || {};
+const TERMS = Object.entries(GLOS.terminos || {}).sort((a, b) => b[0].length - a[0].length);
+const trKey = k => lang === "en" ? k : ((GLOS.claves || {})[k] || k);
+function trVal(v) {
+  if (lang === "en") return v;
+  let out = " " + v + " ";
+  for (const [en, es] of TERMS) out = out.split(en).join(es);
+  return out.trim();
+}
+const ranks = v => /^[\d.]+%?(\/[\d.]+%?){2,}[a-z%]*$/i.test(v.replace(/\s/g, "")) ? v.replace(/\//g, " / ") : v;
+const isScale = k => /Scaling|Damage|Heal|Shield/.test(k);
+// Descripción en español de la habilidad: viene de las fichas de src/curado/combos.json.
+function abilEs(a) {
+  const rec = comboRec(a.dios);
+  const key = a.ranura === "P" ? "pasiva" : a.ranura;
+  const raw = rec && rec.habilidades ? rec.habilidades[key] : "";
+  if (!raw) return "";
+  const i = raw.indexOf(": ");
+  const out = i > 0 && i < 48 ? raw.slice(i + 2) : raw;
+  return out.charAt(0).toUpperCase() + out.slice(1);
+}
 function abilHTML(a, hot) {
   const chips = a.efectos.map(k => `<span class="fx${hot && hot.includes(k) ? " on" : ""}" title="${esc(FX[k] ? FX[k].descripcion : "")}">${esc(fxName(k))}${a.detalle && a.detalle[k] && lang === "es" ? `: ${esc(a.detalle[k].toLowerCase())}` : ""}</span>`).join("");
   const slot = a.ranura === "otra" ? "+" : a.ranura;
+  const es = lang === "es" ? abilEs(a) : "";
+  const rows = (a.datos || []).map(([k, v]) => `<tr${isScale(k) ? ' class="sc"' : ""}><th>${esc(trKey(k))}</th><td>${esc(ranks(trVal(v)))}</td></tr>`);
+  if (a.enfriamiento) rows.push(`<tr><th>${L("Enfriamiento", "Cooldown")}</th><td>${esc(ranks(a.enfriamiento))}</td></tr>`);
+  if (a.costo) rows.push(`<tr><th>${L("Costo de maná", "Mana cost")}</th><td>${esc(ranks(a.costo))}</td></tr>`);
+  const hasRanks = (a.datos || []).some(([, v]) => /\d\/\d/.test(v));
+  const body = lang === "es"
+    ? `${es ? `<div class="short">${esc(es)}</div>` : fxSentence(a) ? `<div class="short">${esc(fxSentence(a))}</div>` : ""}`
+    : (a.texto_en ? `<div class="short">${esc(a.texto_en)}</div>` : "");
   return `<div class="abil"><span class="slot" title="${a.ranura === "P" ? L("Pasiva", "Passive") : a.ranura === "otra" ? L("Variante o habilidad extra", "Variant or extra ability") : L("Habilidad", "Ability") + " " + a.ranura}">${slot}</span>
     <div><div class="n">${esc(a.nombre)}${a.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : ""}</div>
     ${chips ? `<div class="fxs">${chips}</div>` : ""}
-    ${fxSentence(a) ? `<div class="short">${esc(fxSentence(a))}</div>` : ""}
-    ${a.texto_en ? `<div class="d">${esc(a.texto_en)}</div>` : ""}</div></div>`;
+    ${body}
+    ${rows.length && !hot ? `<table class="nums"><caption>${L("Números y escalados", "Numbers and scalings")}${hasRanks ? L(" · los valores separados por / son por rango (1 a 5)", " · values split by / are per rank (1 to 5)") : ""}</caption>${rows.join("")}</table>` : ""}
+    ${lang === "es" && a.texto_en && !hot ? `<details class="orig"><summary>Texto original del juego</summary><p>${esc(a.texto_en)}</p></details>` : ""}</div></div>`;
 }
 
 function godAbilsHTML(g) {
   const list = abilsOf(g);
   if (!list.length) return "";
   return `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Habilidades", "Abilities")}</span><h2>${L(`Qué hace ${esc(N(g))}`, `What ${esc(N(g))} does`)}</h2>
-    <p>${L("Nombre y texto de cada habilidad tal como salen en el juego (en inglés), con sus efectos marcados.", "Each ability's in-game name and text, with its effects tagged.")}</p></div>
+    <p>${L("Qué hace cada habilidad, con su daño por rango y con qué escala (Fuerza o Inteligencia). Los nombres van en inglés, como en el juego.", "What each ability does, with its damage per rank and what it scales with.")}</p></div>
     <div class="abils">${list.map(a => abilHTML(a)).join("")}</div></section>`;
 }
 
@@ -608,40 +648,68 @@ function renderHabilidades() {
 }
 
 // ---------- Combos por dios (src/curado/combos.json) ----------
-const COMBOS = (CURADO.combos || {}).combos || [];
+// Formato: { meta, dioses: [ { dios, fuente, parche_verificado, pendiente_verificar, nota_verificacion, habilidades, combos: [...] } ] }
+const COMBO_GODS = (CURADO.combos || {}).dioses || [];
+const COMBO_META = (CURADO.combos || {}).meta || {};
+const COMBO_BY = {};
+for (const rec of COMBO_GODS) { const g = G.find(x => norm(x.e) === norm(rec.dios || "") || x.s === rec.dios); if (g) COMBO_BY[g.s] = rec; }
+const comboRec = slug => COMBO_BY[slug] || null;
 const DIFF = { facil: ["Fácil", "Easy"], media: ["Media", "Medium"], dificil: ["Difícil", "Hard"] };
+const ORIGEN = { guia: ["De una guía", "From a guide"], derivado: ["Por probar", "Untested"], usuario: ["Nuestro", "Ours"] };
 const safeUrl = u => /^https:\/\//i.test(u || "") ? u : "";
 function stepHTML(g, st) {
   const k = String(st).trim(), up = k.toUpperCase();
+  const basic = up === "AA" || up === "B";
   const ab = ABILS.find(a => a.dios === g.s && a.ranura === k);
-  const label = up === "B" ? L("Básico", "Basic") : up === "R" ? L("Reliquia", "Relic") : k;
-  const title = ab ? ab.nombre : up === "B" ? L("Ataque básico", "Basic attack") : up === "R" ? L("Reliquia", "Relic") : k;
-  const kind = /^[1-4]$/.test(k) ? " key" : up === "B" ? " basic" : "";
-  return `<span class="step${kind}" title="${esc(title)}"><b>${esc(label)}</b>${ab ? `<small>${esc(ab.nombre)}</small>` : ""}</span>`;
+  const label = basic ? L("Básico", "Basic") : k;
+  const legend = (COMBO_META.leyenda_inputs || {})[k];
+  const title = ab ? ab.nombre : basic ? L("Ataque básico", "Basic attack") : legend || k;
+  const kind = /^[1-4]$/.test(k) ? " key" : basic ? " basic" : " basic";
+  return `<span class="step${kind}" title="${esc(title)}"><b>${esc(label)}</b>${ab ? `<small>${esc(ab.nombre)}</small>` : !basic && legend ? `<small>${esc(L(legend, k))}</small>` : ""}</span>`;
 }
 function comboCard(g, c) {
-  const d = DIFF[c.dificultad] || null, url = safeUrl(c.media_url);
+  const dk = norm(c.dificultad || ""), d = DIFF[dk], o = ORIGEN[c.origen], url = safeUrl(c.media_url);
+  const what = c.que_logra || c.logra;
   return `<article class="sit combo">
-    <h3>${esc(c.nombre || L("Combo", "Combo"))}${d ? `<span class="diff d-${esc(c.dificultad)}">${L(d[0], d[1])}</span>` : ""}${c.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : ""}</h3>
+    <h3>${esc(c.nombre || "Combo")}${d ? `<span class="diff d-${dk}">${L(d[0], d[1])}</span>` : ""}${o ? `<span class="diff o-${esc(c.origen)}" title="${esc((COMBO_META.origen_valores || {})[c.origen] || "")}">${L(o[0], o[1])}</span>` : ""}</h3>
     <div class="seq" role="list" aria-label="${L("Secuencia", "Sequence")}">${(c.secuencia || []).map(st => `<span role="listitem">${stepHTML(g, st)}</span>`).join(`<span class="arrow" aria-hidden="true">→</span>`)}</div>
-    ${c.logra ? `<p class="why"><b>${L("Qué logra", "What it does")}:</b> ${esc(c.logra)}</p>` : ""}
+    ${what ? `<p class="why"><b>${L("Qué logra", "What it does")}:</b> ${esc(what)}</p>` : ""}
     ${c.notas ? `<p class="why">${esc(c.notas)}</p>` : ""}
     ${url ? `<a class="yt" href="${esc(url)}" target="_blank" rel="noopener">${L("Ver el combo en video", "Watch the combo")}</a>` : ""}
   </article>`;
 }
-function godCombosHTML(g) {
-  const list = COMBOS.filter(c => c.dios === g.s);
-  if (!list.length) return "";
-  return `<section class="panel"><div class="sec-head"><span class="eyebrow">Combos</span><h2>${L(`Combos de ${esc(N(g))}`, `${esc(N(g))} combos`)}</h2>
-    <p>${L("Presiona las teclas en ese orden. Pasa el cursor o toca un paso para ver qué habilidad es.", "Press the keys in that order. Hover or tap a step to see which ability it is.")}</p></div>
-    <div class="sits">${list.map(c => comboCard(g, c)).join("")}</div></section>`;
+function comboFoot(rec) {
+  const url = safeUrl(rec.fuente);
+  return `<p class="muted" style="font-size:13.5px">${rec.pendiente_verificar ? `<span class="pend" style="margin:0 6px 0 0">${L("por verificar", "unverified")}</span>` : ""}${rec.nota_verificacion ? esc(rec.nota_verificacion) + " " : ""}${rec.parche_verificado ? esc(rec.parche_verificado) + ". " : ""}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${L("Fuente", "Source")}</a>` : esc(rec.fuente || "")}</p>`;
 }
+function godCombosHTML(g) {
+  const rec = comboRec(g.s);
+  if (!rec || !(rec.combos || []).length) return "";
+  return `<section class="panel"><div class="sec-head"><span class="eyebrow">Combos</span><h2>${L(`Combos de ${esc(N(g))}`, `${esc(N(g))} combos`)}</h2>
+    <p>${L("Presiona en ese orden. «Por probar» significa que el combo se armó a partir de lo que hace cada habilidad y falta probarlo en partida.", "Press in that order. \"Untested\" means the combo was built from what each ability does and still needs testing in a match.")}</p></div>
+    <div class="sits">${rec.combos.map(c => comboCard(g, c)).join("")}</div>${comboFoot(rec)}</section>`;
+}
+let comboQ = "", comboDiff = "all", comboOrig = "all";
 function renderCombos() {
   const el = $("#v-combos");
-  const gods = G.filter(g => COMBOS.some(c => c.dios === g.s)).sort((a, b) => N(a).localeCompare(N(b), lang));
+  const match = c => (comboDiff === "all" || norm(c.dificultad || "") === comboDiff) && (comboOrig === "all" || c.origen === comboOrig);
+  const gods = G.filter(g => comboRec(g.s) && (!comboQ || norm(g.n).includes(comboQ) || norm(g.e).includes(comboQ)) && comboRec(g.s).combos.some(match)).sort((a, b) => N(a).localeCompare(N(b), lang));
+  const total = gods.reduce((n, g) => n + comboRec(g.s).combos.filter(match).length, 0);
+  const chip = (attr, v, label, cur) => `<button class="chip" type="button" data-${attr}="${v}" aria-pressed="${cur === v}">${label}</button>`;
+  const list = gods.map(g => `<section class="panel"><button class="who" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button><div class="sits">${comboRec(g.s).combos.filter(match).map(c => comboCard(g, c)).join("")}</div>${comboFoot(comboRec(g.s))}</section>`).join("");
+  const keepFocus = document.activeElement && document.activeElement.id === "comboQ";
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">Combos</span><h2>${L("Combos por dios", "Combos by god")}</h2>
-    <p>${L(`Hay combos para ${gods.length} de ${G.length} dioses. Se agregan a mano en src/curado/combos.json.`, `There are combos for ${gods.length} of ${G.length} gods. They are added by hand in src/curado/combos.json.`)}</p></div>
-    ${gods.map(g => `<section class="panel"><button class="who" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button><div class="sits">${COMBOS.filter(c => c.dios === g.s).map(c => comboCard(g, c)).join("")}</div></section>`).join("") || `<p class="empty">${L("Todavía no hay combos.", "No combos yet.")}</p>`}`;
+    <p>${esc(L(COMBO_META.descripcion || "", ""))}</p></div>
+    <div class="panel">
+      <div class="picker-row"><input id="comboQ" type="search" placeholder="${L("Filtrar por dios…", "Filter by god…")}" value="${esc($("#comboQ") ? $("#comboQ").value : "")}" aria-label="${L("Filtrar por dios", "Filter by god")}" style="flex:1 1 220px;min-width:0;padding:10px 14px;background:var(--void);border:1px solid var(--line);border-radius:2px"></div>
+      <div class="bar">
+        <div class="chips">${chip("cdiff", "all", L("Dificultad", "Difficulty"), comboDiff)}${Object.keys(DIFF).map(k => chip("cdiff", k, L(DIFF[k][0], DIFF[k][1]), comboDiff)).join("")}</div>
+        <div class="chips">${chip("corig", "all", L("Origen", "Origin"), comboOrig)}${Object.keys(ORIGEN).map(k => chip("corig", k, L(ORIGEN[k][0], ORIGEN[k][1]), comboOrig)).join("")}</div>
+      </div>
+      <p class="muted">${L(`${total} combos de ${gods.length} dioses`, `${total} combos across ${gods.length} gods`)}</p>
+    </div>
+    ${list || `<p class="empty">${L("Ningún combo con esos filtros.", "No combos match those filters.")}</p>`}`;
+  if (keepFocus) { const q = $("#comboQ"); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
 
 // ---------- Vistas ----------
@@ -793,6 +861,10 @@ document.addEventListener("click", e => {
   const fm = t.closest("[data-fxmode]");
   if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
   if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
+  const cd = t.closest("[data-cdiff]");
+  if (cd) { comboDiff = cd.dataset.cdiff; renderCombos(); return; }
+  const co = t.closest("[data-corig]");
+  if (co) { comboOrig = co.dataset.corig; renderCombos(); return; }
   const go = t.closest('[data-go="god"]');
   if (go) { setView("dioses", true); select(G.find(g => g.s === go.dataset.slug), null, true); return; }
   const mate = t.closest(".mate");
@@ -825,6 +897,7 @@ document.addEventListener("change", e => {
 document.addEventListener("input", e => {
   if (e.target.id === "q") { const g = findGod(e.target.value); if (g) { if (view !== "dioses") setView("dioses", true); select(g); } }
   if (e.target.id === "foeQ") tryAddFoe(e.target, false);
+  if (e.target.id === "comboQ") { comboQ = norm(e.target.value); renderCombos(); }
 });
 document.addEventListener("keydown", e => {
   if (e.key !== "Enter") return;

@@ -24,6 +24,33 @@ ETIQUETAS = {
  "movilidad": {"nombre": "Movilidad", "nombre_en": "Mobility", "descripcion": "Salto, embestida o teletransporte."},
  "inmunidad": {"nombre": "Inmunidad a control", "nombre_en": "CC immunity", "descripcion": "Te vuelve inmune al control durante la habilidad."},
 }
+GLOSARIO = {
+ "_nota": "Traducción de las etiquetas y términos de 'datos'. Lo que no esté aquí sale en inglés.",
+ "claves": {"Damage": "Daño", "Damage Scaling": "Escalado del daño", "Range": "Alcance", "Radius": "Radio", "Cone Angle": "Ángulo del cono", "Slow": "Ralentización",
+  "Stun Duration": "Duración del aturdimiento", "Buff Duration": "Duración del bono", "Slow Duration": "Duración de la ralentización", "Movement Speed": "Velocidad de movimiento",
+  "Debuff Duration": "Duración del debilitamiento", "Strength": "Fuerza", "Attack Speed": "Velocidad de ataque", "Heal": "Curación", "Damage Per Tick": "Daño por pulso",
+  "Damage Scaling Per Tick": "Escalado del daño por pulso", "Intelligence": "Inteligencia", "Protections": "Protecciones", "Root Duration": "Duración del enraizamiento",
+  "Bonus Damage": "Daño extra", "Heal Scaling": "Escalado de la curación", "Shield Health": "Vida del escudo", "Healing Reduction": "Reducción de curación",
+  "Bonus Damage Scaling": "Escalado del daño extra", "Initial Damage Scaling": "Escalado del daño inicial", "Duration": "Duración", "Cooldown Reduction": "Reducción de enfriamiento",
+  "Cripple Duration": "Duración del lisiado", "Initial Damage": "Daño inicial", "Physical Protection": "Protección física", "Magical Protection": "Protección mágica",
+  "Explode Radius": "Radio de la explosión", "Dash Damage": "Daño de la embestida", "Heal Per Tick": "Curación por pulso", "Final Damage": "Daño final",
+  "Shield Health Scaling": "Escalado del escudo", "Attack Speed Slow": "Reducción de velocidad de ataque", "Mana Regen": "Regeneración de maná", "Silence Duration": "Duración del silencio",
+  "Dash Radius": "Radio de la embestida", "Max Stacks": "Cargas máximas", "Protections Reduced": "Protecciones reducidas", "Dash Range": "Alcance de la embestida",
+  "Heal Scaling Per Tick": "Escalado de la curación por pulso", "Final Damage Scaling": "Escalado del daño final", "Lifetime": "Tiempo de vida", "Shield Duration": "Duración del escudo",
+  "Inner Radius": "Radio interior", "Outer Radius": "Radio exterior", "Dash Damage Scaling": "Escalado del daño de la embestida", "Lifesteal": "Robo de vida", "Damage Mitigation": "Mitigación de daño",
+  "Attack Damage": "Daño de ataque", "Mesmerize Duration": "Duración del mesmerizado", "Physical Protection Reduced": "Protección física reducida", "Magical Protection Reduced": "Protección mágica reducida",
+  "Protection Buff Duration": "Duración del bono de protecciones", "Cone Range": "Alcance del cono", "Increased Damage Taken": "Daño extra recibido", "Explode Damage": "Daño de la explosión",
+  "Explode Damage Scaling": "Escalado del daño de la explosión", "Bleed Damage": "Daño del sangrado", "Bleed Damage Scaling": "Escalado del sangrado", "Max Buff Stacks": "Cargas máximas del bono",
+  "Projectile Radius": "Radio del proyectil", "Landing Damage": "Daño al caer", "Health Regen": "Regeneración de vida", "Knockup Duration": "Duración del levantamiento", "Health": "Vida",
+  "Landing Damage Scaling": "Escalado del daño al caer", "Max Health": "Vida máxima", "Stacks": "Cargas", "Fear Duration": "Duración del miedo", "Taunt Duration": "Duración de la provocación",
+  "Disarm Duration": "Duración del desarme", "Critical Strike Chance": "Probabilidad de crítico", "Penetration": "Penetración", "Shield": "Escudo", "Heal Per Stack": "Curación por carga"},
+ "terminos": {"Strength or Inhand Power": "Fuerza o daño de ataque básico", "Physical Protection or Magical Protection": "protección física o mágica", "Strength or Intelligence": "Fuerza o Inteligencia",
+  "of Protections from Items": "de las protecciones de objetos", "Item Protections": "protecciones de objetos", "Physical Protections": "protecciones físicas", "Magical Protections": "protecciones mágicas",
+  "Physical Protection": "protección física", "Magical Protection": "protección mágica", "Protections": "protecciones", "Inhand Power": "daño de ataque básico",
+  "Max Health": "vida máxima", "Missing Health": "vida faltante", "Current Health": "vida actual", "Item Health": "vida de objetos", "Movement Speed": "velocidad de movimiento",
+  "Strength": "Fuerza", "Intelligence": "Inteligencia", "Per Additional Stack": "por carga adicional", "Per Stack": "por carga", "per Stack": "por carga", "Per Level": "por nivel", "per Level": "por nivel",
+  "Level": "nivel", "degrees": "grados", "stacking up to": "acumulable hasta", "Up to": "hasta", "times": "veces", "ticks": "pulsos", " and ": " y ", " or ": " o ", " over ": " durante ", " per ": " por "}
+}
 OTROS = {"Cripple": "Lisia (sin habilidades de movimiento)", "Disarm": "Desarma", "Mesmerize": "Mesmeriza", "Fear": "Asusta", "Feared": "Asusta", "Taunted": "Provoca",
          "Blind": "Ciega", "Madness": "Enloquece", "Polymorph": "Transforma", "Banish": "Destierra", "Intoxicate": "Embriaga", "Tremble": "Hace temblar"}
 AREA = re.compile(r"\benemies\b|\ball enemies\b|\barea\b|\baround you\b|\bcone\b|\bradius\b|\bexplod", re.I)
@@ -38,13 +65,23 @@ def parse(s):
         seg = html.unescape(dc.group(1) if dc else body[:3000])
         cls = set(re.findall(r'class="((?:CC|Movement|Heal|Shield|Damage)[^"]*)"', seg))
         txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html.unescape(seg))).strip()
-        yield name, ty, cls, txt
+        limpio = lambda h: re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html.unescape(h))).strip()
+        uls = re.findall(r'<ul class="list-disc[^"]*"[^>]*>(.*?)</ul>', blk, re.S)
+        datos, cd, costo = [], "", ""
+        for li in re.findall(r"<li[^>]*>(.*?)</li>", uls[-1], re.S) if uls else []:
+            t = limpio(li)
+            if ":" not in t: continue
+            k, v = [x.strip() for x in t.split(":", 1)]
+            if k == "Cooldown": cd = v
+            elif k == "Cost": costo = v
+            elif v: datos.append([k, v])
+        yield name, ty, cls, txt, datos, cd, costo
 
 out = []
 for g in gods:
     f = os.path.join(SRC, g["k"] + ".html")
     if not os.path.exists(f): print("falta", g["k"]); continue
-    for name, ty, cls, txt in parse(open(f, encoding="utf8", errors="replace").read()):
+    for name, ty, cls, txt, datos, cd, costo in parse(open(f, encoding="utf8", errors="replace").read()):
         if ty == "BASIC" or "Basic Attack" in name: continue
         m = re.match(r"ABILITY (\d)", ty)
         ranura = m.group(1) if m else "P" if ty == "PASSIVE" else "otra"
@@ -75,15 +112,18 @@ for g in gods:
         if area: rec["area_inferida"] = True
         if por_texto: rec["inferido_por_texto"] = por_texto
         if ranura == "otra": rec["tipo_fuente"] = ty
-        rec["texto_en"] = txt if len(txt) <= 240 else txt[:240].rsplit(" ", 1)[0] + "…"
+        rec["texto_en"] = txt
+        if datos: rec["datos"] = datos
+        if cd: rec["enfriamiento"] = cd
+        if costo: rec["costo"] = costo
         rec.update(parche_verificado=PARCHE, fuente=f"https://smite2.live/god/{g['k']}/info", pendiente_verificar=ranura == "otra")
         out.append(rec)
 
 doc = {"_como_editar": "Un registro por habilidad. 'dios' es el slug de data.json (el mismo de cards/<slug>.webp). 'ranura': P, 1, 2, 3, 4 u 'otra'. 'efectos' usa las claves de 'etiquetas'. Para una etiqueta nueva, agrégala en 'etiquetas' y úsala en 'efectos'.",
-       "etiquetas": ETIQUETAS, "habilidades": out}
+       "etiquetas": ETIQUETAS, "glosario": GLOSARIO, "habilidades": out}
 dst = os.path.join(root, "src", "curado", "efectos_habilidades.json")
 with open(dst, "w", encoding="utf8") as fh:
-    fh.write('{\n "_como_editar": ' + json.dumps(doc["_como_editar"], ensure_ascii=False) + ',\n "etiquetas": ' + json.dumps(ETIQUETAS, ensure_ascii=False, indent=1).replace("\n", "\n ") + ',\n "habilidades": [\n')
+    fh.write('{\n "_como_editar": ' + json.dumps(doc["_como_editar"], ensure_ascii=False) + ',\n "etiquetas": ' + json.dumps(ETIQUETAS, ensure_ascii=False, indent=1).replace("\n", "\n ") + ',\n "glosario": ' + json.dumps(GLOSARIO, ensure_ascii=False, indent=1).replace("\n", "\n ") + ',\n "habilidades": [\n')
     fh.write(",\n".join("  " + json.dumps(r, ensure_ascii=False) for r in out))
     fh.write("\n ]\n}\n")
 from collections import Counter

@@ -1,29 +1,4010 @@
 {
- "_como_editar": "Un registro por combo. 'dios' es el slug de data.json (el mismo de cards/<slug>.webp). 'secuencia' es una lista de pasos: \"1\", \"2\", \"3\", \"4\" (habilidades), \"B\" (ataque básico), \"R\" (reliquia) o cualquier texto corto. 'dificultad': facil, media o dificil. 'media_url' es opcional (YouTube, clip o GIF, con https); si está vacío no se muestra nada.",
- "combos": [
-  {
-   "dios": "susano",
-   "nombre": "Kata completa y jalón",
-   "secuencia": ["1", "B", "1", "B", "2"],
-   "logra": "Metes básicos entre los golpes del 1 para cargar la pasiva y cierras con el 2, que jala a los enemigos hacia ti.",
-   "dificultad": "media",
-   "media_url": "",
-   "notas": "La fuente confirma que el 1 (Storm Kata) son tres golpes seguidos, que cada habilidad carga la pasiva en el siguiente básico y que el 2 (Wind Siphon) jala. El orden exacto de la secuencia es una plantilla nuestra y falta probarlo en el parche actual.",
-   "parche_verificado": "OB47",
-   "fuente": "Secuencia: plantilla propia. Habilidades: https://smite2.live/god/Susano/info",
-   "pendiente_verificar": true
+  "meta": {
+    "descripcion": "Combos por dios para Smite 2: los 95 dioses del roster (parche OB47, nov 2026).",
+    "fecha_investigacion": "2026-11-11",
+    "leyenda_inputs": {
+      "1": "Habilidad 1",
+      "2": "Habilidad 2",
+      "3": "Habilidad 3",
+      "4": "Ultimate",
+      "AA": "Ataque básico (sirve para cancelar animaciones)",
+      "Blink": "Reliquia Blink Rune (no es habilidad)"
+    },
+    "origen_valores": {
+      "guia": "El combo viene escrito tal cual en una guía de Smite 2.",
+      "derivado": "No encontré el combo escrito en una guía de Smite 2; se armó a partir de lo que hace cada habilidad según la fuente. Hay que probarlo en partida.",
+      "usuario": "Combo que propusieron Emilio o Aldo."
+    },
+    "total_dioses": 95
   },
-  {
-   "dios": "neith",
-   "nombre": "Tejido y flecha",
-   "secuencia": ["2", "1"],
-   "logra": "El 2 deja un Tejido y te cura; el 1 lo detona: daño extra y enraíza a los que estén cerca.",
-   "dificultad": "facil",
-   "media_url": "",
-   "notas": "El 2 (Unravel) crea un Weave y el 1 (Spirit Arrow) detona los Weaves que toca; detonarlos hace daño y enraíza.",
-   "parche_verificado": "OB47",
-   "fuente": "https://smite2.live/god/Neith/info",
-   "pendiente_verificar": false
-  }
- ]
+  "dioses": [
+    {
+      "dios": "Achilles",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/achilles-94",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Gift of the Gods: con armadura gana vida y protecciones; sin ella, fuerza y velocidad.",
+        "1": "Shield of Achilles: puñetazo en cono que aturde.",
+        "2": "Radiant Glory: buff de fuerza, protecciones y reducción de control; cura al pegar.",
+        "3": "Combat Dodge: dash con estocada; si pega a un dios se puede repetir. Con armadura ralentiza.",
+        "4": "Fatal Strike: dash que ejecuta dioses bajo 35% de vida; se repite con cada kill."
+      },
+      "combos": [
+        {
+          "nombre": "Entrar y aturdir",
+          "secuencia": [
+            "2",
+            "3",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Buff primero, entras con el dash y aturdes con el puñetazo.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Remate",
+          "secuencia": [
+            "3",
+            "3",
+            "1",
+            "4"
+          ],
+          "que_logra": "Doble dash para pegarte, aturdes y ejecutas con la ulti si está bajo 35%.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Agni",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/agni-18 y https://tacter.com/smite-2/guides/smite-2-agni-build-guide-open-beta-1-fb273f2a",
+      "pendiente_verificar": true,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana); los 'derivado' se armaron del kit.",
+      "habilidades": {
+        "pasiva": "Combustion: los básicos acumulan cargas; a 4, Flame Wave o Rain Fire queman.",
+        "1": "Noxious Fumes: nube de daño; si otra habilidad la toca, explota y aturde.",
+        "2": "Flame Wave: ola en línea que enciende las nubes.",
+        "3": "Path of Flames: dash que deja fuego y enciende las nubes.",
+        "4": "Rain Fire: hasta 3 meteoros que encienden las nubes."
+      },
+      "combos": [
+        {
+          "nombre": "Nube y explosión",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Pones la nube y la enciendes con la ola: aturde.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Nube, dash y ola",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "El dash enciende la nube (aturde) y la ola remata.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Con ulti",
+          "secuencia": [
+            "4",
+            "1",
+            "2"
+          ],
+          "que_logra": "Meteoros para abrir, nube y ola para aturdir.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ah Puch",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ah-puch-65",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Hollow Ground: caminar sobre cadáveres baja enfriamientos y cura.",
+        "1": "Undead Surge: lanza dos cadáveres que ralentizan y reducen curación.",
+        "2": "Corpse Explosion: explosión en área que detona cadáveres cercanos.",
+        "3": "Fleeting Breath: miasma de daño; aturde a quien se cure dentro.",
+        "4": "Empty the Crypts: campo de espíritus; los siguientes ataques dejan cadáveres."
+      },
+      "combos": [
+        {
+          "nombre": "Cadáveres y boom",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Dejas cadáveres con el 1 y los detonas con el 2 para daño extra.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Pelea larga",
+          "secuencia": [
+            "4",
+            "1",
+            "2",
+            "3"
+          ],
+          "que_logra": "Ulti para cadáveres y aguante, ralentizas, detonas y castigas con stun a quien se cure.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Aladdin",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/aladdin-133",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Three Wishes: deseos de oro, revivir o reiniciar enfriamientos con carga de Genio.",
+        "1": "Kufic Invocation: cinco símbolos en cono; con Genio se pueden regresar.",
+        "2": "Sultan's Grace: dash mágico; con Genio el Genio da 5 golpes.",
+        "3": "Agile Run: dash, corre por pared y salta; con Genio lanza al aire.",
+        "4": "Into The Lamp: mete a un dios a duelo en la lámpara 16 s; te da escudo y reinicia enfriamientos."
+      },
+      "combos": [
+        {
+          "nombre": "Entrada por pared",
+          "secuencia": [
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Llegas saltando desde la pared, dash a través y símbolos.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Duelo en la lámpara",
+          "secuencia": [
+            "4",
+            "1",
+            "2",
+            "3"
+          ],
+          "que_logra": "Lo aíslas en la lámpara con enfriamientos reiniciados y le sueltas todo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Amaterasu",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/amaterasu-72 y https://www.tacter.com/smite-2/guides/amaterasu-build-guides-abilities-items-combos-and-more-45a4b3a8",
+      "pendiente_verificar": false,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana).",
+      "habilidades": {
+        "pasiva": "Illuminating Strike: tres marcas aumentan el daño que recibe el enemigo.",
+        "1": "Divine Presence: cura y alterna escudo+velocidad o velocidad de ataque.",
+        "2": "Heavenly Reflection: carga un espejo que reduce daño; al reactivar dispara.",
+        "3": "Glorious Charge: silencia al frente y hace dash hasta el primer dios.",
+        "4": "Dazzling Offensive: combo de 3 golpes inmune a control; el 2º ralentiza, el 3º aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Espejo y carga",
+          "secuencia": [
+            "2",
+            "3",
+            "AA"
+          ],
+          "que_logra": "Cargas el espejo, silencias y entras.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Con ulti",
+          "secuencia": [
+            "2",
+            "4",
+            "AA",
+            "3"
+          ],
+          "que_logra": "Espejo, ulti para aturdir y la carga para seguirlo.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Anhur",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/anhur-5",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Enfeeble: los básicos reducen la protección física.",
+        "1": "Shifting Sands: obelisco tipo pared que ralentiza.",
+        "2": "Impale: lanza que empuja; si choca con pared, aturde.",
+        "3": "Disperse: salto que empuja a los cercanos.",
+        "4": "Desert Fury: lluvia de lanzas canalizada, inmune a control."
+      },
+      "combos": [
+        {
+          "nombre": "Contra el obelisco",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Pones el obelisco detrás del enemigo y lo empujas contra él para aturdirlo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst",
+          "secuencia": [
+            "1",
+            "2",
+            "4"
+          ],
+          "que_logra": "Lo aturdes contra el obelisco y sueltas la ulti mientras no se mueve.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Anubis",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/anubis-6",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "The Scales: robo de vida y protecciones que suben con vida baja.",
+        "1": "Plague Of Locusts: cono canalizado de 12 golpes.",
+        "2": "Mummify: venda que aturde al primer dios.",
+        "3": "Grasping Hands: manos que golpean 4 veces y ralentizan.",
+        "4": "Death Gaze: rayo canalizado; quedas fijo pero inmune a control."
+      },
+      "combos": [
+        {
+          "nombre": "Momia y manos",
+          "secuencia": [
+            "2",
+            "3",
+            "1"
+          ],
+          "que_logra": "Aturdes, ralentizas con las manos y canalizas las langostas.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst completo",
+          "secuencia": [
+            "2",
+            "3",
+            "4"
+          ],
+          "que_logra": "Stun y slow para que no salga del rayo de la ulti.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Aphrodite",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/aphrodite-32 y https://www.tacter.com/smite-2/guides/aphrodite-build-guides-abilities-items-combos-and-more-f03af608",
+      "pendiente_verificar": false,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana).",
+      "habilidades": {
+        "pasiva": "Center Of Attention: protecciones por cada dios cercano.",
+        "1": "Kiss: liga a un aliado; al pegar a un enemigo lo aturde.",
+        "2": "Back Off!: empuja y ralentiza alrededor de ella y su aliado.",
+        "3": "Love Birds: palomas que dañan y curan.",
+        "4": "Undying Love: ella y su aliado inmunes a daño y control; puede saltar hacia él."
+      },
+      "combos": [
+        {
+          "nombre": "Beso y empujón",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Aturdes con el beso y lo empujas.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Con palomas",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Stun, palomas para daño y cura, empujón para alejarlo.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Apollo",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/apollo-33",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Audacity: a 10 cargas gana 100% velocidad de ataque por 5 ataques.",
+        "1": "So Beautiful: proyectil al frente.",
+        "2": "Serenade: hipnotiza (mesmerize) a los cercanos y da protecciones; el daño lo rompe.",
+        "3": "The Moves: dash que aparta enemigos, luego ralentiza y acelera aliados.",
+        "4": "Across the Sky: salto en carro a donde elijas; al caer empuja. Aliados pueden subirse."
+      },
+      "combos": [
+        {
+          "nombre": "Entrar e hipnotizar",
+          "secuencia": [
+            "3",
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Dash para pegarte, hipnotizas a todos y abres con el 1 (el daño rompe el hipnotismo, así que empieza con el golpe más fuerte).",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Gank con ulti",
+          "secuencia": [
+            "4",
+            "2",
+            "3",
+            "1"
+          ],
+          "que_logra": "Caes con la ulti, hipnotizas y sigues con dash y proyectil.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ares",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ares-23 y https://www.tacter.com/smite-2/guides/ares-build-guides-abilities-items-combos-and-more-58631100",
+      "pendiente_verificar": true,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana); los 'derivado' se armaron del kit.",
+      "habilidades": {
+        "pasiva": "Blessed Armaments: auras que dan fuerza e inteligencia a aliados.",
+        "1": "Shackles: cadenas que ralentizan y lisian (impiden saltos/dash); hasta 3.",
+        "2": "Call To Arms: protecciones y daño básico a aliados; cura a Ares.",
+        "3": "Searing Flesh: cono canalizado que daña según vida máxima.",
+        "4": "No Escape: jala a los dioses cercanos hacia Ares y luego los aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Ulti y quemar",
+          "secuencia": [
+            "4",
+            "3",
+            "1"
+          ],
+          "que_logra": "Los jalas y aturdes, quemas con el cono y los encadenas para que no escapen con dash.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Combo de guía",
+          "secuencia": [
+            "3",
+            "4",
+            "1",
+            "2"
+          ],
+          "que_logra": "Cono, ulti para juntar, cadenas y buff al equipo.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Artemis",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/artemis-1 y https://www.tacter.com/smite-2/guides/artemis-build-guides-abilities-items-combos-and-more-90edff4a",
+      "pendiente_verificar": false,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana).",
+      "habilidades": {
+        "pasiva": "Still Target: básicos hacen más daño a dioses y ve dioses en el pasto.",
+        "1": "Transgressor's Fate: trampas (hasta 4) que enraízan y lisian.",
+        "2": "Vengeful Assault: velocidad de movimiento y ataque; limpia slows.",
+        "3": "Suppress the Insolent: lluvia de flechas en área que ralentiza.",
+        "4": "Calydonian Boar: jabalí que aturde al dios más cercano y sigue cargando."
+      },
+      "combos": [
+        {
+          "nombre": "Trampa y básico",
+          "secuencia": [
+            "1",
+            "AA"
+          ],
+          "que_logra": "Enraízas con la trampa y le pegas con básicos mientras no se mueve.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Trampa y buff",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Trampa y activas el buff para dispararle más rápido.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Completo",
+          "secuencia": [
+            "1",
+            "AA",
+            "2",
+            "3",
+            "AA"
+          ],
+          "que_logra": "Trampa, buff y lluvia de flechas para que no se escape.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Artio",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/artio-90",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Decompose: tus habilidades bajan las protecciones del enemigo (acumulable).",
+        "1": "Druida: onda que reduce curación y te cura / Oso: doble zarpazo.",
+        "2": "Druida: enredaderas que lisian y debilitan / Oso: rugido que aturde.",
+        "3": "Druida: drena en línea y ralentiza / Oso: carga que daña y ralentiza.",
+        "4": "Shapeshift: cambia entre druida y oso."
+      },
+      "combos": [
+        {
+          "nombre": "Druida a oso",
+          "secuencia": [
+            "2",
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Lisias con las enredaderas, te vuelves oso, cargas y aturdes con el rugido.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Oso directo",
+          "secuencia": [
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "En forma de oso: carga, rugido para aturdir y zarpazo.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Athena",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/athena-37 y https://tacter.com/smite-2/guides/athena-build-guides-abilities-items-combos-and-more-7ee03103",
+      "pendiente_verificar": false,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana).",
+      "habilidades": {
+        "pasiva": "Reach: tras una habilidad, su básico atraviesa a todos.",
+        "1": "Preemptive Strike: dash cargado que ralentiza y da protecciones.",
+        "2": "Confound: provoca (taunt) en cono y ralentiza.",
+        "3": "Shield Wall: falange en área que golpea dos veces y ralentiza.",
+        "4": "Defender of Olympus: teletransporte global a un aliado con escudo."
+      },
+      "combos": [
+        {
+          "nombre": "Dash, muro y provocar",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Entras con el dash, falange y provocas a los que quedaron dentro.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Gank global",
+          "secuencia": [
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Llegas con la ulti a un aliado, falange, provocas y persigues con el dash.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Atlas",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/atlas-118",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "The Astrolabe: acumula energía; se gasta en un golpe potenciado.",
+        "1": "Unburden: lanza el astrolabio que ralentiza; básicos lo detonan; refire lo regresa.",
+        "2": "Gravity Pull: jala a los dioses hacia el astrolabio.",
+        "3": "Kinetic Charge: dash que limpia slows; si pega a un dios, explota y ralentiza.",
+        "4": "Gamma-Ray Burst: radiación que baja protecciones y poder; refire apunta un rayo."
+      },
+      "combos": [
+        {
+          "nombre": "Lanzar y jalar",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Lanzas el astrolabio detrás del enemigo y lo jalas hacia él.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Teamfight",
+          "secuencia": [
+            "3",
+            "1",
+            "2",
+            "4"
+          ],
+          "que_logra": "Entras con el dash, juntas a todos con el astrolabio y les tiras la radiación.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Awilix",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/awilix-61",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Initiative: tras 5 s sin daño, el primer golpe da más poder.",
+        "1": "Summon Suku: monta y salta a un área.",
+        "2": "Feather Step: salta sobre el último enemigo golpeado; enraíza y lisia.",
+        "3": "Moonlight Charge: carga que lanza al aire si pegas de lado o por detrás.",
+        "4": "Gravity Surge: jala al enemigo en el aire más cercano y lo aturde al caer."
+      },
+      "combos": [
+        {
+          "nombre": "Knockup y ulti",
+          "secuencia": [
+            "3",
+            "4",
+            "AA",
+            "2"
+          ],
+          "que_logra": "Lo lanzas al aire con la carga de lado, la ulti lo jala y aturde, y Feather Step remata.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Entrada",
+          "secuencia": [
+            "1",
+            "3",
+            "4"
+          ],
+          "que_logra": "Llegas con Suku, lo lanzas al aire y lo atrapas con la ulti.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Bacchus",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/bacchus-26",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Drunk-O-Meter: borracho da stats; Tipsy a 30%, Smashed a 60%.",
+        "1": "Chug: cura, da stats y potencia el siguiente básico.",
+        "2": "Belly Flop: salta y cae lanzando al aire (ralentiza si está Tipsy).",
+        "3": "Belch Of The Gods: eructo canalizado; reduce curación y aturde al final si está Tipsy.",
+        "4": "Intoxicate: rompe la jarra e intoxica a los cercanos."
+      },
+      "combos": [
+        {
+          "nombre": "Panzazo y eructo",
+          "secuencia": [
+            "1",
+            "2",
+            "3"
+          ],
+          "que_logra": "Tomas para estar Tipsy, caes encima y eructas para aturdir al final.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Con ulti",
+          "secuencia": [
+            "2",
+            "4",
+            "3"
+          ],
+          "que_logra": "Knockup, intoxicas y eructo con stun.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Baron Samedi",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/baron-samedi-96",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Hysteria: tu daño aplica Hysteria; a 30+ tus habilidades tienen efectos extra.",
+        "1": "Vivid Gaze: calaveras en X; con 30+ baja poder y velocidad de ataque.",
+        "2": "Consign Spirits: daño en área; al pegar a un dios cura aliados.",
+        "3": "Wrap It Up: serpiente que enraíza; con 30+ explota e hipnotiza a los cercanos.",
+        "4": "Life Of The Party: ataúd que jala enemigos hacia ti y los aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Cargar Hysteria y raíz",
+          "secuencia": [
+            "1",
+            "2",
+            "3"
+          ],
+          "que_logra": "Calaveras y área para subir Hysteria, luego la serpiente enraíza e hipnotiza.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti y cerrar",
+          "secuencia": [
+            "4",
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Jalas y aturdes, calaveras encimadas, serpiente y curas al equipo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Bastet",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/bastet-7",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Nightstalker: robo de vida y fuerza acumulable al pegar a dioses.",
+        "1": "Pounce: salto; reactiva para regresar.",
+        "2": "Razor Whip: latigazo en cono que hace sangrar.",
+        "3": "Ensnaring Claw: gato que enraíza al primer enemigo y cercanos.",
+        "4": "Cat Call: tres gatos que persiguen a los que sangran y ralentizan."
+      },
+      "combos": [
+        {
+          "nombre": "Salto y sangrado",
+          "secuencia": [
+            "1",
+            "3",
+            "2",
+            "4"
+          ],
+          "que_logra": "Saltas, enraízas, haces sangrar y los gatos los persiguen.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Entrar y salir",
+          "secuencia": [
+            "1",
+            "2",
+            "3",
+            "1"
+          ],
+          "que_logra": "Saltas, latigazo, enraízas y regresas con el refire del salto.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Bellona",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/bellona-63 y https://www.tacter.com/smite-2/guides/bellona-build-guides-abilities-items-combos-and-more-83a8b6a6",
+      "pendiente_verificar": false,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana).",
+      "habilidades": {
+        "pasiva": "Master of War: los básicos dan velocidad; cada arma da un bono distinto.",
+        "1": "Shield Bash: dash que daña y ralentiza; el escudo bloquea y refleja.",
+        "2": "Bludgeon: giro con martillo y golpe en línea.",
+        "3": "Scourge: latigazo en línea que desarma (no pueden usar básicos).",
+        "4": "Eagle's Rally: salta y planta una bandera que aturde y potencia aliados."
+      },
+      "combos": [
+        {
+          "nombre": "Escudo y martillo",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Entras con el escudo y rematas con el martillo.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Completo",
+          "secuencia": [
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Bandera para aturdir, desarmas, martillo y escudo.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Cabrakan",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/cabrakan-57",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Shadow Zone: él y aliados cercanos reciben menos daño.",
+        "1": "Seismic Crush: su siguiente básico aturde.",
+        "2": "Refraction Shield: explosión en cono que da escudos; potenciada aturde y cura.",
+        "3": "Tremors: vórtice canalizado que jala; refire lisia.",
+        "4": "Tectonic Shift: grieta en línea que se vuelve muro; refire lo destruye."
+      },
+      "combos": [
+        {
+          "nombre": "Muro y aturdir",
+          "secuencia": [
+            "4",
+            "3",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Encierras con el muro, jalas con Tremors y aturdes con el básico potenciado.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Pelea corta",
+          "secuencia": [
+            "1",
+            "AA",
+            "2"
+          ],
+          "que_logra": "Básico que aturde y explosión de escudo.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Cerberus",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/cerberus-93",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Spirit of Death: reduce curación enemiga cercana y roba parte.",
+        "1": "Paralyzing Spit: veneno que aturde cuando todas las cabezas están alerta.",
+        "2": "Ghastly Breath: aliento en cono que baja protección mágica y ralentiza.",
+        "3": "Soul Expulsion: salto que separa almas; matarlas te cura.",
+        "4": "Stygian Torment: levanta a los dioses y los jala frente a ti."
+      },
+      "combos": [
+        {
+          "nombre": "Ulti y aliento",
+          "secuencia": [
+            "4",
+            "2",
+            "1"
+          ],
+          "que_logra": "Levantas y jalas, aliento para bajarles protección y escupitajo para aturdir.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Entrada",
+          "secuencia": [
+            "3",
+            "1",
+            "2",
+            "4"
+          ],
+          "que_logra": "Saltas encima, aturdes, aliento y ulti para jalarlos a tu equipo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Cernunnos",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/cernunnos-86",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Heavy Glaive: básicos con daño extra cuerpo a cuerpo.",
+        "1": "Shifter of Seasons: cambia el efecto de los básicos (cura, daño, baja protección, slow).",
+        "2": "Bramble Blast: zarza que enraíza al objetivo y deja área de daño.",
+        "3": "Horn Charge: dash a través de enemigos aplicando la estación.",
+        "4": "The Wild Hunt: convierte enemigos en jabalíes (silencio, desarme y slow)."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y carga",
+          "secuencia": [
+            "2",
+            "3",
+            "AA"
+          ],
+          "que_logra": "Enraízas con la zarza, cargas a través y le pegas.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Jabalíes",
+          "secuencia": [
+            "4",
+            "2",
+            "3",
+            "AA"
+          ],
+          "que_logra": "Los conviertes en jabalíes (no pueden pelear), enraízas y cargas.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Chaac",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/chaac-47",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Overflow: tras 5 básicos, la siguiente habilidad es gratis, más corta y cura.",
+        "1": "Thunder Strike: hacha que se queda en el piso; reactivar la regresa.",
+        "2": "Torrent: giro que da escudo; hace dash a través de paredes hacia el hacha.",
+        "3": "Rain Dance: tormenta que te cura y ralentiza enemigos.",
+        "4": "Storm Call: carga inmune a control y explota: knockup y silencio."
+      },
+      "combos": [
+        {
+          "nombre": "Hacha y giro",
+          "secuencia": [
+            "1",
+            "2",
+            "AA"
+          ],
+          "que_logra": "Lanzas el hacha, giras y te teletransportas hacia ella.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Pelea larga",
+          "secuencia": [
+            "3",
+            "1",
+            "2",
+            "4"
+          ],
+          "que_logra": "Tormenta para curarte, hacha, giro y ulti para lanzar y silenciar.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Charon",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/charon-127",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Ferryman of Souls: junta monedas; aliados pueden pagar para subirse.",
+        "1": "Spectral Surge: alma en línea que ralentiza y al tocar dios silencia.",
+        "2": "Damnation: marca dioses y les baja velocidad de ataque; aliados ganan escudo.",
+        "3": "Swift Voyage: dash que enraíza a quien toca.",
+        "4": "Summon Styx: ola global que causa miedo (fear) a enemigos."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y silencio",
+          "secuencia": [
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Dash para enraizar, silencias y marcas para que tu equipo pegue con escudo.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ola global",
+          "secuencia": [
+            "4",
+            "3",
+            "1"
+          ],
+          "que_logra": "La ola los asusta y los empuja hacia tu equipo; los enraízas y silencias.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Chiron",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/chiron-71",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Herbal Medicine: cada habilidad cura al aliado con menos vida.",
+        "1": "Training Exercise: constelación que da 0.5 s de inmunidad a control a aliados y luego explota.",
+        "2": "Masterful Shot: marca enemigos; al activarla, flechas que ralentizan.",
+        "3": "Giddyup!: dash que patea dioses hacia atrás.",
+        "4": "Centaurus: tres flechas largas que atraviesan paredes; no puedes morir mientras disparas."
+      },
+      "combos": [
+        {
+          "nombre": "Patada y flechas",
+          "secuencia": [
+            "3",
+            "2",
+            "AA"
+          ],
+          "que_logra": "Pateas al enemigo hacia tu equipo y lo ralentizas con las flechas.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Remate",
+          "secuencia": [
+            "2",
+            "1",
+            "4"
+          ],
+          "que_logra": "Marcas, explosión y ulti para rematar de lejos.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Chronos",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/chronos-39",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Time Lord: inteligencia permanente por cargas.",
+        "1": "Time Rift: daño en área que crece al pegar a dioses.",
+        "2": "Accelerate: velocidad y bono aleatorio (cura, sin maná o inteligencia).",
+        "3": "Stop Time: engrane que ralentiza y luego aturde 1 s.",
+        "4": "Rewind: recupera vida y maná anteriores y reinicia todos los enfriamientos."
+      },
+      "combos": [
+        {
+          "nombre": "Aturdir y área",
+          "secuencia": [
+            "3",
+            "1"
+          ],
+          "que_logra": "Aturdes con el engrane y pones el área encima.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Doble combo",
+          "secuencia": [
+            "3",
+            "1",
+            "2",
+            "4",
+            "3",
+            "1"
+          ],
+          "que_logra": "Sueltas todo, Rewind reinicia enfriamientos y lo repites.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Cu Chulainn",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/cu-chulainn-89",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Berserk: la ira llena una forma Berserk con fuerza, escudo y habilidades nuevas.",
+        "1": "Humano: lanza que reduce curación / Berserk: golpe al piso que enraíza.",
+        "2": "Vent Anger: vapor que da velocidad y daña alrededor (gasta ira).",
+        "3": "Humano: salto / Berserk: carga que aturde y empuja.",
+        "4": "Humano: giro que lanza al aire / Berserk: grito que hace temblar."
+      },
+      "combos": [
+        {
+          "nombre": "Humano",
+          "secuencia": [
+            "3",
+            "4",
+            "1"
+          ],
+          "que_logra": "Saltas encima, giro para lanzar al aire y lanza para cortar curación.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Berserk",
+          "secuencia": [
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "En Berserk: carga que aturde, golpe que enraíza y vapor.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Cupid",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/cupid-17",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Lovestruck: básicos dan cargas; a 8 desbloquean efectos extra.",
+        "1": "Heart Bomb: flecha que ralentiza y explota (aturde con 8 cargas).",
+        "2": "Share The Love: corazones que curan y dan maná.",
+        "3": "Flutter: dash que acelera a aliados.",
+        "4": "Fields Of Love: daña y cura; ralentiza, lisia e hipnotiza."
+      },
+      "combos": [
+        {
+          "nombre": "Bomba cargada",
+          "secuencia": [
+            "AA",
+            "AA",
+            "1",
+            "3"
+          ],
+          "que_logra": "Juntas cargas con básicos, bomba que aturde y dash para reposicionarte.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Teamfight",
+          "secuencia": [
+            "4",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Ulti para hipnotizar y bomba encima.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Da Ji",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/da-ji-88",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Torture Blades: ataques y habilidades hacen sangrar sin límite de cargas.",
+        "1": "Horrible Burns: potencia tu siguiente golpe con quemadura y velocidad; ralentiza.",
+        "2": "One Thousand Cuts: cono de 4 golpes que da velocidad.",
+        "3": "Trickster Spirit: teletransporte a un aliado, enemigo o ward.",
+        "4": "Paolao: tres cadenas que lisian y jalan; aturde a los que llegan al aparato."
+      },
+      "combos": [
+        {
+          "nombre": "Teleport y cortes",
+          "secuencia": [
+            "3",
+            "1",
+            "AA",
+            "2"
+          ],
+          "que_logra": "Te teletransportas al enemigo, golpe potenciado y los cuatro cortes.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Con cadenas",
+          "secuencia": [
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Cadenas para jalar y aturdir, teletransporte y combo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Danzaburou",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/danzaburou-112",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Dishonest Duplication: básicos pueden crear clones.",
+        "1": "Fool's Gold: bolsas de dinero que hacen temblar (tremble) a los dioses.",
+        "2": "Alluring Spirits: te curas y lanzas botella que ralentiza; a 3 cargas provoca.",
+        "3": "Tanuki Trickery: campo de velocidad e inmunidad a slow.",
+        "4": "Uproarious Rocket: cohete que aturde al primer dios; puedes convertirte en él."
+      },
+      "combos": [
+        {
+          "nombre": "Cohete y bolsas",
+          "secuencia": [
+            "4",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Aturdes con el cohete y tiras las bolsas mientras no se mueve.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Provocar",
+          "secuencia": [
+            "2",
+            "2",
+            "2",
+            "1"
+          ],
+          "que_logra": "Tres botellas para provocarlo y bolsas encima.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Discordia",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/discordia-92",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Contest of Gods: quien más daño hace en tu equipo gana stats.",
+        "1": "Unruly Magic: orbe que explota y se divide.",
+        "2": "Strife: zona que enraíza a un enemigo o hace que varios se ataquen entre ellos.",
+        "3": "Erratic Behavior: salto que crea campo de sigilo y velocidad.",
+        "4": "Golden Apple of Discord: manzana que lisia y hace temblar."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y orbe",
+          "secuencia": [
+            "2",
+            "1"
+          ],
+          "que_logra": "Enraízas con Strife y el orbe le cae completo.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Caos en grupo",
+          "secuencia": [
+            "4",
+            "2",
+            "1"
+          ],
+          "que_logra": "Manzana para lisiar, Strife sobre varios para que se peleen entre ellos y orbe.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Eset",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/eset-36",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Funeral Rites: cargas por muertes cercanas; cada 3er básico pega más.",
+        "1": "Wing Gust: 4 proyectiles en línea; te da velocidad.",
+        "2": "Spirit Ball: crece con la distancia; reactivar detona y aturde.",
+        "3": "Dispel Magic: silencia, ralentiza y baja protección mágica; escuda aliados.",
+        "4": "Circle of Protection: reduce daño a aliados; reactivar explota y cura."
+      },
+      "combos": [
+        {
+          "nombre": "Silencio y bola",
+          "secuencia": [
+            "3",
+            "2",
+            "2"
+          ],
+          "que_logra": "Silencias y ralentizas, lanzas la bola y la detonas para aturdir.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst",
+          "secuencia": [
+            "2",
+            "2",
+            "3",
+            "1"
+          ],
+          "que_logra": "Aturdes con la bola, silencias y rematas con las alas.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Fenrir",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/fenrir-35",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Unbound Runes: 5 runas potencian la siguiente habilidad.",
+        "1": "Unchained: salto; potenciado aturde.",
+        "2": "Seething Howl: buff de fuerza, velocidad de ataque y robo de vida; da 2 runas.",
+        "3": "Brutalize: salta y golpea 4 veces.",
+        "4": "Ragnarok: crece, inmune a control; su siguiente básico levanta y carga a un dios."
+      },
+      "combos": [
+        {
+          "nombre": "Salto potenciado",
+          "secuencia": [
+            "2",
+            "1",
+            "3"
+          ],
+          "que_logra": "El aullido te da runas para que el salto aturda; rematas con Brutalize.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Robar al enemigo",
+          "secuencia": [
+            "4",
+            "AA",
+            "1",
+            "3"
+          ],
+          "que_logra": "Ulti, lo levantas con el básico y lo llevas a tu equipo o torre; luego salto y Brutalize.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ganesha",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ganesha-87",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Good Fortune: tus kills se las da al aliado más cercano.",
+        "1": "Turn of Fate: maldición que da daño extra a aliados.",
+        "2": "Ohm: canaliza un silencio en cono.",
+        "3": "Remove Obstacles: dash que detiene al dios y lo lanza al aire.",
+        "4": "Dharmic Pillars: cuatro pilares que dañan, ralentizan y bajan protecciones."
+      },
+      "combos": [
+        {
+          "nombre": "Agarrar y silenciar",
+          "secuencia": [
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Lo atrapas y lanzas al aire, silencias y maldices.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Teamfight",
+          "secuencia": [
+            "4",
+            "3",
+            "2"
+          ],
+          "que_logra": "Pilares para ralentizar, lo atrapas y silencias a todo el grupo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Geb",
+      "parche_verificado": "Guía de Open Beta 1 (ene 2025)",
+      "fuente": "https://tacter.com/smite-2/guides/smite-2-geb-build-guide-open-beta-1-b0735861",
+      "pendiente_verificar": true,
+      "nota_verificacion": "Los combos vienen de una guía de Smite 2, pero es de enero 2025; revisar si el kit cambió.",
+      "habilidades": {
+        "pasiva": "Hard as Rock: recibe menos daño de críticos.",
+        "1": "Roll Out: rueda ralentizando; al llegar a velocidad máxima puede reactivarse para saltar y lanzar al aire.",
+        "2": "Shock Wave: onda en cono que lanza al aire.",
+        "3": "Stone Shield: escudo para él o un aliado; limpia controles y comparte la pasiva.",
+        "4": "Cataclysm: aturde en área y hace daño según la vida actual."
+      },
+      "combos": [
+        {
+          "nombre": "Doble knockup",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Entras rodando (reactiva el 1 para saltar) y encadenas el segundo knockup con la onda.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti y proteger",
+          "secuencia": [
+            "4",
+            "3",
+            "2"
+          ],
+          "que_logra": "Aturdes a todos, escudas a quien lo necesite y los vuelves a lanzar al aire.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Iniciación completa",
+          "secuencia": [
+            "1",
+            "4",
+            "3",
+            "2"
+          ],
+          "que_logra": "Entras rodando, ulti en medio del equipo enemigo, escudo y onda para encadenar controles.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Gilgamesh",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/gilgamesh-114",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Epic of Gilgamesh: misiones mejoran sus habilidades.",
+        "1": "Sun-Forged Scimitar: espada encendida que ralentiza a los cercanos.",
+        "2": "Drop Kick: patada que lanza al más cercano; aturde si choca con dios o pared.",
+        "3": "Hero's Advance: salto que deja un faro de velocidad y robo de vida.",
+        "4": "Winds of Shamash: anillo que ralentiza y luego enraíza; jala a los que escapan."
+      },
+      "combos": [
+        {
+          "nombre": "Salto y patada",
+          "secuencia": [
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Saltas detrás, lo pateas contra pared o tu equipo para aturdir y prendes la espada.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti y patada",
+          "secuencia": [
+            "4",
+            "2",
+            "1"
+          ],
+          "que_logra": "Anillo para enraizar y patada mientras está quieto.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Guan Yu",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/guan-yu-14",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Battle Fervor: cargas de velocidad de ataque al dar o recibir daño.",
+        "1": "Conviction: cura aliados; al curar dioses reinicia enfriamientos.",
+        "2": "Warrior's Will: dash que ralentiza; al pegar a dioses reinicia enfriamientos.",
+        "3": "Taolu Assault: giro de 10 golpes que roba protecciones.",
+        "4": "Cavalry Charge: monta inmune a control y al bajar aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Dash y giro",
+          "secuencia": [
+            "2",
+            "3",
+            "1"
+          ],
+          "que_logra": "Dash para ralentizar, giro para robar protecciones y te curas.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Caballo",
+          "secuencia": [
+            "4",
+            "2",
+            "3"
+          ],
+          "que_logra": "Entras a caballo, aturdes al bajar y sigues con dash y giro.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hachiman",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hachiman-91",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Master of Arms: básicos dan velocidad de ataque y maná.",
+        "1": "Eagle Eye: 4 flechas potenciadas de largo alcance.",
+        "2": "Heavenly Banner: daño cercano y bandera de velocidad de ataque.",
+        "3": "Iaijutsu: dash y barrido; si pegan ambos, aturde.",
+        "4": "Mounted Archery: monta inmune a control y dispara conos que ralentizan."
+      },
+      "combos": [
+        {
+          "nombre": "Aturdir y disparar",
+          "secuencia": [
+            "3",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Iaijutsu para aturdir y flechas potenciadas.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "DPS",
+          "secuencia": [
+            "2",
+            "1",
+            "AA",
+            "AA"
+          ],
+          "que_logra": "Bandera y flechas potenciadas para el máximo daño.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hades",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hades-3",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Blight: tus ataques aplican Blight y bajan fuerza e inteligencia.",
+        "1": "Death From Below: salto subterráneo; ralentiza a los Blighted.",
+        "2": "Shroud Of Darkness: silencio en cono; a los Blighted les da miedo y los empuja.",
+        "3": "Devour Souls: daño cercano; los Blighted explotan y te curan.",
+        "4": "Pillar Of Agony: vórtice canalizado que jala."
+      },
+      "combos": [
+        {
+          "nombre": "Ulti y silencio",
+          "secuencia": [
+            "4",
+            "2",
+            "3"
+          ],
+          "que_logra": "Los jalas con la ulti (ya quedan Blighted), silencias y explotas las almas.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Entrada",
+          "secuencia": [
+            "1",
+            "3",
+            "2",
+            "4"
+          ],
+          "que_logra": "Saltas encima, Devour, silencio y ulti para que no escapen.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hecate",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hecate-131",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Mythic Ritual: potencia estructuras para curar; buffa a un aliado.",
+        "1": "Triplicate Form: proyectiles alternos; la forma Hex hipnotiza.",
+        "2": "Spell Eater: se carga con habilidades cercanas; reactivar lanza un sello.",
+        "3": "Repel Magic: escudo mágico para ti o un aliado.",
+        "4": "Open The Gates: portales que aturden y desplazan enemigos; aliados viajan por ellos."
+      },
+      "combos": [
+        {
+          "nombre": "Hipnotizar y sello",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Hipnotizas con la forma Hex y sueltas el sello cargado encima.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Portales",
+          "secuencia": [
+            "4",
+            "1",
+            "2"
+          ],
+          "que_logra": "Aturdes con los portales, hipnotizas y rematas con el sello.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hel",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hel-10",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Stance Attunement: Oscura da +20% daño; Luz baja stats enemigos.",
+        "1": "Oscura: orbe de daño / Luz: orbe de cura y maná.",
+        "2": "Oscura: área que ralentiza y baja protecciones / Luz: limpia controles a aliados.",
+        "3": "Oscura: explosión cercana / Luz: cura y velocidad.",
+        "4": "Switch Stances: cambia de postura (1 s de enfriamiento)."
+      },
+      "combos": [
+        {
+          "nombre": "Daño oscuro",
+          "secuencia": [
+            "2",
+            "1",
+            "3"
+          ],
+          "que_logra": "En Oscura: área que ralentiza, orbe y explosión.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Pegar y salvar",
+          "secuencia": [
+            "2",
+            "1",
+            "4",
+            "2",
+            "3"
+          ],
+          "que_logra": "Ralentizas y pegas en Oscura, cambias a Luz para limpiar controles y curar al equipo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hercules",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hercules-28",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Apotheosis: fuerza por daño a dioses; a 4 cargas baja enfriamientos.",
+        "1": "Driving Strike: dash que aturde y empuja.",
+        "2": "Earthbreaker: grieta que jala hacia ti a los del extremo.",
+        "3": "Mitigate Wounds: cura, velocidad de ataque y protecciones.",
+        "4": "Excavate: roca que lanza al aire y rueda."
+      },
+      "combos": [
+        {
+          "nombre": "Jalar y empujar",
+          "secuencia": [
+            "2",
+            "1"
+          ],
+          "que_logra": "Lo jalas con la grieta y lo empujas con el dash hacia tu equipo o torre.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Roca y jalar",
+          "secuencia": [
+            "4",
+            "2",
+            "1"
+          ],
+          "que_logra": "Roca para lanzar al aire de lejos, grieta para jalar y dash para aturdir.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Horus",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/horus-103",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Resolute: cargas de protecciones al recibir daño; se convierten en cura.",
+        "1": "Updraft: lanza al aire a los cercanos; siguiente ataque ralentiza.",
+        "2": "Fracture: dash que aturde al dios y baja protecciones.",
+        "3": "Protector's Surge: salta a un aliado y lo cura.",
+        "4": "To The Skies!: teletransporte a un punto; empuja y te da escudo."
+      },
+      "combos": [
+        {
+          "nombre": "Dash y knockup",
+          "secuencia": [
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Aturdes con el dash, lanzas al aire y básico que ralentiza.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Llegar desde lejos",
+          "secuencia": [
+            "4",
+            "1",
+            "2"
+          ],
+          "que_logra": "Caes con la ulti, knockup y dash para aturdir.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hou Yi",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hou-yi-62",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Suntouched: tras crítico o golpe grande, acelera y marca.",
+        "1": "Ricochet: flecha que rebota en paredes; aturde a los marcados.",
+        "2": "Mark of the Golden Crow: marca a un enemigo para daño o efectos extra.",
+        "3": "Divebomb: salto en picada; empuja a los marcados.",
+        "4": "Sunbreaker: nueve soles en área que ralentizan; el primero sirve de pared para rebotar."
+      },
+      "combos": [
+        {
+          "nombre": "Marca y rebote",
+          "secuencia": [
+            "2",
+            "1"
+          ],
+          "que_logra": "Marcas y la flecha rebotada lo aturde.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Soles y rebote",
+          "secuencia": [
+            "2",
+            "4",
+            "1"
+          ],
+          "que_logra": "Marcas, soles para ralentizar y la flecha rebota en el primer sol para aturdir.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hua Mulan",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hua-mulan-135",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Training Arc: usar habilidades sube su nivel y baja enfriamientos.",
+        "1": "Cross Strike: doble espadazo en cono.",
+        "2": "Spear Thrust: lanza al frente que ralentiza.",
+        "3": "Grapple: engancha a un dios, lo aturde y te jala hacia él.",
+        "4": "Divine Mastery: dash con espada, knockup con lanza y disparo; enraíza."
+      },
+      "combos": [
+        {
+          "nombre": "Enganchar",
+          "secuencia": [
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Lo enganchas y aturdes, espadazo y lanza para ralentizar.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Con ulti",
+          "secuencia": [
+            "3",
+            "4",
+            "1"
+          ],
+          "que_logra": "Gancho, ulti para lanzar y enraizar, espadazo final.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Hun Batz",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/hun-batz-38",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Infused Strikes: tras una habilidad, el básico pega más y da fuerza.",
+        "1": "Somersault: salto que ralentiza.",
+        "2": "Overhand Smash: golpe canalizado que baja protección física.",
+        "3": "Sacred Monkey: proyectil que rebota; reactivar te teletransporta.",
+        "4": "Fear No Evil: tótem que causa miedo repetido."
+      },
+      "combos": [
+        {
+          "nombre": "Mono y salto",
+          "secuencia": [
+            "3",
+            "3",
+            "1",
+            "AA",
+            "2"
+          ],
+          "que_logra": "Lanzas el mono, te teletransportas, saltas para ralentizar y golpe fuerte.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Miedo",
+          "secuencia": [
+            "1",
+            "4",
+            "2",
+            "AA"
+          ],
+          "que_logra": "Saltas encima, tótem de miedo y golpe mientras huyen sin control.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ishtar",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ishtar-122",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Mark of Vengeance: marca a quien la ataca y gana velocidad de ataque contra él.",
+        "1": "Imbue Arrows: cambia tipo de disparo (explosivo, abanico o largo alcance).",
+        "2": "Rolling Thunder: 4 rayos en línea; si recibe varios, hipnotiza.",
+        "3": "Jolt: dash que enraíza 1 s y das voltereta hacia atrás disparando.",
+        "4": "Blades of Retribution: espadas en cono que lisian; refire las regresa y aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y rayos",
+          "secuencia": [
+            "3",
+            "2"
+          ],
+          "que_logra": "Enraízas con el dash y los rayos le caen todos (hipnotiza).",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti doble",
+          "secuencia": [
+            "4",
+            "4",
+            "2",
+            "3"
+          ],
+          "que_logra": "Espadas de ida y vuelta para aturdir, rayos y dash para salir.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ix Chel",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ix-chel-126",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Rainbow Weaver: a 6 cargas, tu básico va más lejos y pega más.",
+        "1": "Gleaming Blast: rayo que se detiene en el dios; refire hace un cono que ciega.",
+        "2": "Lunar Invocation: explosión retrasada que lanza al aire y cura aliados.",
+        "3": "Rainbow Crash: arcoíris que enraíza al caer.",
+        "4": "Great End: rayo canalizado inmune a control que cura aliados y daña enemigos."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y explosión",
+          "secuencia": [
+            "3",
+            "2"
+          ],
+          "que_logra": "Enraízas con el arcoíris para que la explosión retrasada sí le pegue.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Cegar y remate",
+          "secuencia": [
+            "3",
+            "2",
+            "1",
+            "1"
+          ],
+          "que_logra": "Raíz, knockup y el rayo con su refire para cegar.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Izanami",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/izanami-80",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Death Draws Nigh: gana penetración e inteligencia al recibir daño.",
+        "1": "Sickle Storm: velocidad de ataque y sangrado.",
+        "2": "Spectral Projection: línea que atraviesa paredes y ralentiza.",
+        "3": "Fade Away: salto con sigilo y velocidad.",
+        "4": "Dark Portal: círculo que sangra, silencia y ralentiza."
+      },
+      "combos": [
+        {
+          "nombre": "Ralentizar y DPS",
+          "secuencia": [
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Ralentizas y activas la tormenta para pegarle con sangrado.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Con ulti",
+          "secuencia": [
+            "4",
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Silencias con el portal, ralentizas y DPS. Fade Away para salir.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Janus",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/janus-54",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Passages: cruzar un portal o umbral potencia tu siguiente habilidad.",
+        "1": "Portal: portal que daña; en pared te deja atravesarla.",
+        "2": "Unstable Vortex: portales ligados que dañan en su camino.",
+        "3": "Threshold: grieta que ralentiza enemigos y acelera aliados.",
+        "4": "Through Space and Time: proyectil global más fuerte a distancia."
+      },
+      "combos": [
+        {
+          "nombre": "Pasar y potenciar",
+          "secuencia": [
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Cruzas tu umbral para potenciar y lanzas portal y vórtice ya cargados.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Remate global",
+          "secuencia": [
+            "3",
+            "2",
+            "4"
+          ],
+          "que_logra": "Ralentizas, vórtice y ulti para rematar de lejos.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Jing Wei",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/jing-wei-75 y https://tacter.com/smite-2/guides/smite-2-jing-wei-build-guides-closed-alpha-4-e0f8ee2e",
+      "pendiente_verificar": true,
+      "nota_verificacion": "Los combos marcados como 'guia' vienen de una guía de Tacter de 2025 (Open Beta temprana); los 'derivado' se armaron del kit.",
+      "habilidades": {
+        "pasiva": "Rapid Reincarnation: al salir de la fuente vuela rápido e inmune a control.",
+        "1": "Persistent Gust: ráfaga que lanza al aire y da velocidad de ataque si la pisas.",
+        "2": "Explosive Bolts: tus siguientes 3 básicos explotan.",
+        "3": "Agility: dash con bono de fuerza.",
+        "4": "Air Strike: sube y bombardea; puede regresar a golpear otra vez."
+      },
+      "combos": [
+        {
+          "nombre": "Ráfaga y bolts",
+          "secuencia": [
+            "1",
+            "2",
+            "AA",
+            "AA",
+            "AA"
+          ],
+          "que_logra": "Lanzas al aire con la ráfaga, te paras en ella y disparas los bolts explosivos.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Completo",
+          "secuencia": [
+            "3",
+            "1",
+            "2",
+            "AA",
+            "4"
+          ],
+          "que_logra": "Dash para posicionarte, ráfaga, bolts y bombardeo.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Jormungandr",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/jormungandr-101",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Immovable: inmune a desplazamiento fuerte; en lugar de eso queda aturdido leve.",
+        "1": "Venomous Haze: nube tóxica que ralentiza y reduce curación.",
+        "2": "Consuming Bellow: absorbe nubes y ruge; ralentiza y hace temblar.",
+        "3": "Submerge: sigilo; al salir lanza al aire.",
+        "4": "The World Serpent: se zambulle hasta 3 veces lanzando al aire; inmune a control."
+      },
+      "combos": [
+        {
+          "nombre": "Emboscada",
+          "secuencia": [
+            "3",
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Te sumerges, sales lanzando al aire, nube y rugido.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "4",
+            "4",
+            "4",
+            "2"
+          ],
+          "que_logra": "Tres zambullidas de knockup y rugido final.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Kali",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/kali-20",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Marked for Death: marca a un dios para penetración y recompensa.",
+        "1": "Nimble Strike: salto que cura según vida faltante del objetivo.",
+        "2": "Lash: tres cuchillas que sangran.",
+        "3": "Incense: aturde a los cercanos y te cura.",
+        "4": "Destruction: no puede morir ni ser desplazada mientras pulsa daño."
+      },
+      "combos": [
+        {
+          "nombre": "Salto y stun",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Saltas encima, aturdes con Incense y cuchillas.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "All-in",
+          "secuencia": [
+            "4",
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Ulti para no morir, salto, stun y cuchillas.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Khepri",
+      "parche_verificado": "Smite 2 Open Beta 47",
+      "fuente": "https://smitebrain.com/gods/khepri/abilities",
+      "pendiente_verificar": true,
+      "nota_verificacion": "El kit está verificado en OB47, pero no encontré combos escritos en guías de Smite 2; estos salen del kit.",
+      "habilidades": {
+        "pasiva": "Fortitude: escudo de 2% de vida periódico para él y aliados cercanos.",
+        "1": "Abduct: se lanza y jala hacia él al primer dios enemigo; gana protecciones.",
+        "2": "Rising Dawn: sol rodante que quema y baja la protección física enemiga; da mitigación a aliados.",
+        "3": "Solar Flare: golpe de sol en área que enraíza.",
+        "4": "Scarab's Blessing: bendice a un aliado 5 s; si muere, revive junto a Khepri. Limpia controles y da inmunidad a slow."
+      },
+      "combos": [
+        {
+          "nombre": "Jalar y enraizar",
+          "secuencia": [
+            "1",
+            "3"
+          ],
+          "que_logra": "Lo jalas hacia tu equipo y lo dejas enraizado ahí.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Jalar, enraizar y ablandar",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Igual que el anterior, y el sol le baja la protección física para que tus aliados físicos peguen más.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Dive seguro (\"a lo viva México\")",
+          "secuencia": [
+            "4",
+            "1",
+            "3"
+          ],
+          "que_logra": "Bendices a tu aliado melee antes de que se meta; si muere, revive contigo. Tú lo apoyas jalando y enraizando.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Kukulkan",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/kukulkan-13",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Power Of The Wind Jewel: maná de items se vuelve inteligencia.",
+        "1": "Zephyr: proyectil explosivo que ralentiza.",
+        "2": "Slipstream: velocidad; dentro del torbellino hace dash.",
+        "3": "Whirlwind: tornado que daña y ralentiza.",
+        "4": "Spirit of the Nine Winds: línea larga que lanza enemigos y atraviesa paredes."
+      },
+      "combos": [
+        {
+          "nombre": "Tornado y zephyr",
+          "secuencia": [
+            "3",
+            "1"
+          ],
+          "que_logra": "Tornado para ralentizar y zephyr encima.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst",
+          "secuencia": [
+            "3",
+            "1",
+            "4"
+          ],
+          "que_logra": "Ralentizas y la ulti no falla.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Kuzenbo",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/kuzenbo-85",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Water Bowl: recibir daño da mitigación (hasta 15%).",
+        "1": "NeNe Kappa: proyectil que rebota en paredes y ralentiza.",
+        "2": "Shell Spikes: refleja daño y baja enfriamientos de 1 y 3.",
+        "3": "Sumo Slam: dash que silencia y empuja al primer dios.",
+        "4": "Watery Grave: giro que empuja; inmune a control."
+      },
+      "combos": [
+        {
+          "nombre": "Empujón",
+          "secuencia": [
+            "3",
+            "1"
+          ],
+          "que_logra": "Silencias y empujas con el Sumo (contra pared o hacia tu equipo) y lanzas el Kappa.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Aguantar y regresar",
+          "secuencia": [
+            "2",
+            "3",
+            "1",
+            "4"
+          ],
+          "que_logra": "Escudo de pinchos, sumo, kappa y giro para separarlos.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Loki",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/loki-25",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Behind You: daño extra por la espalda; los cegados cuentan siempre como espalda.",
+        "1": "Vanish: sigilo y velocidad.",
+        "2": "Agonizing Visions: ilusión que daña y ciega tras 4 golpes.",
+        "3": "Flurry Strike: ráfaga canalizada que ralentiza.",
+        "4": "Assassinate: teletransporte, lisia y golpe que aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Asesinato",
+          "secuencia": [
+            "1",
+            "4",
+            "3"
+          ],
+          "que_logra": "Desapareces, llegas con la ulti para aturdir y ráfaga.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Cegar",
+          "secuencia": [
+            "2",
+            "1",
+            "AA",
+            "3"
+          ],
+          "que_logra": "Ilusión para cegar (cuenta como espalda), sigilo y ráfaga.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Medusa",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/medusa-64",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Sidewinder: sin penalización al moverse de lado.",
+        "1": "Viper Shot: velocidad de ataque y veneno en 4 básicos.",
+        "2": "Acid Spray: daño en cono que reduce curación.",
+        "3": "Lacerate: dash que enraíza 1 s al primer dios.",
+        "4": "Petrify: aturde a los dioses que la miran."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y ácido",
+          "secuencia": [
+            "3",
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Enraízas con el dash, ácido y básicos envenenados.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Petrificar",
+          "secuencia": [
+            "4",
+            "3",
+            "1"
+          ],
+          "que_logra": "Petrificas, dash para enraizar después y DPS.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Mercury",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/mercury-44",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Fastest God Alive: moverse potencia el siguiente básico.",
+        "1": "Made You Look: blink-dash que daña en un área.",
+        "2": "Maximum Velocity: velocidad de ataque e inmunidad a slow.",
+        "3": "Special Delivery: dash al primer dios, lo gira y lo avienta (aturde).",
+        "4": "Sonic Boom: dash cargado que gira y aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Entrega",
+          "secuencia": [
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Lo agarras y lo avientas hacia tu equipo, buff y blink-dash.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Doble stun",
+          "secuencia": [
+            "4",
+            "3",
+            "2"
+          ],
+          "que_logra": "Ulti y Special Delivery encadenan dos aturdimientos.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Merlin",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/merlin-100",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Overload: habilidades dan cargas que tus básicos consumen.",
+        "1": "Arcano: orbe que marca / Fuego: rayo / Hielo: proyectil extra a ralentizados.",
+        "2": "Arcano: vórtice que jala / Fuego: dragones que bajan protecciones / Hielo: ventisca.",
+        "3": "Flicker: teletransporte corto con efecto según postura.",
+        "4": "Elemental Mastery: explosión y elige postura (arcano lanza al aire)."
+      },
+      "combos": [
+        {
+          "nombre": "Arcano",
+          "secuencia": [
+            "2",
+            "1",
+            "4"
+          ],
+          "que_logra": "Vórtice para jalar, orbe y ulti para lanzar al aire.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Hielo",
+          "secuencia": [
+            "2",
+            "1",
+            "3"
+          ],
+          "que_logra": "Ventisca para ralentizar, proyectil extra y Flicker para bajar enfriamientos.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Mordred",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/mordred-132",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Wrath Of The Forsaken: golpes dan ira; a 40 y 80 desbloquea la ulti.",
+        "1": "Cruel Strikes: corte y azote; cura o pega más según tu cadena de básicos.",
+        "2": "Bloodrage: daño alrededor y buff de velocidad; baja protecciones enemigas.",
+        "3": "Severing Slice: proyectil que ralentiza; en el centro hace sangrar.",
+        "4": "Heart Slash enraíza y te escuda / Pursue the Weak: salto por paredes que aturde."
+      },
+      "combos": [
+        {
+          "nombre": "Pelea",
+          "secuencia": [
+            "3",
+            "2",
+            "AA",
+            "1"
+          ],
+          "que_logra": "Ralentizas, Bloodrage y los dos golpes.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "4",
+            "1",
+            "2",
+            "3"
+          ],
+          "que_logra": "Ulti para enraizar o aturdir, Cruel Strikes, Bloodrage y Severing Slice si escapa.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Morgan Le Fay",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/morgan-le-fay-115",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Empowered Blade: tus habilidades marcan y llenan símbolos; set completo da stats.",
+        "1": "Sigil Mastery: espada que cae; Mente da miedo, Cuerpo ralentiza, Alma crea un clon.",
+        "2": "Dragonflight: dragón que lanza al aire y luego hace dash empujando.",
+        "3": "Shroud of Wildfire: fuego que daña si el enemigo usa movilidad.",
+        "4": "Consuming Power: consume marcas para tres golpes que curan."
+      },
+      "combos": [
+        {
+          "nombre": "Dragón y espada",
+          "secuencia": [
+            "2",
+            "1",
+            "3"
+          ],
+          "que_logra": "Lanzas al aire con el dragón, espada de miedo o slow y fuego.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst",
+          "secuencia": [
+            "3",
+            "2",
+            "1",
+            "4"
+          ],
+          "que_logra": "Marcas con todo y consumes las marcas con la ulti.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ne Zha",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ne-zha-34",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Righteous Spirit: golpes y críticos dan velocidad y daño crítico.",
+        "1": "Universe Ring Toss: aro que rebota, ralentiza y baja protecciones.",
+        "2": "Flaming Spear: velocidad de ataque, crítico y cura.",
+        "3": "Armillary Sash: te jala al primer dios y lo aturde.",
+        "4": "Wind Fire Wheels: dash inmune, lanza al objetivo al aire en combo y regresas."
+      },
+      "combos": [
+        {
+          "nombre": "Gancho y aro",
+          "secuencia": [
+            "3",
+            "1",
+            "2",
+            "AA"
+          ],
+          "que_logra": "Te jalas y aturdes, aro, lanza y básicos.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "1",
+            "3",
+            "4"
+          ],
+          "que_logra": "Aro para ralentizar, gancho para aturdir y ulti para el combo aéreo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Neith",
+      "parche_verificado": "Guía de feb 2025 (Open Beta temprana)",
+      "fuente": "https://www.tacter.com/smite-2/guides/smite-2-neith-build-guide-561c4db8",
+      "pendiente_verificar": true,
+      "nota_verificacion": "La fuente del kit es vieja; revisar en el juego que el 2 siga creando telar y el 1 y el 3 lo sigan detonando.",
+      "habilidades": {
+        "pasiva": "Broken Weave: detonar un telar hace daño, enraíza 1 s y te da velocidad de ataque e inteligencia acumulables.",
+        "1": "Spirit Arrow: flecha que enraíza 1 s y detona telares.",
+        "2": "Unravel: daño en área, crea un telar y te cura por cada enemigo.",
+        "3": "Back Flip: daño y ralentización en cono, saltas hacia atrás y detona telares.",
+        "4": "World Weaver: flecha global fijada a un dios; aturde 1 s."
+      },
+      "combos": [
+        {
+          "nombre": "2 → 1 (el de Aldo)",
+          "secuencia": [
+            "2",
+            "1"
+          ],
+          "que_logra": "El 2 deja un telar sobre el enemigo y la flecha del 1 lo detona: daño extra y raíz.",
+          "dificultad": "fácil",
+          "origen": "usuario",
+          "media_url": null
+        },
+        {
+          "nombre": "Pegar y salir",
+          "secuencia": [
+            "2",
+            "3"
+          ],
+          "que_logra": "El salto hacia atrás detona el telar: lo enraízas justo cuando te alejas.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Remate con ulti",
+          "secuencia": [
+            "4",
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "El aturdimiento del 4 asegura que el 2 caiga encima, y el 1 detona el telar para enraizar otra vez.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Nemesis",
+      "parche_verificado": "Guía actualizada 12 jun 2026",
+      "fuente": "https://www.smitefire.com/smite/guide/deity-gm-nemesis-jungle-32001",
+      "pendiente_verificar": false,
+      "habilidades": {
+        "pasiva": "Scales of Fate: roba poder al golpear enemigos (hasta 3 veces).",
+        "1": "Swift Vengeance: dash; puedes repetirlo antes de 2 s.",
+        "2": "Slice and Dice: cono; los del centro reciben más daño y quedan ralentizados 30% por 2 s.",
+        "3": "Retribution: escudo de 2 s que cura y refleja daño. Un control duro lo rompe.",
+        "4": "Divine Judgement: daño según la vida actual del objetivo; le roba 25% de protecciones y te da velocidad."
+      },
+      "combos": [
+        {
+          "nombre": "Daño cuerpo a cuerpo",
+          "secuencia": [
+            "2",
+            "AA",
+            "3",
+            "AA"
+          ],
+          "que_logra": "Combo básico de pelea. El 2 puede ir en lugar de cualquier básico; úsalo al final si el enemigo se aleja o necesitas el slow.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Entrar y salir con dash",
+          "secuencia": [
+            "1",
+            "AA",
+            "3",
+            "AA",
+            "1",
+            "AA",
+            "2"
+          ],
+          "que_logra": "Para entrar y salir. No hagas los dos dashes seguidos sin un básico en medio; usa el segundo al final de la ventana.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "1v1 tardío / anti-tanque",
+          "secuencia": [
+            "4",
+            "AA",
+            "3",
+            "AA",
+            "1"
+          ],
+          "que_logra": "Abres con la ulti para alcanzarlo, robarle protecciones y ganar velocidad. Es su herramienta para destrozar tanques.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Nike",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/nike-83",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "To Victory!: habilidades dan laureles que curan y suben daño de básicos.",
+        "1": "Rend: triple golpe; a 3 golpes desarma.",
+        "2": "Barrier Formation: barrera que bloquea ataques a distancia y empuja.",
+        "3": "Valiant Leap: salto que lanza al aire.",
+        "4": "Sentinel of Zeus: se transforma; onda que ralentiza y escudo grande."
+      },
+      "combos": [
+        {
+          "nombre": "Salto y Rend",
+          "secuencia": [
+            "3",
+            "1"
+          ],
+          "que_logra": "Lanzas al aire con el salto y Rend completo para desarmar.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Con ulti",
+          "secuencia": [
+            "4",
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Ulti para escudo y slow, salto, Rend y barrera para cortar a sus tiradores.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Nox",
+      "parche_verificado": "OB47 (2 nov 2026), salió en este parche",
+      "fuente": "https://patchbot.io/games/smite-2/articles/2052-ob47-the-night-update",
+      "pendiente_verificar": true,
+      "nota_verificacion": "Llegó hace días; todavía no hay guías con combos. Estos salen del kit.",
+      "habilidades": {
+        "pasiva": "Flame of Night: cada habilidad enciende una vela y cada vela sube tu inteligencia.",
+        "1": "Shadow Lock: tu sombra atraviesa paredes; al tocar un dios lo enraíza y lo lisia mientras canalizas.",
+        "2": "Siphon Darkness: vacío que silencia y explota tras un momento. Quien sale antes recibe menos daño y queda ralentizado.",
+        "3": "Shadow Step: dash; si tocas a un aliado te fusionas con su sombra y viajas con él.",
+        "4": "Night Terror: vórtice que explota en el primer dios, silencia y debilita."
+      },
+      "combos": [
+        {
+          "nombre": "Enraizar y explotar",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Lo enraízas para que no salga del vacío y reciba la explosión completa.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst completo",
+          "secuencia": [
+            "1",
+            "2",
+            "4"
+          ],
+          "que_logra": "Raíz, explosión con silencio y la ulti para rematar y volver a silenciar.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Entrar con un aliado",
+          "secuencia": [
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Te metes en la sombra de un aliado que va entrando, sales a su lado y encadenas raíz y silencio.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Nu Wa",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/nu-wa-46",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Strength of Wood: cada 12 s tu básico enraíza 1 s.",
+        "1": "Mysterious Fog: niebla que daña; aliados dentro se vuelven invisibles.",
+        "2": "Clay Soldiers: soldados de barro que atacan.",
+        "3": "Shining Metal: proyectil que atraviesa paredes; detona soldados.",
+        "4": "Fire Shards: revela a los enemigos y les lanza fragmentos (global)."
+      },
+      "combos": [
+        {
+          "nombre": "Soldados y explosión",
+          "secuencia": [
+            "2",
+            "3"
+          ],
+          "que_logra": "Mandas soldados y los detonas con Shining Metal.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Raíz y burst",
+          "secuencia": [
+            "AA",
+            "2",
+            "3",
+            "1"
+          ],
+          "que_logra": "Básico que enraíza, soldados, explosión y niebla.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Nut",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/nut-130",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Flux: habilidades dan velocidad de ataque; básicos cargan daño para habilidades.",
+        "1": "Convergence: tus ataques disparan dos proyectiles extra.",
+        "2": "Crashing Comet: cometa que enraíza al centro y hace temblar en el borde.",
+        "3": "Warp: teletransporte con proyectiles que ralentizan; reinicia el 1.",
+        "4": "Skyfall: subes inmune y sueltas un agujero negro que jala y lanza al aire."
+      },
+      "combos": [
+        {
+          "nombre": "Cometa y disparos",
+          "secuencia": [
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Enraízas con el cometa y disparas con Convergence.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Warp reset",
+          "secuencia": [
+            "1",
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Convergence, Warp lo reinicia, otra ronda y cometa.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Odin",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/odin-11",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Path To Valhalla: muertes cercanas dan stats.",
+        "1": "Lunge: salto que detona el escudo de Raven Shout.",
+        "2": "Raven Shout: escudo que pulsa daño y explota.",
+        "3": "Gungnir's Might: pulsos que ralentizan y lanza que aturde.",
+        "4": "Ring of Spears: anillo que encierra, bloquea curación y ralentiza a quien sale."
+      },
+      "combos": [
+        {
+          "nombre": "Escudo y salto",
+          "secuencia": [
+            "2",
+            "1",
+            "3"
+          ],
+          "que_logra": "Escudo, saltas para detonarlo y aturdes con la lanza.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Encerrar",
+          "secuencia": [
+            "1",
+            "4",
+            "3"
+          ],
+          "que_logra": "Saltas encima, los encierras en el anillo y aturdes.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Osiris",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/osiris-53",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Fragmented: cada habilidad suelta un fragmento; a 8 te vuelves espíritu.",
+        "1": "Sickle Strike: hoz que ralentiza al primer dios.",
+        "2": "Spirit Flail: golpe en área con velocidad; mejora el slow de la hoz.",
+        "3": "Judgement Tether: ata a dioses cercanos; si siguen en rango, aturde.",
+        "4": "Lord of the Afterlife: salto que enraíza y bloquea curación."
+      },
+      "combos": [
+        {
+          "nombre": "Atar y aturdir",
+          "secuencia": [
+            "1",
+            "2",
+            "3"
+          ],
+          "que_logra": "Hoz y flail para ralentizar, así no escapan del tether y quedan aturdidos.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Caes enraizando, tether para aturdir, flail y hoz.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Pele",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/pele-97",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Everlasting Flame: bajo 50% de vida gana fuerza y robo de vida.",
+        "1": "Pyroclast: línea de magma con dos cargas.",
+        "2": "Eruption: dash y explosión que lanza al aire.",
+        "3": "Magma Rush: daño al piso y velocidad (activable).",
+        "4": "Volcanic Rush: dash inmune que ralentiza; básicos hacen conos."
+      },
+      "combos": [
+        {
+          "nombre": "Knockup",
+          "secuencia": [
+            "2",
+            "1",
+            "1"
+          ],
+          "que_logra": "Erupción para lanzar al aire y doble Pyroclast.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "4",
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Dash de ulti, erupción y básicos en cono.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Poseidon",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/poseidon-31",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Changing Tides: básicos dan Tide para velocidad y daño de habilidades.",
+        "1": "Tidal Surge: ola que empuja.",
+        "2": "Trident: buff de velocidad y disparos extra.",
+        "3": "Whirlpool: remolino que lisia y jala hacia dentro.",
+        "4": "Release The Kraken!: área que ralentiza; en el centro aturde y lanza al aire."
+      },
+      "combos": [
+        {
+          "nombre": "Remolino y ola",
+          "secuencia": [
+            "3",
+            "1"
+          ],
+          "que_logra": "Jalas y lisias con el remolino y rematas con la ola.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Kraken",
+          "secuencia": [
+            "3",
+            "4",
+            "2",
+            "1"
+          ],
+          "que_logra": "El remolino los deja en el centro para que el Kraken los aturda.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Princess Bari",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/princess-bari-136",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Mystic Surge: a 100 de Spirit, 5 s de habilidades sin enfriamiento y con efectos extra.",
+        "1": "Sacred Bell: campana que ralentiza; se puede empujar con 2 o 3 (máx. 3).",
+        "2": "Warding Gust: abanico en cono que empuja.",
+        "3": "Reverent Steps: dash en cualquier dirección y proyectil.",
+        "4": "Spirit's Cadence: pulsos; escudo que da inmunidad ante daño letal a aliados."
+      },
+      "combos": [
+        {
+          "nombre": "Campana y empujón",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Campana para ralentizar y el abanico la empuja hacia el enemigo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Surge",
+          "secuencia": [
+            "3",
+            "1",
+            "2",
+            "1",
+            "2"
+          ],
+          "que_logra": "Dash para cargar Spirit; en Surge repites campana y abanico sin enfriamiento.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ra",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ra-8",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Speed of Light: usar habilidades da velocidad.",
+        "1": "Celestial Beam: rayo que avanza dañando.",
+        "2": "Divine Light: ralentiza y explota cegando a quien mira a Ra.",
+        "3": "Solar Blessing: pilar que cura aliados y daña enemigos.",
+        "4": "Searing Pain: ola de calor frontal con daño extra a dioses."
+      },
+      "combos": [
+        {
+          "nombre": "Cegar y rayo",
+          "secuencia": [
+            "2",
+            "1"
+          ],
+          "que_logra": "Ralentizas y ciegas, el rayo le pega mientras no se mueve rápido.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst",
+          "secuencia": [
+            "2",
+            "1",
+            "4"
+          ],
+          "que_logra": "Slow, rayo y ola de calor.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Rama",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/rama-55",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Astral Quiver: genera flechas astrales.",
+        "1": "Astral Strike: flechas que atraviesan y ralentizan.",
+        "2": "Infinite Arrows: velocidad de ataque.",
+        "3": "Rolling Assault: rueda y básico que lisia.",
+        "4": "Astral Barrage: salta y dispara tres flechas desde el aire."
+      },
+      "combos": [
+        {
+          "nombre": "Slow y DPS",
+          "secuencia": [
+            "1",
+            "2",
+            "AA"
+          ],
+          "que_logra": "Flecha que ralentiza y buff de velocidad de ataque.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Completo",
+          "secuencia": [
+            "1",
+            "3",
+            "2",
+            "4"
+          ],
+          "que_logra": "Ralentizas, rueda para lisiar, buff y ulti desde arriba.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ratatoskr",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ratatoskr-66",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Acorn of Yggdrasil: bellota que se mejora y cambia sus habilidades.",
+        "1": "Dart: dash que ralentiza y se detiene en dioses.",
+        "2": "Flurry: giro que baja protección física.",
+        "3": "Acorn Blast: tres bellotas en cono; si pegan las 3, aturde.",
+        "4": "Through the Cosmos: salta a ramas y cae lanzando al aire."
+      },
+      "combos": [
+        {
+          "nombre": "Dash y bellotas",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Dash para pegarte, las tres bellotas de cerca aturden y giro.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Caes con knockup, bellotas, giro y dash para perseguir.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ravana",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ravana-67",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Chain of Blows: a 8 de combo, escudo, velocidad y fuerza.",
+        "1": "Prana Onslaught: puñetazo en cono que ralentiza.",
+        "2": "Overhead Kick: onda en línea; te hace inmune a control y daño.",
+        "3": "10-Hand Shadow Fist: puños en línea que enraízan al primer dios.",
+        "4": "Mystic Rush: salto inmune a control con mitigación al caer."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y puños",
+          "secuencia": [
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Enraízas, puñetazo que ralentiza y patada.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Entrada",
+          "secuencia": [
+            "4",
+            "3",
+            "1",
+            "2"
+          ],
+          "que_logra": "Saltas encima, enraízas y combo. La patada te protege si te intentan controlar.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Scylla",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/scylla-50",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Quick Learner: habilidades al máximo ganan efectos.",
+        "1": "Sic 'Em: perros que enraízan y lisian.",
+        "2": "Crush: campo que ralentiza y explota; puedes detonarlo antes.",
+        "3": "Sentinel: ward de visión; reactivar salta hacia ella.",
+        "4": "I'm a Monster: inmune a control; reactivar golpea un área."
+      },
+      "combos": [
+        {
+          "nombre": "Raíz y Crush",
+          "secuencia": [
+            "1",
+            "2",
+            "2"
+          ],
+          "que_logra": "Enraízas con los perros y detonas Crush encima.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Burst",
+          "secuencia": [
+            "1",
+            "2",
+            "4",
+            "2"
+          ],
+          "que_logra": "Raíz, Crush, golpe de ulti y detonas.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Sobek",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/sobek-9",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Blessing Of The Nile: daño da protecciones y reducción de enfriamientos.",
+        "1": "Charge Prey: dash al primer enemigo, lo aturde y lo avienta detrás.",
+        "2": "Tail Whip: giro que aleja a los enemigos.",
+        "3": "Sickening Strike: cono que reduce curación y te cura.",
+        "4": "Lurking In The Waters: te sumerges inmune y ralentizas."
+      },
+      "combos": [
+        {
+          "nombre": "Robar y aventar",
+          "secuencia": [
+            "1",
+            "2"
+          ],
+          "que_logra": "Lo agarras y lo avientas detrás de ti; el coletazo lo manda más lejos hacia tu equipo.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Pelea",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Agarre, cono para cortar curación y coletazo.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Sol",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/sol-70",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Unstable Manifestation: calor da stats; al máximo, básicos pegan más.",
+        "1": "Radiance: charco de fuego que te cura.",
+        "2": "Stellar Burst: tu básico explota y ralentiza.",
+        "3": "Disapparate: velocidad, inmunidad a slow y estela de fuego.",
+        "4": "Supernova: golpe de 8 golpes al piso; el primero empuja."
+      },
+      "combos": [
+        {
+          "nombre": "Charco y básico",
+          "secuencia": [
+            "1",
+            "2",
+            "AA"
+          ],
+          "que_logra": "Charco, básico explosivo que ralentiza para que no salga del fuego.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "2",
+            "AA",
+            "4",
+            "1"
+          ],
+          "que_logra": "Slow con el básico, ulti y charco.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Sun Wukong",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/sun-wukong-16",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Undefeated Body: con poca vida gana stats; bajo 30% crea un clon.",
+        "1": "The Magic Cudgel: golpe largo con el bastón.",
+        "2": "Master's Will: golpe alrededor que ralentiza.",
+        "3": "72 Transformations: dash como buey, tigre o águila; el tigre aturde.",
+        "4": "Somersault Cloud: sube a la nube invisible curándote."
+      },
+      "combos": [
+        {
+          "nombre": "Tigre",
+          "secuencia": [
+            "3",
+            "2",
+            "1"
+          ],
+          "que_logra": "Dash de tigre para aturdir, golpe que ralentiza y bastón.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Escapar y volver",
+          "secuencia": [
+            "4",
+            "4",
+            "3",
+            "2"
+          ],
+          "que_logra": "Te curas en la nube, caes con daño y vuelves a entrar.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Susano",
+      "parche_verificado": "Guía actualizada 12 jun 2026; Storm Kata nerfeado en OB44 (22 sep 2026)",
+      "fuente": "https://www.smitefire.com/smite/guide/deity-gm-susano-jungle-32003",
+      "pendiente_verificar": false,
+      "habilidades": {
+        "1": "Storm Kata: 3 golpes (cono, giro, dash). Daño principal.",
+        "2": "Wind Siphon: cono que jala a los del centro.",
+        "3": "Jet Stream: lanza un torbellino; al reactivarlo te teletransportas a él.",
+        "4": "Typhoon: crece, jala hacia el centro y lanza al aire si ya es grande."
+      },
+      "combos": [
+        {
+          "nombre": "Daño completo",
+          "secuencia": [
+            "2",
+            "AA",
+            "3",
+            "AA",
+            "3",
+            "AA",
+            "1",
+            "AA",
+            "1",
+            "AA",
+            "1"
+          ],
+          "que_logra": "Máximo daño. El segundo 3 es el teletransporte; cada golpe del 1 se cancela con un básico.",
+          "dificultad": "difícil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Contra enemigo con escape",
+          "secuencia": [
+            "2",
+            "AA",
+            "3",
+            "AA",
+            "1"
+          ],
+          "que_logra": "Pegas con el 1 en vez de teletransportarte, y guardas el teletransporte del 3 para seguirlo cuando use su escape.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Engage con ulti",
+          "secuencia": [
+            "Blink",
+            "2",
+            "4",
+            "3",
+            "AA",
+            "1"
+          ],
+          "que_logra": "Entrar a la pelea y lanzar al aire. Si crees que el enemigo va a huir, guarda el 4 para después del teletransporte.",
+          "dificultad": "difícil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Combo de Emilio",
+          "secuencia": [
+            "1",
+            "AA",
+            "1",
+            "AA",
+            "2"
+          ],
+          "que_logra": "Dos golpes del Kata cancelados con básico y cierras jalando con el 2.",
+          "dificultad": "media",
+          "origen": "usuario",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Sylvanus",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/sylvanus-58",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Nature's Bounty: tus golpes sueltan semillas que dan maná y bajan enfriamientos.",
+        "1": "Verdant Growth: semilla que enraíza y baja protecciones.",
+        "2": "Wisps: cura aliados y daña enemigos.",
+        "3": "Nature's Grasp: liana que aturde al primer dios y lo jala hacia ti.",
+        "4": "Wrath of Terra: golpe al piso que lanza al aire."
+      },
+      "combos": [
+        {
+          "nombre": "Jalar y enraizar",
+          "secuencia": [
+            "3",
+            "1"
+          ],
+          "que_logra": "Lo jalas aturdido y lo enraízas al llegar.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Teamfight",
+          "secuencia": [
+            "3",
+            "1",
+            "4",
+            "2"
+          ],
+          "que_logra": "Jala, raíz, knockup y cura al equipo.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Thanatos",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/thanatos-43",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Harvester Of Souls: matar cura; matar dioses baja enfriamientos. Habilidades cuestan vida.",
+        "1": "Death Scythe: proyectil que ralentiza y cura.",
+        "2": "Scent Of Death: velocidad, inmunidad a slow y penetración.",
+        "3": "Soul Reap: cono que silencia 1 s.",
+        "4": "Hovering Death: sube y cae aturdiendo; ejecuta a los de vida baja."
+      },
+      "combos": [
+        {
+          "nombre": "Silencio y guadaña",
+          "secuencia": [
+            "2",
+            "3",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Buff para alcanzarlo, silencias y guadaña que ralentiza.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ejecutar",
+          "secuencia": [
+            "4",
+            "3",
+            "1"
+          ],
+          "que_logra": "Caes con la ulti para aturdir (o ejecutar), silencio y guadaña.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "The Morrigan",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/the-morrigan-84",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Doomsayer: el 3er básico explota por 9% de la vida del objetivo.",
+        "1": "Deadly Aspects: dos pasos; al reactivar, cono que aturde.",
+        "2": "Dark Omen: proyectil que marca; la marca explota al pegarle.",
+        "3": "Confusion: sigilo y clon que camina.",
+        "4": "Changeling: te conviertes 10 s en otro dios de la partida con su kit."
+      },
+      "combos": [
+        {
+          "nombre": "Marca y stun",
+          "secuencia": [
+            "2",
+            "1",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Marcas, aturdes con Deadly Aspects (eso detona la marca) y básicos.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Changeling",
+          "secuencia": [
+            "4"
+          ],
+          "que_logra": "Conviértete en el dios con mejor ulti de la partida (por ejemplo un guardián con control en área) y úsala.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Thor",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/thor-22",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Warrior's Madness: fuerza por dioses cercanos.",
+        "1": "Mjolnir's Attunement: lanza el martillo; reactivar te teletransporta a él.",
+        "2": "Tectonic Rift: grieta que aturde y bloquea el paso.",
+        "3": "Berserker Barrage: giro y cono frontal.",
+        "4": "Anvil of Dawn: salta y cae aturdiendo."
+      },
+      "combos": [
+        {
+          "nombre": "Grieta y martillo",
+          "secuencia": [
+            "2",
+            "1",
+            "1",
+            "3"
+          ],
+          "que_logra": "Grieta para aturdir y cortarle la salida, martillo, teletransporte y Barrage.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Gank",
+          "secuencia": [
+            "4",
+            "2",
+            "3"
+          ],
+          "que_logra": "Caes con la ulti, grieta detrás para que no escape y Barrage.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Tsukuyomi",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/tsukuyomi-111",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Shingetsu & Mangetsu: los golpes potencian tus tonfas.",
+        "1": "Dark Moon Shuriken: shuriken que se pega; recogerlo baja enfriamiento.",
+        "2": "Kusarigama: combo de 3 golpes que desarma; el último aturde.",
+        "3": "Silver Moon Caltrops: abrojos que ralentizan.",
+        "4": "Piercing Moonlight: cuatro rayos que marcan y luego dash a través de los marcados."
+      },
+      "combos": [
+        {
+          "nombre": "Shuriken y kusarigama",
+          "secuencia": [
+            "1",
+            "2",
+            "2",
+            "2"
+          ],
+          "que_logra": "Shuriken para marcar y los tres golpes de kusarigama para desarmar y aturdir.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "3",
+            "4",
+            "2"
+          ],
+          "que_logra": "Abrojos para ralentizar, rayos y dash, y kusarigama para rematar.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ullr",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ullr-51",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Weapon Master: usar una postura baja enfriamientos de la otra.",
+        "1": "Arco: flecha que atraviesa / Hachas: hacha que aturde.",
+        "2": "Arco: velocidad de ataque / Hachas: velocidad de movimiento.",
+        "3": "Arco: lluvia de flechas / Hachas: salto que baja protección física.",
+        "4": "Cambia de postura (arco o hachas)."
+      },
+      "combos": [
+        {
+          "nombre": "Hachas",
+          "secuencia": [
+            "4",
+            "3",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Cambias a hachas, saltas encima y aturdes con el hacha.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ida y vuelta",
+          "secuencia": [
+            "3",
+            "1",
+            "4",
+            "2",
+            "1"
+          ],
+          "que_logra": "Salto y hacha en melee, cambias a arco y lo rematas a distancia.",
+          "dificultad": "difícil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Vulcan",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/vulcan-29",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Master Craftsman: pegar a dioses da velocidad y maná.",
+        "1": "Backfire: dash hacia atrás que marca al primer dios.",
+        "2": "Inferno Cannon: torreta que dispara.",
+        "3": "Magma Bomb: bomba que lanza enemigos lejos.",
+        "4": "Earthshaker: cohete que pega más mientras más lejos viaja."
+      },
+      "combos": [
+        {
+          "nombre": "Torreta y bomba",
+          "secuencia": [
+            "2",
+            "3"
+          ],
+          "que_logra": "Pones la torreta y lanzas al enemigo con la bomba hacia ella.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Marca",
+          "secuencia": [
+            "2",
+            "1",
+            "3",
+            "4"
+          ],
+          "que_logra": "Torreta, Backfire marca para más daño de torreta, bomba y cohete.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Xbalanque",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/xbalanque-27",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Dead of Night: dañar dioses da fuerza o inteligencia.",
+        "1": "Branching Bola: tus básicos se dividen a los de atrás.",
+        "2": "Poison Darts: cono de dardos que envenena y ralentiza.",
+        "3": "Rising Jaguar: dash y salto inmune disparando dardos.",
+        "4": "Darkest of Nights: oscurece a los enemigos y te da alcance y velocidad."
+      },
+      "combos": [
+        {
+          "nombre": "Dardos y bola",
+          "secuencia": [
+            "2",
+            "1",
+            "AA"
+          ],
+          "que_logra": "Ralentizas con dardos y activas la bola para DPS.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "4",
+            "2",
+            "1",
+            "3"
+          ],
+          "que_logra": "Oscuridad, dardos, bola y salto si se te acercan.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Xing Tian",
+      "parche_verificado": "En Smite 2 desde antes de OB44; recibió ajustes en OB44 y OB45 (sep–oct 2026)",
+      "fuente": "https://zathong.com/xing-tian-smite/ y https://patchbot.io/games/smite-2/articles/1520-ob44-goddess-of-the-underworld-update",
+      "pendiente_verificar": true,
+      "nota_verificacion": "Los combos vienen de guías de Smite 1. Las notas de parche confirman que el kit existe en Smite 2 con los mismos nombres, pero hay que probarlo.",
+      "habilidades": {
+        "1": "Furious Roar: grito que reduce el daño de los básicos enemigos y les quita % de vida con el tiempo.",
+        "2": "Hook Slam: los lanza al aire y los azota contra el piso enraizándolos.",
+        "3": "Sky-Cutting Axe: salto que puede repetirse; gana protecciones en el aire.",
+        "4": "Whirlwind of Rage and Steel: agarra enemigos, los gira y los avienta donde quieras."
+      },
+      "combos": [
+        {
+          "nombre": "Salto y raíz",
+          "secuencia": [
+            "3",
+            "2"
+          ],
+          "que_logra": "Cierras distancia con el salto y los dejas quietos.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Debilitar y atrapar",
+          "secuencia": [
+            "1",
+            "3",
+            "2"
+          ],
+          "que_logra": "Primero bajas su daño básico, luego saltas y enraízas.",
+          "dificultad": "fácil",
+          "origen": "guia",
+          "media_url": null
+        },
+        {
+          "nombre": "Entregar al enemigo",
+          "secuencia": [
+            "3",
+            "4",
+            "2",
+            "1"
+          ],
+          "que_logra": "Saltas, los avientas hacia tu equipo o tu torre con la ulti, los enraízas al caer y rematas con el grito. Es el combo de \"los deja quietos\" para que otro los mate.",
+          "dificultad": "media",
+          "origen": "guia",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Yemoja",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/yemoja-106",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Omi: usa Omi en lugar de maná; sus ataques curan aliados.",
+        "1": "Bouncing Bubble / Moonstrike: burbuja que ralentiza; el recast aturde.",
+        "2": "Mending Waters: ola que daña y cura aliados con escudo.",
+        "3": "Riptide: anillo que empuja y ralentiza; acelera aliados.",
+        "4": "River's Rebuke: dos muros de agua que bloquean y luego caen."
+      },
+      "combos": [
+        {
+          "nombre": "Burbuja y stun",
+          "secuencia": [
+            "1",
+            "1"
+          ],
+          "que_logra": "Burbuja para ralentizar y recast para aturdir.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Encerrar",
+          "secuencia": [
+            "4",
+            "1",
+            "1",
+            "3"
+          ],
+          "que_logra": "Muros para encerrarlo, burbuja con stun y Riptide para que no salga.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Ymir",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/ymir-12",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Frostbite: enemigos congelados hacen menos daño y reciben más de básicos.",
+        "1": "Ice Wall: muro que empuja; en tus pies te impulsa.",
+        "2": "Glacial Strike: campo de hielo que ralentiza.",
+        "3": "Frost Breath: cono que aturde.",
+        "4": "Shards Of Ice: canaliza, ralentiza 40% y explota."
+      },
+      "combos": [
+        {
+          "nombre": "Muro y aliento",
+          "secuencia": [
+            "1",
+            "3"
+          ],
+          "que_logra": "Muro detrás para cortarle la salida y aliento para aturdir.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Ulti",
+          "secuencia": [
+            "1",
+            "3",
+            "4"
+          ],
+          "que_logra": "Muro, aturdes y cargas la ulti mientras está quieto.",
+          "dificultad": "media",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    },
+    {
+      "dios": "Zeus",
+      "parche_verificado": "Kit revisado en SmiteFire (sección SMITE 2) el 11 nov 2026",
+      "fuente": "https://www.smitefire.com/smite/god/zeus-4",
+      "pendiente_verificar": true,
+      "nota_verificacion": "No encontré combos escritos para este dios en Smite 2; se armaron a partir del kit actual. Probar en partida.",
+      "habilidades": {
+        "pasiva": "Overcharge: cargas que suben el daño de los básicos.",
+        "1": "Chain Lightning: rayo que rebota y ralentiza.",
+        "2": "Thunderclap: rayos alrededor y velocidad.",
+        "3": "Detonate Charge: detona cargas; a máximo aturde 0.5 s.",
+        "4": "Lightning Storm: tormenta en área que pega 5 veces."
+      },
+      "combos": [
+        {
+          "nombre": "Cargar y detonar",
+          "secuencia": [
+            "1",
+            "2",
+            "AA",
+            "3"
+          ],
+          "que_logra": "Cargas al enemigo con rayo, Thunderclap y básicos, y detonas para aturdir.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        },
+        {
+          "nombre": "Tormenta",
+          "secuencia": [
+            "1",
+            "3",
+            "4"
+          ],
+          "que_logra": "Rayo, detonas para aturdir y la tormenta le cae completa.",
+          "dificultad": "fácil",
+          "origen": "derivado",
+          "media_url": null
+        }
+      ]
+    }
+  ]
 }
