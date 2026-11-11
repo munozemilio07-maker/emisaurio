@@ -19,6 +19,8 @@ function allTileUrls() {
   return out;
 }
 
+const PREVIEW = !!import.meta.env.VITE_ARTIFACT;
+
 export function Settings() {
   const open = useStore((s) => s.settingsOpen);
   const theme = useStore((s) => s.theme);
@@ -41,6 +43,12 @@ export function Settings() {
 
   const doExport = () => {
     const s = useStore.getState();
+    if (PREVIEW) {
+      // aquí no se pueden descargar archivos: se copia el JSON al portapapeles
+      navigator.clipboard.writeText(JSON.stringify(exportProgress(s)))
+        .then(() => setMsg('Progreso copiado al portapapeles. Pégalo en una nota para guardarlo.'), () => setMsg('No se pudo copiar el progreso en este visor.'));
+      return;
+    }
     const blob = new Blob([JSON.stringify(exportProgress(s), null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -90,10 +98,11 @@ export function Settings() {
     <dialog ref={ref} className="dialog" onClose={() => set({ settingsOpen: false })} onClick={(e) => { if (e.target === ref.current) set({ settingsOpen: false }); }}>
       <div className="dialog-inner">
         <header className="dialog-head">
-          <h2>Ajustes y progreso</h2>
+          <h2>{PREVIEW ? 'Progreso' : 'Ajustes y progreso'}</h2>
           <button type="button" className="icon-btn" aria-label="Cerrar" onClick={() => set({ settingsOpen: false })}><IconClose /></button>
         </header>
 
+        {!PREVIEW && (
         <section>
           <h3>Tema</h3>
           <div className="seg" role="group" aria-label="Tema">
@@ -102,19 +111,22 @@ export function Settings() {
             ))}
           </div>
         </section>
+        )}
 
+        {PREVIEW && <p className="dialog-msg">Vista previa: tu progreso se guarda solo en este navegador. El chat, la sincronización y el modo sin conexión están en la app desplegada.</p>}
         <section>
           <h3>Progreso</h3>
           <p className="hint">Llevas <b className="mono">{doneCount}/{TOTAL}</b> paradas. Los checks se guardan por marcador de MetaForge, así que regenerar las expediciones después de un parche no los borra.</p>
           <div className="btn-row">
-            <button type="button" className="btn" onClick={doExport}>Exportar JSON</button>
+            <button type="button" className="btn" onClick={doExport}>{PREVIEW ? 'Copiar progreso' : 'Exportar JSON'}</button>
             <button type="button" className="btn" onClick={() => { file.current!.dataset.mode = 'merge'; file.current!.click(); }}>Importar y combinar</button>
-            <button type="button" className="btn" onClick={() => { if (confirm('Se reemplazará tu progreso actual por el del archivo. ¿Continuar?')) { file.current!.dataset.mode = 'replace'; file.current!.click(); } }}>Importar y reemplazar</button>
+{!PREVIEW && <button type="button" className="btn" onClick={() => { if (confirm('Se reemplazará tu progreso actual por el del archivo. ¿Continuar?')) { file.current!.dataset.mode = 'replace'; file.current!.click(); } }}>Importar y reemplazar</button>}
           </div>
           <p className="hint">También acepta el progreso de la versión 4 (el valor <code>aw-done</code>).</p>
           <input ref={file} type="file" accept="application/json,.json" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) void doImport(f, (e.target.dataset.mode as 'merge' | 'replace') ?? 'merge'); e.target.value = ''; }} />
         </section>
 
+        {!PREVIEW && (
         <section>
           <h3>Sincronizar entre PC y celular</h3>
           <p className="hint">Usa el mismo código en los dos dispositivos. Quien tenga el código puede leer y cambiar ese progreso: no lo compartas. Si marcas y desmarcas en dos lados, gana el cambio más reciente de cada parada.</p>
@@ -134,7 +146,9 @@ export function Settings() {
             </p>
           ) : <p className="hint">Sin código, el progreso vive solo en este navegador.</p>}
         </section>
+        )}
 
+        {!PREVIEW && (
         <section>
           <h3>Sin conexión</h3>
           <p className="hint">La app, los datos y el mapa hasta el zoom 5 se guardan solos al instalarla. El zoom más nítido (6) se guarda al verlo, o completo con este botón (unos 20 MB más).</p>
@@ -142,13 +156,16 @@ export function Settings() {
             {dl ? `Guardando mapa… ${dl.n}/${dl.total}` : 'Descargar el mapa completo'}
           </button>
         </section>
+        )}
 
+        {!PREVIEW && (
         <section>
           <h3>Zona de peligro</h3>
           <button type="button" className="btn btn--danger" onClick={() => { if (confirm(`Se borrarán tus ${doneCount} checks en este dispositivo${syncCode ? ' y en los sincronizados' : ''}. Exporta antes si quieres un respaldo. ¿Borrar?`)) { useStore.getState().resetProgress(); setMsg('Progreso borrado.'); } }}>
             Borrar todo el progreso
           </button>
         </section>
+        )}
 
         {msg && <p className="dialog-msg" role="status">{msg}</p>}
         <footer className="dialog-foot">

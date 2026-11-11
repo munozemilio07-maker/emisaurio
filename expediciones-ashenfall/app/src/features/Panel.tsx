@@ -34,7 +34,7 @@ export function Panel() {
           <p className="kicker">Cuaderno de cartógrafo</p>
           <h1>Expediciones de Ashenfall</h1>
         </div>
-        <button type="button" className="icon-btn" aria-label="Chat con Claude" title="Chat con Claude" onClick={() => set({ chatOpen: true })}><IconChat /></button>
+        {!import.meta.env.VITE_ARTIFACT && <button type="button" className="icon-btn" aria-label="Chat con Claude" title="Chat con Claude" onClick={() => set({ chatOpen: true })}><IconChat /></button>}
         <button type="button" className="icon-btn" aria-label="Ajustes y progreso" title="Ajustes y progreso" onClick={() => set({ settingsOpen: true })}><IconGear /></button>
       </header>
       <div className="total">

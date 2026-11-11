@@ -9,9 +9,25 @@ import type { LayerId, Stop } from '../types';
 import { activeLayer, currentRoute, routeStops, useStore, type Route } from '../state/store';
 import { ASHENFALL_CRS, WORLD_BOUNDS } from './crs';
 import { StopCard } from '../features/StopCard';
+import superTiles from '../data/supertiles.json';
 
 const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/**
+ * Vista previa (Artifact): hay un tope de archivos, así que el detalle fino va en
+ * "supertiles" de 2048 px (8×8 tiles de z6 cosidos) en vez de miles de tiles sueltos.
+ */
+const SUPER = import.meta.env.VITE_ARTIFACT ? (superTiles as Record<string, string[]>) : null;
+function makeSuper(id: LayerId, z: 4 | 6, opts: L.TileLayerOptions) {
+  const have = new Set(SUPER?.[`${id}/s${z}`] ?? []);
+  const layer = L.tileLayer('', {
+    tileSize: 2048, zoomOffset: -3, minNativeZoom: z, maxNativeZoom: z, minZoom: z === 6 ? 4.5 : TILES.minZoom, maxZoom: TILES.maxZoom + 1,
+    noWrap: true, bounds: WORLD_BOUNDS, keepBuffer: 0, errorTileUrl: BLANK, ...opts,
+  });
+  layer.getTileUrl = (c: L.Coords) => (have.has(`${c.x}/${c.y}`) ? `${import.meta.env.BASE_URL}tiles/${id}/s${z}/${c.x}/${c.y}.webp` : BLANK);
+  return layer;
+}
 
 /** TileLayer que solo pide los tiles que existen según el manifiesto (sin 404 ni tiles vacíos). */
 function makeTiles(id: LayerId, opts: L.TileLayerOptions) {
@@ -46,14 +62,20 @@ function panelPadding(): { tl: L.PointExpression; br: L.PointExpression } {
 function Layers() {
   const map = useMap();
   const layer = useStore(activeLayer);
-  const refs = useRef<{ surface: L.TileLayer; dowdun: L.TileLayer } | null>(null);
+  const refs = useRef<{ surface: L.Layer; dowdun: L.Layer } | null>(null);
 
   useEffect(() => {
     // Base borrosa (zoom 4, siempre precacheada): el mapa nunca queda en negro
     // mientras cargan los tiles nítidos, ni sin conexión.
-    const base = makeTiles('surface', { className: 'tiles-surface', zIndex: 0, maxNativeZoom: 4, keepBuffer: 1 }).addTo(map);
-    const surface = makeTiles('surface', { className: 'tiles-surface', zIndex: 1 }).addTo(map);
-    const dowdun = makeTiles('dowdun', { className: 'tiles-dowdun', zIndex: 2 });
+    const base = (SUPER
+      ? makeSuper('surface', 4, { className: 'tiles-surface', zIndex: 0 })
+      : makeTiles('surface', { className: 'tiles-surface', zIndex: 0, maxNativeZoom: 4, keepBuffer: 1 })).addTo(map);
+    const surface = (SUPER
+      ? makeSuper('surface', 6, { className: 'tiles-surface', zIndex: 1 })
+      : makeTiles('surface', { className: 'tiles-surface', zIndex: 1 })).addTo(map);
+    const dowdun = SUPER
+      ? L.layerGroup([makeSuper('dowdun', 4, { zIndex: 2 }), makeSuper('dowdun', 6, { zIndex: 3 })])
+      : makeTiles('dowdun', { className: 'tiles-dowdun', zIndex: 2 });
     refs.current = { surface, dowdun };
     return () => { base.remove(); surface.remove(); dowdun.remove(); };
   }, [map]);

@@ -8,6 +8,7 @@ import { useStore } from './state/store';
 export function App() {
   const theme = useStore((s) => s.theme);
   useEffect(() => {
+    if (import.meta.env.VITE_ARTIFACT) return; // ahí el tema lo pone quien muestra la página
     if (theme === 'auto') delete document.documentElement.dataset.theme;
     else document.documentElement.dataset.theme = theme;
   }, [theme]);

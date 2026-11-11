@@ -4,3 +4,4 @@ dev-dist
 .wrangler
 .dev.vars
 *.local
+dist-artifact

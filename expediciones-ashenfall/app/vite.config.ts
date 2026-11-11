@@ -2,10 +2,15 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// VITE_ARTIFACT=1 compila la versión de vista previa (sin PWA ni servidor, rutas relativas)
+const ARTIFACT = process.env.VITE_ARTIFACT === '1';
+
 export default defineConfig({
+  base: ARTIFACT ? './' : '/',
+  publicDir: ARTIFACT ? false : 'public',
   plugins: [
     react(),
-    VitePWA({
+    !ARTIFACT && VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/*.png'],
       manifest: {
@@ -41,6 +46,6 @@ export default defineConfig({
   ],
   server: { proxy: { '/api': 'http://127.0.0.1:8787' } },
   preview: { proxy: { '/api': 'http://127.0.0.1:8787' } },
-  build: { chunkSizeWarningLimit: 1200 },
+  build: { chunkSizeWarningLimit: 1200, outDir: ARTIFACT ? 'dist-artifact' : 'dist' },
   test: { include: ['tests/**/*.test.ts'] },
 });
