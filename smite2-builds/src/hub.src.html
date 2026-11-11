@@ -44,6 +44,9 @@ a { color: var(--gold); }
 .hero { position: relative; overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, #1b2450 0%, #0d1126 45%, var(--void) 100%); border-bottom: 1px solid var(--gold-deep); }
 #sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .hero .rays { position: absolute; inset: -20% -10% auto; height: 120%; background: conic-gradient(from 180deg at 50% -10%, transparent 40%, rgba(236,198,112,.10) 46%, transparent 50%, rgba(236,198,112,.07) 54%, transparent 58%, rgba(236,198,112,.05) 62%, transparent 66%); pointer-events: none; }
+.lang { position: absolute; z-index: 2; top: calc(12px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); display: flex; border: 1px solid var(--gold-deep); background: rgba(6,7,12,.7); }
+.lang button { cursor: pointer; border: 0; background: none; padding: 8px 14px; font-family: var(--font-head); font-size: 13px; letter-spacing: .14em; color: var(--muted); }
+.lang button[aria-pressed="true"] { background: linear-gradient(180deg, var(--gold), var(--gold-deep)); color: #1a1305; font-weight: 700; }
 .hero-in { position: relative; padding-block: clamp(36px, 7vw, 76px) 28px; display: grid; gap: 18px; justify-items: center; text-align: center; }
 .hero h1 { font-family: var(--font-title); font-weight: 900; font-size: clamp(34px, 8.4vw, 92px); line-height: .98; letter-spacing: .03em;
   background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 42%, var(--gold-deep) 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -166,6 +169,7 @@ footer { padding-block: 26px 48px; display: grid; gap: 8px; font-size: 14px; col
 footer p { max-width: 90ch; }
 
 @media (max-width: 720px) {
+  .hero-in { padding-top: 64px; }
   .shrine { grid-template-columns: minmax(0, 1fr); }
   .statue { min-height: 0; height: 230px; }
   .statue::after { background: linear-gradient(0deg, var(--stone) 0%, transparent 60%); }
@@ -179,14 +183,15 @@ footer p { max-width: 90ch; }
 </style>
 
 <header class="hero">
+  <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
   <canvas id="sky" aria-hidden="true"></canvas>
   <div class="rays" aria-hidden="true"></div>
   <div class="gut hero-in">
     <h1><small>Smite 2 · Joust 3 vs 3</small>Panteón de Builds</h1>
-    <p class="sub">Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.</p>
-    <p class="patch"><b id="patch">OB47</b><span>Datos de partidas de Joust · actualizado el 11 nov 2026</span></p>
+    <p class="sub" id="tSub">Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.</p>
+    <p class="patch"><b id="patch">OB47</b><span id="tPatch">Datos de partidas de Joust · actualizado el 11 nov 2026</span></p>
     <div class="oracle">
-      <label class="eyebrow" for="q">¿A quién invocas?</label>
+      <label class="eyebrow" for="q" id="tAsk">¿A quién invocas?</label>
       <input id="q" type="search" list="godlist" placeholder="Zeus, Atenea, Anubis…" autocomplete="off">
       <datalist id="godlist"></datalist>
     </div>
@@ -199,8 +204,8 @@ footer p { max-width: 90ch; }
     <div class="bar">
       <h2 class="eyebrow" id="count">Los dioses</h2>
       <div class="selects">
-        <label for="fPan">Panteón <select id="fPan"></select></label>
-        <label for="fSort">Ordenar por <select id="fSort">
+        <label for="fPan"><span id="tPan">Panteón</span> <select id="fPan"></select></label>
+        <label for="fSort"><span id="tSort">Ordenar por</span> <select id="fSort">
           <option value="name">Nombre</option><option value="tier">Tier (mejor primero)</option><option value="wr">% de victorias</option><option value="n">Más jugados</option>
         </select></label>
       </div>
@@ -219,8 +224,8 @@ footer p { max-width: 90ch; }
 
 <footer class="gut">
   <div class="frieze" aria-hidden="true"></div>
-  <p>Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí.</p>
-  <p>Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.</p>
+  <p id="tF1">Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí.</p>
+  <p id="tF2">Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.</p>
 </footer>
 
 <script>
@@ -293,6 +298,86 @@ const PROTECT = {
 };
 const NEEDS_CARE = new Set(["Kali", "Mercury", "Chronos", "Sol"]);
 
+const SETUP_EN = {
+  "Sobek": "plucks them with his hook and throws them toward your team", "Ares": "chains everyone and pulls them in with his ult", "Ymir": "freezes them in an area",
+  "Athena": "taunts them into hitting her", "Cabrakan": "stuns them and traps them with his walls", "Hun Batz": "makes them dance with his ult",
+  "Odin": "traps them in his ring", "Xing Tian": "grabs everyone and slams them with his ult", "Sylvanus": "pulls and roots them",
+  "Atlas": "pulls them toward him", "Bacchus": "knocks them up and leaves them dizzy", "Cerberus": "pulls everyone in with his ult", "Hades": "drags them in and holds them with his ult",
+  "Khepri": "grabs one and drags them away", "Fenrir": "carries one in his jaws back to your team", "Geb": "stuns them in an area with his ult",
+  "Kuzenbo": "pushes them into a wall", "Ganesha": "silences them and traps them with his pillars", "Medusa": "turns them to stone with her ult",
+  "Nox": "roots and silences them", "Nike": "knocks them up with her barrier", "Poseidon": "drags them in with his whirlpool"
+};
+const PAYOFF_EN = {
+  "Janus": "drops his portal or ult right where they land", "Zeus": "detonates his charges on all of them at once", "Poseidon": "releases the Kraken on top of them",
+  "Anubis": "melts them with his ult while they can't move", "Kukulkan": "puts his tornado and dragon on them", "Scylla": "blows them up with her ult",
+  "Agni": "rains fire and meteors on them", "Ra": "lines up his ult beam on them", "Vulcan": "lands his ult missile on them", "Merlin": "unloads his area spells on them",
+  "Sol": "fires her ult down the line", "Nu Wa": "hits all of them with her ult", "Ah Puch": "explodes his corpses on them", "Neith": "finishes them with her ult from afar",
+  "Baron Samedi": "drags them into his ult", "Thor": "drops on them from the sky with his ult", "Morgan Le Fay": "detonates her marks on them"
+};
+const PROTECT_EN = {
+  "Aphrodite": "heals them and makes them immune with her ult", "Hel": "heals them and cleanses crowd control", "Ra": "heals them inside his zone", "Geb": "shields them and cleanses crowd control",
+  "Khepri": "revives them with his ult", "Sylvanus": "heals them with his seeds", "Yemoja": "heals and shields them", "Baron Samedi": "heals them in an area", "Horus": "heals and protects them",
+  "Ix Chel": "heals them"
+};
+// Textos en inglés, indexados por el texto en español.
+const EN = {
+  "Ofensiva": "Offensive", "Híbrida": "Hybrid", "Defensiva": "Defensive",
+  "Todo al daño. Úsala si vas ganando o tu equipo ya tiene quien aguante.": "All damage. Use it when you're ahead or your team already has a frontline.",
+  "Daño y aguante. Para partidas parejas o si te enfocan de vez en cuando.": "Damage and durability. For even games or when you get focused now and then.",
+  "Aguantar y seguir peleando. Úsala si te matan mucho o eres el frente.": "Survive and keep fighting. Use it if you keep dying or you are the frontline.",
+  "mago": "mage", "luchador de habilidades": "ability bruiser", "carry de ataque básico": "basic attack carry", "tanque": "tank",
+  "Mago": "Mage", "Luchador": "Bruiser", "Carry": "Carry", "Tanque": "Tank",
+  "Cazador": "Hunter", "Asesino": "Assassin", "Guerrero": "Warrior", "Guardián": "Guardian",
+  "Magos": "Mages", "Cazadores": "Hunters", "Asesinos": "Assassins", "Guerreros": "Warriors", "Guardianes": "Guardians", "Todos": "All",
+  "Se curan mucho": "They heal a lot",
+  "Curanderos o mucho robo de vida. El antiheal les baja 40% toda la curación; con uno en el equipo basta, pero que alguien lo lleve.": "Healers or lots of lifesteal. Anti-heal cuts all their healing by 40%. One on your team is enough, but someone has to buy it.",
+  "Tanques y mucha vida": "Tanks and big health pools",
+  "Si no les bajas la vida, compra daño por porcentaje de vida o penetración.": "If you can't get through their health, buy percent-health damage or penetration.",
+  "Mucho daño mágico": "Lots of magical damage",
+  "Dos o tres rivales pegan con magia, o su mago va muy adelantado.": "Two or three enemies deal magical damage, or their mage is far ahead.",
+  "Mucho daño físico": "Lots of physical damage",
+  "Dos o tres rivales pegan físico, o su carry va muy adelantado.": "Two or three enemies deal physical damage, or their carry is far ahead.",
+  "Carries de ataque básico y críticos": "Basic attack carries and crits",
+  "Su carry te derrite a golpes. Estos objetos castigan o frenan los ataques básicos.": "Their carry shreds you with basic attacks. These items punish or slow basic attacks.",
+  "Mucho control": "Lots of crowd control",
+  "Aturdimientos, raíces y agarres en cadena. Si te atrapan, mueres sin jugar.": "Chained stuns, roots and grabs. If they catch you, you die without playing.",
+  "Usan escudos": "They use shields",
+  "Dioses que se escudan a sí mismos o a su equipo. Rómpeles el escudo antes de gastar tu daño.": "Gods that shield themselves or their team. Break the shield before you spend your damage.",
+  "Los magos no tienen rompeescudos propio: pídele Erosión a tu tanque y guarda tu daño para cuando el escudo se acabe.": "Mages have no shield breaker of their own: ask your tank for Erosion and hold your damage until the shield is gone.",
+  "Asesinos que te saltan encima": "Assassins that dive you",
+  "Te borran en un combo. Necesitas un segundo de vida extra para que tu equipo responda.": "They delete you in one combo. You need one extra second alive so your team can respond.",
+  "reliquia": "relic", "ya en tu build": "already in your build", "sugerido": "suggested",
+  "Copiar lista": "Copy list", "Copiada": "Copied", "La más jugada en Joust": "Most played in Joust",
+  "Sin rivales elegidos se muestran todas las situaciones.": "With no enemies picked, every situation is shown.",
+  "Contra este equipo no hay nada urgente: sigue tu build normal.": "Nothing urgent against this team: follow your normal build.",
+  "Según el rival": "Against the enemy", "¿Contra quién juegas?": "Who are you up against?",
+  "Limpiar": "Clear", "Agregar rival (hasta 3)…": "Add an enemy (up to 3)…",
+  "Regla práctica: no vendas tu núcleo. Cambia el quinto o sexto objeto, o compra el situacional en cuanto termines tus dos primeros. El antiheal sirve más mientras antes lo tengas.": "Rule of thumb: don't sell your core. Swap your fifth or sixth item, or buy the situational one right after your first two. Anti-heal is worth more the earlier you get it.",
+  "Tú preparas, ellos rematan": "You set up, they finish", "Ellos preparan, tú rematas": "They set up, you finish", "A quién cuidar": "Who to protect", "Quién te cuida": "Who keeps you alive",
+  "hace muchísimo daño si lo mantienes vivo": "deals huge damage if you keep them alive",
+  "Con quién combina": "Good partners",
+  "Son combos por cómo encajan las habilidades, no por estadísticas. Los compañeros salen ordenados por su tier en Joust; toca uno para ver su build.": "These combos are based on how the kits fit together, not on stats. Partners are sorted by their Joust tier; tap one to see their build.",
+  "Sin datos suficientes.": "Not enough data.", "Sin aspecto": "No aspect",
+  "Estas builds son de partidas jugadas con el aspecto activado.": "These builds come from games played with the aspect on.",
+  "Recomendado": "Recommended", "Poco usado en Joust": "Rarely used in Joust",
+  "Tier en Joust": "Joust tier", "Victorias": "Win rate", "Partidas analizadas": "Games analysed", "Así lo juegan": "Played as", " · muestra chica": " · small sample",
+  "Objeto inicial": "Starter item", "Reliquia": "Relic", "Las tres builds": "The three builds",
+  "Ningún dios cumple esos filtros.": "No god matches those filters.",
+  "Nombre": "Name", "Tier (mejor primero)": "Tier (best first)", "% de victorias": "Win rate", "Más jugados": "Most played",
+  "Panteón": "Pantheon", "Ordenar por": "Sort by", "¿A quién invocas?": "Who do you summon?",
+  "Zeus, Atenea, Anubis…": "Zeus, Athena, Anubis…",
+  "Datos de partidas de Joust · actualizado el 11 nov 2026": "Joust match data · updated Nov 11, 2026",
+  "Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.": "Pick your god and get their <b>offensive</b>, <b>hybrid</b> and <b>defensive</b> build, with what each item does and what to buy against the enemy team.",
+  "Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí.": "Builds come from each god's most recent Joust matches published on Smite2.live: which items were bought and in how many games. The item catalog and images come from there too.",
+  "Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.": "Item text in English is the in-game description. Fan site, not affiliated with Hi-Rez or Titan Forge Games."
+};
+let lang = "es";
+try { if (localStorage.getItem("lang") === "en") lang = "en"; } catch (e) {}
+const t = s => lang === "en" && EN[s] != null ? EN[s] : s;
+const L = (es, en) => lang === "en" ? en : es;
+const N = g => lang === "en" ? g.e : g.n;
+const IN = it => lang === "en" ? it.e : it.n;
+
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -313,38 +398,38 @@ try { foes = JSON.parse(localStorage.getItem("foes") || "[]").filter(s => G.some
 function itemRow(id, opts = {}) {
   const it = IT[id];
   if (!it) return "";
-  const pk = opts.sug ? `<span class="pk sug">sugerido</span>` : opts.pick != null ? `<span class="pk" title="Jugadores que lo compran">${opts.pick}%</span>` : opts.tag ? `<span class="pk">${opts.tag}</span>` : "";
+  const pk = opts.sug ? `<span class="pk sug">${t("sugerido")}</span>` : opts.pick != null ? `<span class="pk" title="Jugadores que lo compran">${opts.pick}%</span>` : opts.tag ? `<span class="pk">${opts.tag}</span>` : "";
   return `<div class="it${opts.small ? " small" : ""}">
     <span class="ic spr-i" style="${pos(it.i, DATA.ic, DATA.ir)}" role="img" aria-label="${esc(it.e)}"></span>
-    <div><div class="n">${esc(it.n)}</div>${it.n !== it.e ? `<div class="e">${esc(it.e)}</div>` : ""}
-      ${opts.noDesc || !it.d ? "" : `<div class="d">${esc(it.d)}</div>`}
-      ${opts.stats && it.s.length ? `<div class="s">${esc(it.s.join(" · "))}</div>` : ""}</div>
+    <div><div class="n">${esc(IN(it))}</div>${lang === "es" && it.n !== it.e ? `<div class="e">${esc(it.e)}</div>` : ""}
+      ${opts.noDesc || !L(it.d, it.de) ? "" : `<div class="d">${esc(L(it.d, it.de))}</div>`}
+      ${opts.stats && it.s.length ? `<div class="s">${esc(L(it.s, it.se).join(" · "))}</div>` : ""}</div>
     ${pk}</div>`;
 }
 
 function buildHTML(kind, r) {
   const b = r.b[kind], isMeta = r.meta === kind;
   if (!b) {
-    return `<article class="build ${kind}"><header><h3>${KIND[kind].t}</h3></header>
-      <p class="na">No aplica en este rol: con lo que compran los jugadores, esta versión queda igual que la ${KIND[r.meta].t.toLowerCase()}.</p></article>`;
+    return `<article class="build ${kind}"><header><h3>${t(KIND[kind].t)}</h3></header>
+      <p class="na">${L(`No aplica: con lo que compran los jugadores, esta versión queda igual que la ${KIND[r.meta].t.toLowerCase()}.`, `Not applicable: with what players actually buy, this version ends up the same as the ${t(KIND[r.meta].t).toLowerCase()} one.`)}</p></article>`;
   }
   const rows = b.map(([id, pick, flag]) => `<li>${itemRow(id, { pick, sug: flag === 2, stats: true })}</li>`).join("");
-  const txt = b.map(([id]) => `${IT[id].n} (${IT[id].e})`).join(" > ");
+  const txt = b.map(([id]) => L(`${IT[id].n} (${IT[id].e})`, IT[id].e)).join(" > ");
   return `<article class="build ${kind}${isMeta ? " meta" : ""}">
-    <header><h3>${KIND[kind].t}${isMeta ? `<span class="crown">La más jugada en Joust</span>` : ""}</h3>
-    <p class="when">${KIND[kind].w}</p></header>
+    <header><h3>${t(KIND[kind].t)}${isMeta ? `<span class="crown">${t("La más jugada en Joust")}</span>` : ""}</h3>
+    <p class="when">${t(KIND[kind].w)}</p></header>
     <ol>${rows}</ol>
-    <button class="copy" type="button" data-copy="${esc(txt)}">Copiar lista</button>
+    <button class="copy" type="button" data-copy="${esc(txt)}">${t("Copiar lista")}</button>
   </article>`;
 }
 
 function analyse() {
   const E = foes.map(s => G.find(g => g.s === s)).filter(Boolean);
-  const who = t => E.filter(g => g.tr.includes(t)).map(g => g.n);
-  const M = E.filter(g => g.dmg === "M").map(g => g.n), P = E.filter(g => g.dmg === "P").map(g => g.n);
+  const who = k => E.filter(g => g.tr.includes(k)).map(N);
+  const M = E.filter(g => g.dmg === "M").map(N), P = E.filter(g => g.dmg === "P").map(N);
   const need = 2;
   const out = {};
-  for (const t of ["heal", "tank", "aa", "shield", "burst"]) if (who(t).length) out[t] = who(t);
+  for (const k of ["heal", "tank", "aa", "shield", "burst"]) if (who(k).length) out[k] = who(k);
   if (who("cc").length >= 2) out.cc = who("cc");
   if (M.length >= need) out.magic = M;
   if (P.length >= need) out.phys = P;
@@ -358,97 +443,100 @@ function rivalHTML(r) {
   const cards = order.map(s => {
     const ids = [...(s.picks[r.prof] || []), ...(s.picks.any || [])];
     const note = s.note && s.note[r.prof];
-    const list = (s.skip && s.skip[r.prof]) ? "" : ids.map(id => itemRow(id, { small: true, tag: IT[id].c === "x" ? "reliquia" : have.has(id) ? "ya en tu build" : "" })).join("");
+    const list = (s.skip && s.skip[r.prof]) ? "" : ids.map(id => itemRow(id, { small: true, tag: IT[id].c === "x" ? t("reliquia") : have.has(id) ? t("ya en tu build") : "" })).join("");
     const hot = out[s.id];
     return `<article class="sit${hot ? " hot" : ""}">
-      <h3>${SVG[s.id]}${s.t}</h3>
-      ${hot ? `<p class="because">Aplica contra: ${esc(hot.join(", "))}</p>` : ""}
-      <p class="why">${s.why}</p>
-      ${note ? `<p class="why">${note}</p>` : ""}
+      <h3>${SVG[s.id]}${t(s.t)}</h3>
+      ${hot ? `<p class="because">${L("Aplica contra", "Applies against")}: ${esc(hot.join(", "))}</p>` : ""}
+      <p class="why">${t(s.why)}</p>
+      ${note ? `<p class="why">${t(note)}</p>` : ""}
       <div class="list">${list}</div>
     </article>`;
   }).join("");
-  const chips = E.map(g => `<button class="foe" type="button" data-foe="${g.s}" aria-label="Quitar a ${esc(g.n)}">${face(g)}<span>${esc(g.n)}</span><span class="x" aria-hidden="true">×</span></button>`).join("");
+  const chips = E.map(g => `<button class="foe" type="button" data-foe="${g.s}" aria-label="${L("Quitar a", "Remove")} ${esc(N(g))}">${face(g)}<span>${esc(N(g))}</span><span class="x" aria-hidden="true">×</span></button>`).join("");
   const n = Object.keys(out).length;
-  const verdict = !E.length ? "Sin rivales elegidos se muestran todas las situaciones."
-    : n ? `Contra este equipo te aplican ${n} ${n === 1 ? "situación" : "situaciones"}, marcadas en dorado.`
-    : "Contra este equipo no hay nada urgente: sigue tu build normal.";
+  const verdict = !E.length ? t("Sin rivales elegidos se muestran todas las situaciones.")
+    : n ? L(`Contra este equipo te aplican ${n} ${n === 1 ? "situación" : "situaciones"}, marcadas en dorado.`, `${n} ${n === 1 ? "situation applies" : "situations apply"} against this team, highlighted in gold.`)
+    : t("Contra este equipo no hay nada urgente: sigue tu build normal.");
   return `<section class="rival">
-    <div class="sec-head"><span class="eyebrow">Según el rival</span><h2>¿Contra quién juegas?</h2>
-      <p>Ninguna build es fija. Agrega a los 3 dioses del equipo contrario y te marco qué cambiar. Las sugerencias están pensadas para un ${PROF[r.prof]}, que es como más se juega este dios en Joust.</p></div>
+    <div class="sec-head"><span class="eyebrow">${t("Según el rival")}</span><h2>${t("¿Contra quién juegas?")}</h2>
+      <p>${L(`Ninguna build es fija. Agrega a los 3 dioses del equipo contrario y te marco qué cambiar. Las sugerencias están pensadas para un ${PROF[r.prof]}, que es como más se juega este dios en Joust.`, `No build is fixed. Add the 3 enemy gods and the page highlights what to change. Suggestions assume a ${t(PROF[r.prof])}, which is how this god is most played in Joust.`)}</p></div>
     <div class="picker">
       <div class="picker-row">
-        <input id="foeQ" type="search" list="godlist" placeholder="Agregar rival (hasta 3)…" autocomplete="off" aria-label="Agregar dios rival">
-        ${E.length ? `<button class="chip" type="button" id="foeClear">Limpiar</button>` : ""}
+        <input id="foeQ" type="search" list="godlist" placeholder="${t("Agregar rival (hasta 3)…")}" autocomplete="off" aria-label="${t("Agregar rival (hasta 3)…")}">
+        ${E.length ? `<button class="chip" type="button" id="foeClear">${t("Limpiar")}</button>` : ""}
       </div>
       ${E.length ? `<div class="foes">${chips}</div>` : ""}
       <p class="muted" id="verdict">${verdict}</p>
     </div>
-    <p class="rule">Regla práctica: no vendas tu núcleo. Cambia el quinto o sexto objeto, o compra el situacional en cuanto termines tus dos primeros. El antiheal sirve más mientras antes lo tengas.</p>
+    <p class="rule">${t("Regla práctica: no vendas tu núcleo. Cambia el quinto o sexto objeto, o compra el situacional en cuanto termines tus dos primeros. El antiheal sirve más mientras antes lo tengas.")}</p>
     <div class="sits">${cards}</div>
   </section>`;
 }
 
 function comboHTML(g) {
   const byTier = (a, b) => "SABCD".indexOf(a.tier) - "SABCD".indexOf(b.tier) || b.wr - a.wr;
-  const pick = (map, n = 30) => G.filter(x => x !== g && map[x.e]).sort(byTier).slice(0, n);
-  const row = (x, txt) => `<button class="mate" type="button" data-slug="${x.s}">${face(x)}<span><b>${esc(x.n)}</b> ${esc(txt)}.</span></button>`;
-  const hunter = g.cls === "Cazador", carry = hunter || NEEDS_CARE.has(g.e);
+  const en = lang === "en", SU = en ? SETUP_EN : SETUP, PA = en ? PAYOFF_EN : PAYOFF, PR = en ? PROTECT_EN : PROTECT;
+  const pick = map => G.filter(x => x !== g && map[x.e]).sort(byTier);
+  const row = (x, txt) => `<button class="mate" type="button" data-slug="${x.s}">${face(x)}<span><b>${esc(N(x))}</b> ${esc(txt)}.</span></button>`;
+  const hunter = g.cls === "Cazador", carry = hunter || NEEDS_CARE.has(g.e), n = N(g);
   const groups = [];
-  if (SETUP[g.e]) groups.push(["Tú preparas, ellos rematan", `${g.n} ${SETUP[g.e]}. Júntalo con alguien que tenga mucho daño en área:`, pick(PAYOFF).map(x => row(x, PAYOFF[x.e]))]);
-  if (PAYOFF[g.e] || hunter) groups.push(["Ellos preparan, tú rematas", PAYOFF[g.e] ? `${g.n} ${PAYOFF[g.e]}. Le falta alguien que los junte o los deje quietos:` : `${g.n} hace su daño con ataques básicos: le conviene alguien que deje quietos a los rivales.`, pick(SETUP).map(x => row(x, SETUP[x.e]))]);
-  if (PROTECT[g.e]) groups.push(["A quién cuidar", `${g.n} ${PROTECT[g.e].replace(/^lo /, "cuida a su compañero: lo ")}. Rinde más con un carry que haga todo el daño:`, G.filter(x => x !== g && (x.cls === "Cazador" || NEEDS_CARE.has(x.e))).sort(byTier).slice(0, 12).map(x => row(x, "hace muchísimo daño si lo mantienes vivo"))]);
-  if (carry) groups.push(["Quién te cuida", `${g.n} es frágil y hace su daño peleando un rato. Con alguien que lo mantenga vivo gana las peleas largas:`, pick(PROTECT).map(x => row(x, PROTECT[x.e]))]);
+  if (SU[g.e]) groups.push(["Tú preparas, ellos rematan", L(`${n} ${SU[g.e]}. Júntalo con alguien que tenga mucho daño en área:`, `${n} ${SU[g.e]}. Pair them with someone who has big area damage:`), pick(PA).map(x => row(x, PA[x.e]))]);
+  if (PA[g.e] || hunter) groups.push(["Ellos preparan, tú rematas", PA[g.e] ? L(`${n} ${PA[g.e]}. Le falta alguien que los junte o los deje quietos:`, `${n} ${PA[g.e]}. What's missing is someone to group them up or hold them still:`) : L(`${n} hace su daño con ataques básicos: le conviene alguien que deje quietos a los rivales.`, `${n} deals damage with basic attacks, so a partner who holds enemies still helps a lot.`), pick(SU).map(x => row(x, SU[x.e]))]);
+  if (PR[g.e]) groups.push(["A quién cuidar", L(`${n} ${PR[g.e].replace(/^lo /, "cuida a su compañero: lo ")}. Rinde más con un carry que haga todo el daño:`, `${n} keeps a teammate alive: ${PR[g.e]}. Works best with a carry who deals all the damage:`), G.filter(x => x !== g && (x.cls === "Cazador" || NEEDS_CARE.has(x.e))).sort(byTier).slice(0, 12).map(x => row(x, t("hace muchísimo daño si lo mantienes vivo")))]);
+  if (carry) groups.push(["Quién te cuida", L(`${n} es frágil y hace su daño peleando un rato. Con alguien que lo mantenga vivo gana las peleas largas:`, `${n} is fragile and needs time to deal damage. With someone keeping them alive, they win long fights:`), pick(PR).map(x => row(x, PR[x.e]))]);
   if (!groups.length) return "";
-  return `<section class="rival"><div class="sec-head"><span class="eyebrow">Con quién combina</span><h2>Duplas para ${esc(g.n)}</h2>
-    <p>Son combos por cómo encajan las habilidades, no por estadísticas. Los compañeros salen ordenados por su tier en Joust; toca uno para ver su build.</p></div>
-    <div class="combos">${groups.map(([t, why, rows]) => `<article class="sit"><h3>${t}</h3><p class="why">${esc(why)}</p><div class="list cols">${rows.join("")}</div></article>`).join("")}</div></section>`;
+  return `<section class="rival"><div class="sec-head"><span class="eyebrow">${t("Con quién combina")}</span><h2>${L("Duplas para", "Duos for")} ${esc(n)}</h2>
+    <p>${t("Son combos por cómo encajan las habilidades, no por estadísticas. Los compañeros salen ordenados por su tier en Joust; toca uno para ver su build.")}</p></div>
+    <div class="combos">${groups.map(([h, why, rows]) => `<article class="sit"><h3>${t(h)}</h3><p class="why">${esc(why)}</p><div class="list cols">${rows.join("")}</div></article>`).join("")}</div></section>`;
 }
 
 function renderHall() {
   const el = $("#hall");
   if (!cur) { el.innerHTML = ""; return; }
   const { god: g, role } = cur, r = g.roles[role];
-  const kitList = (arr, tag) => arr.length ? arr.map(([id, p]) => itemRow(id, { small: true, pick: p, noDesc: false })).join("") : `<span class="muted">Sin datos suficientes.</span>`;
+  const kitList = (arr, tag) => arr.length ? arr.map(([id, p]) => itemRow(id, { small: true, pick: p, noDesc: false })).join("") : `<span class="muted">${t("Sin datos suficientes.")}</span>`;
   const keys = Object.keys(g.roles);
-  const tabLabel = k => g.roles[k].var.k === "asp" ? `Aspecto: ${esc(g.roles[k].var.es)}` : "Sin aspecto";
+  const an = v => lang === "en" ? v.e : v.es;
+  const tabLabel = k => g.roles[k].var.k === "asp" ? `${L("Aspecto", "Aspect")}: ${esc(an(g.roles[k].var))}` : t("Sin aspecto");
   const tabs = keys.length > 1 ? `<div class="tabs" role="tablist" aria-label="Variante">${keys.map(k => `<button class="tab" role="tab" type="button" data-tab="${k}" aria-selected="${k === role}">${tabLabel(k)}<b>${g.roles[k].n}</b></button>`).join("")}</div>` : "";
   let asp = "";
+  const aspHead = v => `<span class="n">${L("Aspecto", "Aspect")}: ${esc(an(v))}</span>${lang === "es" ? `<span class="e">Aspect of ${esc(v.e)}</span>` : ""}${L(v.d, v.de) ? `<span>${esc(L(v.d, v.de))}</span>` : ""}`;
   if (r.var) {
     asp = r.var.k === "asp"
-      ? `<div class="aspect"><span class="n">Aspecto: ${esc(r.var.es)}</span><span class="e">Aspect of ${esc(r.var.e)}</span><span>${esc(r.var.d)}</span><span class="muted">Estas builds son de partidas jugadas con el aspecto activado.</span></div>`
-      : `<div class="aspect"><span class="n">Sin aspecto</span><span class="muted">Estas builds son de partidas sin el aspecto. Si lo activas (${esc(r.var.es)}), mira la otra pestaña: cambia qué conviene comprar.</span></div>`;
-  } else if (r.asp) {
+      ? `<div class="aspect">${aspHead(r.var)}<span class="muted">${t("Estas builds son de partidas jugadas con el aspecto activado.")}</span></div>`
+      : `<div class="aspect"><span class="n">${t("Sin aspecto")}</span><span class="muted">${L(`Estas builds son de partidas sin el aspecto. Si lo activas (${esc(r.var.es)}), mira la otra pestaña: cambia qué conviene comprar.`, `These builds come from games without the aspect. If you turn it on (${esc(r.var.e)}), check the other tab: the best items change.`)}</span></div>`;
+  } else if (r.asp && r.asp.e) {
     const a = r.asp, rec = a.p >= 50 || (a.w - a.nw >= 5 && a.p >= 20);
-    asp = `<div class="aspect"><span class="n">Aspecto: ${esc(a.es || a.n)}</span><span class="e">Aspect of ${esc(a.e || a.n)}</span>${a.d ? `<span>${esc(a.d)}</span>` : ""}
-      <span class="muted">${rec ? "Recomendado" : "Poco usado en Joust"}: lo llevan en el ${a.p}% de las partidas y ganan el ${a.w}%. Sin aspecto ganan el ${a.nw}%.</span></div>`;
+    asp = `<div class="aspect">${aspHead(a)}
+      <span class="muted">${t(rec ? "Recomendado" : "Poco usado en Joust")}: ${L(`lo llevan en el ${a.p}% de las partidas y ganan el ${a.w}%. Sin aspecto ganan el ${a.nw}%.`, `used in ${a.p}% of games with a ${a.w}% win rate. Without it the win rate is ${a.nw}%.`)}</span></div>`;
   }
   const yt = "https://www.youtube.com/results?search_query=" + encodeURIComponent(`Smite 2 ${g.e} Joust build`);
-  const small = r.n < 80 ? ` · muestra chica` : "";
+  const small = r.n < 80 ? t(" · muestra chica") : "";
   el.innerHTML = `
     <article class="shrine">
-      <div class="statue"><img src="cards/${g.s}.webp" alt="${esc(g.n)}" loading="eager"></div>
+      <div class="statue"><img src="cards/${g.s}.webp" alt="${esc(N(g))}" loading="eager"></div>
       <div class="shrine-body">
-        <div class="name"><span class="eyebrow">Panteón ${esc(g.p.toLowerCase())}</span>
-          <h2>${esc(g.n)}</h2><p class="en">${g.n !== g.e ? `${esc(g.e)} en inglés · ` : ""}${g.cls}</p></div>
+        <div class="name"><span class="eyebrow">${L(`Panteón ${esc(g.p.toLowerCase())}`, `${esc(g.pe)} pantheon`)}</span>
+          <h2>${esc(N(g))}</h2><p class="en">${lang === "es" && g.n !== g.e ? `${esc(g.e)} en inglés · ` : ""}${t(g.cls)}</p></div>
         ${tabs}
         <div class="facts">
-          <div><span class="v">${g.tier}</span><span class="l">Tier en Joust</span></div>
-          <div><span class="v">${Math.round(r.wr)}%</span><span class="l">Victorias</span></div>
-          <div><span class="v">${r.n}</span><span class="l">Partidas analizadas${small}</span></div>
-          <div><span class="v">${PROF_SHORT[r.prof]}</span><span class="l">Así lo juegan</span></div>
+          <div><span class="v">${g.tier}</span><span class="l">${t("Tier en Joust")}</span></div>
+          <div><span class="v">${Math.round(r.wr)}%</span><span class="l">${t("Victorias")}</span></div>
+          <div><span class="v">${r.n}</span><span class="l">${t("Partidas analizadas")}${small}</span></div>
+          <div><span class="v">${t(PROF_SHORT[r.prof])}</span><span class="l">${t("Así lo juegan")}</span></div>
         </div>
-        ${r.old ? `<p class="muted">Hay pocas partidas de este parche con ${esc(g.n)}, así que incluí las de parches anteriores.</p>` : ""}
+        ${r.old ? `<p class="muted">${L(`Hay pocas partidas de este parche con ${esc(g.n)}, así que incluí las de parches anteriores.`, `There are few games on this patch for ${esc(g.e)}, so earlier patches are included.`)}</p>` : ""}
         <div class="kit">
-          <div><span class="l">Objeto inicial</span>${kitList(r.st)}</div>
-          <div><span class="l">Reliquia</span>${kitList(r.re)}</div>
+          <div><span class="l">${t("Objeto inicial")}</span>${kitList(r.st)}</div>
+          <div><span class="l">${t("Reliquia")}</span>${kitList(r.re)}</div>
         </div>
         ${asp}
-        <a class="yt" href="${yt}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5a3 3 0 00-2.1-2.1C19 5 12 5 12 5s-7 0-8.900.4A3 3 0 001 7.5 31 31 0 001 12a31 31 0 00.1 4.500 3 3 0 002.100 2.100C5 19 12 19 12 19s7 0 8.900-.4a3 3 0 002.100-2.100A31 31 0 0023 12a31 31 0 000-4.500zM10 15V9l5.200 3z"/></svg>Buscar builds de ${esc(g.n)} en YouTube</a>
+        <a class="yt" href="${yt}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5a3 3 0 00-2.1-2.1C19 5 12 5 12 5s-7 0-8.900.4A3 3 0 001 7.5 31 31 0 001 12a31 31 0 00.1 4.500 3 3 0 002.100 2.100C5 19 12 19 12 19s7 0 8.900-.4a3 3 0 002.100-2.100A31 31 0 0023 12a31 31 0 000-4.500zM10 15V9l5.200 3z"/></svg>${L(`Buscar builds de ${esc(g.n)} en YouTube`, `Search ${esc(g.e)} builds on YouTube`)}</a>
       </div>
     </article>
-    <div class="sec-head"><span class="eyebrow">Las tres builds</span><h2>${esc(g.n)} en Joust</h2>
-      <p>El porcentaje es en cuántas partidas de Joust compraron ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.</p></div>
+    <div class="sec-head"><span class="eyebrow">${t("Las tres builds")}</span><h2>${L(`${esc(g.n)} en Joust`, `${esc(g.e)} in Joust`)}</h2>
+      <p>${L(`El porcentaje es en cuántas partidas de Joust compraron ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.`, `The percentage is how many Joust games that item was bought in with ${esc(g.e)}. Items marked "suggested" are rarely bought on this god: they are added to complete that version.`)}</p></div>
     <div class="builds">${buildHTML("off", r)}${buildHTML("hyb", r)}${buildHTML("def", r)}</div>
     ${comboHTML(g)}
     ${rivalHTML(r)}`;
@@ -463,17 +551,17 @@ let fTier = "all", fPan = "all", fSort = "name";
 function renderGods() {
   const rank = t => TIERS.indexOf(t);
   const list = G.filter(g => (roleFilter === "all" || g.cls === roleFilter) && (fTier === "all" || g.tier === fTier) && (fPan === "all" || g.p === fPan));
-  const byName = (a, b) => a.n.localeCompare(b.n, "es");
+  const byName = (a, b) => N(a).localeCompare(N(b), lang);
   list.sort(fSort === "tier" ? (a, b) => rank(a.tier) - rank(b.tier) || b.wr - a.wr || byName(a, b)
     : fSort === "wr" ? (a, b) => b.wr - a.wr || byName(a, b)
     : fSort === "n" ? (a, b) => b.tn - a.tn || byName(a, b) : byName);
-  $("#gods").innerHTML = list.map(g => `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)} · ${g.cls} · ${g.wr}% de victorias">
-      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"><span class="tier t${g.tier}">${g.tier}</span></span><span class="nm">${esc(g.n)}</span></button>`).join("") || `<p class="empty">Ningún dios cumple esos filtros.</p>`;
-  $("#count").textContent = list.length === G.length ? `Los ${G.length} dioses` : `${list.length} de ${G.length} dioses`;
+  $("#gods").innerHTML = list.map(g => `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)} · ${t(g.cls)} · ${g.wr}%">
+      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"><span class="tier t${g.tier}">${g.tier}</span></span><span class="nm">${esc(N(g))}</span></button>`).join("") || `<p class="empty">${t("Ningún dios cumple esos filtros.")}</p>`;
+  $("#count").textContent = list.length === G.length ? L(`Los ${G.length} dioses`, `All ${G.length} gods`) : L(`${list.length} de ${G.length} dioses`, `${list.length} of ${G.length} gods`);
 }
 
 function renderChips() {
-  $("#roleChips").innerHTML = [["all", "Todos"], ...CLASSES.map(c => [c, CLASS_PL[c]])]
+  $("#roleChips").innerHTML = [["all", t("Todos")], ...CLASSES.map(c => [c, t(CLASS_PL[c])])]
     .map(([v, l]) => `<button class="chip" type="button" data-role="${v}" aria-pressed="${v === roleFilter}">${l}</button>`).join("");
   $("#tierChips").innerHTML = [["all", "Tier"], ...TIERS.map(t => [t, t])]
     .map(([v, l]) => `<button class="chip" type="button" data-tier="${v}" aria-pressed="${v === fTier}">${l}</button>`).join("");
@@ -502,8 +590,25 @@ function setFoes(next) {
   window.scrollTo(0, y);
 }
 
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  const set = (id, es, html) => { const el = $(id); if (!el) return; if (!el.dataset.es) el.dataset.es = es; el[html ? "innerHTML" : "textContent"] = t(el.dataset.es); };
+  set("#tSub", $("#tSub").dataset.es || $("#tSub").innerHTML, true);
+  for (const id of ["#tPatch", "#tAsk", "#tPan", "#tSort", "#tF1", "#tF2"]) set(id, $(id).dataset.es || $(id).textContent);
+  $("#q").placeholder = t("Zeus, Atenea, Anubis…");
+  const so = $("#fSort"); [...so.options].forEach(o => { if (!o.dataset.es) o.dataset.es = o.textContent; o.textContent = t(o.dataset.es); });
+  const pan = $("#fPan"), keep = pan.value || "all";
+  const pans = [...new Map(G.map(g => [g.p, g.pe])).entries()].sort((a, b) => L(a[0], a[1]).localeCompare(L(b[0], b[1]), lang));
+  pan.innerHTML = `<option value="all">${t("Todos")}</option>` + pans.map(([es, en]) => `<option value="${esc(es)}">${esc(L(es, en))}</option>`).join("");
+  pan.value = keep;
+  renderChips(); renderGods(); renderHall();
+}
+
 document.addEventListener("click", e => {
   const t = e.target;
+  const lb = t.closest("[data-lang]");
+  if (lb) { lang = lb.dataset.lang; try { localStorage.setItem("lang", lang); } catch (err) {} const y = window.scrollY; applyLang(); window.scrollTo(0, y); return; }
   const chip = t.closest("[data-role]");
   if (chip) { roleFilter = chip.dataset.role; renderChips(); renderGods(); return; }
   const tc = t.closest("[data-tier]");
@@ -519,7 +624,7 @@ document.addEventListener("click", e => {
   if (t.closest("#foeClear")) { setFoes([]); return; }
   const cp = t.closest(".copy");
   if (cp) {
-    const done = () => { cp.textContent = "Copiada"; setTimeout(() => { cp.textContent = "Copiar lista"; }, 1500); };
+    const done = () => { cp.textContent = L("Copiada", "Copied"); setTimeout(() => { cp.textContent = L("Copiar lista", "Copy list"); }, 1500); };
     try { navigator.clipboard.writeText(cp.dataset.copy).then(done, () => { cp.textContent = cp.dataset.copy; }); }
     catch (err) { cp.textContent = cp.dataset.copy; }
   }
@@ -555,9 +660,8 @@ window.addEventListener("hashchange", fromHash);
 
 $("#patch").textContent = DATA.patch;
 $("#godlist").innerHTML = G.map(g => `<option value="${esc(g.n)}">${g.n !== g.e ? `<option value="${esc(g.e)}">` : ""}`).join("");
-$("#fPan").innerHTML = `<option value="all">Todos</option>` + [...new Set(G.map(g => g.p))].sort((a, b) => a.localeCompare(b, "es")).map(p => `<option>${esc(p)}</option>`).join("");
-renderChips();
 fromHash();
+applyLang();
 
 // Cielo: estrellas, brasas que suben y relámpagos lejanos.
 (function sky() {

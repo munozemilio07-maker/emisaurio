@@ -7,6 +7,13 @@ from aspects_es import ASPECTS_ES,CLASS_OF
 from PIL import Image
 items=gen.items
 OUT=sys.argv[1]
+STAT_EN={'MaxHealth':'Health','MagicalPower':'Intelligence','PhysicalPower':'Strength','ManaPerTime':'MP5','CooldownReductionPercent':'Cooldown Rate','AttackSpeedPercent':'Attack Speed','MaxMana':'Mana','MagicalProtectionItem':'Magical Prot.','PhysicalProtectionItem':'Physical Prot.','LifeStealPercent':'Lifesteal','PhysicalProtection':'Physical Prot.','MagicalProtection':'Magical Prot.','HealthPerTime':'HP5','InhandPower':'Attack Damage','MagicalPenetrationPercent':'Penetration','MagicalPenetrationFlat':'Penetration','CritChance':'Crit Chance','Plating':'Plating','CrowdControlReductionItem':'Tenacity','Dampening':'Dampening','EchoItem':'Echo','PathfindingItem':'Pathfinding','MovementSpeed':'Movement Speed','PhysicalPenetrationPercent':'Penetration'}
+def clean_en(d,n=240):
+    d=re.sub(r'Adaptive Stat:[^/]*/','',d)
+    d=re.sub(r'\s*(/\s*)+',' ',d).replace('• ','').strip(' /')
+    d=re.sub(r'\s+',' ',d)
+    if len(d)>n: d=d[:n].rsplit(' ',1)[0].rstrip(',.;:')+'…'
+    return d
 def cat(sl):
     if sl=='shifters-shield': return 'hyb'
     c=gen.cat(sl); return 'def' if c=='util' else c
@@ -124,7 +131,7 @@ for key,g in G0.items():
     ac=Counter(asp_of(m) for m in ms); ac.pop(None,None)
     def aspinfo(sl):
         en=items[sl]['name'].replace('Aspect of ','').strip(); es=ASPECTS_ES.get(en,(en,''))
-        return dict(e=en,es=es[0],d=es[1])
+        return dict(e=en,es=es[0],d=es[1],de=clean_en(items[sl]['desc'],300))
     roles={}
     if ac:
         topa=ac.most_common(1)[0][0]; A=[m for m in ms if asp_of(m)==topa]; B=[m for m in ms if asp_of(m) is None]
@@ -150,7 +157,7 @@ for key,g in G0.items():
     if top['prof']=='aa': tr.append('aa')
     if 'burst damage' in tags or 'stealth' in tags: tr.append('burst')
     slug=re.sub(r'[^a-z0-9]+','-',{'Daji':'Da Ji'}.get(g['name'],g['name']).lower()).strip('-')
-    gods.append(dict(k=key,s=slug,n=GODS_ES.get(g['name'],g['name']),e=g['name'],p=PAN_ES.get(g['pan'],g['pan']),dmg='M' if 'magical' in tags else 'P',tr=tr,cls=CLASS_OF.get(g['name'],'Mago'),tier=tier,wr=round(100*W/N),tn=N,roles=roles))
+    gods.append(dict(k=key,s=slug,n=GODS_ES.get(g['name'],g['name']),e=g['name'],p=PAN_ES.get(g['pan'],g['pan']),pe=g['pan'],dmg='M' if 'magical' in tags else 'P',tr=tr,cls=CLASS_OF.get(g['name'],'Mago'),tier=tier,wr=round(100*W/N),tn=N,roles=roles))
 gods.sort(key=lambda g:g['e'])
 # sprites
 os.makedirs(OUT+'/img',exist_ok=True); os.makedirs(OUT+'/cards',exist_ok=True); os.makedirs('img/item',exist_ok=True)
@@ -178,8 +185,10 @@ for i,k in enumerate(ids):
         if a in STAT_ES and b: chips.append(f"+{b:g}{'%' if a in PCT else ''} {STAT_ES[a]}")
     m=re.search(r'Adaptive Stat: \+(\d+) Strength or \+(\d+) Intelligence',x['desc'])
     if m: chips.insert(0,f"+{m.group(1)} Fuerza o +{m.group(2)} Inteligencia")
+    chipsE=[f"+{b:g}{'%' if a in PCT else ''} {STAT_EN[a]}" for a,b in x['stats'] if a in STAT_EN and b]
+    if m: chipsE.insert(0,f"+{m.group(1)} Strength or +{m.group(2)} Intelligence")
     es=ES.get(k,(x['name'],''))
-    I[k]=dict(n=es[0],e=x['name'].strip(),d=es[1],s=chips[:4],c=cat(k) if x['type'] in('Passive','Active') else 'x',i=i,g=round(x['cost']))
+    I[k]=dict(n=es[0],e=x['name'].strip(),d=es[1],de=clean_en(x['desc']),s=chips[:4],se=chipsE[:4],c=cat(k) if x['type'] in('Passive','Active') else 'x',i=i,g=round(x['cost']))
 sh.save(OUT+'/img/items.webp',quality=84,method=6)
 data=dict(patch='OB47',mode='joust',gc=GC,gr=sheet.height//S,ic=IC,ir=sh.height//T,items=I,gods=gods)
 json.dump(data,open('data.json','w'),ensure_ascii=False,separators=(',',':'))
