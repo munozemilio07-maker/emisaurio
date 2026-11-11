@@ -168,9 +168,9 @@ footer p { max-width: 90ch; }
   <canvas id="sky" aria-hidden="true"></canvas>
   <div class="rays" aria-hidden="true"></div>
   <div class="gut hero-in">
-    <h1><small>Smite 2 · Conquista</small>Panteón de Builds</h1>
+    <h1><small>Smite 2 · Joust 3 vs 3</small>Panteón de Builds</h1>
     <p class="sub">Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.</p>
-    <p class="patch"><b id="patch">OB47</b><span>Datos de partidas Ranked · actualizado el 11 nov 2026</span></p>
+    <p class="patch"><b id="patch">OB47</b><span>Datos de partidas de Joust · actualizado el 11 nov 2026</span></p>
     <div class="oracle">
       <label class="eyebrow" for="q">¿A quién invocas?</label>
       <input id="q" type="search" list="godlist" placeholder="Zeus, Atenea, Anubis…" autocomplete="off">
@@ -184,7 +184,7 @@ footer p { max-width: 90ch; }
   <section class="gut pantheon" aria-label="Todos los dioses">
     <div class="bar">
       <h2 class="eyebrow" id="count">Los dioses</h2>
-      <div class="chips" id="roleChips" role="group" aria-label="Filtrar por rol"></div>
+      <div class="chips" id="roleChips" role="group" aria-label="Filtrar por estilo"></div>
     </div>
     <div class="gods" id="gods"></div>
   </section>
@@ -196,7 +196,7 @@ footer p { max-width: 90ch; }
 
 <footer class="gut">
   <div class="frieze" aria-hidden="true"></div>
-  <p>Las builds salen de las estadísticas públicas de Ranked de SmiteBrain (qué compran los jugadores en cada casilla y cuánto ganan). El catálogo de objetos y las imágenes vienen de Smite2.live.</p>
+  <p>Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí.</p>
   <p>Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.</p>
 </footer>
 
@@ -204,13 +204,14 @@ footer p { max-width: 90ch; }
 const DATA = /*__DATA__*/null;
 </script>
 <script>
-const ROLE = { solo: "Solo", jungle: "Jungla", mid: "Medio", carry: "Carry", support: "Soporte" };
-const ROLE_ORDER = ["solo", "jungle", "mid", "carry", "support"];
+const STYLE = { mage: "Magos", aa: "Carries", phys: "Luchadores", tank: "Tanques" };
+const STYLE_ORDER = ["mage", "aa", "phys", "tank"];
 const KIND = {
   off: { t: "Ofensiva", w: "Todo al daño. Úsala si vas ganando o tu equipo ya tiene quien aguante." },
   hyb: { t: "Híbrida", w: "Daño y aguante. Para partidas parejas o si te enfocan de vez en cuando." },
   def: { t: "Defensiva", w: "Aguantar y seguir peleando. Úsala si te matan mucho o eres el frente." }
 };
+const PROF_SHORT = { mage: "Mago", phys: "Luchador", aa: "Carry", tank: "Tanque" };
 const PROF = { mage: "mago", phys: "luchador de habilidades", aa: "carry de ataque básico", tank: "tanque" };
 
 const SVG = {
@@ -230,9 +231,9 @@ const SITS = [
     picks: { mage: ["divine-ruin"], phys: ["brawlers-beat-stick"], aa: ["toxic-blade"], tank: ["stygian-anchor", "brawlers-beat-stick", "contagion"], any: ["sundering-arc"] } },
   { id: "tank", t: "Tanques y mucha vida", why: "Si no les bajas la vida, compra daño por porcentaje de vida o penetración.",
     picks: { mage: ["soul-reaver", "obsidian-shard"], phys: ["heartseeker", "titans-bane"], aa: ["qins-blade", "the-executioner", "dominance"], tank: ["void-shield", "void-stone", "stone-of-binding"] } },
-  { id: "magic", t: "Mucho daño mágico", why: "Tres o más rivales pegan con magia, o el mago rival va muy adelantado.",
+  { id: "magic", t: "Mucho daño mágico", why: "Dos o tres rivales pegan con magia, o su mago va muy adelantado.",
     picks: { mage: ["genjis-guard", "sphere-of-negation"], phys: ["genjis-guard", "wyrmskin-hide"], aa: ["genjis-guard", "magis-cloak"], tank: ["genjis-guard", "oni-hunters-garb", "void-stone"] } },
-  { id: "phys", t: "Mucho daño físico", why: "Tres o más rivales pegan físico, o su jungla y su carry van adelantados.",
+  { id: "phys", t: "Mucho daño físico", why: "Dos o tres rivales pegan físico, o su carry va muy adelantado.",
     picks: { mage: ["breastplate-of-valor", "prophetic-cloak"], phys: ["breastplate-of-valor", "shifters-shield"], aa: ["prophetic-cloak", "freyas-tears"], tank: ["breastplate-of-valor", "leviathans-hide", "helm-of-radiance"] } },
   { id: "aa", t: "Carries de ataque básico y críticos", why: "Su carry te derrite a golpes. Estos objetos castigan o frenan los ataques básicos.",
     picks: { mage: ["hide-of-the-nemean-lion"], phys: ["hide-of-the-nemean-lion", "spectral-armor"], aa: ["spectral-armor"], tank: ["spectral-armor", "midgardian-mail", "hide-of-the-nemean-lion", "pharaohs-curse"], any: ["phantom-shell"] } },
@@ -260,7 +261,7 @@ const face = g => `<span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}
 let roleFilter = "all";
 let cur = null;          // { god, role }
 let foes = [];           // slugs
-try { foes = JSON.parse(localStorage.getItem("foes") || "[]").filter(s => G.some(g => g.s === s)).slice(0, 5); } catch (e) {}
+try { foes = JSON.parse(localStorage.getItem("foes") || "[]").filter(s => G.some(g => g.s === s)).slice(0, 3); } catch (e) {}
 
 function itemRow(id, opts = {}) {
   const it = IT[id];
@@ -283,7 +284,7 @@ function buildHTML(kind, r) {
   const rows = b.map(([id, pick, flag]) => `<li>${itemRow(id, { pick, sug: flag === 2, stats: true })}</li>`).join("");
   const txt = b.map(([id]) => `${IT[id].n} (${IT[id].e})`).join(" > ");
   return `<article class="build ${kind}${isMeta ? " meta" : ""}">
-    <header><h3>${KIND[kind].t}${isMeta ? `<span class="crown">La más jugada</span>` : ""}</h3>
+    <header><h3>${KIND[kind].t}${isMeta ? `<span class="crown">La más jugada en Joust</span>` : ""}</h3>
     <p class="when">${KIND[kind].w}</p></header>
     <ol>${rows}</ol>
     <button class="copy" type="button" data-copy="${esc(txt)}">Copiar lista</button>
@@ -294,7 +295,7 @@ function analyse() {
   const E = foes.map(s => G.find(g => g.s === s)).filter(Boolean);
   const who = t => E.filter(g => g.tr.includes(t)).map(g => g.n);
   const M = E.filter(g => g.dmg === "M").map(g => g.n), P = E.filter(g => g.dmg === "P").map(g => g.n);
-  const need = Math.max(2, Math.ceil(E.length * 0.6));
+  const need = 2;
   const out = {};
   for (const t of ["heal", "tank", "aa", "shield", "burst"]) if (who(t).length) out[t] = who(t);
   if (who("cc").length >= 2) out.cc = who("cc");
@@ -327,10 +328,10 @@ function rivalHTML(r) {
     : "Contra este equipo no hay nada urgente: sigue tu build normal.";
   return `<section class="rival">
     <div class="sec-head"><span class="eyebrow">Según el rival</span><h2>¿Contra quién juegas?</h2>
-      <p>Ninguna build es fija. Agrega a los dioses del equipo contrario y te marco qué cambiar. Las sugerencias están pensadas para un ${PROF[r.prof]}, que es como se juega este dios en ${ROLE[cur.role].toLowerCase()}.</p></div>
+      <p>Ninguna build es fija. Agrega a los 3 dioses del equipo contrario y te marco qué cambiar. Las sugerencias están pensadas para un ${PROF[r.prof]}, que es como más se juega este dios en Joust.</p></div>
     <div class="picker">
       <div class="picker-row">
-        <input id="foeQ" type="search" list="godlist" placeholder="Agregar rival (hasta 5)…" autocomplete="off" aria-label="Agregar dios rival">
+        <input id="foeQ" type="search" list="godlist" placeholder="Agregar rival (hasta 3)…" autocomplete="off" aria-label="Agregar dios rival">
         ${E.length ? `<button class="chip" type="button" id="foeClear">Limpiar</button>` : ""}
       </div>
       ${E.length ? `<div class="foes">${chips}</div>` : ""}
@@ -345,7 +346,6 @@ function renderHall() {
   const el = $("#hall");
   if (!cur) { el.innerHTML = ""; return; }
   const { god: g, role } = cur, r = g.roles[role];
-  const tabs = Object.keys(g.roles).map(k => `<button class="tab" role="tab" type="button" data-tab="${k}" aria-selected="${k === role}">${ROLE[k]}<b>${g.roles[k].t}</b></button>`).join("");
   const kitList = (arr, tag) => arr.length ? arr.map(([id, p]) => itemRow(id, { small: true, pick: p, noDesc: false })).join("") : `<span class="muted">Sin datos suficientes.</span>`;
   let asp = "";
   if (r.asp) {
@@ -353,19 +353,19 @@ function renderHall() {
     asp = `<div><span class="l">Aspecto</span><div><div class="n" style="font-weight:700">${esc(a.n)}</div>
       <div class="d muted" style="font-size:14px">${rec ? "Recomendado" : "Opcional"}: lo usa el ${a.p}% y gana el ${a.w}%. Sin aspecto ganan el ${a.nw}%.</div></div></div>`;
   }
-  const small = r.n < 120 ? ` · muestra chica` : "";
+  const small = r.n < 80 ? ` · muestra chica` : "";
   el.innerHTML = `
     <article class="shrine">
       <div class="statue"><img src="cards/${g.s}.webp" alt="${esc(g.n)}" loading="eager"></div>
       <div class="shrine-body">
         <div class="name"><span class="eyebrow">Panteón ${esc(g.p.toLowerCase())}</span>
           <h2>${esc(g.n)}</h2>${g.n !== g.e ? `<p class="en">${esc(g.e)} en inglés</p>` : ""}</div>
-        <div class="tabs" role="tablist" aria-label="Rol">${tabs}</div>
         <div class="facts">
-          <div><span class="v">${r.t}</span><span class="l">Tier en ${ROLE[role].toLowerCase()}</span></div>
-          <div><span class="v">${String(r.wr).replace(".", ",")}%</span><span class="l">Victorias</span></div>
-          <div><span class="v">${r.n.toLocaleString("es-MX")}</span><span class="l">Partidas${small}</span></div>
+          <div><span class="v">${Math.round(r.wr)}%</span><span class="l">Victorias en Joust</span></div>
+          <div><span class="v">${r.n}</span><span class="l">Partidas analizadas${small}</span></div>
+          <div><span class="v">${PROF_SHORT[r.prof]}</span><span class="l">Así lo juegan</span></div>
         </div>
+        ${r.old ? `<p class="muted">Hay pocas partidas de este parche con ${esc(g.n)}, así que incluí las del parche anterior.</p>` : ""}
         <div class="kit">
           <div><span class="l">Objeto inicial</span>${kitList(r.st)}</div>
           <div><span class="l">Reliquia</span>${kitList(r.re)}</div>
@@ -373,27 +373,21 @@ function renderHall() {
         </div>
       </div>
     </article>
-    <div class="sec-head"><span class="eyebrow">Las tres builds</span><h2>${esc(g.n)} en ${ROLE[role].toLowerCase()}</h2>
-      <p>El porcentaje es cuántos jugadores Ranked compran ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.</p></div>
+    <div class="sec-head"><span class="eyebrow">Las tres builds</span><h2>${esc(g.n)} en Joust</h2>
+      <p>El porcentaje es en cuántas partidas de Joust compraron ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.</p></div>
     <div class="builds">${buildHTML("off", r)}${buildHTML("hyb", r)}${buildHTML("def", r)}</div>
     ${rivalHTML(r)}`;
 }
 
 function renderGods() {
-  const rank = { S: 0, A: 1, B: 2, C: 3, D: 4, F: 5 };
-  const list = G.filter(g => roleFilter === "all" || g.roles[roleFilter]);
-  if (roleFilter !== "all") list.sort((a, b) => rank[a.roles[roleFilter].t] - rank[b.roles[roleFilter].t] || a.n.localeCompare(b.n, "es"));
-  else list.sort((a, b) => a.n.localeCompare(b.n, "es"));
-  $("#gods").innerHTML = list.map(g => {
-    const t = roleFilter === "all" ? Object.values(g.roles)[0].t : g.roles[roleFilter].t;
-    return `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)}">
-      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"><span class="tier t${t}">${t}</span></span><span class="nm">${esc(g.n)}</span></button>`;
-  }).join("") || `<p class="empty">Ningún dios con ese rol.</p>`;
-  $("#count").textContent = roleFilter === "all" ? `Los ${G.length} dioses` : `${list.length} dioses en ${ROLE[roleFilter].toLowerCase()}, del mejor al peor`;
+  const list = G.filter(g => roleFilter === "all" || g.roles.joust.prof === roleFilter).sort((a, b) => a.n.localeCompare(b.n, "es"));
+  $("#gods").innerHTML = list.map(g => `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)}">
+      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"></span><span class="nm">${esc(g.n)}</span></button>`).join("") || `<p class="empty">Ningún dios con ese estilo.</p>`;
+  $("#count").textContent = roleFilter === "all" ? `Los ${G.length} dioses` : `${list.length} dioses que en Joust se arman como ${STYLE[roleFilter].toLowerCase()}`;
 }
 
 function renderChips() {
-  $("#roleChips").innerHTML = [["all", "Todos"], ...ROLE_ORDER.map(r => [r, ROLE[r]])]
+  $("#roleChips").innerHTML = [["all", "Todos"], ...STYLE_ORDER.map(r => [r, STYLE[r]])]
     .map(([v, l]) => `<button class="chip" type="button" data-role="${v}" aria-pressed="${v === roleFilter}">${l}</button>`).join("");
 }
 
@@ -406,15 +400,14 @@ function findGod(text) {
 
 function select(g, role, scroll) {
   if (!g) return;
-  const r = role && g.roles[role] ? role : (roleFilter !== "all" && g.roles[roleFilter]) ? roleFilter : Object.keys(g.roles)[0];
-  cur = { god: g, role: r };
+  cur = { god: g, role: "joust" };
   try { if (location.hash !== "#" + g.s) history.replaceState(null, "", "#" + g.s); } catch (e) {}
   renderGods(); renderHall();
   if (scroll) $("#hall").scrollIntoView({ block: "start" });
 }
 
 function setFoes(next) {
-  foes = next.slice(0, 5);
+  foes = next.slice(0, 3);
   try { localStorage.setItem("foes", JSON.stringify(foes)); } catch (e) {}
   const y = window.scrollY;
   renderHall();
@@ -427,8 +420,6 @@ document.addEventListener("click", e => {
   if (chip) { roleFilter = chip.dataset.role; renderChips(); renderGods(); return; }
   const gb = t.closest(".god");
   if (gb) { select(G.find(g => g.s === gb.dataset.slug), null, true); return; }
-  const tab = t.closest(".tab");
-  if (tab && cur) { const y = window.scrollY; select(cur.god, tab.dataset.tab); window.scrollTo(0, y); return; }
   const foe = t.closest("[data-foe]");
   if (foe) { setFoes(foes.filter(s => s !== foe.dataset.foe)); return; }
   if (t.closest("#foeClear")) { setFoes([]); return; }
@@ -445,7 +436,7 @@ function tryAddFoe(inp, force) {
   const exact = G.find(g => norm(g.n) === norm(v) || norm(g.e) === norm(v));
   const g = exact || (force ? findGod(v) : null);
   if (!g) return;
-  if (!foes.includes(g.s) && foes.length < 5) setFoes([...foes, g.s]); else { inp.value = ""; return; }
+  if (!foes.includes(g.s) && foes.length < 3) setFoes([...foes, g.s]); else { inp.value = ""; return; }
   const again = $("#foeQ"); if (again) again.focus();
 }
 document.addEventListener("input", e => {
