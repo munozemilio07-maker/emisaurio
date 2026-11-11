@@ -271,7 +271,8 @@ async function main() {
     let cur: Pt | null = null;
     for (const r of [...groups.keys()].sort((a, b) => a - b)) {
       const g = groups.get(r)!.map((s) => ({ ...s, lat: s.c.lat, lng: s.c.lng }));
-      const t = cur ? tour(g, cur) : twoOpt(tour(g, g[0]), g[0]);
+      const startAt: Pt = cur ?? g[0];
+      const t: typeof g = cur ? tour(g, startAt) : twoOpt(tour(g, startAt), startAt);
       sorted.push(...t); cur = t[t.length - 1];
     }
     const minExp = Math.min(...sorted.map((s) => stopIndex.get(s.c.id)!.exp));

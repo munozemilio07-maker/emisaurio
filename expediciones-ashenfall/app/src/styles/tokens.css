@@ -1,0 +1,64 @@
+/* Cuaderno de cartógrafo: tinta, pergamino y latón. */
+:root {
+  color-scheme: dark;
+  --bg: #100d09;
+  --paper: #1b1610;
+  --paper-2: #241d14;
+  --paper-3: #2e261a;
+  --ink: #ecdfc3;
+  --ink-2: #b8a988;
+  --ink-3: #85775c;
+  --line: #3b3122;
+  --line-2: #564730;
+  --accent: #d8a23c;
+  --accent-ink: #1a1306;
+  --ember: #e0603c;
+  --ok: #86c47f;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  --rule: rgba(236, 223, 195, 0.035);
+
+  --font-title: 'IM Fell English SC', 'IM Fell English', Georgia, serif;
+  --font-hand: 'IM Fell English', Georgia, serif;
+  --font-body: 'Alegreya Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --panel-w: 420px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+    --bg: #cdbf9c;
+    --paper: #f2e8cf;
+    --paper-2: #eadfc1;
+    --paper-3: #dfd2b0;
+    --ink: #2a2117;
+    --ink-2: #5b4c38;
+    --ink-3: #8a785c;
+    --line: #cdbd95;
+    --line-2: #a8966c;
+    --accent: #8f3a1c;
+    --accent-ink: #f7efdb;
+    --ember: #b3401f;
+    --ok: #3f7a3a;
+    --shadow: 0 18px 44px rgba(60, 40, 10, 0.35);
+    --rule: rgba(42, 33, 23, 0.05);
+  }
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #cdbf9c;
+  --paper: #f2e8cf;
+  --paper-2: #eadfc1;
+  --paper-3: #dfd2b0;
+  --ink: #2a2117;
+  --ink-2: #5b4c38;
+  --ink-3: #8a785c;
+  --line: #cdbd95;
+  --line-2: #a8966c;
+  --accent: #8f3a1c;
+  --accent-ink: #f7efdb;
+  --ember: #b3401f;
+  --ok: #3f7a3a;
+  --shadow: 0 18px 44px rgba(60, 40, 10, 0.35);
+  --rule: rgba(42, 33, 23, 0.05);
+}

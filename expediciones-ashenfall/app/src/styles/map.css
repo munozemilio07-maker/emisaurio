@@ -1,0 +1,68 @@
+.map { position: absolute; inset: 0; background: #0b0a0d; font-family: var(--font-body); z-index: 0; }
+.map.leaflet-container { background: #0b0a0d; font-family: var(--font-body); }
+/* viñeta: el mapa se funde con la mesa */
+.map::after { content: ''; position: absolute; inset: 0; z-index: 450; pointer-events: none; box-shadow: inset 0 0 140px 30px rgba(6, 4, 2, 0.75); }
+.tiles-surface { transition: opacity 0.35s ease, filter 0.35s ease; }
+.is-underground .tiles-surface { opacity: 0.28; filter: grayscale(0.6) brightness(0.7); }
+/* con zoom fraccionario Leaflet deja rendijas de 1px entre tiles */
+.map .leaflet-tile-container img { width: 256.6px !important; height: 256.6px !important; }
+
+.map-controls { position: absolute; z-index: 460; right: 14px; top: 14px; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.map-controls button {
+  min-width: 42px; height: 42px; display: grid; place-items: center; padding: 0 10px;
+  background: var(--paper); color: var(--ink); border: 1px solid var(--line-2); border-radius: 3px;
+  font: 500 1.2rem var(--font-mono); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+.map-controls button:hover { background: var(--paper-3); }
+.map-controls .layer-toggle { font: 400 0.9rem var(--font-title); letter-spacing: 0.06em; padding: 0 12px; }
+.map-controls .layer-toggle.is-on { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+
+/* Pines numerados */
+.pin {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--k); color: #14100a; font: 700 12.5px var(--font-mono); font-variant-numeric: tabular-nums;
+  border: 2px solid #0d0a06; box-shadow: 0 0 0 1.5px rgba(255, 244, 214, 0.55), 0 3px 8px rgba(0, 0, 0, 0.6);
+  transition: transform 0.15s ease;
+}
+.pin:hover { transform: scale(1.14); }
+.pin.is-done { background: #1a1610; color: var(--k); border-color: var(--k); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); opacity: 0.78; }
+.pin.is-sel { transform: scale(1.22); box-shadow: 0 0 0 3px #fff6dc, 0 0 0 7px color-mix(in srgb, var(--k) 55%, transparent), 0 4px 12px rgba(0, 0, 0, 0.7); opacity: 1; }
+.pin-cluster {
+  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+  background: #1a1610; color: #f3e6c4; font: 700 13px var(--font-mono);
+  border: 2px double #d8a23c; box-shadow: 0 0 0 4px rgba(216, 162, 60, 0.25), 0 3px 10px rgba(0, 0, 0, 0.6);
+}
+.pin-cluster span::before { content: '×'; opacity: 0.6; margin-right: 1px; }
+
+/* Ruta: primero se traza la tinta, luego aparece el punteado */
+.route-ink { stroke: #0d0a06; stroke-width: 6; stroke-opacity: 0.55; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.route-dash { stroke: #ffe9b0; stroke-width: 2.4; stroke-dasharray: 2 8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.route-ink.is-drawing { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.3s ease-out forwards; }
+.route-dash.is-drawing { opacity: 0; animation: appear 0.5s ease-out 0.9s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes appear { to { opacity: 1; } }
+
+.tip { background: #1a1610; color: #f3e6c4; border: 1px solid #564730; border-radius: 2px; font: 500 0.8rem var(--font-body); padding: 2px 8px; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5); }
+.tip::before { display: none; }
+
+/* Popup: ficha de la parada */
+.stop-popup .leaflet-popup-content-wrapper {
+  background: var(--paper); color: var(--ink); border: 1px solid var(--line-2); border-radius: 3px;
+  box-shadow: var(--shadow), inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--line);
+}
+.stop-popup .leaflet-popup-content { margin: 13px 15px 12px; font: 400 0.95rem/1.35 var(--font-body); }
+.stop-popup .leaflet-popup-tip { background: var(--paper); border: 1px solid var(--line-2); box-shadow: none; }
+.stop-popup a.leaflet-popup-close-button { color: var(--ink-3); top: 4px; right: 4px; width: 28px; height: 28px; font-size: 20px; line-height: 26px; }
+.card-kicker { display: flex; align-items: center; gap: 5px; font-size: 0.78rem; color: var(--ink-2); padding-right: 22px; }
+.card-where { margin-left: auto; font: 500 0.72rem var(--font-mono); color: var(--ink-3); }
+.card-title { font: 400 1.3rem/1.1 var(--font-title); margin: 3px 0 2px; text-wrap: balance; }
+.card-detail { color: var(--ink-2); font-size: 0.88rem; margin: 0; }
+.card-recipes { font-size: 0.84rem; margin: 6px 0 0 !important; color: var(--ink-2); }
+.card-note { font: italic 0.88rem var(--font-hand); color: var(--ember); border-left: 2px solid var(--ember); padding-left: 8px; margin: 8px 0 0 !important; }
+.card-actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 8px; }
+.card-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.8rem; color: var(--ink-2) !important; }
+.card-link:hover { color: var(--accent) !important; }
+
+@media (max-width: 899px) {
+  .map-controls { top: calc(10px + env(safe-area-inset-top)); right: 10px; }
+}

@@ -18,3 +18,11 @@ export function toTile(lat: number, lng: number, z: number): { x: number; y: num
 
 export const METAFORGE_MAP = 'https://metaforge.app/runescape-dragonwilds/map/ashenfall';
 export const metaforgeUrl = (markerId: string) => `${METAFORGE_MAP}?markerID=${markerId}`;
+
+/**
+ * Coeficientes [a, b, c, d] de L.Transformation para el CRS de la app:
+ * x = a·lng + b, y = c·lat + d (píxeles a zoom 0). Equivale a toPixel(…, 0).
+ */
+export const CRS_TRANSFORM: [number, number, number, number] = [
+  TILE / WORLD_W, (-WORLD.lngMin * TILE) / WORLD_W, TILE / WORLD_H, (-WORLD.latMin * TILE) / WORLD_H,
+];
