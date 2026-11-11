@@ -84,7 +84,8 @@ for g in gods:
     for name, ty, cls, txt, datos, cd, costo in parse(open(f, encoding="utf8", errors="replace").read()):
         if ty == "BASIC" or "Basic Attack" in name: continue
         m = re.match(r"ABILITY (\d)", ty)
-        ranura = m.group(1) if m else "P" if ty == "PASSIVE" else "otra"
+        mt = re.match(r"TALENT(\d)", ty)
+        ranura = m.group(1) if m else mt.group(1) if mt else "P" if ty == "PASSIVE" else "otra"
         ef, det = [], {}
         por_texto = []
         def tiene(clave, marcado, patron):

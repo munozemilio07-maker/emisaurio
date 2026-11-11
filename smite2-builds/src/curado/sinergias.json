@@ -1,0 +1,673 @@
+{
+ "_como_editar": "'sinergias' son las jugadas de equipo que se muestran como tarjetas. 'dioses' usa slugs de data.json. 'con' dice con quién combina: {\"dioses\": [slugs]}, {\"clases\": [\"Guerrero\", ...]} o {\"rol\": \"prepara|remata|protege\"}. 'contra' es opcional: {\"rasgo\": \"tank|heal|aa|cc|shield|burst\"} o {\"dioses\": [slugs]}. 'tipo' usa una clave de 'tipos'. 'roles' alimenta la sección «Con quién combina» de cada dios: quien prepara (junta o inmoviliza), quien remata (daño en área) y quien protege.",
+ "tipos": {
+  "inmovilizar_rematar": {
+   "nombre": "Inmovilizar → daño → kill",
+   "nombre_en": "Lock down → damage → kill"
+  },
+  "proteccion": {
+   "nombre": "Protección",
+   "nombre_en": "Protection"
+  },
+  "anti_tanque": {
+   "nombre": "Anti-tanque",
+   "nombre_en": "Anti-tank"
+  }
+ },
+ "sinergias": [
+  {
+   "id": "khepri-cuerpo-a-cuerpo",
+   "titulo": "Khepri + dioses cuerpo a cuerpo",
+   "dioses": [
+    "khepri"
+   ],
+   "con": {
+    "clases": [
+     "Guerrero",
+     "Asesino"
+    ]
+   },
+   "tipo": "proteccion",
+   "explicacion": "Los que pelean pegados al rival son los que más mueren y los que más aprovechan a Khepri. Su pasiva da un escudo de 2% de vida a él y a los aliados cercanos cada 5 s. Su 2 les da mitigación de daño y le baja la protección física al enemigo. Su ulti bendice a un aliado 5 s: le quita el control, le da Fuerza, Inteligencia y velocidad, y si muere en ese tiempo revive junto a Khepri.",
+   "claves": [
+    {
+     "dios": "khepri",
+     "ranura": "P",
+     "habilidad": "Fortitude",
+     "papel": "Escudo periódico para los aliados que tenga cerca."
+    },
+    {
+     "dios": "khepri",
+     "ranura": "2",
+     "habilidad": "Rising Dawn",
+     "papel": "Mitigación para aliados y menos protección física para enemigos."
+    },
+    {
+     "dios": "khepri",
+     "ranura": "4",
+     "habilidad": "Scarab's Blessing",
+     "papel": "Revive al aliado si muere bendecido."
+    }
+   ],
+   "orden": [
+    "Khepri tira el 2 (Rising Dawn) sobre la pelea: tu compañero recibe menos daño y pega más.",
+    "Tu compañero entra a pelear.",
+    "Khepri agarra con el 1 (Abduct) o enraíza con el 3 (Solar Flare) al que intente huir.",
+    "Cuando a tu compañero le quede poca vida, Khepri le pone la ulti. Si muere, revive al lado de Khepri."
+   ],
+   "media_url": "",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/god/Khepri/info",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "nemesis-anti-tanque",
+   "titulo": "Némesis contra tanques",
+   "dioses": [
+    "nemesis"
+   ],
+   "contra": {
+    "rasgo": "tank"
+   },
+   "tipo": "anti_tanque",
+   "explicacion": "Némesis castiga a los que tienen mucha vida y protecciones. Su ulti pega un porcentaje de la vida actual del objetivo (15% a 25% según el rango), le roba 25% de sus protecciones y lo ralentiza. Su pasiva le quita poder al enemigo con cada básico (7% por carga, hasta 3) y se lo da a ella. Su 3 refleja parte del daño que recibe.",
+   "claves": [
+    {
+     "dios": "nemesis",
+     "ranura": "P",
+     "habilidad": "Scales of Fate",
+     "papel": "Cada básico le quita poder al rival y te lo da a ti."
+    },
+    {
+     "dios": "nemesis",
+     "ranura": "4",
+     "habilidad": "Divine Judgement",
+     "papel": "Daño por vida actual y robo de 25% de protecciones."
+    },
+    {
+     "dios": "nemesis",
+     "ranura": "3",
+     "habilidad": "Retribution",
+     "papel": "Escudo que cura y refleja daño."
+    }
+   ],
+   "orden": [
+    "Abre con la ulti (4) cuando el tanque tenga la vida llena: pega según su vida actual, así que al inicio es cuando más daño hace.",
+    "Entra con el 1 (Swift Vengeance) y pega básicos para cargar la pasiva.",
+    "Usa el 2 (Slice and Dice) de frente para el daño del centro y la ralentización.",
+    "Activa el 3 (Retribution) cuando te respondan."
+   ],
+   "media_url": "",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/god/Nemesis/info",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "xing-tian-iniciador",
+   "titulo": "Xing Tian como iniciador",
+   "dioses": [
+    "xing-tian"
+   ],
+   "con": {
+    "rol": "remata"
+   },
+   "tipo": "inmovilizar_rematar",
+   "explicacion": "Su 2 (Hook Slam) levanta a los enemigos y los azota contra el piso, dejándolos enraizados de 1.6 a 2 s según el rango: ese es el momento para que tu compañero suelte su daño en área. Su 1 les quita un porcentaje de vida máxima por segundo y les baja el daño de ataque.",
+   "claves": [
+    {
+     "dios": "xing-tian",
+     "ranura": "2",
+     "habilidad": "Hook Slam",
+     "papel": "Levanta y enraíza: la ventana para rematar."
+    },
+    {
+     "dios": "xing-tian",
+     "ranura": "3",
+     "habilidad": "Sky-Cutting Axe",
+     "papel": "Doble salto para llegar a ellos."
+    },
+    {
+     "dios": "xing-tian",
+     "ranura": "1",
+     "habilidad": "Furious Roar",
+     "papel": "Daño por porcentaje de vida máxima y menos daño de ataque enemigo."
+    }
+   ],
+   "orden": [
+    "Xing Tian salta con el 3 (Sky-Cutting Axe) para caerles encima.",
+    "Usa el 2 (Hook Slam): quedan en el aire y luego enraizados.",
+    "Tu compañero suelta su habilidad de área mientras están enraizados.",
+    "Xing Tian mete el 1 (Furious Roar) y la ulti para seguir pegando."
+   ],
+   "media_url": "",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/god/XingTian/info",
+   "pendiente_verificar": true,
+   "nota": "La ficha actual de su ulti (Whirlwind of Rage and Steel) dice que gira el hacha haciendo daño alrededor; no menciona que agarre y aviente enemigos como en Smite 1. Por eso la sinergia se apoya en el 2 y la ulti queda por verificar en partida."
+  }
+ ],
+ "roles": {
+  "prepara": [
+   {
+    "dios": "sobek",
+    "ranura": "1",
+    "habilidad": "Charge Prey",
+    "texto": "embiste, aturde al primero que toca y lo avienta detrás de él, hacia tu equipo",
+    "texto_en": "dashes, stuns the first enemy hit and throws them behind him, toward your team",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Sobek/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "ares",
+    "ranura": "4",
+    "habilidad": "No Escape",
+    "texto": "encadena a los que estén cerca, los jala hacia él y los aturde",
+    "texto_en": "chains nearby enemies, pulls them to him and stuns them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Ares/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "ymir",
+    "ranura": "3",
+    "habilidad": "Frost Breath",
+    "texto": "los congela (aturde) en área",
+    "texto_en": "freezes (stuns) them in an area",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Ymir/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "athena",
+    "ranura": "2",
+    "habilidad": "Confound",
+    "texto": "los provoca: tienen que pegarle a ella",
+    "texto_en": "taunts them into attacking her",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Athena/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "cabrakan",
+    "ranura": "1",
+    "habilidad": "Seismic Crush",
+    "texto": "aturde a su objetivo; con Tectonic Shift levanta un muro para encerrar",
+    "texto_en": "stuns his target; Tectonic Shift raises a wall to trap them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Cabrakan/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "hun-batz",
+    "ranura": "4",
+    "habilidad": "Fear No Evil",
+    "texto": "planta un tótem que asusta a todos los que estén alrededor",
+    "texto_en": "drops a totem that fears everyone around it",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/HunBatz/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "odin",
+    "ranura": "4",
+    "habilidad": "Ring Of Spears",
+    "texto": "los encierra en su anillo de lanzas, donde no pueden curarse",
+    "texto_en": "traps them in his ring of spears, where they cannot heal",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Odin/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "xing-tian",
+    "ranura": "2",
+    "habilidad": "Hook Slam",
+    "texto": "los levanta con el hacha y los azota contra el piso, dejándolos enraizados",
+    "texto_en": "knocks them up with his axe and slams them down, leaving them rooted",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/XingTian/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "sylvanus",
+    "ranura": "3",
+    "habilidad": "Nature's Grasp",
+    "texto": "jala a uno y lo aturde; con Verdant Growth enraíza en área",
+    "texto_en": "pulls one and stuns them; Verdant Growth roots in an area",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Sylvanus/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "atlas",
+    "ranura": "otra",
+    "habilidad": "Gravity Pull",
+    "texto": "los jala hacia su astrolabio y los lanza",
+    "texto_en": "pulls them toward his astrolabe and launches them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Atlas/info",
+    "pendiente_verificar": true,
+    "nota": "La fuente lista esta habilidad como variante; falta confirmar en qué ranura va."
+   },
+   {
+    "dios": "bacchus",
+    "ranura": "2",
+    "habilidad": "Belly Flop",
+    "texto": "les cae encima y los levanta; su eructo los aturde",
+    "texto_en": "lands on them and knocks them up; his belch stuns",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Bacchus/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "cerberus",
+    "ranura": "4",
+    "habilidad": "Stygian Torment",
+    "texto": "levanta a todos los dioses enemigos y los jala frente a él",
+    "texto_en": "lifts every enemy god and pulls them in front of him",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Cerberus/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "hades",
+    "ranura": "4",
+    "habilidad": "Pillar Of Agony",
+    "texto": "los atrae hacia él mientras dura su ulti",
+    "texto_en": "drags them toward him while his ult lasts",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Hades/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "khepri",
+    "ranura": "1",
+    "habilidad": "Abduct",
+    "texto": "agarra al primer dios que toca y lo arrastra hacia atrás",
+    "texto_en": "grabs the first god hit and drags them backwards",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Khepri/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "fenrir",
+    "ranura": "4",
+    "habilidad": "Ragnarok",
+    "texto": "crece, muerde a un dios y lo carga hasta donde tú quieras",
+    "texto_en": "grows, bites a god and carries them wherever you want",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Fenrir/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "geb",
+    "ranura": "4",
+    "habilidad": "Cataclysm",
+    "texto": "aturde con su ulti; con Roll Out y Shock Wave los levanta",
+    "texto_en": "stuns with his ult; Roll Out and Shock Wave knock up",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Geb/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "kuzenbo",
+    "ranura": "4",
+    "habilidad": "Watery Grave",
+    "texto": "los jala hacia él con su ulti",
+    "texto_en": "pulls them toward him with his ult",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Kuzenbo/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "ganesha",
+    "ranura": "2",
+    "habilidad": "Ohm",
+    "texto": "los silencia; con Dharmic Pillars los encierra entre pilares que ralentizan",
+    "texto_en": "silences them; Dharmic Pillars traps them between slowing pillars",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Ganesha/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "medusa",
+    "ranura": "4",
+    "habilidad": "Petrify",
+    "texto": "los petrifica (aturde) con su ulti",
+    "texto_en": "petrifies (stuns) them with her ult",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Medusa/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "nox",
+    "ranura": "1",
+    "habilidad": "Shadow Lock",
+    "texto": "enraíza a su objetivo; con Siphon Darkness lo silencia",
+    "texto_en": "roots her target; Siphon Darkness silences",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Nox/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "nike",
+    "ranura": "2",
+    "habilidad": "Barrier Formation",
+    "texto": "los levanta con su barrera",
+    "texto_en": "knocks them up with her barrier",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Nike/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "poseidon",
+    "ranura": "3",
+    "habilidad": "Whirlpool",
+    "texto": "los atrae al centro de su remolino",
+    "texto_en": "drags them into the centre of his whirlpool",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Poseidon/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "baron-samedi",
+    "ranura": "4",
+    "habilidad": "Life of the Party",
+    "texto": "los atrae hacia él y aturde a los que lleguen",
+    "texto_en": "drags them toward him and stuns those who reach him",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/BaronSamedi/info",
+    "pendiente_verificar": false
+   }
+  ],
+  "remata": [
+   {
+    "dios": "janus",
+    "ranura": "1",
+    "habilidad": "Portal",
+    "texto": "abre un portal en el piso que los manda hacia arriba y les pega al caer; su ulti atraviesa todo el mapa",
+    "texto_en": "opens a ground portal that sends them upward and damages on landing; his ult crosses the whole map",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Janus/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "zeus",
+    "ranura": "3",
+    "habilidad": "Detonate Charge",
+    "texto": "les detona las cargas a todos a la vez y los aturde",
+    "texto_en": "detonates his charges on all of them at once and stuns",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Zeus/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "poseidon",
+    "ranura": "4",
+    "habilidad": "Release the Kraken!",
+    "texto": "les suelta el Kraken: levanta, aturde y pega en área",
+    "texto_en": "releases the Kraken: knock up, stun and area damage",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Poseidon/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "anubis",
+    "ranura": "4",
+    "habilidad": "Death Gaze",
+    "texto": "los derrite con su rayo de ulti mientras no se pueden mover",
+    "texto_en": "melts them with his ult beam while they cannot move",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Anubis/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "kukulkan",
+    "ranura": "4",
+    "habilidad": "Spirit Of The Nine Winds",
+    "texto": "les pone el tornado y les tira el dragón encima",
+    "texto_en": "drops his tornado and dragon ult on them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Kukulkan/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "scylla",
+    "ranura": "4",
+    "habilidad": "I'm a Monster",
+    "texto": "les revienta su ulti; con Crush pega en área y ralentiza",
+    "texto_en": "blows them up with her ult; Crush hits an area and slows",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Scylla/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "agni",
+    "ranura": "4",
+    "habilidad": "Rain Fire",
+    "texto": "les tira sus meteoros y deja el camino en llamas",
+    "texto_en": "drops his meteors and leaves a burning path",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Agni/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "ra",
+    "ranura": "4",
+    "habilidad": "Searing Pain",
+    "texto": "les acomoda su rayo de ulti",
+    "texto_en": "lines up his ult beam on them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Ra/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "vulcan",
+    "ranura": "4",
+    "habilidad": "Earthshaker",
+    "texto": "les cae con el misil de su ulti",
+    "texto_en": "lands his ult missile on them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Vulcan/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "merlin",
+    "ranura": "4",
+    "habilidad": "Elemental Mastery",
+    "texto": "explota su ulti sobre ellos y luego descarga sus hechizos de área",
+    "texto_en": "explodes his ult on them and unloads his area spells",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Merlin/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "sol",
+    "ranura": "4",
+    "habilidad": "Supernova",
+    "texto": "les tira su ulti",
+    "texto_en": "fires her ult at them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Sol/info",
+    "pendiente_verificar": true,
+    "nota": "No revisé la forma exacta del área de Supernova en el parche actual."
+   },
+   {
+    "dios": "nu-wa",
+    "ranura": "4",
+    "habilidad": "Fire Shards",
+    "texto": "les pega su ulti a todos",
+    "texto_en": "hits all of them with her ult",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/NuWa/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "ah-puch",
+    "ranura": "4",
+    "habilidad": "Empty the Crypts",
+    "texto": "les abre un campo de espíritus que pega cada medio segundo y les reduce la curación",
+    "texto_en": "opens a spirit field that hits every half second and cuts their healing",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/AhPuch/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "neith",
+    "ranura": "4",
+    "habilidad": "World Weaver",
+    "texto": "los remata con su ulti desde cualquier parte del mapa",
+    "texto_en": "finishes them with her ult from anywhere on the map",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Neith/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "baron-samedi",
+    "ranura": "4",
+    "habilidad": "Life of the Party",
+    "texto": "los mete en su ulti",
+    "texto_en": "drags them into his ult",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/BaronSamedi/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "thor",
+    "ranura": "4",
+    "habilidad": "Anvil of Dawn",
+    "texto": "les cae del cielo con su ulti y los aturde",
+    "texto_en": "drops on them from the sky with his ult and stuns",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Thor/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "morgan-le-fay",
+    "ranura": "2",
+    "habilidad": "Dragonflight",
+    "texto": "les pasa encima con su dragón y los levanta",
+    "texto_en": "flies her dragon over them and knocks them up",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/MorganLeFay/info",
+    "pendiente_verificar": false
+   }
+  ],
+  "protege": [
+   {
+    "dios": "aphrodite",
+    "ranura": "3",
+    "habilidad": "Love Birds",
+    "texto": "lo cura con sus palomas",
+    "texto_en": "heals them with her doves",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Aphrodite/info",
+    "pendiente_verificar": false,
+    "nota": "Antes decía que su ulti vuelve inmune al aliado; la ficha actual de la ulti (Undying Love) solo habla de daño y enlaces, así que lo quité."
+   },
+   {
+    "dios": "hel",
+    "ranura": "1",
+    "habilidad": "Restoration",
+    "texto": "lo cura y con Cleanse le quita todo el control y lo vuelve inmune 1.5 s",
+    "texto_en": "heals them, and Cleanse removes all crowd control and grants 1.5s of immunity",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Hel/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "ra",
+    "ranura": "3",
+    "habilidad": "Solar Blessing",
+    "texto": "lo cura dentro de su zona",
+    "texto_en": "heals them inside his zone",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Ra/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "geb",
+    "ranura": "3",
+    "habilidad": "Stone Shield",
+    "texto": "le pone un escudo de vida",
+    "texto_en": "gives them a health shield",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Geb/info",
+    "pendiente_verificar": false,
+    "nota": "Antes decía que también limpia el control; la ficha actual no lo menciona."
+   },
+   {
+    "dios": "khepri",
+    "ranura": "4",
+    "habilidad": "Scarab's Blessing",
+    "texto": "lo bendice 5 s: le quita el control, le da Fuerza, Inteligencia y velocidad, y si muere lo revive a su lado",
+    "texto_en": "blesses them for 5s: cleanses crowd control, grants Strength, Intelligence and speed, and revives them at his side if they die",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Khepri/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "sylvanus",
+    "ranura": "2",
+    "habilidad": "Wisps",
+    "texto": "lo cura con sus semillas",
+    "texto_en": "heals them with his wisps",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Sylvanus/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "yemoja",
+    "ranura": "2",
+    "habilidad": "Mending Waters",
+    "texto": "lo cura y lo escuda",
+    "texto_en": "heals and shields them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Yemoja/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "baron-samedi",
+    "ranura": "2",
+    "habilidad": "Consign Spirits",
+    "texto": "lo cura en área",
+    "texto_en": "heals them in an area",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/BaronSamedi/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "horus",
+    "ranura": "3",
+    "habilidad": "Protector's Surge",
+    "texto": "lo cura al lanzarse hacia él",
+    "texto_en": "heals them when he dashes to them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/Horus/info",
+    "pendiente_verificar": false
+   },
+   {
+    "dios": "ix-chel",
+    "ranura": "2",
+    "habilidad": "Lunar Invocation",
+    "texto": "lo cura",
+    "texto_en": "heals them",
+    "parche_verificado": "OB47",
+    "fuente": "https://smite2.live/god/IxChel/info",
+    "pendiente_verificar": false
+   }
+  ],
+  "necesita_cuidado": {
+   "_nota": "Además de todos los Cazadores, estos dioses rinden más con alguien que los mantenga vivos.",
+   "dioses": [
+    "kali",
+    "mercury",
+    "chronos",
+    "sol"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "Criterio propio",
+   "pendiente_verificar": true
+  }
+ }
+}

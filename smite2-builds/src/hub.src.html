@@ -71,6 +71,8 @@ a { color: var(--gold); }
 .orig p { margin-top: 4px; }
 .abil .d { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
 .pend { font-size: 11px; color: var(--ember); border: 1px solid var(--ember); padding: 0 6px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
+.orden { margin: 6px 0 0; padding-left: 22px; display: grid; gap: 5px; font-size: 14.5px; color: #d7d1bf; }
+.syn .foe { cursor: pointer; }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
 .step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
@@ -274,6 +276,7 @@ footer p { max-width: 90ch; }
 
  <section class="gut hall" id="v-habilidades" hidden></section>
  <section class="gut hall" id="v-combos" hidden></section>
+ <section class="gut hall" id="v-sinergias" hidden></section>
 </main>
 
 <footer class="gut">
@@ -329,51 +332,6 @@ const SITS = [
     picks: { mage: ["time-lock-aegis", "magis-cloak"], phys: ["shifters-shield", "mantle-of-discord"], aa: ["mantle-of-discord", "magis-cloak"], tank: ["draconic-scale", "prophetic-cloak"], any: ["aegis-of-acceleration"] } }
 ];
 
-// Combos por habilidades (no salen de estadísticas): quién prepara la jugada, quién la remata y quién cuida a quién.
-const SETUP = {
-  "Sobek": "los jala con su gancho y los avienta hacia tu equipo", "Ares": "los encadena y los jala a todos con su ulti", "Ymir": "los congela en área",
-  "Athena": "los obliga a pegarle con su provocación", "Cabrakan": "los aturde y los encierra con sus muros", "Hun Batz": "los pone a bailar con su ulti",
-  "Odin": "los encierra en su anillo", "Xing Tian": "los agarra a todos y los azota con su ulti", "Sylvanus": "los jala y los enraíza",
-  "Atlas": "los jala hacia él", "Bacchus": "los levanta y los deja mareados", "Cerberus": "los jala a todos con su ulti", "Hades": "los atrae y los retiene con su ulti",
-  "Khepri": "agarra a uno y lo arrastra", "Fenrir": "se lleva a uno en el hocico hasta tu equipo", "Geb": "los aturde en área con su ulti",
-  "Kuzenbo": "los empuja contra la pared", "Ganesha": "los silencia y los encierra con sus pilares", "Medusa": "los petrifica con su ulti",
-  "Nox": "los enraíza y los silencia", "Nike": "los levanta con su barrera", "Poseidon": "los atrae con su remolino"
-};
-const PAYOFF = {
-  "Janus": "les tira el portal o la ulti justo donde van a caer", "Zeus": "les detona las cargas a todos juntos", "Poseidon": "les suelta el Kraken encima",
-  "Anubis": "los derrite con su ulti mientras no se pueden mover", "Kukulkan": "les pone el tornado y el dragón encima", "Scylla": "les revienta su ulti",
-  "Agni": "les llueve fuego y meteoros", "Ra": "les acomoda su rayo de ulti", "Vulcan": "les cae con el misil de su ulti", "Merlin": "les descarga sus hechizos de área",
-  "Sol": "les tira su ulti en línea", "Nu Wa": "les pega su ulti a todos", "Ah Puch": "les explota los cadáveres encima", "Neith": "los remata con su ulti desde lejos",
-  "Baron Samedi": "los mete en su ulti", "Thor": "les cae del cielo con su ulti", "Morgan Le Fay": "les detona sus marcas"
-};
-const PROTECT = {
-  "Aphrodite": "lo cura y lo vuelve inmune con su ulti", "Hel": "lo cura y le quita el control", "Ra": "lo cura dentro de su zona", "Geb": "le pone escudo y le quita el control",
-  "Khepri": "lo revive con su ulti", "Sylvanus": "lo cura con sus semillas", "Yemoja": "lo cura y lo escuda", "Baron Samedi": "lo cura en área", "Horus": "lo cura y lo protege",
-  "Ix Chel": "lo cura"
-};
-const NEEDS_CARE = new Set(["Kali", "Mercury", "Chronos", "Sol"]);
-
-const SETUP_EN = {
-  "Sobek": "plucks them with his hook and throws them toward your team", "Ares": "chains everyone and pulls them in with his ult", "Ymir": "freezes them in an area",
-  "Athena": "taunts them into hitting her", "Cabrakan": "stuns them and traps them with his walls", "Hun Batz": "makes them dance with his ult",
-  "Odin": "traps them in his ring", "Xing Tian": "grabs everyone and slams them with his ult", "Sylvanus": "pulls and roots them",
-  "Atlas": "pulls them toward him", "Bacchus": "knocks them up and leaves them dizzy", "Cerberus": "pulls everyone in with his ult", "Hades": "drags them in and holds them with his ult",
-  "Khepri": "grabs one and drags them away", "Fenrir": "carries one in his jaws back to your team", "Geb": "stuns them in an area with his ult",
-  "Kuzenbo": "pushes them into a wall", "Ganesha": "silences them and traps them with his pillars", "Medusa": "turns them to stone with her ult",
-  "Nox": "roots and silences them", "Nike": "knocks them up with her barrier", "Poseidon": "drags them in with his whirlpool"
-};
-const PAYOFF_EN = {
-  "Janus": "drops his portal or ult right where they land", "Zeus": "detonates his charges on all of them at once", "Poseidon": "releases the Kraken on top of them",
-  "Anubis": "melts them with his ult while they can't move", "Kukulkan": "puts his tornado and dragon on them", "Scylla": "blows them up with her ult",
-  "Agni": "rains fire and meteors on them", "Ra": "lines up his ult beam on them", "Vulcan": "lands his ult missile on them", "Merlin": "unloads his area spells on them",
-  "Sol": "fires her ult down the line", "Nu Wa": "hits all of them with her ult", "Ah Puch": "explodes his corpses on them", "Neith": "finishes them with her ult from afar",
-  "Baron Samedi": "drags them into his ult", "Thor": "drops on them from the sky with his ult", "Morgan Le Fay": "detonates her marks on them"
-};
-const PROTECT_EN = {
-  "Aphrodite": "heals them and makes them immune with her ult", "Hel": "heals them and cleanses crowd control", "Ra": "heals them inside his zone", "Geb": "shields them and cleanses crowd control",
-  "Khepri": "revives them with his ult", "Sylvanus": "heals them with his seeds", "Yemoja": "heals and shields them", "Baron Samedi": "heals them in an area", "Horus": "heals and protects them",
-  "Ix Chel": "heals them"
-};
 // Textos en inglés, indexados por el texto en español.
 const EN = {
   "Ofensiva": "Offensive", "Híbrida": "Hybrid", "Defensiva": "Defensive",
@@ -529,21 +487,80 @@ function rivalHTML(r) {
   </section>`;
 }
 
+// ---------- Sinergias y duplas (src/curado/sinergias.json) ----------
+const SIN = CURADO.sinergias || {};
+const SIN_LIST = SIN.sinergias || [];
+const SIN_TIPOS = SIN.tipos || {};
+const ROLES = SIN.roles || {};
+const roleMap = k => Object.fromEntries((ROLES[k] || []).map(r => [r.dios, r]));
+const R_PREP = roleMap("prepara"), R_REM = roleMap("remata"), R_PROT = roleMap("protege");
+const CARE = new Set(((ROLES.necesita_cuidado || {}).dioses) || []);
+const bySlug = s => G.find(g => g.s === s);
+const byTier = (a, b) => "SABCD".indexOf(a.tier) - "SABCD".indexOf(b.tier) || b.wr - a.wr;
+const roleTxt = r => `${L(r.texto, r.texto_en || r.texto)} (${r.ranura === "otra" ? "" : r.ranura + " · "}${r.habilidad})`;
+const pendTag = x => x && x.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : "";
+
 function comboHTML(g) {
-  const byTier = (a, b) => "SABCD".indexOf(a.tier) - "SABCD".indexOf(b.tier) || b.wr - a.wr;
-  const en = lang === "en", SU = en ? SETUP_EN : SETUP, PA = en ? PAYOFF_EN : PAYOFF, PR = en ? PROTECT_EN : PROTECT;
-  const pick = map => G.filter(x => x !== g && map[x.e]).sort(byTier);
-  const row = (x, txt) => `<button class="mate" type="button" data-slug="${x.s}">${face(x)}<span><b>${esc(N(x))}</b> ${esc(txt)}.</span></button>`;
-  const hunter = g.cls === "Cazador", carry = hunter || NEEDS_CARE.has(g.e), n = N(g);
+  if (!SIN.roles) return "";
+  const pick = map => G.filter(x => x !== g && map[x.s]).sort(byTier);
+  const row = (x, r) => `<button class="mate" type="button" data-slug="${x.s}">${face(x)}<span><b>${esc(N(x))}</b> ${esc(typeof r === "string" ? r : roleTxt(r))}.${typeof r === "string" ? "" : pendTag(r)}</span></button>`;
+  const hunter = g.cls === "Cazador", carry = hunter || CARE.has(g.s), n = N(g);
   const groups = [];
-  if (SU[g.e]) groups.push(["Tú preparas, ellos rematan", L(`${n} ${SU[g.e]}. Júntalo con alguien que tenga mucho daño en área:`, `${n} ${SU[g.e]}. Pair them with someone who has big area damage:`), pick(PA).map(x => row(x, PA[x.e]))]);
-  if (PA[g.e] || hunter) groups.push(["Ellos preparan, tú rematas", PA[g.e] ? L(`${n} ${PA[g.e]}. Le falta alguien que los junte o los deje quietos:`, `${n} ${PA[g.e]}. What's missing is someone to group them up or hold them still:`) : L(`${n} hace su daño con ataques básicos: le conviene alguien que deje quietos a los rivales.`, `${n} deals damage with basic attacks, so a partner who holds enemies still helps a lot.`), pick(SU).map(x => row(x, SU[x.e]))]);
-  if (PR[g.e]) groups.push(["A quién cuidar", L(`${n} ${PR[g.e].replace(/^lo /, "cuida a su compañero: lo ")}. Rinde más con un carry que haga todo el daño:`, `${n} keeps a teammate alive: ${PR[g.e]}. Works best with a carry who deals all the damage:`), G.filter(x => x !== g && (x.cls === "Cazador" || NEEDS_CARE.has(x.e))).sort(byTier).slice(0, 12).map(x => row(x, t("hace muchísimo daño si lo mantienes vivo")))]);
-  if (carry) groups.push(["Quién te cuida", L(`${n} es frágil y hace su daño peleando un rato. Con alguien que lo mantenga vivo gana las peleas largas:`, `${n} is fragile and needs time to deal damage. With someone keeping them alive, they win long fights:`), pick(PR).map(x => row(x, PR[x.e]))]);
-  if (!groups.length) return "";
+  if (R_PREP[g.s]) groups.push(["Tú preparas, ellos rematan", L(`${n} ${roleTxt(R_PREP[g.s])}. Júntalo con alguien que tenga mucho daño en área:`, `${n} ${roleTxt(R_PREP[g.s])}. Pair them with someone who has big area damage:`), pick(R_REM).map(x => row(x, R_REM[x.s]))]);
+  if (R_REM[g.s] || hunter) groups.push(["Ellos preparan, tú rematas", R_REM[g.s] ? L(`${n} ${roleTxt(R_REM[g.s])}. Le falta alguien que los junte o los deje quietos:`, `${n} ${roleTxt(R_REM[g.s])}. What's missing is someone to group them up or hold them still:`) : L(`${n} hace su daño con ataques básicos: le conviene alguien que deje quietos a los rivales.`, `${n} deals damage with basic attacks, so a partner who holds enemies still helps a lot.`), pick(R_PREP).map(x => row(x, R_PREP[x.s]))]);
+  if (R_PROT[g.s]) groups.push(["A quién cuidar", L(`${n} cuida a su compañero: ${roleTxt(R_PROT[g.s])}. Rinde más con un carry que haga todo el daño:`, `${n} keeps a teammate alive: ${roleTxt(R_PROT[g.s])}. Works best with a carry who deals all the damage:`), G.filter(x => x !== g && (x.cls === "Cazador" || CARE.has(x.s))).sort(byTier).slice(0, 12).map(x => row(x, t("hace muchísimo daño si lo mantienes vivo")))]);
+  if (carry) groups.push(["Quién te cuida", L(`${n} es frágil y hace su daño peleando un rato. Con alguien que lo mantenga vivo gana las peleas largas:`, `${n} is fragile and needs time to deal damage. With someone keeping them alive, they win long fights:`), pick(R_PROT).map(x => row(x, R_PROT[x.s]))]);
+  const mine = SIN_LIST.filter(x => sinInvolves(x, g));
+  if (!groups.length && !mine.length) return "";
   return `<section class="rival"><div class="sec-head"><span class="eyebrow">${t("Con quién combina")}</span><h2>${L("Duplas para", "Duos for")} ${esc(n)}</h2>
     <p>${t("Son combos por cómo encajan las habilidades, no por estadísticas. Los compañeros salen ordenados por su tier en Joust; toca uno para ver su build.")}</p></div>
+    ${mine.length ? `<div class="combos">${mine.map(sinCard).join("")}</div>` : ""}
     <div class="combos">${groups.map(([h, why, rows]) => `<article class="sit"><h3>${t(h)}</h3><p class="why">${esc(why)}</p><div class="list cols">${rows.join("")}</div></article>`).join("")}</div></section>`;
+}
+
+function sinPartners(x) {
+  const c = x.con || {};
+  if (c.dioses) return c.dioses.map(bySlug).filter(Boolean);
+  if (c.clases) return G.filter(g => c.clases.includes(g.cls) && !(x.dioses || []).includes(g.s)).sort(byTier);
+  if (c.rol) return G.filter(g => roleMap(c.rol)[g.s] && !(x.dioses || []).includes(g.s)).sort(byTier);
+  return [];
+}
+function sinInvolves(x, g) {
+  if ((x.dioses || []).includes(g.s)) return true;
+  const c = x.con || {};
+  return !!((c.dioses && c.dioses.includes(g.s)) || (c.clases && c.clases.includes(g.cls)) || (c.rol && roleMap(c.rol)[g.s]));
+}
+const RASGO = { tank: ["tanques", "tanks"], heal: ["curanderos", "healers"], aa: ["carries de ataque básico", "basic attack carries"], cc: ["dioses con mucho control", "heavy crowd control gods"], shield: ["dioses con escudos", "shielding gods"], burst: ["asesinos", "assassins"] };
+function sinCard(x) {
+  const mains = (x.dioses || []).map(bySlug).filter(Boolean);
+  const partners = sinPartners(x), tipo = SIN_TIPOS[x.tipo];
+  const mini = g => `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>`;
+  const c = x.con || {}, k = x.contra || {};
+  const withLabel = c.clases ? L(`Con ${c.clases.map(v => t(CLASS_PL[v] || v).toLowerCase()).join(" y ")}`, `With ${c.clases.map(v => t(CLASS_PL[v] || v).toLowerCase()).join(" and ")}`) : c.rol ? L("Con quien remate en área", "With an area finisher") : c.dioses ? L("Con", "With") : "";
+  const vs = k.rasgo ? G.filter(g => g.tr.includes(k.rasgo)).sort(byTier) : (k.dioses || []).map(bySlug).filter(Boolean);
+  const url = safeUrl(x.media_url);
+  return `<article class="sit syn">
+    <h3>${esc(x.titulo)}${tipo ? `<span class="diff o-usuario">${esc(L(tipo.nombre, tipo.nombre_en || tipo.nombre))}</span>` : ""}${pendTag(x)}</h3>
+    <div class="foes">${mains.map(mini).join("")}</div>
+    <p class="why" style="color:#d7d1bf;font-size:15px">${esc(x.explicacion || "")}</p>
+    ${(x.claves || []).length ? `<div class="list">${x.claves.map(cv => `<div class="abil"><span class="slot">${esc(cv.ranura === "otra" ? "+" : cv.ranura)}</span><div><div class="n">${esc(cv.habilidad)}</div><div class="d" style="font-size:14px">${esc(cv.papel || "")}</div></div></div>`).join("")}</div>` : ""}
+    ${(x.orden || []).length ? `<div><span class="eyebrow">${L("Orden sugerido", "Suggested order")}</span><ol class="orden">${x.orden.map(o => `<li>${esc(o)}</li>`).join("")}</ol></div>` : ""}
+    ${partners.length ? `<div><span class="eyebrow">${esc(withLabel)}</span><div class="foes" style="margin-top:6px">${partners.slice(0, 14).map(mini).join("")}</div></div>` : ""}
+    ${vs.length ? `<div><span class="eyebrow">${L("Sirve contra", "Good against")}${k.rasgo && RASGO[k.rasgo] ? " " + L(RASGO[k.rasgo][0], RASGO[k.rasgo][1]) : ""}</span><div class="foes" style="margin-top:6px">${vs.slice(0, 14).map(mini).join("")}</div></div>` : ""}
+    ${x.nota ? `<p class="why">${esc(x.nota)}</p>` : ""}
+    ${url ? `<a class="yt" href="${esc(url)}" target="_blank" rel="noopener">${L("Ver en video", "Watch")}</a>` : ""}
+    <p class="muted" style="font-size:13px">${esc(x.parche_verificado || "")}${safeUrl(x.fuente) ? ` · <a href="${esc(x.fuente)}" target="_blank" rel="noopener">${L("Fuente", "Source")}</a>` : ""}</p>
+  </article>`;
+}
+let sinTipo = "all";
+function renderSinergias() {
+  const el = $("#v-sinergias");
+  const list = SIN_LIST.filter(x => sinTipo === "all" || x.tipo === sinTipo);
+  const chips = [["all", L("Todas", "All")], ...Object.entries(SIN_TIPOS).map(([k, v]) => [k, L(v.nombre, v.nombre_en || v.nombre)])].map(([k, l]) => `<button class="chip" type="button" data-sintipo="${k}" aria-pressed="${sinTipo === k}">${esc(l)}</button>`).join("");
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Sinergias", "Synergies")}</span><h2>${L("Jugadas de equipo", "Team plays")}</h2>
+    <p>${L("Por qué dos o más dioses funcionan juntos, contando pasivas y ultis. Cada dato sale de la ficha de habilidades del parche indicado; lo que no pude confirmar va marcado «por verificar».", "Why two or more gods work together, counting passives and ults. Unconfirmed details are marked \"unverified\".")}</p></div>
+    <div class="panel"><div class="chips">${chips}</div><p class="muted">${L(`${list.length} sinergias. En la ficha de cada dios también salen sus duplas.`, `${list.length} synergies. Each god's page also lists their duos.`)}</p></div>
+    <div class="combos">${list.map(sinCard).join("") || `<p class="empty">${L("Todavía no hay sinergias: se agregan en src/curado/sinergias.json.", "No synergies yet.")}</p>`}</div>`;
 }
 
 // ---------- Habilidades y efectos (src/curado/efectos_habilidades.json) ----------
@@ -713,7 +730,7 @@ function renderCombos() {
 }
 
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
@@ -724,6 +741,7 @@ function setView(v, keepHash) {
   renderViews();
   if (view === "habilidades") renderHabilidades();
   if (view === "combos") renderCombos();
+  if (view === "sinergias") renderSinergias();
   if (!keepHash) { try { history.replaceState(null, "", "#" + (view === "dioses" && cur ? cur.god.s : view)); } catch (e) {} }
 }
 
@@ -861,6 +879,8 @@ document.addEventListener("click", e => {
   const fm = t.closest("[data-fxmode]");
   if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
   if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
+  const stp = t.closest("[data-sintipo]");
+  if (stp) { sinTipo = stp.dataset.sintipo; renderSinergias(); return; }
   const cd = t.closest("[data-cdiff]");
   if (cd) { comboDiff = cd.dataset.cdiff; renderCombos(); return; }
   const co = t.closest("[data-corig]");
