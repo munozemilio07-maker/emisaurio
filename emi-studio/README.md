@@ -19,14 +19,14 @@ Un editor de video que funciona dentro de tu navegador y en tu propia computador
 |---|---|
 | Marca de agua en la versión gratis | Nunca hay marca de agua |
 | Créditos de IA que se agotan y cobros por renovación automática | Gratis y local, sin cuentas |
-| Va lento con 4K o con videos largos | Exportación fotograma a fotograma con WebCodecs y aceleración por hardware |
-| Pocos ajustes para cada red social | 22 destinos con resolución, fps y bitrate ya ajustados, más avisos de duración |
+| Va lento con 4K o con videos largos | Exportación con WebCodecs (aceleración por hardware cuando el navegador la ofrece), audio leído por partes y archivos grandes escritos directo al disco. *Aún no medido con 4K real.* |
+| Pocos ajustes para cada red social | 22 destinos con resolución, fps y bitrate ya ajustados, más avisos de duración (límites aproximados: las apps los cambian seguido) |
 | Los videos horizontales quedan mal en formato vertical | Fondo desenfocado automático y zonas seguras de TikTok/Reels/Shorts |
 
 ## Etapas
 
 - [x] **Etapa 1: la base.** Importar video, foto y audio, vista previa, línea de tiempo (mover, recortar, dividir, imán, varias pistas), formatos de proyecto (9:16, 16:9, 1:1, 4:5, 3:4, 2:3, 4:3, 21:9), velocidad, volumen, fundidos, encuadre, transformar, deshacer/rehacer y exportación.
-- [x] **Etapa 2: modo viral.** Botón «Optimizar mi video» en 1 clic, subtítulos automáticos con Whisper local (palabra resaltada, emojis, 5 estilos, SRT), cortes de silencio, zoom alterno en cortes, ganchos de los primeros 3 s, barra de progreso, beats de la música, «Voz clara», volumen a −14 LUFS, bajar la música al hablar, 18 filtros con vista previa, auto-color, 15 transiciones, 10 estilos de texto animado y Modo Fácil / Modo Pro.
+- [x] **Etapa 2: modo viral.** Botón «Optimizar mi video» en 1 clic, subtítulos automáticos con Whisper local (palabra resaltada, emojis, 5 estilos, SRT), cortes de silencio, zoom alterno en cortes, ganchos de los primeros 3 s, barra de progreso, beats de la música, «Voz clara», volumen a ≈ −14 LUFS (estimado), bajar la música al hablar, 18 filtros con vista previa, auto-color, 15 transiciones, 10 estilos de texto animado y Modo Fácil / Modo Pro.
 - [x] **Extra: sonido viral de TikTok.** Pista «Sonido guía» que se escucha al editar pero no se exporta, detección de BPM y beats, cortes al ritmo y montaje al ritmo, e instrucciones de en qué segundo recortar el sonido dentro de TikTok.
 - [x] **Etapa 3: autoguardado y «Mis proyectos».** Todo se guarda solo, también tus archivos (hasta 2 GB cada uno). Al abrir, se recupera el último proyecto. Puedes duplicar, borrar y volver a vincular archivos que falten.
 - [x] **Etapa 4: editar con el texto.** Pestaña ¶ Transcripción: borra palabras y el video se corta solo, limpieza de muletillas, sonidos sin palabra, repeticiones y pausas, búsqueda en lo que dices, subtítulos desde el texto y armado del video desde un guion.

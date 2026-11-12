@@ -313,6 +313,9 @@ kbd { font: 600 10.5px ui-monospace, monospace; background: var(--panel2); borde
 
 /* ---------- Toasts ---------- */
 .toasts { position: fixed; right: 18px; bottom: 18px; display: grid; gap: 8px; z-index: 200; }
+/* los avisos no bloquean la línea de tiempo: sólo sus botones reciben clics */
+.toasts, .toast { pointer-events: none; }
+.toast button, .toast a { pointer-events: auto; }
 .toast { background: var(--panel2); border: 1px solid var(--line2); border-left: 3px solid var(--accent); border-radius: 12px; padding: 10px 14px; max-width: 360px; box-shadow: 0 14px 40px rgba(0, 0, 0, .5); animation: dlg .2s ease-out; }
 .toast.ok { border-left-color: var(--ok); } .toast.err { border-left-color: var(--bad); } .toast.warn { border-left-color: var(--warn); }
 .drop-overlay { position: fixed; inset: 0; z-index: 150; background: rgba(139, 92, 246, .18); backdrop-filter: blur(4px); display: grid; place-items: center; border: 3px dashed var(--accent); pointer-events: none; }

@@ -159,8 +159,8 @@ export async function openExport(app) {
     if (p.aspect && p.aspect !== P.aspect && st.fmt.kind !== 'audio') {
       w.push(`<div class="warnbox">⚠ ${p.name} usa formato <b>${p.aspect}</b> y tu proyecto es <b>${P.aspect}</b>. Se exportará con tu formato actual.<br><button class="btn small" data-asp="${p.aspect}">Cambiar el proyecto a ${p.aspect}</button></div>`);
     }
-    if (p.maxDur && len > p.maxDur && st.fmt.kind === 'video') w.push(`<div class="warnbox">⏱ ${p.name} admite como máximo ~${fmtTime(p.maxDur)}. Tu video dura ${fmtTime(len)}: recórtalo o divídelo en partes.</div>`);
-    else if (p.sweet && st.fmt.kind === 'video' && p.id !== 'custom' && (len < p.sweet[0] || len > p.sweet[1])) w.push(`<div class="warnbox">💡 Para ${p.name} suelen rendir mejor los videos de ${p.sweet[0]}–${p.sweet[1] >= 600 ? Math.round(p.sweet[1] / 60) + ' min' : p.sweet[1] + ' s'}. El tuyo dura ${fmtTime(len)}.</div>`);
+    if (p.maxDur && len > p.maxDur && st.fmt.kind === 'video') w.push(`<div class="warnbox">⏱ ${p.name} admite como máximo ~${fmtTime(p.maxDur)} (límite aproximado, revisa la app). Tu video dura ${fmtTime(len)}: recórtalo o divídelo en partes.</div>`);
+    else if (p.sweet && st.fmt.kind === 'video' && p.id !== 'custom' && (len < p.sweet[0] || len > p.sweet[1])) w.push(`<div class="warnbox">💡 Como referencia general, en ${p.name} suelen rendir mejor los videos de ${p.sweet[0]}–${p.sweet[1] >= 600 ? Math.round(p.sweet[1] / 60) + ' min' : p.sweet[1] + ' s'}. El tuyo dura ${fmtTime(len)}.</div>`);
     if (st.fmt.kind === 'gif' && len > 15) w.push(`<div class="warnbox">GIF largo (${Math.round(len)} s): el archivo será pesado. Usa el bucle (I/O) para exportar sólo un tramo.</div>`);
     if (!w.length && st.fmt.kind === 'video') w.push(`<div class="warnbox ok">✓ Listo para ${p.name}. Sin marca de agua.</div>`);
     $('#exWarn').innerHTML = w.join('');

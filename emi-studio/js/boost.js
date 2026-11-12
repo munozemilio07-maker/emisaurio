@@ -142,7 +142,7 @@ export function viralScore(P) {
   }
 
   // Audio
-  add('loud', 'Volumen para redes', 5, P.loudnessDone ? 1 : 0.5, P.loudnessDone ? 'Normalizado a ≈ −14 LUFS.' : 'Sin normalizar: puede sonar más bajo que otros videos.', P.loudnessDone ? null : { label: 'Normalizar', async: 'normalize' });
+  add('loud', 'Volumen para redes', 5, P.loudnessDone ? 1 : 0.5, P.loudnessDone ? 'Normalizado a ≈ −14 LUFS (estimación por RMS, no medición BS.1770).' : 'Sin normalizar: puede sonar más bajo que otros videos.', P.loudnessDone ? null : { label: 'Normalizar', async: 'normalize' });
 
   // Cierre
   const endText = texts.some((c) => clipEnd(c) > dur - 3 && c.kind === 'text');

@@ -25,7 +25,7 @@ export function createPanels(app, ui) {
     ['sil', 'Quitar silencios (jump cuts)', true],
     ['zoom', 'Zoom alterno en cada corte', true],
     ['voice', 'Voz clara (EQ + compresión)', true],
-    ['loud', 'Volumen listo para redes (≈ −14 LUFS)', true],
+    ['loud', 'Volumen listo para redes (≈ −14 LUFS, aprox.)', true],
     ['duck', 'Bajar la música cuando hablas', true],
     ['color', 'Auto-color en todos los clips', true],
     ['bar', 'Barra de progreso', false],
@@ -52,7 +52,7 @@ export function createPanels(app, ui) {
     if (viralOn.duck) { P.autoDuck = true; log.push('ducking'); }
     if (viralOn.color) { let n = 0; for (const c of P.clips) if ((c.kind === 'video' || c.kind === 'image') && autoColor(c)) n++; if (n) log.push(`color en ${n} clips`); }
     if (viralOn.bar) { P.progressBar = { on: true, pos: 'top', color: '#ec4899', color2: '#f59e0b', h: 0.008 }; log.push('barra de progreso'); }
-    if (viralOn.loud) { say('Midiendo volumen…'); const r = await normalizeLoudness(P); log.push(`volumen ${r.db > -99 ? r.db.toFixed(1) + ' dB → ' : ''}−14 LUFS`); }
+    if (viralOn.loud) { say('Midiendo volumen…'); const r = await normalizeLoudness(P); log.push(`volumen ${r.db > -99 ? r.db.toFixed(1) + ' dB → ' : ''}≈ −14 LUFS`); }
     app.refresh();
     if (viralOn.caps) {
       say('Generando subtítulos… (la primera vez descarga el modelo)');
@@ -335,7 +335,7 @@ export function createPanels(app, ui) {
     el.innerHTML = `<h3>Audio</h3>
       <div class="tool"><div class="tool-h"><b>🎙 Voz clara</b><span class="sub">Quita graves que retumban, da presencia y nivela la voz</span></div>
         <div class="row"><label class="switch"><input type="checkbox" id="aEnh"${allEnh ? ' checked' : ''}><i></i></label><span class="sub">${voiceClips.length} clips con voz</span></div></div>
-      <div class="tool"><div class="tool-h"><b>📢 Volumen para redes</b><span class="sub">Ajusta todo a ≈ −14 LUFS, el nivel que usan TikTok, YouTube e Instagram</span></div>
+      <div class="tool"><div class="tool-h"><b>📢 Volumen para redes</b><span class="sub">Ajusta todo a ≈ −14 LUFS, el nivel que suelen usar TikTok, YouTube e Instagram. Es una estimación por RMS, no una medición profesional BS.1770</span></div>
         <div class="row"><button class="btn small" id="aNorm">Normalizar</button><span class="sub" id="aNormInfo"></span></div></div>
       <div class="tool"><div class="tool-h"><b>🎵 Bajar música al hablar</b><span class="sub">Ducking automático en la pista Música</span></div>
         <div class="row"><label class="switch"><input type="checkbox" id="aDuck"${P.autoDuck ? ' checked' : ''}><i></i></label>

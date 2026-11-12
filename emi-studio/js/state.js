@@ -119,8 +119,11 @@ export function rippleDeleteRange(P, a, b, onlyTracks = null) {
     if (!affected(c)) continue;
     if (c.start < b && clipEnd(c) > b) splitClip(P, c, b);
   }
-  P.clips = P.clips.filter((c) => !(affected(c) && c.start >= a - 1e-6 && clipEnd(c) <= b + 1e-6));
-  for (const c of P.clips) if (affected(c) && c.start >= b - 1e-6) c.start -= len;
+  // splitClip no corta a menos de 0.03 s de un borde: esos trozos también se borran (si no, el video
+  // se quedaría mientras el resto se recorre y todo quedaría desincronizado)
+  const TOL = 0.035;
+  P.clips = P.clips.filter((c) => !(affected(c) && c.start >= a - TOL && clipEnd(c) <= b + TOL));
+  for (const c of P.clips) if (affected(c) && c.start >= b - TOL) c.start = Math.max(0, c.start - len);
   // los beats pertenecen a la música / sonido guía, que no se recorren: se quedan donde están
   P.markers = P.markers.filter((m) => m.beat || m.t < a || m.t >= b).map((m) => (!m.beat && m.t >= b ? { ...m, t: m.t - len } : m));
 }
