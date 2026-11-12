@@ -1,6 +1,8 @@
 // Compositor: dibuja un fotograma del proyecto en un canvas 2D.
 // Se usa igual para la vista previa y para la exportación, así lo que ves es lo que exportas.
 import { clamp, clipEnd, clipsOnTrack, projectDuration } from './state.js';
+import { keyFrame } from './vision.js';
+import { camAt } from './camera.js';
 
 const ease = {
   out: (x) => 1 - Math.pow(1 - x, 3),
@@ -92,6 +94,14 @@ export function drawClip(ctx, P, c, t, prov, ex = {}) {
     if (!src) return;
     [sw, sh] = srcSize(src);
   }
+  // Quitar fondo: croma o persona (la máscara de persona llega del proveedor)
+  const origSrc = src;
+  let keyed = null;
+  if (src && c.key?.on) {
+    const needMask = c.key.type === 'person';
+    const mask = needMask ? prov.mask?.(c, src) : null;
+    if (!needMask || mask) { try { keyed = keyFrame(src, c.key, mask); } catch (e) { console.warn(e); } }
+  }
   const tr = c.transform, mo = motionFor(c, t, W, H);
   const fit = c.fit || 'cover';
   let base;
@@ -121,6 +131,24 @@ export function drawClip(ctx, P, c, t, prov, ex = {}) {
   if (rot) ctx.rotate((rot * Math.PI) / 180);
   ctx.scale(scale * (tr.flipX ? -1 : 1), scale);
   if (filt) ctx.filter = filt;
+  // Reencuadre: centra la cara que sigue la trayectoria de cámara
+  if (c.reframe && P.faceTracks?.[c.mediaId]) {
+    const cam = camAt(P.faceTracks[c.mediaId], ex.holdT ?? sourceTime(c, t));
+    if (cam) {
+      const mx = Math.max(0, dw / 2 - W / 2 / scale), my = Math.max(0, dh / 2 - H / 2 / scale);
+      ctx.translate(clamp(-(cam[0] - 0.5) * dw, -mx, mx), clamp(-(cam[1] - 0.45) * dh, -my, my));
+    }
+  }
+
+  if (keyed && c.key.bg === 'blur') {
+    const f0 = ctx.filter;
+    ctx.filter = `blur(${Math.round(Math.min(W, H) * 0.02)}px) ${filt}`;
+    ctx.drawImage(origSrc, -dw / 2, -dh / 2, dw, dh);
+    ctx.filter = f0;
+  } else if (keyed && c.key.bg === 'color') {
+    ctx.fillStyle = c.key.bgColor || '#111';
+    ctx.fillRect(-dw / 2, -dh / 2, dw, dh);
+  }
 
   if (c.kind === 'solid') {
     const g = ctx.createLinearGradient(-W / 2, -H / 2, W / 2, H / 2);
@@ -128,11 +156,12 @@ export function drawClip(ctx, P, c, t, prov, ex = {}) {
     ctx.fillStyle = g;
     ctx.fillRect(-W / 2, -H / 2, W, H);
   } else {
-    ctx.drawImage(src, -dw / 2, -dh / 2, dw, dh);
+    ctx.drawImage(keyed || src, -dw / 2, -dh / 2, dw, dh);
   }
   ctx.filter = 'none';
 
-  const col = c.color || {};
+  // con fondo transparente, los ajustes que pintan encima ensuciarían lo que hay detrás
+  const col = keyed && c.key.bg !== 'blur' && c.key.bg !== 'color' ? {} : c.color || {};
   // Temperatura y tinte: superposición suave sólo sobre el área del clip
   if (col.temp || col.tint) {
     ctx.globalCompositeOperation = 'soft-light';

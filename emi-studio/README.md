@@ -31,7 +31,7 @@ Un editor de video que funciona dentro de tu navegador y en tu propia computador
 - [x] **Etapa 3: autoguardado y «Mis proyectos».** Todo se guarda solo, también tus archivos (hasta 2 GB cada uno). Al abrir, se recupera el último proyecto. Puedes duplicar, borrar y volver a vincular archivos que falten.
 - [x] **Etapa 4: editar con el texto.** Pestaña ¶ Transcripción: borra palabras y el video se corta solo, limpieza de muletillas, sonidos sin palabra, repeticiones y pausas, búsqueda en lo que dices, subtítulos desde el texto y armado del video desde un guion.
 - [x] **Etapa 5: potenciadores.** Puntuación viral de 0 a 100 con arreglos en un clic, zooms automáticos en las palabras fuertes, 12 efectos de sonido sintetizados (sin derechos de autor) colocados solos en cortes y zooms, y clips automáticos de videos largos con exportación en lote.
-- [ ] Etapa 6: reencuadre con cara, aislar personas, croma, multicámara automática
+- [x] **Etapa 6: cámara inteligente.** Reencuadre siguiendo tu cara (cámara virtual con paneo suave y cortes), quitar el fondo de personas sin pantalla verde, croma con color automático, modo retrato (fondo desenfocado) y multicámara sincronizada por audio que cambia a quien habla. Los modelos de IA vienen incluidos: funciona sin internet.
 - [ ] Etapa 7 (Pro): fotogramas clave con curvas, curvas de color y LUTs, máscaras y seguimiento
 - [ ] Etapa 8: limpieza de voz con RNNoise e igualado de diálogos
 
@@ -57,4 +57,4 @@ Los formatos que tu navegador no puede codificar aparecen en gris.
 
 ## Créditos
 
-[Mediabunny](https://mediabunny.dev) (MPL‑2.0) para la lectura y escritura de archivos multimedia. [gifenc](https://github.com/mattdesl/gifenc) (MIT) para los GIF.
+[Mediabunny](https://mediabunny.dev) (MPL‑2.0) para la lectura y escritura de archivos multimedia. [gifenc](https://github.com/mattdesl/gifenc) (MIT) para los GIF. [MediaPipe](https://github.com/google-ai-edge/mediapipe) (Apache-2.0) para detectar caras y recortar personas.

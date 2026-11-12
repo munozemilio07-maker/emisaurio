@@ -12,6 +12,7 @@ import { TEXT_STYLES } from './presets.js';
 import { initProjects } from './projects.js';
 import { createTranscriptPanel } from './transcriptpanel.js';
 import { createBoostPanels } from './boostpanels.js';
+import { createCameraPanel } from './camerapanel.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -45,7 +46,7 @@ const app = {
     updateChrome();
     scheduleAutosave();
   },
-  select(id) { this.selection.clear(); if (id) this.selection.add(id); this.timeline.render(); renderInspector(); if (curTab === 'filters' || curTab === 'transitions') renderPanel(); },
+  select(id) { this.selection.clear(); if (id) this.selection.add(id); this.timeline.render(); renderInspector(); if (['filters', 'transitions', 'camera'].includes(curTab)) renderPanel(); },
   toggleSelect(id) { this.selection.has(id) ? this.selection.delete(id) : this.selection.add(id); this.timeline.render(); renderInspector(); },
   selected() { return this.P.clips.filter((c) => this.selection.has(c.id)); },
   toast,
@@ -391,7 +392,7 @@ ui = initUI(app);
   const { viral, ...rest } = base;
   const boost = createBoostPanels(app);
   app.mountScore = boost.mountScore;
-  panels = { viral, transcript: createTranscriptPanel(app), clips: boost.clips, fx: boost.fx, ...rest };
+  panels = { viral, transcript: createTranscriptPanel(app), clips: boost.clips, camera: createCameraPanel(app, ui), fx: boost.fx, ...rest };
 }
 buildTabs();
 syncPro();

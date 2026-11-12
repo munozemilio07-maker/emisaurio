@@ -26,7 +26,26 @@ export class Player {
         const e = this.els.get(c.id);
         return e && e.el.readyState >= 2 ? e.el : null;
       },
+      mask: (c, src) => this.maskFor(c, src),
     };
+    this.masks = new Map();
+    this.segBusy = false;
+  }
+
+  // Máscara de persona: se calcula en segundo plano y se usa la última disponible
+  maskFor(c, src) {
+    let e = this.masks.get(c.id);
+    if (!e) { e = { canvas: document.createElement('canvas'), ready: false, st: null }; this.masks.set(c.id, e); }
+    const st = src.currentTime ?? 'img';
+    if (!this.segBusy && e.st !== st) {
+      this.segBusy = true;
+      e.st = st;
+      import('./vision.js').then((v) => v.segmentPerson(src, e.canvas)).then((m) => {
+        e.ready = !!m; this.segBusy = false;
+        if (!this.playing) this.requestDraw();
+      }).catch((err) => { console.warn(err); this.segBusy = false; });
+    }
+    return e.ready ? e.canvas : null;
   }
 
   on(fn) { this.listeners.add(fn); }

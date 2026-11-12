@@ -4,6 +4,7 @@ import { GIFEncoder, quantize, applyPalette } from '../vendor/gifenc.esm.js';
 import { projectDuration, clipEnd } from './state.js';
 import { renderFrame, activeVisuals, sourceTime } from './render.js';
 import { mixOffline } from './audio.js';
+import { segmentPerson } from './vision.js';
 import { media } from './media.js';
 
 let encodersReady = null;
@@ -48,7 +49,7 @@ const MIME = { mp4: 'video/mp4', mov: 'video/quicktime', webm: 'video/webm', mkv
 
 // ---------- Fuente de fotogramas para exportar ----------
 class ExportFrames {
-  constructor(P, fps, a, b) { this.P = P; this.fps = fps; this.a = a; this.b = b; this.cur = new Map(); this.iters = new Map(); this.inputs = new Map(); this.fallback = new Map(); }
+  constructor(P, fps, a, b) { this.P = P; this.fps = fps; this.a = a; this.b = b; this.cur = new Map(); this.iters = new Map(); this.inputs = new Map(); this.fallback = new Map(); this.masks = new Map(); }
 
   async prepare() {
     const P = this.P, N = Math.ceil((this.b - this.a) * this.fps);
@@ -65,6 +66,11 @@ class ExportFrames {
       }
     }
     this.plan = plan;
+    // fotos con fondo quitado: la máscara se calcula una vez
+    for (const c of P.clips) {
+      const m = media.get(c.mediaId);
+      if (c.kind === 'image' && m?.bitmap && c.key?.on && c.key.type === 'person') this.masks.set(c.id, await segmentPerson(m.bitmap, document.createElement('canvas')));
+    }
     this.need = new Map(); // i -> [clipId]
     for (const [id, p] of plan) for (const x of p.list) { if (!this.need.has(x.i)) this.need.set(x.i, []); this.need.get(x.i).push(id); }
     for (const [id, p] of plan) {
@@ -101,6 +107,11 @@ class ExportFrames {
       if (it) {
         const r = await it.next();
         this.cur.set(id, r.value ? r.value.canvas : null);
+        const clip = this.plan.get(id).clip;
+        if (r.value && clip.key?.on && clip.key.type === 'person') {
+          const mc = this.masks.get(id) || document.createElement('canvas');
+          this.masks.set(id, await segmentPerson(r.value.canvas, mc));
+        }
       } else {
         const v = this.fallback.get(id);
         const x = this.plan.get(id).list.find((y) => y.i === i);
@@ -109,6 +120,8 @@ class ExportFrames {
             await new Promise((r) => { const done = () => { v.removeEventListener('seeked', done); r(); }; v.addEventListener('seeked', done); v.currentTime = x.st; setTimeout(done, 3000); });
           }
           this.cur.set(id, v);
+          const clip = this.plan.get(id).clip;
+          if (clip.key?.on && clip.key.type === 'person') this.masks.set(id, await segmentPerson(v, this.masks.get(id) || document.createElement('canvas')));
         }
       }
     }
@@ -122,6 +135,7 @@ class ExportFrames {
         if (m.type === 'image') return m.bitmap;
         return this.cur.get(c.id) || null;
       },
+      mask: (c) => this.masks.get(c.id) || null,
     };
   }
 

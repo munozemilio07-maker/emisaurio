@@ -58,7 +58,7 @@ Revisé Premiere Pro, DaVinci Resolve, Final Cut Pro, CapCut Pro, Descript, Opus
 1. **Etapa 3:** autoguardado y "Mis proyectos" ✓
 2. **Etapa 4:** editar con el texto, quitar muletillas, buscar en lo dicho, armar desde guion ✓
 3. **Etapa 5:** zooms y efectos de sonido automáticos, puntuación viral, clips automáticos ✓
-4. **Etapa 6:** reencuadre con cara, aislar personas, croma, multicámara automática
+4. **Etapa 6:** reencuadre con cara, aislar personas, croma, multicámara automática ✓
 5. **Etapa 7 (Pro):** fotogramas clave con curvas, curvas de color y LUTs, máscaras y seguimiento
 6. **Etapa 8:** limpieza de voz con RNNoise e igualado de diálogos
 
