@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emisaurio Studio</title>
+<meta name="description" content="Editor de vídeo local, sin marca de agua ni créditos, con exportación para todas las plataformas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,800&family=Poppins:wght@500;700;800&family=Bebas+Neue&family=Anton&family=Space+Grotesk:wght@500;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Permanent+Marker&family=Pacifico&family=Bangers&family=Caveat:wght@700&family=Oswald:wght@500;700&display=swap">
+<link rel="stylesheet" href="css/studio.css">
+<script type="importmap">
+{ "imports": { "mediabunny": "./vendor/mediabunny.min.mjs" } }
+</script>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="logo">◆</span><span class="brand-name">Emisaurio <b>Studio</b></span></div>
+    <input id="projName" class="proj-name" value="Mi video" spellcheck="false" aria-label="Nombre del proyecto">
+    <div class="top-mid">
+      <button class="btn ghost icon" id="undoBtn" title="Deshacer (Ctrl+Z)">↶</button>
+      <button class="btn ghost icon" id="redoBtn" title="Rehacer (Ctrl+Shift+Z)">↷</button>
+      <div class="aspect-pick">
+        <button class="btn ghost" id="aspectBtn"><span class="aspect-ico"></span><span id="aspectLabel">9:16</span> ▾</button>
+        <div class="menu" id="aspectMenu"></div>
+      </div>
+    </div>
+    <div class="top-right">
+      <span class="badge-free" title="Sin marca de agua, sin suscripción, sin créditos de IA. Todo se procesa en tu equipo.">Sin marca de agua · 100% local</span>
+      <button class="btn primary" id="exportBtn">⇪ Exportar</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="left">
+      <nav class="tabs" id="leftTabs">
+        <button data-tab="media" class="active"><i>▣</i><span>Medios</span></button>
+      </nav>
+      <section class="panel" id="panel-media"></section>
+    </aside>
+
+    <section class="center">
+      <div class="stage" id="stage">
+        <div class="canvas-wrap" id="canvasWrap">
+          <canvas id="preview"></canvas>
+          <div class="safe-zone" id="safeZone" hidden></div>
+        </div>
+        <div class="empty-hint" id="emptyHint">
+          <div class="drop-icon">⇣</div>
+          <h2>Arrastra aquí tus videos, fotos o música</h2>
+          <p>o <button class="link" id="emptyImport">elige archivos</button> · todo se queda en tu equipo</p>
+        </div>
+      </div>
+      <div class="transport">
+        <span class="tc" id="tcCur">00:00:00</span>
+        <div class="tp-btns">
+          <button class="btn ghost icon" id="toStart" title="Inicio (Home)">⏮</button>
+          <button class="btn ghost icon" id="frameBack" title="Fotograma anterior (←)">◂</button>
+          <button class="btn play" id="playBtn" title="Reproducir (Espacio)">▶</button>
+          <button class="btn ghost icon" id="frameFwd" title="Fotograma siguiente (→)">▸</button>
+          <button class="btn ghost icon" id="toEnd" title="Final (End)">⏭</button>
+        </div>
+        <span class="tc dim" id="tcDur">00:00:00</span>
+        <div class="tp-right">
+          <button class="btn ghost small" id="safeBtn" title="Muestra las zonas que tapan los botones de TikTok/Reels/Shorts">Zonas seguras</button>
+          <button class="btn ghost small" id="loopBtn" title="Repetir la selección">⟲ Bucle</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="right" id="inspector"></aside>
+  </main>
+
+  <footer class="timeline-area">
+    <div class="tl-toolbar">
+      <button class="btn ghost small" id="splitBtn" title="Dividir en el cabezal (S)">✂ Dividir</button>
+      <button class="btn ghost small" id="delBtn" title="Eliminar (Supr)">🗑 Eliminar</button>
+      <button class="btn ghost small" id="rippleBtn" title="Eliminar y cerrar hueco (Shift+Supr)">⇤ Eliminar y cerrar hueco</button>
+      <button class="btn ghost small" id="dupBtn" title="Duplicar (Ctrl+D)">⧉ Duplicar</button>
+      <span class="sep"></span>
+      <button class="btn ghost small toggle on" id="snapBtn" title="Imán (N)">🧲 Imán</button>
+      <span class="grow"></span>
+      <button class="btn ghost small" id="fitBtn" title="Ajustar a la ventana">⤢</button>
+      <input type="range" id="zoom" min="8" max="600" value="70" title="Zoom (Ctrl + rueda)">
+    </div>
+    <div id="timeline" class="timeline"></div>
+  </footer>
+</div>
+
+<div class="modal" id="exportModal" hidden></div>
+<div class="toasts" id="toasts"></div>
+<input type="file" id="fileInput" multiple accept="video/*,audio/*,image/*" hidden>
+<div class="drop-overlay" id="dropOverlay" hidden><div>Suelta para importar</div></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

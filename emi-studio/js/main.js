@@ -1,0 +1,466 @@
+// Emisaurio Studio — punto de entrada: estado global, paneles, inspector y atajos.
+import { ASPECTS, GRADIENTS } from './presets.js';
+import { newProject, makeClip, History, clipEnd, splitClip, rippleDeleteRange, trackEnd, projectDuration, fmtTime, uid, clone, clamp } from './state.js';
+import { media, importFile } from './media.js';
+import { Player } from './player.js';
+import { Timeline } from './timeline.js';
+import { openExport } from './exportui.js';
+
+const $ = (s, r = document) => r.querySelector(s);
+
+const app = {
+  P: newProject(ASPECTS[0]),
+  history: new History(),
+  selection: new Set(),
+  _snap: null,
+
+  commit(fn) {
+    this.history.push(this.P);
+    fn?.(this.P);
+    this.refresh();
+  },
+  beginEdit() { this._snap = JSON.stringify(this.P); },
+  endEdit() {
+    if (this._snap && this._snap !== JSON.stringify(this.P)) {
+      this.history.stack.push(this._snap);
+      this.history.redo.length = 0;
+    }
+    this._snap = null;
+    this.refresh();
+  },
+  livePreview() { this.player.invalidate(); },
+  refresh() {
+    this.timeline.render();
+    renderInspector();
+    this.player.resize();
+    this.player.invalidate();
+    updateChrome();
+    scheduleAutosave();
+  },
+  select(id) { this.selection.clear(); if (id) this.selection.add(id); this.timeline.render(); renderInspector(); },
+  toggleSelect(id) { this.selection.has(id) ? this.selection.delete(id) : this.selection.add(id); this.timeline.render(); renderInspector(); },
+  selected() { return this.P.clips.filter((c) => this.selection.has(c.id)); },
+  toast,
+  importFiles,
+  addMediaClip,
+};
+window.emi = app; // útil para depurar desde la consola
+
+// ---------- Utilidades UI ----------
+function toast(msg, type = '', ms = 3600) {
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = msg;
+  $('#toasts').appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity .3s'; setTimeout(() => el.remove(), 300); }, ms);
+}
+
+// ---------- Vista previa ----------
+const canvas = $('#preview');
+app.player = new Player(canvas, () => app.P);
+app.timeline = new Timeline($('#timeline'), app);
+app.player.on((t, playing) => {
+  app.timeline.updatePlayhead(t);
+  $('#tcCur').textContent = fmtTime(t, app.P.fps, true).replace('.', ':');
+  $('#playBtn').textContent = playing ? '❚❚' : '▶';
+});
+
+function fitStage() {
+  const st = $('#stage');
+  const W = st.clientWidth - 36, H = st.clientHeight - 36;
+  const ar = app.P.width / app.P.height;
+  let w = W, h = W / ar;
+  if (h > H) { h = H; w = H * ar; }
+  const wrap = $('#canvasWrap');
+  wrap.style.width = Math.max(10, w) + 'px';
+  wrap.style.height = Math.max(10, h) + 'px';
+  renderSafeZones();
+}
+new ResizeObserver(fitStage).observe($('#stage'));
+
+function renderSafeZones() {
+  const sz = $('#safeZone');
+  if (sz.hidden) return;
+  const vertical = app.P.width / app.P.height < 0.7;
+  sz.innerHTML = vertical
+    ? `<div class="z" style="left:0;right:0;top:0;height:9%">Barra superior</div>
+       <div class="z" style="right:0;width:15%;top:38%;height:44%">Botones<br>❤ 💬 ↗</div>
+       <div class="z" style="left:0;right:0;bottom:0;height:18%">Descripción · usuario · música</div>`
+    : `<div class="z" style="left:0;right:0;bottom:0;height:12%">Controles del reproductor</div>`;
+}
+
+function updateChrome() {
+  const P = app.P;
+  const d = projectDuration(P);
+  $('#tcDur').textContent = fmtTime(d, P.fps, true).replace('.', ':');
+  $('#emptyHint').style.display = P.clips.length ? 'none' : '';
+  $('#canvasWrap').style.visibility = P.clips.length ? 'visible' : 'hidden';
+  const a = ASPECTS.find((x) => x.id === P.aspect);
+  $('#aspectLabel').textContent = a ? a.id : `${P.width}×${P.height}`;
+  const ico = $('.aspect-ico');
+  const s = 14 / Math.max(P.width, P.height);
+  ico.className = 'aspect-ico ar-box';
+  ico.style.cssText = `display:inline-block;width:${P.width * s}px;height:${P.height * s}px;margin-right:6px;vertical-align:-2px`;
+  $('#undoBtn').disabled = !app.history.stack.length;
+  $('#redoBtn').disabled = !app.history.redo.length;
+  if ($('#projName').value !== P.name) $('#projName').value = P.name;
+  fitStage();
+}
+
+// ---------- Selector de formato (aspecto) ----------
+function buildAspectMenu() {
+  const menu = $('#aspectMenu');
+  menu.innerHTML = ASPECTS.map((a) => {
+    const s = 22 / Math.max(a.w, a.h);
+    return `<button class="menu-item${a.id === app.P.aspect ? ' active' : ''}" data-id="${a.id}">
+      <span class="ar-box" style="width:${a.w * s}px;height:${a.h * s}px"></span>
+      <span><b>${a.label}</b><small>${a.hint}</small></span></button>`;
+  }).join('');
+  menu.querySelectorAll('.menu-item').forEach((b) => b.addEventListener('click', () => {
+    setAspect(b.dataset.id);
+    menu.classList.remove('open');
+  }));
+}
+export function setAspect(id) {
+  const a = ASPECTS.find((x) => x.id === id);
+  if (!a) return;
+  app.commit((P) => { P.aspect = a.id; P.width = a.w; P.height = a.h; });
+  toast(`Formato cambiado a <b>${a.label}</b>. Los clips se reencuadran solos; ajusta el “Encuadre” en el inspector si lo necesitas.`, 'ok');
+}
+app.setAspect = setAspect;
+$('#aspectBtn').addEventListener('click', (e) => { e.stopPropagation(); buildAspectMenu(); $('#aspectMenu').classList.toggle('open'); });
+document.addEventListener('click', (e) => { if (!e.target.closest('.aspect-pick')) $('#aspectMenu').classList.remove('open'); });
+
+// ---------- Importación ----------
+async function importFiles(files, at = null) {
+  const list = [...files];
+  const wasEmpty = !app.P.clips.length;
+  let added = 0;
+  for (const f of list) {
+    try {
+      const m = await importFile(f, (what) => { renderMediaPanel(); if (what === 'audio') { app.timeline.render(); app.player.invalidate(); } });
+      added++;
+      if (at) { addMediaClip(m.id, at.trackId, at.t); at.t += m.duration; }
+      else if (wasEmpty) addMediaClip(m.id);
+    } catch (e) { toast(e.message, 'err', 6000); }
+  }
+  renderMediaPanel();
+  if (added) toast(`${added} archivo${added > 1 ? 's' : ''} importado${added > 1 ? 's' : ''}. Pulsa <b>+</b> o arrástralos a la línea de tiempo.`, 'ok');
+}
+
+function defaultTrackFor(m) {
+  if (m.type === 'audio') return app.P.tracks.find((t) => t.music)?.id || 'tA2';
+  return app.P.tracks.find((t) => t.main)?.id || 'tV1';
+}
+
+function addMediaClip(mediaId, trackId = null, t = null) {
+  const m = media.get(mediaId);
+  if (!m || m.loading) return toast('Espera a que termine de cargar…');
+  trackId = trackId || defaultTrackFor(m);
+  const tr = app.P.tracks.find((x) => x.id === trackId);
+  // ajustar a una pista compatible
+  if (m.type === 'audio' && tr.type !== 'audio') trackId = defaultTrackFor(m);
+  if (m.type !== 'audio' && tr.type !== 'video') trackId = defaultTrackFor(m);
+  if (t == null) t = trackEnd(app.P, trackId);
+  const kind = m.type === 'audio' ? 'audio' : m.type === 'image' ? 'image' : 'video';
+  const c = makeClip(kind, trackId, t, m.duration, { mediaId });
+  // vídeo horizontal en proyecto vertical → fondo desenfocado (lo que la gente suele querer)
+  if (kind !== 'audio') {
+    const projV = app.P.height > app.P.width, srcV = m.h > m.w;
+    if (projV !== srcV) c.fit = 'blurfill';
+    if (kind === 'image') c.motion = 'zoom-in';
+  }
+  app.commit((P) => P.clips.push(c));
+  app.select(c.id);
+  if (app.P.clips.length === 1) {
+    // primer clip: sugerir formato
+    const srcV = m.h > m.w;
+    if (kind !== 'audio' && !srcV && app.P.height > app.P.width) {
+      toast(`Tu video es horizontal y el proyecto vertical (9:16). Lo puse con <b>fondo desenfocado</b>. <button class="btn small" id="swAsp">Cambiar a 16:9</button>`, 'warn', 9000);
+      setTimeout(() => $('#swAsp')?.addEventListener('click', () => setAspect('16:9')));
+    }
+  }
+}
+
+$('#fileInput').addEventListener('change', (e) => { importFiles(e.target.files); e.target.value = ''; });
+$('#emptyImport').addEventListener('click', () => $('#fileInput').click());
+let dragDepth = 0;
+window.addEventListener('dragenter', (e) => { if (e.dataTransfer?.types?.includes('Files')) { dragDepth++; $('#dropOverlay').hidden = false; } });
+window.addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) $('#dropOverlay').hidden = true; });
+window.addEventListener('dragover', (e) => e.preventDefault());
+window.addEventListener('drop', (e) => {
+  e.preventDefault(); dragDepth = 0; $('#dropOverlay').hidden = true;
+  if (e.defaultPrevented && e.target.closest?.('.tl-lane')) return;
+  if (!e.target.closest?.('.tl-lane') && e.dataTransfer.files?.length) importFiles(e.dataTransfer.files);
+});
+
+// ---------- Panel de medios ----------
+function renderMediaPanel() {
+  const el = $('#panel-media');
+  const items = [...media.values()];
+  el.innerHTML = `
+    <h3>Tus medios</h3>
+    <button class="import-btn" id="impBtn">＋ Importar video, foto o audio</button>
+    <div class="media-grid">${items.map((m) => `
+      <div class="mcard ${m.type === 'audio' ? 'audio' : ''} ${m.loading ? 'loading' : ''}" draggable="true" data-id="${m.id}" title="${m.name}">
+        ${m.thumb ? `<img src="${m.thumb}" alt="">` : m.type === 'audio' ? '♫' : ''}
+        <span class="mtype">${{ video: 'Video', image: 'Foto', audio: 'Audio' }[m.type]}${m.type === 'video' && m.audioReady && !m.audio ? ' · sin audio' : ''}</span>
+        <button class="madd" title="Añadir a la línea de tiempo">+</button>
+        <div class="mmeta"><span>${m.name}</span><span>${m.type === 'image' ? '' : fmtTime(m.duration)}</span></div>
+      </div>`).join('')}
+    </div>
+    ${items.length ? '' : '<p class="sub" style="margin-top:12px">Formatos: MP4, MOV, WebM, MKV, JPG, PNG, WebP, MP3, WAV, M4A, OGG, FLAC… (lo que tu navegador pueda leer).</p>'}
+    <h3 style="margin-top:20px">Fondos de color</h3>
+    <div class="swatches">${GRADIENTS.map((g, i) => `<button class="swatch" data-g="${i}" style="background:linear-gradient(135deg,${g[0]},${g[1]})" title="Añadir fondo"></button>`).join('')}</div>`;
+  $('#impBtn', el).addEventListener('click', () => $('#fileInput').click());
+  el.querySelectorAll('.mcard').forEach((card) => {
+    card.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/emi-media', card.dataset.id); e.dataTransfer.effectAllowed = 'copy'; });
+    card.querySelector('.madd').addEventListener('click', (e) => { e.stopPropagation(); addMediaClip(card.dataset.id); });
+    card.addEventListener('dblclick', () => addMediaClip(card.dataset.id));
+  });
+  el.querySelectorAll('.swatch').forEach((s) => s.addEventListener('click', () => {
+    const tr = app.P.tracks.find((t) => t.main);
+    const c = makeClip('solid', tr.id, trackEnd(app.P, tr.id), 3, { fill: [...GRADIENTS[+s.dataset.g]] });
+    app.commit((P) => P.clips.push(c)); app.select(c.id);
+  }));
+}
+
+// ---------- Inspector ----------
+function field(parent, { label, type = 'range', min, max, step, get, set, fmt, options, wide }) {
+  const row = document.createElement('div');
+  row.className = 'field' + (wide || type === 'select' || type === 'color' || type === 'text' || type === 'textarea' || type === 'chips' ? ' wide' : '');
+  const lab = document.createElement('label');
+  lab.textContent = label;
+  row.appendChild(lab);
+  let input;
+  if (type === 'select') {
+    input = document.createElement('select');
+    input.innerHTML = options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+    input.value = get();
+  } else if (type === 'chips') {
+    input = document.createElement('div');
+    input.className = 'chips';
+    for (const [v, l] of options) {
+      const b = document.createElement('button');
+      b.className = 'chip' + (String(get()) === String(v) ? ' on' : '');
+      b.textContent = l;
+      b.addEventListener('click', () => { app.beginEdit(); set(v); app.endEdit(); });
+      input.appendChild(b);
+    }
+    row.appendChild(input);
+    parent.appendChild(row);
+    return row;
+  } else if (type === 'textarea') {
+    input = document.createElement('textarea'); input.value = get();
+  } else {
+    input = document.createElement('input');
+    input.type = type;
+    if (min != null) input.min = min; if (max != null) input.max = max; if (step != null) input.step = step;
+    input.value = get();
+    if (type === 'checkbox') input.checked = !!get();
+  }
+  row.appendChild(input);
+  let out = null;
+  if (type === 'range') { out = document.createElement('output'); out.textContent = fmt ? fmt(+get()) : get(); row.appendChild(out); }
+  const read = () => (type === 'checkbox' ? input.checked : type === 'range' || type === 'number' ? +input.value : input.value);
+  input.addEventListener('focus', () => app.beginEdit());
+  input.addEventListener('pointerdown', () => app.beginEdit());
+  input.addEventListener('input', () => {
+    if (!app._snap) app.beginEdit();
+    set(read());
+    if (out) out.textContent = fmt ? fmt(read()) : read();
+    app.player.invalidate();
+    if (type !== 'range') app.timeline.render();
+  });
+  input.addEventListener('change', () => { set(read()); app.endEdit(); });
+  input.addEventListener('dblclick', () => { if (type === 'range' && row.dataset.def != null) { app.beginEdit(); set(+row.dataset.def); app.endEdit(); } });
+  parent.appendChild(row);
+  return row;
+}
+
+function section(root, title) {
+  const s = document.createElement('section');
+  s.innerHTML = `<h3>${title}</h3>`;
+  root.appendChild(s);
+  return s;
+}
+
+const pct = (v) => Math.round(v * 100) + '%';
+const sec = (v) => v.toFixed(2) + 's';
+
+function renderInspector() {
+  const root = $('#inspector');
+  root.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'insp';
+  root.appendChild(wrap);
+  const sel = app.selected();
+  const P = app.P;
+
+  if (!sel.length) {
+    const s = section(wrap, 'Proyecto');
+    field(s, { label: 'FPS', type: 'select', options: [[24, '24 (cine)'], [25, '25 (PAL)'], [30, '30 (redes)'], [50, '50'], [60, '60 (fluido)']], get: () => P.fps, set: (v) => (P.fps = +v) });
+    field(s, { label: 'Fondo', type: 'color', get: () => P.bg, set: (v) => (P.bg = v) });
+    field(s, { label: 'Volumen general', min: 0, max: 2, step: 0.01, get: () => P.masterGain, set: (v) => (P.masterGain = v), fmt: pct });
+    const tip = document.createElement('div');
+    tip.className = 'empty';
+    tip.innerHTML = `<div class="big">◇</div><p>Selecciona un clip para editarlo.</p>
+      <div class="kbd">
+        <kbd>Espacio</kbd><span>Reproducir / pausar</span>
+        <kbd>S</kbd><span>Dividir en el cabezal</span>
+        <kbd>Supr</kbd><span>Eliminar</span>
+        <kbd>Shift+Supr</kbd><span>Eliminar y cerrar hueco</span>
+        <kbd>Ctrl+D</kbd><span>Duplicar</span>
+        <kbd>Ctrl+Z</kbd><span>Deshacer</span>
+        <kbd>← →</kbd><span>Fotograma a fotograma</span>
+        <kbd>Shift+← →</kbd><span>Saltar 1 segundo</span>
+        <kbd>I / O</kbd><span>Marcar entrada / salida del bucle</span>
+        <kbd>Ctrl+rueda</kbd><span>Zoom en la línea de tiempo</span>
+      </div>`;
+    wrap.appendChild(tip);
+    return;
+  }
+
+  const c = sel[0];
+  const m = media.get(c.mediaId);
+  const head = document.createElement('div');
+  head.className = 'clip-title';
+  head.innerHTML = `${m?.thumb ? `<img src="${m.thumb}" alt="">` : ''}<div><b>${m ? m.name : { solid: 'Fondo de color', text: 'Texto', caption: 'Subtítulo' }[c.kind] || c.kind}</b><small>${sel.length > 1 ? `${sel.length} clips seleccionados` : `${fmtTime(c.start)} → ${fmtTime(clipEnd(c))}`}</small></div>`;
+  wrap.appendChild(head);
+
+  const g = section(wrap, 'Clip');
+  field(g, { label: 'Duración', type: 'number', step: 0.1, min: 0.1, get: () => +c.dur.toFixed(2), set: (v) => {
+    let d = Math.max(0.1, v);
+    if (m && (m.type === 'video' || m.type === 'audio')) d = Math.min(d, (m.duration - c.in) / c.speed);
+    c.dur = d;
+  } });
+  if (c.kind === 'video' || c.kind === 'audio') {
+    field(g, { label: 'Velocidad', type: 'chips', options: [[0.25, '0.25×'], [0.5, '0.5×'], [0.75, '0.75×'], [1, '1×'], [1.25, '1.25×'], [1.5, '1.5×'], [2, '2×'], [3, '3×']], get: () => c.speed, set: (v) => {
+      const src = c.dur * c.speed; c.speed = +v; c.dur = src / c.speed;
+    } });
+    field(g, { label: 'Volumen', min: 0, max: 2, step: 0.01, get: () => c.volume, set: (v) => (c.volume = v), fmt: pct }).dataset.def = 1;
+    field(g, { label: 'Fundido entrada', min: 0, max: Math.min(5, c.dur / 2), step: 0.05, get: () => c.fadeIn, set: (v) => (c.fadeIn = v), fmt: sec }).dataset.def = 0;
+    field(g, { label: 'Fundido salida', min: 0, max: Math.min(5, c.dur / 2), step: 0.05, get: () => c.fadeOut, set: (v) => (c.fadeOut = v), fmt: sec }).dataset.def = 0;
+  }
+
+  if (c.kind !== 'audio' && c.kind !== 'text' && c.kind !== 'caption') {
+    const f = section(wrap, 'Encuadre');
+    field(f, { label: 'Modo', type: 'chips', options: [['cover', 'Llenar'], ['contain', 'Ajustar'], ['blurfill', 'Fondo desenfocado'], ['stretch', 'Estirar']], get: () => c.fit, set: (v) => sel.forEach((x) => (x.fit = v)) });
+  }
+  if (c.kind !== 'audio') {
+    const t = section(wrap, 'Transformar');
+    const tr = c.transform;
+    field(t, { label: 'Posición X', min: -1, max: 1, step: 0.005, get: () => tr.x, set: (v) => (tr.x = v), fmt: pct }).dataset.def = 0;
+    field(t, { label: 'Posición Y', min: -1, max: 1, step: 0.005, get: () => tr.y, set: (v) => (tr.y = v), fmt: pct }).dataset.def = 0;
+    field(t, { label: 'Escala', min: 0.1, max: 4, step: 0.01, get: () => tr.scale, set: (v) => (tr.scale = v), fmt: pct }).dataset.def = 1;
+    field(t, { label: 'Rotación', min: -180, max: 180, step: 1, get: () => tr.rot, set: (v) => (tr.rot = v), fmt: (v) => v + '°' }).dataset.def = 0;
+    field(t, { label: 'Opacidad', min: 0, max: 1, step: 0.01, get: () => tr.opacity, set: (v) => (tr.opacity = v), fmt: pct }).dataset.def = 1;
+    if (c.kind !== 'text' && c.kind !== 'caption') field(t, { label: 'Espejo', type: 'checkbox', get: () => tr.flipX, set: (v) => (tr.flipX = v) });
+    const hint = document.createElement('p');
+    hint.className = 'sub'; hint.style.marginTop = '8px';
+    hint.textContent = 'Doble clic en un deslizador para restablecerlo.';
+    t.appendChild(hint);
+  }
+}
+
+// ---------- Acciones de edición ----------
+function splitAtPlayhead() {
+  const t = app.player.t;
+  let targets = app.selected().filter((c) => t > c.start && t < clipEnd(c));
+  if (!targets.length) targets = app.P.clips.filter((c) => t > c.start && t < clipEnd(c) && !app.P.tracks.find((x) => x.id === c.trackId)?.locked);
+  if (!targets.length) return toast('No hay ningún clip bajo el cabezal.');
+  app.commit((P) => { for (const c of targets) splitClip(P, c, t); });
+}
+function deleteSel(ripple = false) {
+  const sel = app.selected();
+  if (!sel.length) return;
+  app.commit((P) => {
+    if (ripple) {
+      for (const c of [...sel].sort((a, b) => b.start - a.start)) {
+        P.clips = P.clips.filter((x) => x.id !== c.id);
+        // cerrar hueco sólo en la pista del clip
+        for (const x of P.clips) if (x.trackId === c.trackId && x.start >= clipEnd(c) - 1e-6) x.start -= c.dur;
+      }
+    } else P.clips = P.clips.filter((x) => !app.selection.has(x.id));
+  });
+  app.select(null);
+}
+function duplicateSel() {
+  const sel = app.selected();
+  if (!sel.length) return;
+  const copies = sel.map((c) => ({ ...clone(c), id: uid('c'), start: trackEnd(app.P, c.trackId) }));
+  app.commit((P) => P.clips.push(...copies));
+  app.selection = new Set(copies.map((c) => c.id));
+  app.refresh();
+}
+function undo() { const p = app.history.undo(app.P); if (p) { app.P = p; app.selection.clear(); app.refresh(); } }
+function redo() { const p = app.history.redoStep(app.P); if (p) { app.P = p; app.selection.clear(); app.refresh(); } }
+app.undo = undo; app.redo = redo;
+
+$('#splitBtn').addEventListener('click', splitAtPlayhead);
+$('#delBtn').addEventListener('click', () => deleteSel(false));
+$('#rippleBtn').addEventListener('click', () => deleteSel(true));
+$('#dupBtn').addEventListener('click', duplicateSel);
+$('#undoBtn').addEventListener('click', undo);
+$('#redoBtn').addEventListener('click', redo);
+$('#snapBtn').addEventListener('click', (e) => { app.timeline.snap = !app.timeline.snap; e.currentTarget.classList.toggle('on', app.timeline.snap); });
+$('#zoom').addEventListener('input', (e) => app.timeline.setZoom(+e.target.value));
+app.onZoom = (pps) => ($('#zoom').value = pps);
+$('#fitBtn').addEventListener('click', () => app.timeline.zoomFit());
+$('#playBtn').addEventListener('click', () => app.player.toggle());
+$('#toStart').addEventListener('click', () => app.player.seek(0));
+$('#toEnd').addEventListener('click', () => app.player.seek(projectDuration(app.P)));
+$('#frameBack').addEventListener('click', () => app.player.seek(app.player.t - 1 / app.P.fps));
+$('#frameFwd').addEventListener('click', () => app.player.seek(app.player.t + 1 / app.P.fps));
+$('#safeBtn').addEventListener('click', (e) => { const z = $('#safeZone'); z.hidden = !z.hidden; e.currentTarget.classList.toggle('toggle', true); e.currentTarget.classList.toggle('on', !z.hidden); renderSafeZones(); });
+$('#loopBtn').addEventListener('click', (e) => {
+  const pl = app.player;
+  if (pl.loopRange) pl.loopRange = null;
+  else {
+    const sel = app.selected();
+    pl.loopRange = sel.length ? [Math.min(...sel.map((c) => c.start)), Math.max(...sel.map(clipEnd))] : [0, projectDuration(app.P)];
+  }
+  e.currentTarget.classList.toggle('toggle', true);
+  e.currentTarget.classList.toggle('on', !!pl.loopRange);
+  app.timeline.drawRuler();
+});
+$('#projName').addEventListener('change', (e) => { app.commit((P) => (P.name = e.target.value.trim() || 'Mi video')); });
+$('#exportBtn').addEventListener('click', () => {
+  if (!app.P.clips.length) return toast('Añade algún clip antes de exportar.', 'warn');
+  app.player.pause();
+  openExport(app);
+});
+
+// ---------- Atajos de teclado ----------
+window.addEventListener('keydown', (e) => {
+  if (e.target.closest('input, textarea, select, [contenteditable]')) return;
+  const mod = e.ctrlKey || e.metaKey;
+  const k = e.key.toLowerCase();
+  if (k === ' ') { e.preventDefault(); app.player.toggle(); }
+  else if (mod && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+  else if (mod && k === 'y') { e.preventDefault(); redo(); }
+  else if (mod && k === 'd') { e.preventDefault(); duplicateSel(); }
+  else if (mod && k === 'b' || k === 's' && !mod) { e.preventDefault(); splitAtPlayhead(); }
+  else if (mod && k === 'a') { e.preventDefault(); app.selection = new Set(app.P.clips.map((c) => c.id)); app.timeline.render(); renderInspector(); }
+  else if (k === 'delete' || k === 'backspace') { e.preventDefault(); deleteSel(e.shiftKey); }
+  else if (k === 'arrowleft') { e.preventDefault(); app.player.seek(app.player.t - (e.shiftKey ? 1 : 1 / app.P.fps)); }
+  else if (k === 'arrowright') { e.preventDefault(); app.player.seek(app.player.t + (e.shiftKey ? 1 : 1 / app.P.fps)); }
+  else if (k === 'home') app.player.seek(0);
+  else if (k === 'end') app.player.seek(projectDuration(app.P));
+  else if (k === 'n') $('#snapBtn').click();
+  else if (k === '+' || k === '=') app.timeline.setZoom(app.timeline.pps * 1.25);
+  else if (k === '-') app.timeline.setZoom(app.timeline.pps / 1.25);
+  else if (k === 'i') { const pl = app.player; pl.loopRange = [pl.t, Math.max(pl.t + 0.5, pl.loopRange?.[1] ?? projectDuration(app.P))]; app.timeline.drawRuler(); }
+  else if (k === 'o') { const pl = app.player; pl.loopRange = [Math.min(pl.loopRange?.[0] ?? 0, pl.t - 0.5), pl.t]; app.timeline.drawRuler(); }
+  else if (k === 'escape') { app.select(null); }
+});
+
+// ---------- Autoguardado (se completa en una etapa posterior) ----------
+let saveTimer = null;
+function scheduleAutosave() { clearTimeout(saveTimer); saveTimer = setTimeout(() => app.onAutosave?.(), 1500); }
+
+// ---------- Inicio ----------
+renderMediaPanel();
+app.refresh();
+setTimeout(() => app.timeline.zoomFit(), 50);
+if (!('VideoEncoder' in window)) toast('Tu navegador no soporta WebCodecs: la exportación no funcionará. Usa Chrome, Edge o Brave actualizados.', 'err', 12000);
