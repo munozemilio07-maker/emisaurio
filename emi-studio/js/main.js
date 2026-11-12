@@ -151,6 +151,10 @@ async function importFiles(files, at = null) {
     try {
       const m = await importFile(f, (what) => { renderMediaPanel(); if (what === 'audio') { app.timeline.render(); app.player.invalidate(); renderPanel(); } });
       added++;
+      if (m.type === 'video' || m.type === 'audio') {
+        const warn = () => { if (m.audioError) toast(`⚠ ${esc(m.name)}: ${esc(m.audioError)} Se verá y oirá en la vista previa, pero el archivo exportado saldrá sin su audio.`, 'warn', 9000); };
+        m.audioReady ? warn() : (m.onAudioReady = warn);
+      }
       if (at) { addMediaClip(m.id, at.trackId, at.t); at.t += m.duration; }
       else if (wasEmpty) addMediaClip(m.id);
     } catch (e) { toast(e.message, 'err', 6000); }
@@ -161,14 +165,7 @@ async function importFiles(files, at = null) {
 }
 
 function defaultTrackFor(m) {
-  if (m.type === 'audio') {
-    // proyecto sólo de audio (podcast, nota de voz): el primer audio es la voz, para poder transcribirlo
-    const voice = app.P.tracks.find((t) => t.type === 'audio' && !t.music && !t.guide && !t.sfx);
-    const hasVisual = app.P.clips.some((c) => c.kind === 'video' || c.kind === 'image');
-    const hasVoice = app.P.clips.some((c) => c.trackId === voice?.id);
-    if (!hasVisual && !hasVoice && voice) return voice.id;
-    return app.P.tracks.find((t) => t.music && !t.guide)?.id || 'tA2';
-  }
+  if (m.type === 'audio') return app.P.tracks.find((t) => t.music && !t.guide)?.id || 'tA2';
   return app.P.tracks.find((t) => t.main)?.id || 'tV1';
 }
 

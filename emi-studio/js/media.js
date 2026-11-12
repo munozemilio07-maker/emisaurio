@@ -74,9 +74,9 @@ async function loadAudio(m, file) {
     if (m.type === 'audio') m.duration = r.duration;
   } catch (e) {
     console.warn('Audio por streaming no disponible, uso el método clásico:', e);
-    if (file.size > 400 * 1024 * 1024) { m.audioError = 'Archivo demasiado grande para decodificar su audio en este navegador.'; return; }
+    if (file.size > 400 * 1024 * 1024) { m.audioError = 'tu navegador no puede leer el audio de un archivo tan grande.'; return; }
     const buf = await decodeFile(file);
-    if (!buf) return;
+    if (!buf) { if (!/sin audio|no audio/i.test(String(e))) m.audioError = 'tu navegador no puede leer el audio de este archivo.'; return; }
     Object.assign(m, { fullAudio: buf, peaks: computePeaks(buf), audio: analysisBuffer(await to16k(buf), buf.duration), sampleRate: buf.sampleRate, channels: buf.numberOfChannels });
     if (m.type === 'audio') m.duration = buf.duration;
   }
@@ -95,7 +95,7 @@ export async function importFile(file, onUpdate, opts = {}) {
     Object.assign(m, await loadVideoMeta(url));
     m.loading = false; onUpdate?.();
     // Audio en segundo plano
-    loadAudio(m, file).finally(() => { m.audioReady = true; onUpdate?.('audio', m); });
+    loadAudio(m, file).finally(() => { m.audioReady = true; onUpdate?.('audio', m); m.onAudioReady?.(); });
   } else if (kind === 'image') {
     m.bitmap = await createImageBitmap(file);
     m.w = m.bitmap.width; m.h = m.bitmap.height; m.duration = 5;

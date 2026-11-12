@@ -6,7 +6,7 @@ import { esc } from './ui.js';
 import { audioPending } from './media.js';
 
 export function createTranscriptPanel(app) {
-  const prefs = { lang: 'spanish', model: MODELS[0][0], clean: { filler: true, repeat: true, sound: true, pause: true, maybe: false }, pauseMin: 0.6, query: '', script: '', matches: null };
+  const prefs = { lang: 'spanish', model: MODELS[0][0], clean: { filler: true, repeat: true, sound: false, pause: true, maybe: false }, pauseMin: 0.6, query: '', script: '', matches: null };
   let busy = false, status = '', tokens = [], el = null, nowEl = null;
 
   app.player.on((t) => {
@@ -31,7 +31,9 @@ export function createTranscriptPanel(app) {
     const list = voiceMedia(app.P).filter((m) => !app.P.transcripts?.[m.id]);
     if (!list.length) { app.toast('Todo lo que suena en tu pista de voz ya está transcrito.'); return; }
     busy = true;
-    const set = (t) => { status = t; const s = el?.querySelector('#txStat'); if (s) s.innerHTML = t; };
+    const t0 = Date.now();
+    const set = (t) => { status = t + ` · ${Math.round((Date.now() - t0) / 1000)} s`; const s = el?.querySelector('#txStat'); if (s) s.innerHTML = status; };
+    const tick = setInterval(() => { const s = el?.querySelector('#txStat'); if (s && busy) s.innerHTML = status.replace(/ · \d+ s$/, '') + ` · ${Math.round((Date.now() - t0) / 1000)} s (en CPU tarda más o menos lo que dura el audio)`; }, 1000);
     app.history.push(app.P);
     try {
       for (let k = 0; k < list.length; k++) {
@@ -55,7 +57,7 @@ export function createTranscriptPanel(app) {
       console.error(e);
       status = `⚠ ${esc(e.message)}. La primera vez necesitas internet para descargar el modelo.`;
       app.toast('No se pudo transcribir: ' + esc(e.message), 'err', 8000);
-    } finally { busy = false; render(el); }
+    } finally { clearInterval(tick); busy = false; render(el); }
   }
 
   function picked(st) {
@@ -73,7 +75,7 @@ export function createTranscriptPanel(app) {
     const analyzing = audioPending(P);
     const isMusic = (c) => { const t = P.tracks.find((x) => x.id === c.trackId); return t?.music && !t.guide; };
     const musicAudio = P.clips.filter((c) => c.kind === 'audio' && isMusic(c));
-    if (analyzing.length) status = `Analizando el audio de ${analyzing.map((m) => esc(m.name)).join(', ')}…`;
+    const shownStatus = analyzing.length ? `Analizando el audio de ${analyzing.map((m) => esc(m.name)).join(', ')}…` : status;
     tokens = buildTokens(P);
     const st = stats(tokens, prefs.pauseMin);
     const toCut = new Set(picked(st));
@@ -99,7 +101,7 @@ export function createTranscriptPanel(app) {
           <label class="chk"><input type="checkbox" id="txCpu"${(() => { try { return localStorage.getItem('emi.cpu') === '1'; } catch { return false; } })() ? ' checked' : ''}><span>Sólo CPU (más lento; úsalo si con la GPU sale texto raro o se traba)</span></label>
           <button class="btn primary wide" id="txGo"${busy || analyzing.length ? ' disabled' : ''}>¶ Transcribir ${pending.length} archivo${pending.length > 1 ? 's' : ''}</button>
         </div>` : ''}
-      <div class="vstatus" id="txStat">${status}</div>
+      <div class="vstatus" id="txStat">${shownStatus}</div>
       ${tokens.length ? `
         <div class="tx-tools">
           <input type="search" id="txFind" placeholder="Buscar en lo que dices…" value="${esc(prefs.query)}">
@@ -114,7 +116,7 @@ export function createTranscriptPanel(app) {
         <div class="tool clean-tool">
           <div class="tool-h"><b>✨ Limpieza automática</b><span class="sub">Lo tachado en el texto es lo que se cortará</span></div>
           <div class="checks">
-            ${[['filler', 'Muletillas (eh, em, mmm, um)'], ['sound', 'Sonidos sin palabra'], ['repeat', 'Palabras repetidas'], ['pause', `Pausas de más de ${prefs.pauseMin}s → 0.25s`], ['maybe', 'Posibles muletillas (este, o sea, pues, tipo…)']]
+            ${[['filler', 'Muletillas (eh, em, mmm, um)'], ['sound', 'Sonidos sin palabra (revisa antes: puede incluir voz real)'], ['repeat', 'Palabras repetidas'], ['pause', `Pausas de más de ${prefs.pauseMin}s → 0.25s`], ['maybe', 'Posibles muletillas (este, o sea, pues, tipo…)']]
               .map(([k, l]) => `<label class="chk"><input type="checkbox" data-k="${k}"${prefs.clean[k] ? ' checked' : ''}><span class="dot d-${k}"></span><span>${l} <b>${st[k].length}</b></span></label>`).join('')}
           </div>
           <button class="btn primary wide" id="txClean"${toCut.size ? '' : ' disabled'}>Limpiar ${toCut.size} cosas · −${save.toFixed(1)} s</button>
