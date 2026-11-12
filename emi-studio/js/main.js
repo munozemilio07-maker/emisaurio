@@ -165,10 +165,12 @@ function addMediaClip(mediaId, trackId = null, t = null) {
   trackId = trackId || defaultTrackFor(m);
   const tr = app.P.tracks.find((x) => x.id === trackId);
   // ajustar a una pista compatible
+  // un video soltado en una pista de audio aporta sólo su sonido (p. ej. un TikTok guardado como sonido guía)
+  const audioOnly = m.type === 'video' && tr.type === 'audio' && m.audio;
   if (m.type === 'audio' && tr.type !== 'audio') trackId = defaultTrackFor(m);
-  if (m.type !== 'audio' && tr.type !== 'video') trackId = defaultTrackFor(m);
+  if (m.type !== 'audio' && !audioOnly && tr.type !== 'video') trackId = defaultTrackFor(m);
   if (t == null) t = trackEnd(app.P, trackId);
-  const kind = m.type === 'audio' ? 'audio' : m.type === 'image' ? 'image' : 'video';
+  const kind = m.type === 'audio' || audioOnly ? 'audio' : m.type === 'image' ? 'image' : 'video';
   const c = makeClip(kind, trackId, t, m.duration, { mediaId });
   // vídeo horizontal en proyecto vertical → fondo desenfocado (lo que la gente suele querer)
   if (kind !== 'audio') {

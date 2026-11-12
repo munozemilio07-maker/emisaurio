@@ -16,6 +16,7 @@ export function newProject(aspect = { id: '9:16', w: 1080, h: 1920 }) {
       { id: 'tT', type: 'text', name: 'Texto', hidden: false, muted: false, locked: false },
       { id: 'tV2', type: 'video', name: 'Overlay', hidden: false, muted: false, locked: false },
       { id: 'tV1', type: 'video', name: 'Principal', hidden: false, muted: false, locked: false, main: true },
+      { id: 'tG', type: 'audio', name: 'Sonido guía', hidden: false, muted: false, locked: false, music: true, guide: true },
       { id: 'tA1', type: 'audio', name: 'Voz / Audio', hidden: false, muted: false, locked: false },
       { id: 'tA2', type: 'audio', name: 'Música', hidden: false, muted: false, locked: false, music: true },
     ],
@@ -45,10 +46,15 @@ export function makeClip(kind, trackId, start, dur, extra = {}) {
 export const clipEnd = (c) => c.start + c.dur;
 export const srcDur = (c) => c.dur * c.speed;
 
+// Duración del video. El sonido guía no alarga el video (salvo que sea lo único que hay).
 export function projectDuration(P) {
-  let d = 0;
-  for (const c of P.clips) d = Math.max(d, clipEnd(c));
-  return d;
+  let d = 0, g = 0;
+  const guide = new Set(P.tracks.filter((t) => t.guide).map((t) => t.id));
+  for (const c of P.clips) {
+    if (guide.has(c.trackId)) g = Math.max(g, clipEnd(c));
+    else d = Math.max(d, clipEnd(c));
+  }
+  return d || g;
 }
 
 export function trackById(P, id) { return P.tracks.find((t) => t.id === id); }

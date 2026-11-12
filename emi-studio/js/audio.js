@@ -127,7 +127,9 @@ export async function mixOffline(P, media, sampleRate = 48000, t0 = 0, t1 = null
     const a = Math.max(c.start, t0), b = Math.min(clipEnd(c), t1);
     if (b <= a) continue;
     const m = media.get(c.mediaId);
-    if (opts.filter && !opts.filter(c, P.tracks.find((x) => x.id === c.trackId))) continue;
+    const trk = P.tracks.find((x) => x.id === c.trackId);
+    if (trk?.guide && !opts.includeGuide) continue;
+    if (opts.filter && !opts.filter(c, trk)) continue;
     const src = ctx.createBufferSource();
     src.buffer = m.audio;
     src.playbackRate.value = c.speed;

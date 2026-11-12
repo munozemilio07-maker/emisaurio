@@ -10,6 +10,7 @@ export async function openExport(app) {
   const P = app.P;
   const modal = document.getElementById('exportModal');
   const dur = projectDuration(P);
+  const hasGuide = P.clips.some((c) => P.tracks.find((t) => t.id === c.trackId)?.guide);
   const st = {
     plat: PLATFORMS.find((p) => p.id === P.platform && (p.aspect === P.aspect || !p.aspect)) || PLATFORMS.find((p) => p.aspect === P.aspect) || PLATFORMS.find((p) => p.id === 'custom'),
     fmt: FORMATS[0], q: 'high', fps: P.fps, range: 'all', scale: 1, abort: null, result: null,
@@ -40,6 +41,8 @@ export async function openExport(app) {
             ${app.player.loopRange ? `<button class="chip" data-r="loop">Bucle</button>` : ''}
             ${app.selected().length ? `<button class="chip" data-r="sel">Selección</button>` : ''}
           </div></div>
+          ${hasGuide ? `<div class="field wide"><label>Sonido guía</label><div><label class="switch"><input type="checkbox" id="exGuide"><i></i></label>
+            <p class="sub" style="margin:6px 0 0">Déjalo apagado y añade el mismo sonido en TikTok: tu video entra en la página de la tendencia y evitas que lo silencien.</p></div></div>` : ''}
           <h4 style="margin-top:16px">Resumen</h4>
           <div class="summary" id="exSum"></div>
           <div id="exWarn"></div>
@@ -182,7 +185,7 @@ export async function openExport(app) {
     const t0 = performance.now();
     try {
       const fps = st.fmt.kind === 'gif' ? Math.min(15, s.fps) : s.fps;
-      const res = await exportProject({ ...P, name }, { fmt: st.fmt, w: s.w, h: s.h, fps, mbps: s.mbps, range: s.range, at: app.player.t }, ({ p, label, eta }) => {
+      const res = await exportProject({ ...P, name }, { fmt: st.fmt, w: s.w, h: s.h, fps, mbps: s.mbps, range: s.range, at: app.player.t, includeGuide: !!modal.querySelector('#exGuide')?.checked }, ({ p, label, eta }) => {
         bar.style.width = (p * 100).toFixed(1) + '%';
         txt.textContent = `${Math.round(p * 100)}% · ${label}${eta != null ? ` · quedan ~${Math.ceil(eta)} s` : ''}`;
       }, ctrl.signal);

@@ -102,12 +102,13 @@ export class Timeline {
     const m = media.get(c.mediaId);
     const el = document.createElement('div');
     const sel = this.app.selection.has(c.id);
-    el.className = `tl-clip kind-${c.kind}${sel ? ' selected' : ''}`;
+    el.className = `tl-clip kind-${c.kind}${sel ? ' selected' : ''}${tr.guide ? ' guide' : ''}`;
     el.dataset.id = c.id;
     el.style.left = c.start * this.pps + 'px';
     el.style.width = Math.max(4, c.dur * this.pps) + 'px';
     let label = m ? m.name : c.kind === 'solid' ? 'Fondo' : (c.words?.map((w) => w.w).join(' ') || c.text?.content || '');
     if (c.speed !== 1) label = `${c.speed}× · ` + label;
+    if (tr.guide) label = 'GUÍA · no se exporta · ' + label;
     let inner = '';
     if (m?.thumb && (c.kind === 'video' || c.kind === 'image')) inner += `<div class="tl-thumbs" style="background-image:url(${m.thumb})"></div>`;
     if (c.kind === 'solid') inner += `<div class="tl-thumbs" style="background:linear-gradient(90deg,${c.fill[0]},${c.fill[1]})"></div>`;
@@ -123,7 +124,7 @@ export class Timeline {
       const w = Math.min(4000, Math.max(4, Math.round(c.dur * this.pps)));
       cv.width = w; cv.height = 40;
       el.appendChild(cv);
-      drawWave(cv, m.peaks, c, tr.muted ? '#666' : c.kind === 'audio' ? (tr.music ? '#34d399' : '#38bdf8') : 'rgba(255,255,255,.55)');
+      drawWave(cv, m.peaks, c, tr.muted ? '#666' : tr.guide ? '#f472b6' : c.kind === 'audio' ? (tr.music ? '#34d399' : '#38bdf8') : 'rgba(255,255,255,.55)');
     }
     if (!tr.locked) this.bindClip(el, c);
     return el;

@@ -4,11 +4,12 @@ import { makeClip, clipEnd, clipsOnTrack, projectDuration, fmtTime } from './sta
 import { drawClip } from './render.js';
 import { media } from './media.js';
 import { LANGS, MODELS, voiceAudio, transcribe, toWords, buildCaptionClips, parseSRT, captionClipsFromSegments, applyCaptionStyle, retimeCaption } from './captions.js';
-import { HOOKS, findSilences, removeSilences, alternateZoom, addHook, autoColor, applyLook, normalizeLoudness, beatMarkers } from './viral.js';
+import { HOOKS, findSilences, removeSilences, alternateZoom, addHook, autoColor, applyLook, normalizeLoudness, beatMarkers, guideInfo, cutAtBeats, beatMontage, estimateBpm } from './viral.js';
+import { importFile } from './media.js';
 import { esc, pct } from './ui.js';
 
 export function createPanels(app, ui) {
-  const prefs = { silence: 'normal', capLang: 'spanish', capModel: MODELS[0][0], capStyle: 'hormozi', capWords: 3, capEmoji: true, capPos: 'low', lookK: 1, transDur: 0.45 };
+  const prefs = { beatEvery: 2, silence: 'normal', capLang: 'spanish', capModel: MODELS[0][0], capStyle: 'hormozi', capWords: 3, capEmoji: true, capPos: 'low', lookK: 1, transDur: 0.45 };
   const SIL = { soft: { thresholdDb: -44, minDur: 0.8 }, normal: { thresholdDb: -38, minDur: 0.55 }, hard: { thresholdDb: -33, minDur: 0.35 } };
   let capBusy = false, capStatus = '';
   const mainClips = () => clipsOnTrack(app.P, app.P.tracks.find((t) => t.main).id);
@@ -71,6 +72,8 @@ export function createPanels(app, ui) {
         <div class="vstatus" id="vStat">${vStatus}</div>
       </div>
 
+      ${guideCard()}
+
       <div class="tool">
         <div class="tool-h"><b>✂ Cortes de silencio</b><span class="sub">Quita pausas y muletillas largas</span></div>
         <div class="chips" id="silK">${[['soft', 'Suave'], ['normal', 'Normal'], ['hard', 'Agresivo']].map(([k, l]) => `<button class="chip${prefs.silence === k ? ' on' : ''}" data-k="${k}">${l}</button>`).join('')}</div>
@@ -94,11 +97,6 @@ export function createPanels(app, ui) {
           <div class="chips" id="pbPos">${[['top', 'Arriba'], ['bottom', 'Abajo']].map(([k, l]) => `<button class="chip${(app.P.progressBar?.pos || 'top') === k ? ' on' : ''}" data-k="${k}">${l}</button>`).join('')}</div>
           <input type="color" id="pbCol" value="${app.P.progressBar?.color || '#ec4899'}" title="Color">
         </div>
-      </div>
-
-      <div class="tool">
-        <div class="tool-h"><b>🥁 Ritmo de la música</b><span class="sub">Marca los golpes para cortar a tiempo</span></div>
-        <div class="row"><button class="btn small" id="beatGo">Marcar beats</button><span class="sub" id="beatInfo"></span></div>
       </div>`;
     const $ = (s) => el.querySelector(s);
     el.querySelectorAll('.chk input').forEach((i) => i.addEventListener('change', () => (viralOn[i.dataset.k] = i.checked)));
@@ -128,10 +126,73 @@ export function createPanels(app, ui) {
     $('#pbOn').addEventListener('change', (e) => app.commit(() => (pb().on = e.target.checked)));
     $('#pbPos').addEventListener('click', (e) => { const b = e.target.closest('[data-k]'); if (b) { app.commit(() => { pb().pos = b.dataset.k; pb().on = true; }); renderViral(el); } });
     $('#pbCol').addEventListener('change', (e) => app.commit(() => { pb().color = e.target.value; pb().color2 = e.target.value; }));
-    $('#beatGo').addEventListener('click', () => {
+    bindGuide(el, () => renderViral(el));
+  }
+
+  // ---------------- SONIDO VIRAL (guía) ----------------
+  function guideCard() {
+    const g = guideInfo(app.P);
+    const beats = app.P.markers.filter((m) => m.beat).map((m) => m.t);
+    const bpm = estimateBpm(beats);
+    const hasMusic = app.P.clips.some((c) => c.kind === 'audio' && app.P.tracks.find((t) => t.id === c.trackId)?.music);
+    return `<div class="tool guide-tool">
+      <div class="tool-h"><b>🎵 Sonido viral de TikTok</b><span class="sub">Edita al ritmo de un audio en tendencia y ponlo después en TikTok</span></div>
+      ${g ? `
+        <div class="row"><span class="bpm">${bpm ? bpm + ' BPM' : '— BPM'}</span><span class="sub">${beats.length} beats · ${esc(g.name || '')}</span></div>
+        <div class="offset-box">En TikTok: <b>Añadir sonido</b> → el mismo audio → <b>Recortar</b> para que empiece en <b>${fmtTime(g.offset).replace(/\.\d$/, '')}</b>${g.at > 0.05 ? ` y entre en el segundo ${g.at.toFixed(1)} de tu video` : ''}.</div>
+        <div class="field wide"><label>Cortar cada</label><div class="chips" id="gEvery">${[[1, 'beat'], [2, '2 beats'], [4, 'compás'], [8, '2 compases']].map(([v, l]) => `<button class="chip${prefs.beatEvery === v ? ' on' : ''}" data-v="${v}">${l}</button>`).join('')}</div></div>
+        <div class="row">
+          <button class="btn small" id="gCut" title="Divide tu video en cada golpe y alterna el zoom">✂ Cortes al ritmo</button>
+          <button class="btn small" id="gMont" title="Cada clip o foto dura exactamente N beats">🖼 Montaje al ritmo</button>
+        </div>
+        <div class="row"><button class="btn small ghost" id="gNew">Cambiar sonido</button><button class="btn small ghost" id="gDel">Quitar guía</button></div>
+        <p class="sub" style="margin:0">La pista rosa <b>no se exporta</b>. Arrastra su borde izquierdo para usar otra parte de la canción.</p>`
+      : `<ol class="steps">
+          <li>En TikTok abre el video con el sonido → <b>Compartir → Guardar video</b> (o graba el audio).</li>
+          <li>Súbelo aquí: uso sólo su sonido como <b>guía</b> y detecto los beats.</li>
+          <li>Cuadra tus clips al ritmo con un clic.</li>
+          <li>Exporta <b>sin la canción</b> y en TikTok añade el mismo sonido. Así entras en la tendencia y no te silencian.</li>
+        </ol>
+        <button class="btn primary wide" id="gNew">🎵 Elegir el TikTok guardado o el audio</button>
+        ${hasMusic ? '<button class="btn small wide" id="gBeats">o detectar beats de mi pista Música</button>' : ''}`}
+      <input type="file" id="gFile" accept="video/*,audio/*" hidden>
+    </div>`;
+  }
+
+  function bindGuide(el, rerender) {
+    const $ = (s) => el.querySelector(s);
+    $('#gNew')?.addEventListener('click', () => $('#gFile').click());
+    $('#gFile')?.addEventListener('change', async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      app.toast('Analizando el sonido…');
+      try {
+        const m = await importFile(f, () => app.renderPanel?.('media'));
+        for (let i = 0; i < 300 && !m.audioReady; i++) await new Promise((r) => setTimeout(r, 100));
+        if (!m.audio) throw new Error('ese archivo no tiene audio');
+        const gid = app.P.tracks.find((t) => t.guide).id;
+        app.P.clips = app.P.clips.filter((c) => c.trackId !== gid);
+        app.addMediaClip(m.id, gid, 0);
+        let r;
+        app.commit((P) => (r = beatMarkers(P)));
+        app.toast(`🎵 Sonido guía listo: ${r.bpm ? r.bpm + ' BPM · ' : ''}${r.n} beats. Pulsa Espacio para escucharlo con tu video.`, 'ok', 6000);
+        rerender();
+      } catch (err) { app.toast('No pude usar ese sonido: ' + esc(err.message), 'err'); }
+    });
+    $('#gBeats')?.addEventListener('click', () => { let r; app.commit((P) => (r = beatMarkers(P))); app.toast(r.n ? `${r.n} beats marcados${r.bpm ? ` (${r.bpm} BPM)` : ''}.` : 'No encontré beats claros.', r.n ? 'ok' : 'warn'); rerender(); });
+    $('#gEvery')?.addEventListener('click', (e) => { const b = e.target.closest('[data-v]'); if (b) { prefs.beatEvery = +b.dataset.v; rerender(); } });
+    $('#gCut')?.addEventListener('click', () => {
       let n = 0;
-      app.commit((P) => (n = beatMarkers(P)));
-      $('#beatInfo').textContent = n ? `${n} beats marcados (líneas verdes). El imán se pega a ellos.` : 'Añade una canción a la pista Música.';
+      app.commit((P) => { beatMarkers(P); n = cutAtBeats(P, prefs.beatEvery); alternateZoom(P); });
+      app.toast(n ? `✂ ${n} cortes al ritmo con zoom alterno.` : 'No hay clips bajo los beats. Pon tu video en la pista Principal.', n ? 'ok' : 'warn');
+    });
+    $('#gMont')?.addEventListener('click', () => {
+      let n = 0;
+      app.commit((P) => { beatMarkers(P); n = beatMontage(P, prefs.beatEvery); });
+      app.toast(n ? `🖼 ${n} clips cuadrados al ritmo.` : 'Añade fotos o clips a la pista Principal.', n ? 'ok' : 'warn');
+    });
+    $('#gDel')?.addEventListener('click', () => {
+      app.commit((P) => { const gid = P.tracks.find((t) => t.guide).id; P.clips = P.clips.filter((c) => c.trackId !== gid); P.markers = P.markers.filter((m) => !m.beat); });
+      rerender();
     });
   }
 
@@ -267,8 +328,10 @@ export function createPanels(app, ui) {
         <input type="range" id="aDuckAmt" min="0.05" max="0.8" step="0.01" value="${P.duckAmount}" style="flex:1"><output id="aDuckOut">${pct(P.duckAmount)}</output></div></div>
       <div class="tool"><div class="tool-h"><b>🔊 Volumen general</b></div>
         <div class="row"><input type="range" id="aMaster" min="0" max="3" step="0.01" value="${P.masterGain}" style="flex:1"><output id="aMasterOut">${pct(P.masterGain)}</output></div></div>
+      <div class="tool guide-tool"><div class="tool-h"><b>🎵 Sonido viral de TikTok</b><span class="sub">Cuadra tu video al ritmo de un audio en tendencia</span></div><button class="btn small" id="aGuide">Abrir en Viral</button></div>
       <p class="sub">Música: importa tu canción en Medios y se coloca en la pista Música. Volumen, fundidos y velocidad de cada clip están en el panel derecho.</p>`;
     const $ = (s) => el.querySelector(s);
+    $('#aGuide').addEventListener('click', () => app.showTab('viral'));
     $('#aEnh').addEventListener('change', (e) => app.commit(() => voiceClips.forEach((c) => (c.enhance = e.target.checked))));
     $('#aNorm').addEventListener('click', async () => {
       $('#aNormInfo').textContent = 'Midiendo…';

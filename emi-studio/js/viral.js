@@ -1,5 +1,5 @@
 // Herramientas virales de un clic: cortes de silencio, zoom en cortes, gancho, auto-color, sonido listo para redes.
-import { clipEnd, clipsOnTrack, rippleDeleteRange, makeClip, clamp } from './state.js';
+import { clipEnd, clipsOnTrack, rippleDeleteRange, makeClip, clamp, splitClip } from './state.js';
 import { detectSilences, loudnessGain, detectBeats } from './audio.js';
 import { media } from './media.js';
 import { TEXT_STYLES, LOOKS, DEFAULT_COLOR } from './presets.js';
@@ -91,23 +91,74 @@ export async function normalizeLoudness(P) {
   return r;
 }
 
+// Clips de los que sacar el ritmo: el sonido guía si existe; si no, la música
+function rhythmClips(P) {
+  const isT = (c, k) => P.tracks.find((t) => t.id === c.trackId)?.[k];
+  const guide = P.clips.filter((c) => c.kind === 'audio' && isT(c, 'guide'));
+  return guide.length ? guide : P.clips.filter((c) => c.kind === 'audio' && isT(c, 'music'));
+}
+
+export function guideInfo(P) {
+  const g = P.clips.filter((c) => c.kind === 'audio' && P.tracks.find((t) => t.id === c.trackId)?.guide).sort((a, b) => a.start - b.start)[0];
+  return g ? { clip: g, offset: g.in, at: g.start, name: media.get(g.mediaId)?.name } : null;
+}
+
 export function beatMarkers(P) {
-  const music = P.clips.filter((c) => c.kind === 'audio' && P.tracks.find((t) => t.id === c.trackId)?.music);
   P.markers = P.markers.filter((m) => !m.beat);
-  let n = 0;
-  for (const c of music) {
+  const times = [];
+  for (const c of rhythmClips(P)) {
     const m = media.get(c.mediaId);
     if (!m?.audio) continue;
-    for (const bt of detectBeats(m.audio)) {
+    if (!m.beats) m.beats = detectBeats(m.audio);
+    for (const bt of m.beats) {
       const t = c.start + (bt - c.in) / c.speed;
-      if (t >= c.start && t < clipEnd(c)) { P.markers.push({ t, beat: true }); n++; }
+      if (t >= c.start && t < clipEnd(c)) times.push(t);
     }
+  }
+  times.sort((a, b) => a - b);
+  for (const t of times) P.markers.push({ t, beat: true });
+  return { n: times.length, bpm: estimateBpm(times) };
+}
+
+export function estimateBpm(times) {
+  if (times.length < 4) return null;
+  const iv = [];
+  for (let i = 1; i < times.length; i++) iv.push(times[i] - times[i - 1]);
+  iv.sort((a, b) => a - b);
+  let p = iv[Math.floor(iv.length / 2)];
+  let bpm = 60 / p;
+  while (bpm < 70) bpm *= 2;
+  while (bpm > 180) bpm /= 2;
+  return Math.round(bpm);
+}
+
+const beatTimes = (P, every) => P.markers.filter((m) => m.beat).map((m) => m.t).sort((a, b) => a - b).filter((_, i) => i % every === 0);
+
+// Corta los clips de la pista principal en cada N beats (cortes al ritmo)
+export function cutAtBeats(P, every = 2) {
+  const main = P.tracks.find((t) => t.main).id;
+  let n = 0;
+  for (const b of beatTimes(P, every)) {
+    const c = P.clips.find((x) => x.trackId === main && b > x.start + 0.05 && b < clipEnd(x) - 0.05);
+    if (c && splitClip(P, c, b)) n++;
   }
   return n;
 }
 
-// Corta los clips de la pista principal en los beats (montaje al ritmo)
-export function cutToBeats(P, every = 2) {
+// Montaje: coloca los clips de la pista principal uno tras otro, cada uno durando N beats
+export function beatMontage(P, every = 2) {
+  const main = P.tracks.find((t) => t.main).id;
   const beats = P.markers.filter((m) => m.beat).map((m) => m.t).sort((a, b) => a - b);
-  return beats.filter((_, i) => i % every === 0);
+  if (beats.length < 2) return 0;
+  const avg = (beats[beats.length - 1] - beats[0]) / (beats.length - 1);
+  const at = (i) => (i < beats.length ? beats[i] : beats[beats.length - 1] + (i - beats.length + 1) * avg);
+  const list = clipsOnTrack(P, main).filter((c) => c.kind !== 'audio');
+  list.forEach((c, k) => {
+    const a = k === 0 ? 0 : at(k * every), b = at((k + 1) * every);
+    let d = b - a;
+    const m = media.get(c.mediaId);
+    if (c.kind === 'video' && m) d = Math.min(d, (m.duration - c.in) / c.speed);
+    c.start = a; c.dur = Math.max(0.1, d);
+  });
+  return list.length;
 }

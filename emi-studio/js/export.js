@@ -195,7 +195,7 @@ export async function exportProject(P, opts, onProgress, signal) {
 
   // Audio
   prog(0, 'Mezclando audio…');
-  const mix = await mixOffline(P, media, 48000, a, b);
+  const mix = await mixOffline(P, media, 48000, a, b, { includeGuide: !!opts.includeGuide });
   const pickAudio = async () => {
     for (const c of fmt.a || []) if (await MB.canEncodeAudio(c, { numberOfChannels: 2, sampleRate: 48000 }).catch(() => false)) return c;
     return null;

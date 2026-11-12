@@ -56,7 +56,7 @@ export class Player {
     const m = media.get(c.mediaId);
     if (e && e.mediaId === c.mediaId) return e;
     if (e) this.drop(c.id);
-    const el = document.createElement(m.type === 'audio' ? 'audio' : 'video');
+    const el = document.createElement(m.type === 'audio' || c.kind === 'audio' ? 'audio' : 'video');
     el.src = m.url; el.preload = 'auto'; el.playsInline = true; el.crossOrigin = 'anonymous';
     el.addEventListener('seeked', () => this.requestDraw());
     el.addEventListener('loadeddata', () => this.requestDraw());
