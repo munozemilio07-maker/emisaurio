@@ -29,7 +29,7 @@ Un editor de video que funciona dentro de tu navegador y en tu propia computador
 - [x] **Etapa 2: modo viral.** Botón «Optimizar mi video» en 1 clic, subtítulos automáticos con Whisper local (palabra resaltada, emojis, 5 estilos, SRT), cortes de silencio, zoom alterno en cortes, ganchos de los primeros 3 s, barra de progreso, beats de la música, «Voz clara», volumen a −14 LUFS, bajar la música al hablar, 18 filtros con vista previa, auto-color, 15 transiciones, 10 estilos de texto animado y Modo Fácil / Modo Pro.
 - [x] **Extra: sonido viral de TikTok.** Pista «Sonido guía» que se escucha al editar pero no se exporta, detección de BPM y beats, cortes al ritmo y montaje al ritmo, e instrucciones de en qué segundo recortar el sonido dentro de TikTok.
 - [x] **Etapa 3: autoguardado y «Mis proyectos».** Todo se guarda solo, también tus archivos (hasta 2 GB cada uno). Al abrir, se recupera el último proyecto. Puedes duplicar, borrar y volver a vincular archivos que falten.
-- [ ] Etapa 4: editar con el texto, quitar muletillas, buscar en lo dicho, armar desde guion
+- [x] **Etapa 4: editar con el texto.** Pestaña ¶ Transcripción: borra palabras y el video se corta solo, limpieza de muletillas, sonidos sin palabra, repeticiones y pausas, búsqueda en lo que dices, subtítulos desde el texto y armado del video desde un guion.
 - [ ] Etapa 5: zooms y efectos de sonido automáticos, puntuación viral, clips automáticos
 - [ ] Etapa 6: reencuadre con cara, aislar personas, croma, multicámara automática
 - [ ] Etapa 7 (Pro): fotogramas clave con curvas, curvas de color y LUTs, máscaras y seguimiento

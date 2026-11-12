@@ -6,6 +6,7 @@ import { media } from './media.js';
 import { LANGS, MODELS, voiceAudio, transcribe, toWords, buildCaptionClips, parseSRT, captionClipsFromSegments, applyCaptionStyle, retimeCaption } from './captions.js';
 import { HOOKS, findSilences, removeSilences, alternateZoom, addHook, autoColor, applyLook, normalizeLoudness, beatMarkers, guideInfo, cutAtBeats, beatMontage, estimateBpm } from './viral.js';
 import { importFile } from './media.js';
+import { voiceMedia, timelineWords } from './textedit.js';
 import { esc, pct } from './ui.js';
 
 export function createPanels(app, ui) {
@@ -223,6 +224,17 @@ export function createPanels(app, ui) {
     capBusy = true;
     const set = (t) => { capStatus = t; const e = document.getElementById(statusId); if (e) e.innerHTML = t; if (statusId !== 'cStat') { const c2 = document.getElementById('cStat'); if (c2) c2.innerHTML = t; } };
     try {
+      const vm = voiceMedia(app.P);
+      if (vm.length && vm.every((m) => app.P.transcripts?.[m.id])) {
+        // Ya hay transcripción: no hace falta volver a pasar Whisper
+        const words = timelineWords(app.P);
+        const clips = buildCaptionClips(app.P, words, { maxWords: prefs.capWords, styleId: prefs.capStyle, emojis: prefs.capEmoji, pos: prefs.capPos });
+        if (!quiet) app.history.push(app.P);
+        app.P.clips = app.P.clips.filter((c) => c.kind !== 'caption').concat(clips);
+        app.refresh();
+        set(`✓ ${clips.length} subtítulos desde la transcripción guardada`);
+        return true;
+      }
       set('Preparando el audio…');
       const audio = await voiceAudio(app.P);
       const files = {};

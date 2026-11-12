@@ -10,7 +10,7 @@ export const HOOKS = [
   'Antes vs. después', 'Mira esto hasta el final',
 ];
 
-function voiceTrackId(P) {
+export function voiceTrackId(P) {
   // La pista con más audio que no sea música: normalmente la principal, o la de voz en off
   let best = null, bestDur = 0;
   for (const tr of P.tracks) {

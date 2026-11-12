@@ -10,6 +10,7 @@ import { createPanels } from './panels.js';
 import { renderInspector as drawInspector } from './inspector.js';
 import { TEXT_STYLES } from './presets.js';
 import { initProjects } from './projects.js';
+import { createTranscriptPanel } from './transcriptpanel.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -384,7 +385,11 @@ $('#proBtn').addEventListener('click', () => {
 
 // ---------- Inicio ----------
 ui = initUI(app);
-panels = createPanels(app, ui);
+{
+  const base = createPanels(app, ui);
+  const { viral, ...rest } = base;
+  panels = { viral, transcript: createTranscriptPanel(app), ...rest };
+}
 buildTabs();
 syncPro();
 renderMediaPanel();
