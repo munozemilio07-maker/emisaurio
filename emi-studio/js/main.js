@@ -5,6 +5,10 @@ import { media, importFile } from './media.js';
 import { Player } from './player.js';
 import { Timeline } from './timeline.js';
 import { openExport } from './exportui.js';
+import { initUI } from './ui.js';
+import { createPanels } from './panels.js';
+import { renderInspector as drawInspector } from './inspector.js';
+import { TEXT_STYLES } from './presets.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -32,12 +36,13 @@ const app = {
   refresh() {
     this.timeline.render();
     renderInspector();
+    if (curTab !== 'media') renderPanel();
     this.player.resize();
     this.player.invalidate();
     updateChrome();
     scheduleAutosave();
   },
-  select(id) { this.selection.clear(); if (id) this.selection.add(id); this.timeline.render(); renderInspector(); },
+  select(id) { this.selection.clear(); if (id) this.selection.add(id); this.timeline.render(); renderInspector(); if (curTab === 'filters' || curTab === 'transitions') renderPanel(); },
   toggleSelect(id) { this.selection.has(id) ? this.selection.delete(id) : this.selection.add(id); this.timeline.render(); renderInspector(); },
   selected() { return this.P.clips.filter((c) => this.selection.has(c.id)); },
   toast,
@@ -226,143 +231,32 @@ function renderMediaPanel() {
   }));
 }
 
-// ---------- Inspector ----------
-function field(parent, { label, type = 'range', min, max, step, get, set, fmt, options, wide }) {
-  const row = document.createElement('div');
-  row.className = 'field' + (wide || type === 'select' || type === 'color' || type === 'text' || type === 'textarea' || type === 'chips' ? ' wide' : '');
-  const lab = document.createElement('label');
-  lab.textContent = label;
-  row.appendChild(lab);
-  let input;
-  if (type === 'select') {
-    input = document.createElement('select');
-    input.innerHTML = options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
-    input.value = get();
-  } else if (type === 'chips') {
-    input = document.createElement('div');
-    input.className = 'chips';
-    for (const [v, l] of options) {
-      const b = document.createElement('button');
-      b.className = 'chip' + (String(get()) === String(v) ? ' on' : '');
-      b.textContent = l;
-      b.addEventListener('click', () => { app.beginEdit(); set(v); app.endEdit(); });
-      input.appendChild(b);
-    }
-    row.appendChild(input);
-    parent.appendChild(row);
-    return row;
-  } else if (type === 'textarea') {
-    input = document.createElement('textarea'); input.value = get();
-  } else {
-    input = document.createElement('input');
-    input.type = type;
-    if (min != null) input.min = min; if (max != null) input.max = max; if (step != null) input.step = step;
-    input.value = get();
-    if (type === 'checkbox') input.checked = !!get();
-  }
-  row.appendChild(input);
-  let out = null;
-  if (type === 'range') { out = document.createElement('output'); out.textContent = fmt ? fmt(+get()) : get(); row.appendChild(out); }
-  const read = () => (type === 'checkbox' ? input.checked : type === 'range' || type === 'number' ? +input.value : input.value);
-  input.addEventListener('focus', () => app.beginEdit());
-  input.addEventListener('pointerdown', () => app.beginEdit());
-  input.addEventListener('input', () => {
-    if (!app._snap) app.beginEdit();
-    set(read());
-    if (out) out.textContent = fmt ? fmt(read()) : read();
-    app.player.invalidate();
-    if (type !== 'range') app.timeline.render();
-  });
-  input.addEventListener('change', () => { set(read()); app.endEdit(); });
-  input.addEventListener('dblclick', () => { if (type === 'range' && row.dataset.def != null) { app.beginEdit(); set(+row.dataset.def); app.endEdit(); } });
-  parent.appendChild(row);
-  return row;
+// ---------- Inspector y paneles ----------
+let ui, panels, curTab = 'media';
+function renderInspector() { drawInspector(app, ui); }
+function renderPanel(id = curTab) {
+  if (id !== curTab) return;
+  if (id === 'media') return renderMediaPanel();
+  const el = $('#panel-' + id);
+  if (el && panels[id]) panels[id].render(el);
 }
+app.renderPanel = renderPanel;
 
-function section(root, title) {
-  const s = document.createElement('section');
-  s.innerHTML = `<h3>${title}</h3>`;
-  root.appendChild(s);
-  return s;
+function buildTabs() {
+  const nav = $('#leftTabs');
+  const tabs = [['media', 'Medios', '▣'], ...Object.entries(panels).filter(([, v]) => v.render).map(([k, v]) => [k, v.label, v.icon])];
+  nav.innerHTML = tabs.map(([id, l, i]) => `<button data-tab="${id}" class="${id === curTab ? 'active' : ''}${id === 'viral' ? ' tab-viral' : ''}"><i>${i}</i><span>${l}</span></button>`).join('');
+  const left = $('.left');
+  for (const [id] of tabs) if (!$('#panel-' + id)) { const s = document.createElement('section'); s.className = 'panel'; s.id = 'panel-' + id; s.hidden = true; left.appendChild(s); }
+  nav.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
 }
-
-const pct = (v) => Math.round(v * 100) + '%';
-const sec = (v) => v.toFixed(2) + 's';
-
-function renderInspector() {
-  const root = $('#inspector');
-  root.innerHTML = '';
-  const wrap = document.createElement('div');
-  wrap.className = 'insp';
-  root.appendChild(wrap);
-  const sel = app.selected();
-  const P = app.P;
-
-  if (!sel.length) {
-    const s = section(wrap, 'Proyecto');
-    field(s, { label: 'FPS', type: 'select', options: [[24, '24 (cine)'], [25, '25 (PAL)'], [30, '30 (redes)'], [50, '50'], [60, '60 (fluido)']], get: () => P.fps, set: (v) => (P.fps = +v) });
-    field(s, { label: 'Fondo', type: 'color', get: () => P.bg, set: (v) => (P.bg = v) });
-    field(s, { label: 'Volumen general', min: 0, max: 2, step: 0.01, get: () => P.masterGain, set: (v) => (P.masterGain = v), fmt: pct });
-    const tip = document.createElement('div');
-    tip.className = 'empty';
-    tip.innerHTML = `<div class="big">◇</div><p>Selecciona un clip para editarlo.</p>
-      <div class="kbd">
-        <kbd>Espacio</kbd><span>Reproducir / pausar</span>
-        <kbd>S</kbd><span>Dividir en el cabezal</span>
-        <kbd>Supr</kbd><span>Eliminar</span>
-        <kbd>Shift+Supr</kbd><span>Eliminar y cerrar hueco</span>
-        <kbd>Ctrl+D</kbd><span>Duplicar</span>
-        <kbd>Ctrl+Z</kbd><span>Deshacer</span>
-        <kbd>← →</kbd><span>Fotograma a fotograma</span>
-        <kbd>Shift+← →</kbd><span>Saltar 1 segundo</span>
-        <kbd>I / O</kbd><span>Marcar entrada / salida del bucle</span>
-        <kbd>Ctrl+rueda</kbd><span>Zoom en la línea de tiempo</span>
-      </div>`;
-    wrap.appendChild(tip);
-    return;
-  }
-
-  const c = sel[0];
-  const m = media.get(c.mediaId);
-  const head = document.createElement('div');
-  head.className = 'clip-title';
-  head.innerHTML = `${m?.thumb ? `<img src="${m.thumb}" alt="">` : ''}<div><b>${m ? m.name : { solid: 'Fondo de color', text: 'Texto', caption: 'Subtítulo' }[c.kind] || c.kind}</b><small>${sel.length > 1 ? `${sel.length} clips seleccionados` : `${fmtTime(c.start)} → ${fmtTime(clipEnd(c))}`}</small></div>`;
-  wrap.appendChild(head);
-
-  const g = section(wrap, 'Clip');
-  field(g, { label: 'Duración', type: 'number', step: 0.1, min: 0.1, get: () => +c.dur.toFixed(2), set: (v) => {
-    let d = Math.max(0.1, v);
-    if (m && (m.type === 'video' || m.type === 'audio')) d = Math.min(d, (m.duration - c.in) / c.speed);
-    c.dur = d;
-  } });
-  if (c.kind === 'video' || c.kind === 'audio') {
-    field(g, { label: 'Velocidad', type: 'chips', options: [[0.25, '0.25×'], [0.5, '0.5×'], [0.75, '0.75×'], [1, '1×'], [1.25, '1.25×'], [1.5, '1.5×'], [2, '2×'], [3, '3×']], get: () => c.speed, set: (v) => {
-      const src = c.dur * c.speed; c.speed = +v; c.dur = src / c.speed;
-    } });
-    field(g, { label: 'Volumen', min: 0, max: 2, step: 0.01, get: () => c.volume, set: (v) => (c.volume = v), fmt: pct }).dataset.def = 1;
-    field(g, { label: 'Fundido entrada', min: 0, max: Math.min(5, c.dur / 2), step: 0.05, get: () => c.fadeIn, set: (v) => (c.fadeIn = v), fmt: sec }).dataset.def = 0;
-    field(g, { label: 'Fundido salida', min: 0, max: Math.min(5, c.dur / 2), step: 0.05, get: () => c.fadeOut, set: (v) => (c.fadeOut = v), fmt: sec }).dataset.def = 0;
-  }
-
-  if (c.kind !== 'audio' && c.kind !== 'text' && c.kind !== 'caption') {
-    const f = section(wrap, 'Encuadre');
-    field(f, { label: 'Modo', type: 'chips', options: [['cover', 'Llenar'], ['contain', 'Ajustar'], ['blurfill', 'Fondo desenfocado'], ['stretch', 'Estirar']], get: () => c.fit, set: (v) => sel.forEach((x) => (x.fit = v)) });
-  }
-  if (c.kind !== 'audio') {
-    const t = section(wrap, 'Transformar');
-    const tr = c.transform;
-    field(t, { label: 'Posición X', min: -1, max: 1, step: 0.005, get: () => tr.x, set: (v) => (tr.x = v), fmt: pct }).dataset.def = 0;
-    field(t, { label: 'Posición Y', min: -1, max: 1, step: 0.005, get: () => tr.y, set: (v) => (tr.y = v), fmt: pct }).dataset.def = 0;
-    field(t, { label: 'Escala', min: 0.1, max: 4, step: 0.01, get: () => tr.scale, set: (v) => (tr.scale = v), fmt: pct }).dataset.def = 1;
-    field(t, { label: 'Rotación', min: -180, max: 180, step: 1, get: () => tr.rot, set: (v) => (tr.rot = v), fmt: (v) => v + '°' }).dataset.def = 0;
-    field(t, { label: 'Opacidad', min: 0, max: 1, step: 0.01, get: () => tr.opacity, set: (v) => (tr.opacity = v), fmt: pct }).dataset.def = 1;
-    if (c.kind !== 'text' && c.kind !== 'caption') field(t, { label: 'Espejo', type: 'checkbox', get: () => tr.flipX, set: (v) => (tr.flipX = v) });
-    const hint = document.createElement('p');
-    hint.className = 'sub'; hint.style.marginTop = '8px';
-    hint.textContent = 'Doble clic en un deslizador para restablecerlo.';
-    t.appendChild(hint);
-  }
+function showTab(id) {
+  curTab = id;
+  document.querySelectorAll('#leftTabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === id));
+  document.querySelectorAll('.left .panel').forEach((p) => (p.hidden = p.id !== 'panel-' + id));
+  renderPanel(id);
 }
+app.showTab = showTab;
 
 // ---------- Acciones de edición ----------
 function splitAtPlayhead() {
@@ -449,6 +343,7 @@ window.addEventListener('keydown', (e) => {
   else if (k === 'home') app.player.seek(0);
   else if (k === 'end') app.player.seek(projectDuration(app.P));
   else if (k === 'n') $('#snapBtn').click();
+  else if (k === 't' && !mod) { e.preventDefault(); addTextAtPlayhead(); }
   else if (k === '+' || k === '=') app.timeline.setZoom(app.timeline.pps * 1.25);
   else if (k === '-') app.timeline.setZoom(app.timeline.pps / 1.25);
   else if (k === 'i') { const pl = app.player; pl.loopRange = [pl.t, Math.max(pl.t + 0.5, pl.loopRange?.[1] ?? projectDuration(app.P))]; app.timeline.drawRuler(); }
@@ -460,7 +355,34 @@ window.addEventListener('keydown', (e) => {
 let saveTimer = null;
 function scheduleAutosave() { clearTimeout(saveTimer); saveTimer = setTimeout(() => app.onAutosave?.(), 1500); }
 
+function addTextAtPlayhead() {
+  const st = TEXT_STYLES[0];
+  const tr = app.P.tracks.find((t) => t.type === 'text');
+  const c = makeClip('text', tr.id, app.player.t, 3, { text: { ...st.s, content: 'Escribe aquí' } });
+  app.commit((P) => P.clips.push(c));
+  app.select(c.id);
+  setTimeout(() => document.querySelector('#inspector textarea')?.select(), 50);
+}
+
+// ---------- Modo Pro ----------
+try { app.pro = localStorage.getItem('emi.pro') === '1'; } catch { app.pro = false; }
+function syncPro() {
+  $('#proBtn').classList.toggle('on', app.pro);
+  $('#proBtn').innerHTML = app.pro ? '◆ Modo Pro' : '◇ Modo Fácil';
+  document.body.classList.toggle('pro', app.pro);
+}
+$('#proBtn').addEventListener('click', () => {
+  app.pro = !app.pro;
+  try { localStorage.setItem('emi.pro', app.pro ? '1' : '0'); } catch {}
+  syncPro(); renderInspector();
+  toast(app.pro ? 'Modo Pro: todos los controles a la vista.' : 'Modo Fácil: sólo lo esencial.', 'ok', 2200);
+});
+
 // ---------- Inicio ----------
+ui = initUI(app);
+panels = createPanels(app, ui);
+buildTabs();
+syncPro();
 renderMediaPanel();
 app.refresh();
 setTimeout(() => app.timeline.zoomFit(), 50);

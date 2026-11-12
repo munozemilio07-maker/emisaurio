@@ -84,13 +84,37 @@ export function duckGain(P, venv, t) {
   return 1 - v * (1 - P.duckAmount);
 }
 
+// Cadena "Voz clara": corta graves, realza presencia y aire, comprime y compensa.
+// Se activa/desactiva por parámetros, así no hay que recablear durante la reproducción.
+export function voiceChain(ctx) {
+  const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.Q.value = 0.7;
+  const mud = ctx.createBiquadFilter(); mud.type = 'peaking'; mud.frequency.value = 300; mud.Q.value = 1;
+  const pres = ctx.createBiquadFilter(); pres.type = 'peaking'; pres.frequency.value = 3200; pres.Q.value = 0.9;
+  const air = ctx.createBiquadFilter(); air.type = 'highshelf'; air.frequency.value = 9000;
+  const comp = ctx.createDynamicsCompressor(); comp.knee.value = 8; comp.attack.value = 0.005; comp.release.value = 0.12;
+  const makeup = ctx.createGain();
+  hp.connect(mud).connect(pres).connect(air).connect(comp).connect(makeup);
+  const set = (on) => {
+    hp.frequency.value = on ? 90 : 10;
+    mud.gain.value = on ? -2.5 : 0;
+    pres.gain.value = on ? 4 : 0;
+    air.gain.value = on ? 2.5 : 0;
+    comp.threshold.value = on ? -26 : 0;
+    comp.ratio.value = on ? 3.5 : 1;
+    makeup.gain.value = on ? 1.7 : 1;
+  };
+  set(false);
+  return { input: hp, output: makeup, set };
+}
+
 // Mezcla offline de todo el proyecto → AudioBuffer
-export async function mixOffline(P, media, sampleRate = 48000, t0 = 0, t1 = null) {
+// opts.filter(clip, track) decide qué clips entran; opts.channels (1 ó 2)
+export async function mixOffline(P, media, sampleRate = 48000, t0 = 0, t1 = null, opts = {}) {
   let dur = 0;
   for (const c of P.clips) dur = Math.max(dur, clipEnd(c));
   if (t1 == null) t1 = dur;
   const len = Math.max(1, Math.ceil((t1 - t0) * sampleRate));
-  const ctx = new OfflineAudioContext(2, len, sampleRate);
+  const ctx = new OfflineAudioContext(opts.channels || 2, len, sampleRate);
   const master = ctx.createGain();
   master.gain.value = P.masterGain ?? 1;
   const limiter = ctx.createDynamicsCompressor();
@@ -103,6 +127,7 @@ export async function mixOffline(P, media, sampleRate = 48000, t0 = 0, t1 = null
     const a = Math.max(c.start, t0), b = Math.min(clipEnd(c), t1);
     if (b <= a) continue;
     const m = media.get(c.mediaId);
+    if (opts.filter && !opts.filter(c, P.tracks.find((x) => x.id === c.trackId))) continue;
     const src = ctx.createBufferSource();
     src.buffer = m.audio;
     src.playbackRate.value = c.speed;
@@ -116,7 +141,9 @@ export async function mixOffline(P, media, sampleRate = 48000, t0 = 0, t1 = null
       if (tr.music) v *= duckGain(P, venv, tt);
       g.gain.setValueAtTime(v, tt - t0);
     }
-    src.connect(g).connect(master);
+    if (c.enhance) { const ch = voiceChain(ctx); ch.set(true); src.connect(ch.input); ch.output.connect(g); }
+    else src.connect(g);
+    g.connect(master);
     const offset = c.in + (a - c.start) * c.speed;
     src.start(a - t0, offset, (b - a) * c.speed);
   }
@@ -175,4 +202,22 @@ export function detectBeats(buffer) {
     if (energy[i] > avg * 1.6 && energy[i] > 0.01 && t - last > 0.28) { beats.push(t); last = t; }
   }
   return beats;
+}
+
+// Mide la sonoridad aproximada del proyecto y devuelve la ganancia para llegar a ~-14 LUFS (redes sociales)
+export async function loudnessGain(P, media) {
+  const mix = await mixOffline({ ...P, masterGain: 1 }, media, 16000, 0, null, { channels: 1 });
+  // RMS sólo de las partes con sonido (ignora silencios largos)
+  const d = mix.getChannelData(0), win = 1600;
+  let sum = 0, n = 0;
+  for (let i = 0; i < d.length; i += win) {
+    let s = 0;
+    for (let j = i; j < Math.min(d.length, i + win); j++) s += d[j] * d[j];
+    const r = s / win;
+    if (r > 1e-5) { sum += r; n++; }
+  }
+  if (!n) return { db: -Infinity, gain: 1 };
+  const db = 10 * Math.log10(sum / n);
+  const target = -15.5; // RMS en dBFS ≈ -14 LUFS para voz/música
+  return { db, gain: Math.max(0.2, Math.min(4, Math.pow(10, (target - db) / 20))) };
 }

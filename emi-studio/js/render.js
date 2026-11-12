@@ -1,6 +1,6 @@
 // Compositor: dibuja un fotograma del proyecto en un canvas 2D.
 // Se usa igual para la vista previa y para la exportación, así lo que ves es lo que exportas.
-import { clamp, clipEnd, clipsOnTrack } from './state.js';
+import { clamp, clipEnd, clipsOnTrack, projectDuration } from './state.js';
 
 const ease = {
   out: (x) => 1 - Math.pow(1 - x, 3),
@@ -213,7 +213,7 @@ export function drawText(ctx, P, c, t) {
   ctx.font = `${T.italic ? 'italic ' : ''}${T.weight} ${fs}px "${T.font}", Inter, system-ui, sans-serif`;
   ctx.textBaseline = 'middle';
   try { ctx.letterSpacing = `${(T.letter || 0) * fs}px`; } catch {}
-  const space = ctx.measureText(' ').width;
+  const space = ctx.measureText(' ').width + (T.strokeW || 0) * fs * 0.6 + (c.kind === 'caption' ? fs * 0.06 : 0);
   const maxW = (T.maxW || 0.86) * W / Math.max(0.2, c.transform.scale);
 
   // Distribución en líneas
@@ -384,6 +384,20 @@ export function renderFrame(ctx, P, t, prov, k = 1) {
         drawClip(ctx, P, c, t, prov);
       }
     }
+  }
+  // Barra de progreso (retención): crece de 0 a 100% durante el video
+  const pb = P.progressBar;
+  if (pb?.on) {
+    const dur = projectDuration(P) || 1;
+    const h = Math.max(4, Math.round(H * (pb.h || 0.008)));
+    const y = pb.pos === 'top' ? 0 : H - h;
+    ctx.globalAlpha = 1; ctx.filter = 'none';
+    ctx.fillStyle = 'rgba(255,255,255,0.22)';
+    ctx.fillRect(0, y, W, h);
+    const g = ctx.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, pb.color || '#ec4899'); g.addColorStop(1, pb.color2 || '#f59e0b');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, y, W * clamp(t / dur, 0, 1), h);
   }
   ctx.restore();
 }

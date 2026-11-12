@@ -1,7 +1,7 @@
 // Motor de vista previa en tiempo real: sincroniza <video>/<audio> por clip y compone en canvas.
 import { clipEnd, projectDuration } from './state.js';
 import { renderFrame, activeVisuals, sourceTime } from './render.js';
-import { audioCtx, clipGainAt, voiceEnvelope, duckGain } from './audio.js';
+import { audioCtx, clipGainAt, voiceEnvelope, duckGain, voiceChain } from './audio.js';
 import { media } from './media.js';
 
 export class Player {
@@ -64,8 +64,10 @@ export class Player {
     try {
       const ac = audioCtx();
       const node = ac.createMediaElementSource(el);
+      e.chain = voiceChain(ac);
       e.gain = ac.createGain();
-      node.connect(e.gain).connect(this.ensureMaster());
+      node.connect(e.chain.input);
+      e.chain.output.connect(e.gain).connect(this.ensureMaster());
     } catch { /* sin WebAudio: volumen nativo */ }
     this.els.set(c.id, e);
     return e;
@@ -120,6 +122,7 @@ export class Player {
       const muted = tr?.muted || !m.audio && m.type === 'video' && false;
       let g = muted ? 0 : clipGainAt(c, t);
       if (tr?.music) g *= duckGain(P, this.venv, t);
+      if (e.chain && e.enh !== !!c.enhance) { e.enh = !!c.enhance; e.chain.set(e.enh); }
       if (e.gain) { e.gain.gain.value = g; el.volume = 1; } else el.volume = Math.min(1, g);
       if (el.playbackRate !== c.speed) el.playbackRate = c.speed;
       if (this.playing) {

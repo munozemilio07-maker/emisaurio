@@ -115,11 +115,11 @@ export const TEXT_STYLES = [
 
 // Estilos de subtítulos (se aplican a todo el track de subtítulos)
 export const CAPTION_STYLES = [
-  { id: 'hormozi', name: 'Viral amarillo', s: { font: 'Montserrat', weight: 900, size: 0.058, upper: true, color: '#ffffff', highlight: '#ffd400', strokeW: 0.16, stroke: '#000', shadow: 0.6, animIn: 'pop', animOut: 'none' } },
-  { id: 'clean', name: 'Limpio', s: { font: 'Inter', weight: 700, size: 0.045, color: '#ffffff', highlight: '#ffffff', bg: 'box', bgColor: '#000000', bgAlpha: 0.55, shadow: 0, animIn: 'none', animOut: 'none' } },
-  { id: 'green', name: 'Verde pop', s: { font: 'Poppins', weight: 800, size: 0.055, upper: true, color: '#ffffff', highlight: '#39ff88', strokeW: 0.14, stroke: '#000', animIn: 'pop', animOut: 'none' } },
-  { id: 'karaoke', name: 'Karaoke', s: { font: 'Bebas Neue', weight: 400, size: 0.075, upper: true, color: '#9aa0b5', highlight: '#ffffff', shadow: 1, animIn: 'none', animOut: 'none' } },
-  { id: 'box', name: 'Caja palabra', s: { font: 'Montserrat', weight: 900, size: 0.055, upper: true, color: '#ffffff', highlight: '#a855f7', hlBox: true, strokeW: 0.1, stroke: '#000', animIn: 'none', animOut: 'none' } },
+  { id: 'hormozi', name: 'Viral amarillo', s: { font: 'Montserrat', weight: 900, size: 0.074, upper: true, color: '#ffffff', highlight: '#ffd400', strokeW: 0.16, stroke: '#000', shadow: 0.6, animIn: 'pop', animOut: 'none' } },
+  { id: 'clean', name: 'Limpio', s: { font: 'Inter', weight: 700, size: 0.05, color: '#ffffff', highlight: '#ffffff', bg: 'box', bgColor: '#000000', bgAlpha: 0.55, shadow: 0, animIn: 'none', animOut: 'none' } },
+  { id: 'green', name: 'Verde pop', s: { font: 'Poppins', weight: 800, size: 0.07, upper: true, color: '#ffffff', highlight: '#39ff88', strokeW: 0.14, stroke: '#000', animIn: 'pop', animOut: 'none' } },
+  { id: 'karaoke', name: 'Karaoke', s: { font: 'Bebas Neue', weight: 400, size: 0.09, upper: true, color: '#9aa0b5', highlight: '#ffffff', shadow: 1, animIn: 'none', animOut: 'none' } },
+  { id: 'box', name: 'Caja palabra', s: { font: 'Montserrat', weight: 900, size: 0.07, upper: true, color: '#ffffff', highlight: '#a855f7', hlBox: true, strokeW: 0.1, stroke: '#000', animIn: 'none', animOut: 'none' } },
 ];
 
 export const TRANSITIONS = [

@@ -4,6 +4,21 @@ import { decodeFile, computePeaks } from './audio.js';
 
 export const media = new Map();
 
+// Estadísticas de imagen (luz, contraste, saturación) para el auto-color
+export function imageStats(canvas) {
+  const g = canvas.getContext('2d');
+  const d = g.getImageData(0, 0, canvas.width, canvas.height).data;
+  let L = 0, L2 = 0, S = 0, n = 0;
+  for (let i = 0; i < d.length; i += 16) {
+    const r = d[i] / 255, gg = d[i + 1] / 255, b = d[i + 2] / 255;
+    const l = 0.2126 * r + 0.7152 * gg + 0.0722 * b;
+    const mx = Math.max(r, gg, b), mn = Math.min(r, gg, b);
+    L += l; L2 += l * l; S += mx ? (mx - mn) / mx : 0; n++;
+  }
+  L /= n; S /= n;
+  return { lum: L, contrast: Math.sqrt(Math.max(0, L2 / n - L * L)), sat: S };
+}
+
 function kindOf(file) {
   const t = file.type || '';
   const ext = (file.name.split('.').pop() || '').toLowerCase();
@@ -25,8 +40,8 @@ function loadVideoMeta(url) {
       const c = document.createElement('canvas');
       const s = 240 / Math.max(v.videoWidth, v.videoHeight);
       c.width = Math.max(1, Math.round(v.videoWidth * s)); c.height = Math.max(1, Math.round(v.videoHeight * s));
-      c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
-      res({ duration: v.duration, w: v.videoWidth, h: v.videoHeight, thumb: c.toDataURL('image/jpeg', 0.75) });
+      c.getContext('2d', { willReadFrequently: true }).drawImage(v, 0, 0, c.width, c.height);
+      res({ duration: v.duration, w: v.videoWidth, h: v.videoHeight, thumb: c.toDataURL('image/jpeg', 0.75), stats: imageStats(c) });
       v.removeAttribute('src'); v.load();
     };
     v.onerror = () => rej(new Error('No se pudo leer el vídeo (¿códec no soportado por el navegador?)'));
@@ -55,8 +70,9 @@ export async function importFile(file, onUpdate) {
     const c = document.createElement('canvas');
     const s = 240 / Math.max(m.w, m.h);
     c.width = Math.round(m.w * s); c.height = Math.round(m.h * s);
-    c.getContext('2d').drawImage(m.bitmap, 0, 0, c.width, c.height);
+    c.getContext('2d', { willReadFrequently: true }).drawImage(m.bitmap, 0, 0, c.width, c.height);
     m.thumb = c.toDataURL('image/jpeg', 0.8);
+    m.stats = imageStats(c);
     m.loading = false; m.audioReady = true;
   } else {
     const buf = await decodeFile(file);
