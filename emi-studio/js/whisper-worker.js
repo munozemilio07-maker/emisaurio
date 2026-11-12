@@ -1,14 +1,34 @@
 // Worker de transcripción: Whisper (Transformers.js) corriendo en tu equipo (WebGPU o WASM).
 // El modelo se descarga una vez y queda en la caché del navegador.
-// Se carga desde jsDelivr (versión fija). Los modelos y el motor quedan en la caché del navegador tras el primer uso.
-import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.1/dist/transformers.min.js';
+// La librería se baja de jsDelivr (versión fija) la primera vez y se guarda en el almacenamiento del navegador
+// (Cache Storage), igual que los modelos y el motor. Así, después funciona sin internet.
+const LIB = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.1/dist/transformers.min.js';
+let lib = null;
+async function loadLib() {
+  if (lib) return lib;
+  lib = (async () => {
+    const store = await caches.open('emi-transformers-lib');
+    let res = await store.match(LIB);
+    if (!res) {
+      res = await fetch(LIB);
+      if (!res.ok) throw new Error('No se pudo descargar el transcriptor (' + res.status + ')');
+      await store.put(LIB, res.clone());
+    }
+    const url = URL.createObjectURL(new Blob([await res.text()], { type: 'text/javascript' }));
+    const m = await import(url);
+    m.env.allowLocalModels = false;
+    m.env.useBrowserCache = true;
+    return m;
+  })();
+  return lib;
+}
 
-env.allowLocalModels = false;
 const cache = new Map();
 
 async function getPipe(model, device, onProgress) {
   const key = model + '|' + device;
   if (cache.has(key)) return cache.get(key);
+  const { pipeline } = await loadLib();
   const dtype = device === 'webgpu' ? { encoder_model: 'fp32', decoder_model_merged: 'q4' } : 'q8';
   const p = await pipeline('automatic-speech-recognition', model, { device, dtype, progress_callback: onProgress });
   cache.set(key, p);

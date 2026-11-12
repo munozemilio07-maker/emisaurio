@@ -45,7 +45,10 @@ El detalle de qué copiamos de cada editor de pago está en [INVESTIGACION.md](I
 
 Probado de forma automática en Chromium (Linux) con archivos de prueba:
 
-- Whisper real con voz en español: unos 16 s de audio en ~9 s en CPU con el modelo ultraligero. Los tiempos por palabra se ajustan al audio real porque Whisper los entrega con hasta 0.5 s de desfase.
+- Whisper real con voz en español e inglés: 16 s en ~9 s (ultraligero, CPU) y 95 s en ~60 s (modelo «Rápido»), con ruido de fondo incluido. Los tiempos por palabra se ajustan al audio real porque Whisper los entrega con hasta 0.5 s de desfase. En textos largos Whisper a veces se salta alguna palabra en las uniones de cada tramo de 30 s (1 de 201 en la prueba).
+- Funciona **sin internet** después de la primera transcripción: la librería, el motor y el modelo quedan en el almacenamiento del navegador.
+- WebGPU probado con una GPU por software (correcto, pero lento). Si en tu equipo sale texto raro, activa «Sólo CPU».
+- Audio exportado sin cortes ni clics entre tramos (verificado muestra a muestra).
 - MP4 H.264/AAC con rotación de celular: la vista previa y la exportación salen iguales.
 - Video de 30 minutos: audio analizado en ~9 s y ~140 MB de memoria; exportar un tramo funciona.
 - Con el ratón: recortar, mover con imán, deshacer, cortar texto con subtítulos (siguen sincronizados) y recargar la página.
@@ -56,7 +59,9 @@ Probado de forma automática en Chromium (Linux) con archivos de prueba:
 - Tus propios videos en Windows o Mac.
 - El lanzador de Windows (`servidor.ps1`).
 - Exportar 4K y videos muy largos completos.
-- WebGPU (en el entorno de prueba sólo había CPU).
+- Una tarjeta gráfica real con WebGPU.
+- Al cambiar la velocidad, la voz cambia de tono (más aguda al acelerar). Mantener el tono es trabajo pendiente.
+- Ediciones con proxies (copias ligeras para 4K): no están hechas.
 
 ## Formatos de exportación
 
