@@ -1,0 +1,386 @@
+{
+ "_como_editar": "'comandos' viene de la tabla de VGS de la wiki oficial; 'codigo' es la secuencia en teclado. Para registrar la secuencia en control, pon en 'control' una lista de botones, por ejemplo [\"Derecha\", \"X\", \"X\"], y cambia 'pendiente_verificar' si aplica. 'top' es la lista corta de los más útiles. 'abrir.control.boton' es el botón que abre el menú en control.",
+ "abrir": {
+  "teclado": {
+   "tecla": "V",
+   "nota": "Presiona V y luego las letras del comando, una por una. Aparece un menú con las opciones de cada paso.",
+   "parche_verificado": "OB47",
+   "fuente": "https://tutorialtactic.com/blog/smite-shortcuts/",
+   "pendiente_verificar": false
+  },
+  "control": {
+   "boton": null,
+   "nota": "La wiki oficial y las notas de parche no dicen cuál es el botón por defecto que abre el VGS en control, y además depende del esquema que tengas elegido. Míralo en los ajustes de controles del juego.",
+   "parche_verificado": "",
+   "fuente": "",
+   "pendiente_verificar": true
+  },
+  "datos_control": [
+   {
+    "texto": "Los jugadores de control pueden reasignar todos los botones, así que el botón del VGS puede cambiarse.",
+    "parche_verificado": "Alpha Weekend 2",
+    "fuente": "https://wiki.smite2.com/index.php?search=VGS+controller&fulltext=1",
+    "pendiente_verificar": false
+   },
+   {
+    "texto": "Existe un modo de «bloqueo de entrada» para el VGS que permite escribir los comandos con teclado mientras juegas con control.",
+    "parche_verificado": "Closed Alpha 3",
+    "fuente": "https://wiki.smite2.com/index.php?search=VGS+controller&fulltext=1",
+    "pendiente_verificar": false
+   },
+   {
+    "texto": "Al abrir el VGS y confirmar para hacer ping (pensado para control), el ping se pega a objetivos importantes: dioses, torres y similares.",
+    "parche_verificado": "OB42",
+    "fuente": "https://wiki.smite2.com/index.php?search=VGS+controller&fulltext=1",
+    "pendiente_verificar": false
+   }
+  ]
+ },
+ "categorias": [
+  {
+   "codigo": "VA",
+   "nombre_en": "Attack",
+   "nombre": "Atacar"
+  },
+  {
+   "codigo": "VB",
+   "nombre_en": "Enemy",
+   "nombre": "Enemigos"
+  },
+  {
+   "codigo": "VC",
+   "nombre_en": "Careful",
+   "nombre": "Cuidado"
+  },
+  {
+   "codigo": "VD",
+   "nombre_en": "Defend",
+   "nombre": "Defender"
+  },
+  {
+   "codigo": "VE",
+   "nombre_en": "Emote",
+   "nombre": "Emociones"
+  },
+  {
+   "codigo": "VF",
+   "nombre_en": "MIA",
+   "nombre": "Enemigo perdido"
+  },
+  {
+   "codigo": "VG",
+   "nombre_en": "Gank",
+   "nombre": "Emboscar"
+  },
+  {
+   "codigo": "VH",
+   "nombre_en": "Help",
+   "nombre": "Ayuda"
+  },
+  {
+   "codigo": "VI",
+   "nombre_en": "Incoming",
+   "nombre": "Vienen enemigos"
+  },
+  {
+   "codigo": "VQ",
+   "nombre_en": "Ward",
+   "nombre": "Centinelas"
+  },
+  {
+   "codigo": "VR",
+   "nombre_en": "Retreat",
+   "nombre": "Retirada"
+  },
+  {
+   "codigo": "VS",
+   "nombre_en": "Self",
+   "nombre": "Yo"
+  },
+  {
+   "codigo": "VT",
+   "nombre_en": "Returned",
+   "nombre": "Regresaron"
+  },
+  {
+   "codigo": "VV",
+   "nombre_en": "Other",
+   "nombre": "Otros"
+  },
+  {
+   "codigo": "VAT",
+   "nombre_en": "Tower",
+   "nombre": "Torre"
+  },
+  {
+   "codigo": "VBJ",
+   "nombre_en": "Jungle",
+   "nombre": "Jungla"
+  },
+  {
+   "codigo": "VSA",
+   "nombre_en": "Attack",
+   "nombre": "Atacar"
+  },
+  {
+   "codigo": "VSB",
+   "nombre_en": "Buff",
+   "nombre": "Bono de jungla"
+  },
+  {
+   "codigo": "VSD",
+   "nombre_en": "Defend",
+   "nombre": "Defender"
+  },
+  {
+   "codigo": "VSQ",
+   "nombre_en": "Ward",
+   "nombre": "Centinelas"
+  },
+  {
+   "codigo": "VSG",
+   "nombre_en": "Gank",
+   "nombre": "Emboscar"
+  },
+  {
+   "codigo": "VST",
+   "nombre_en": "Returned",
+   "nombre": "Regresaron"
+  },
+  {
+   "codigo": "VVG",
+   "nombre_en": "General",
+   "nombre": "General"
+  },
+  {
+   "codigo": "VVV",
+   "nombre_en": "Position",
+   "nombre": "Posición"
+  }
+ ],
+ "top": [
+  {
+   "codigo": "VHH",
+   "por_que": "Pedir ayuda sin escribir. Es el que más partidas salva.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VRR",
+   "por_que": "Avisar que hay que retirarse antes de que maten a alguien.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VFF",
+   "por_que": "Avisar que falta un enemigo: probablemente va hacia tu compañero.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VBA",
+   "por_que": "Avisar que viene la ulti enemiga para que usen reliquia o se alejen.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VBD",
+   "por_que": "La ulti enemiga ya se gastó: es el momento de pelear.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VVVR",
+   "por_que": "Avisar que tu ulti está lista para coordinar el combo.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VVVD",
+   "por_que": "Tu ulti está en enfriamiento: que no cuenten con ella.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VVVG",
+   "por_que": "Juntar al equipo antes de un objetivo o una pelea.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VAA",
+   "por_que": "Dar la señal de ataque.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  },
+  {
+   "codigo": "VHS",
+   "por_que": "Pedirle curación a tu curandero.",
+   "parche_verificado": "OB47",
+   "fuente": "https://wiki.smite2.com/w/Neith_voicelines",
+   "pendiente_verificar": false
+  }
+ ],
+ "comandos": [
+  {"codigo": "VA1", "teclas": ["V", "A", "1"], "mensaje_en": "Attack left lane!", "mensaje_es": "¡Ataquen la línea izquierda!", "grupo": "VA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VA2", "teclas": ["V", "A", "2"], "mensaje_en": "Attack middle lane!", "mensaje_es": "¡Ataquen la línea central!", "grupo": "VA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VA3", "teclas": ["V", "A", "3"], "mensaje_en": "Attack right lane!", "mensaje_es": "¡Ataquen la línea derecha!", "grupo": "VA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VAA", "teclas": ["V", "A", "A"], "mensaje_en": "Attack!", "mensaje_es": "¡Ataquen!", "grupo": "VA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VAF", "teclas": ["V", "A", "F"], "mensaje_en": "Attack Fire Giant!", "mensaje_es": "¡Ataquen al Gigante de Fuego!", "grupo": "VA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VAG", "teclas": ["V", "A", "G"], "mensaje_en": "Attack the Gold Fury!", "mensaje_es": "¡Ataquen a la Furia Dorada!", "grupo": "VA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VAM", "teclas": ["V", "A", "M"], "mensaje_en": "Attack the Titan!", "mensaje_es": "¡Ataquen al Titán!", "grupo": "VA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VAM", "teclas": ["V", "A", "M"], "mensaje_en": "Attack the Minions!", "mensaje_es": "¡Ataquen a los súbditos!", "grupo": "VA", "modo": "Arena", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VAT1", "teclas": ["V", "A", "T", "1"], "mensaje_en": "Attack left tower!", "mensaje_es": "¡Ataquen la torre izquierda!", "grupo": "VAT", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false, "tambien": ["Attack the left phoenix!"]},
+  {"codigo": "VAT2", "teclas": ["V", "A", "T", "2"], "mensaje_en": "Attack middle tower!", "mensaje_es": "¡Ataquen la torre central!", "grupo": "VAT", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false, "tambien": ["Attack the middle phoenix!"]},
+  {"codigo": "VAT3", "teclas": ["V", "A", "T", "3"], "mensaje_en": "Attack right tower!", "mensaje_es": "¡Ataquen la torre derecha!", "grupo": "VAT", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false, "tambien": ["Attack the right phoenix!"]},
+  {"codigo": "VB1", "teclas": ["V", "B", "1"], "mensaje_en": "Enemies in left lane!", "mensaje_es": "¡Enemigos en la línea izquierda!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VB2", "teclas": ["V", "B", "2"], "mensaje_en": "Enemies in middle lane!", "mensaje_es": "¡Enemigos en la línea central!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VB3", "teclas": ["V", "B", "3"], "mensaje_en": "Enemies in right lane!", "mensaje_es": "¡Enemigos en la línea derecha!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBA", "teclas": ["V", "B", "A"], "mensaje_en": "Enemy ultimate incoming!", "mensaje_es": "¡Viene la ulti enemiga!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBB", "teclas": ["V", "B", "B"], "mensaje_en": "Enemies have returned to base.", "mensaje_es": "Los enemigos regresaron a su base.", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBD", "teclas": ["V", "B", "D"], "mensaje_en": "Enemy ultimate down!", "mensaje_es": "¡La ulti enemiga está en enfriamiento!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBE", "teclas": ["V", "B", "E"], "mensaje_en": "Enemies behind us!", "mensaje_es": "¡Enemigos detrás de nosotros!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBF", "teclas": ["V", "B", "F"], "mensaje_en": "Enemies at the Fire Giant!", "mensaje_es": "¡Enemigos en el Gigante de Fuego!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBG", "teclas": ["V", "B", "G"], "mensaje_en": "Enemies at the Gold Fury!", "mensaje_es": "¡Enemigos en la Furia Dorada!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBM", "teclas": ["V", "B", "M"], "mensaje_en": "Enemies at our Titan!", "mensaje_es": "¡Enemigos en nuestro Titán!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBS", "teclas": ["V", "B", "S"], "mensaje_en": "Enemy spotted!", "mensaje_es": "¡Enemigo a la vista!", "grupo": "VB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBJ1", "teclas": ["V", "B", "J", "1"], "mensaje_en": "Enemies in the Left Jungle!", "mensaje_es": "¡Enemigos en la jungla izquierda!", "grupo": "VBJ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBJ2", "teclas": ["V", "B", "J", "2"], "mensaje_en": "Enemies in the right jungle!", "mensaje_es": "¡Enemigos en la jungla derecha!", "grupo": "VBJ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VBJJ", "teclas": ["V", "B", "J", "J"], "mensaje_en": "Enemies in the jungle!", "mensaje_es": "¡Enemigos en la jungla!", "grupo": "VBJ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VC1", "teclas": ["V", "C", "1"], "mensaje_en": "Be careful left!", "mensaje_es": "¡Cuidado en la izquierda!", "grupo": "VC", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VC2", "teclas": ["V", "C", "2"], "mensaje_en": "Be careful middle!", "mensaje_es": "¡Cuidado en la central!", "grupo": "VC", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VC3", "teclas": ["V", "C", "3"], "mensaje_en": "Be careful right!", "mensaje_es": "¡Cuidado en la derecha!", "grupo": "VC", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VCB", "teclas": ["V", "C", "B"], "mensaje_en": "Return to base!", "mensaje_es": "¡Regresen a la base!", "grupo": "VC", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VCC", "teclas": ["V", "C", "C"], "mensaje_en": "Be careful!", "mensaje_es": "¡Cuidado!", "grupo": "VC", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VCJ", "teclas": ["V", "C", "J"], "mensaje_en": "Be careful in the jungle!", "mensaje_es": "¡Cuidado en la jungla!", "grupo": "VC", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VD1", "teclas": ["V", "D", "1"], "mensaje_en": "Defend left lane!", "mensaje_es": "¡Defiendan la línea izquierda!", "grupo": "VD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VD2", "teclas": ["V", "D", "2"], "mensaje_en": "Defend middle lane!", "mensaje_es": "¡Defiendan la línea central!", "grupo": "VD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VD3", "teclas": ["V", "D", "3"], "mensaje_en": "Defend right lane!", "mensaje_es": "¡Defiendan la línea derecha!", "grupo": "VD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VDD", "teclas": ["V", "D", "D"], "mensaje_en": "Defend!", "mensaje_es": "¡Defiendan!", "grupo": "VD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VDF", "teclas": ["V", "D", "F"], "mensaje_en": "Defend the Fire Giant!", "mensaje_es": "¡Defiendan el Gigante de Fuego!", "grupo": "VD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VDG", "teclas": ["V", "D", "G"], "mensaje_en": "Defend the Gold Fury!", "mensaje_es": "¡Defiendan la Furia Dorada!", "grupo": "VD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VDM", "teclas": ["V", "D", "M"], "mensaje_en": "Defend the Titan!", "mensaje_es": "¡Defiendan al Titán!", "grupo": "VD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VDM", "teclas": ["V", "D", "M"], "mensaje_en": "Defend the Portal!", "mensaje_es": "¡Defiendan el portal!", "grupo": "VD", "modo": "Arena", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VEA", "teclas": ["V", "E", "A"], "mensaje_en": "Awesome!", "mensaje_es": "¡Genial!", "grupo": "VE", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VEG", "teclas": ["V", "E", "G"], "mensaje_en": "I'm the Greatest!", "mensaje_es": "¡Soy el mejor!", "grupo": "VE", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VEJ", "teclas": ["V", "E", "J"], "mensaje_en": "Jokes", "mensaje_es": "Chiste", "grupo": "VE", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VEL", "teclas": ["V", "E", "L"], "mensaje_en": "Laughs", "mensaje_es": "Risa", "grupo": "VE", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VER", "teclas": ["V", "E", "R"], "mensaje_en": "You Rock!", "mensaje_es": "¡Eres lo máximo!", "grupo": "VE", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VET", "teclas": ["V", "E", "T"], "mensaje_en": "Taunts", "mensaje_es": "Burla", "grupo": "VE", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VEW", "teclas": ["V", "E", "W"], "mensaje_en": "Woohoo!", "mensaje_es": "¡Yuju!", "grupo": "VE", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VF1", "teclas": ["V", "F", "1"], "mensaje_en": "Enemy missing left!", "mensaje_es": "¡Falta un enemigo en la izquierda!", "grupo": "VF", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VF2", "teclas": ["V", "F", "2"], "mensaje_en": "Enemy missing middle!", "mensaje_es": "¡Falta un enemigo en la central!", "grupo": "VF", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VF3", "teclas": ["V", "F", "3"], "mensaje_en": "Enemy missing right!", "mensaje_es": "¡Falta un enemigo en la derecha!", "grupo": "VF", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VFF", "teclas": ["V", "F", "F"], "mensaje_en": "Enemy missing!", "mensaje_es": "¡Falta un enemigo!", "grupo": "VF", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VG1", "teclas": ["V", "G", "1"], "mensaje_en": "Gank left lane!", "mensaje_es": "¡Embosquen la línea izquierda!", "grupo": "VG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VG2", "teclas": ["V", "G", "2"], "mensaje_en": "Gank middle lane!", "mensaje_es": "¡Embosquen la línea central!", "grupo": "VG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VG3", "teclas": ["V", "G", "3"], "mensaje_en": "Gank right lane!", "mensaje_es": "¡Embosquen la línea derecha!", "grupo": "VG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VGG", "teclas": ["V", "G", "G"], "mensaje_en": "Gank!", "mensaje_es": "¡Embosquen!", "grupo": "VG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VH1", "teclas": ["V", "H", "1"], "mensaje_en": "Help left lane!", "mensaje_es": "¡Ayuda en la línea izquierda!", "grupo": "VH", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VH2", "teclas": ["V", "H", "2"], "mensaje_en": "Help middle lane!", "mensaje_es": "¡Ayuda en la línea central!", "grupo": "VH", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VH3", "teclas": ["V", "H", "3"], "mensaje_en": "Help right lane!", "mensaje_es": "¡Ayuda en la línea derecha!", "grupo": "VH", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VHH", "teclas": ["V", "H", "H"], "mensaje_en": "Help!", "mensaje_es": "¡Ayuda!", "grupo": "VH", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VHS", "teclas": ["V", "H", "S"], "mensaje_en": "Need Healing!", "mensaje_es": "¡Necesito curación!", "grupo": "VH", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VI1", "teclas": ["V", "I", "1"], "mensaje_en": "Enemies incoming left!", "mensaje_es": "¡Vienen enemigos por la izquierda!", "grupo": "VI", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VI2", "teclas": ["V", "I", "2"], "mensaje_en": "Enemies incoming middle!", "mensaje_es": "¡Vienen enemigos por la central!", "grupo": "VI", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VI3", "teclas": ["V", "I", "3"], "mensaje_en": "Enemies incoming right!", "mensaje_es": "¡Vienen enemigos por la derecha!", "grupo": "VI", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VII", "teclas": ["V", "I", "I"], "mensaje_en": "Enemies incoming!", "mensaje_es": "¡Vienen enemigos!", "grupo": "VI", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VQ1", "teclas": ["V", "Q", "1"], "mensaje_en": "Ward Left!", "mensaje_es": "¡Centinela en la izquierda!", "grupo": "VQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VQ2", "teclas": ["V", "Q", "2"], "mensaje_en": "Ward middle!", "mensaje_es": "¡Centinela en la central!", "grupo": "VQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VQ3", "teclas": ["V", "Q", "3"], "mensaje_en": "Ward Right!", "mensaje_es": "¡Centinela en la derecha!", "grupo": "VQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VQF", "teclas": ["V", "Q", "F"], "mensaje_en": "Ward the Fire Giant!", "mensaje_es": "¡Centinela en el Gigante de Fuego!", "grupo": "VQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VQG", "teclas": ["V", "Q", "G"], "mensaje_en": "Ward the Gold Fury!", "mensaje_es": "¡Centinela en la Furia Dorada!", "grupo": "VQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VQN", "teclas": ["V", "Q", "N"], "mensaje_en": "We need Wards!", "mensaje_es": "¡Necesitamos centinelas!", "grupo": "VQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VQQ", "teclas": ["V", "Q", "Q"], "mensaje_en": "Ward Here!", "mensaje_es": "¡Centinela aquí!", "grupo": "VQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VR1", "teclas": ["V", "R", "1"], "mensaje_en": "Retreat left lane!", "mensaje_es": "¡Retirada en la línea izquierda!", "grupo": "VR", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VR2", "teclas": ["V", "R", "2"], "mensaje_en": "Retreat middle lane!", "mensaje_es": "¡Retirada en la línea central!", "grupo": "VR", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VR3", "teclas": ["V", "R", "3"], "mensaje_en": "Retreat right lane!", "mensaje_es": "¡Retirada en la línea derecha!", "grupo": "VR", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VRJ", "teclas": ["V", "R", "J"], "mensaje_en": "Retreat from the Jungle!", "mensaje_es": "¡Salgan de la jungla!", "grupo": "VR", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VRR", "teclas": ["V", "R", "R"], "mensaje_en": "Retreat!", "mensaje_es": "¡Retirada!", "grupo": "VR", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VRS", "teclas": ["V", "R", "S"], "mensaje_en": "Save yourself!", "mensaje_es": "¡Sálvate!", "grupo": "VR", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSO", "teclas": ["V", "S", "O"], "mensaje_en": "I'm on it!", "mensaje_es": "¡Yo me encargo!", "grupo": "VS", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSR", "teclas": ["V", "S", "R"], "mensaje_en": "Falling back!", "mensaje_es": "¡Me retiro!", "grupo": "VS", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSS", "teclas": ["V", "S", "S"], "mensaje_en": "I'm building Stacks!", "mensaje_es": "Estoy cargando acumulaciones.", "grupo": "VS", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSA1", "teclas": ["V", "S", "A", "1"], "mensaje_en": "I'll Attack left lane!", "mensaje_es": "¡Yo ataco la línea izquierda!", "grupo": "VSA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSA2", "teclas": ["V", "S", "A", "2"], "mensaje_en": "I'll Attack middle lane!", "mensaje_es": "¡Yo ataco la línea central!", "grupo": "VSA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSA3", "teclas": ["V", "S", "A", "3"], "mensaje_en": "I'll Attack right lane!", "mensaje_es": "¡Yo ataco la línea derecha!", "grupo": "VSA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSAA", "teclas": ["V", "S", "A", "A"], "mensaje_en": "I'll Attack!", "mensaje_es": "¡Yo ataco!", "grupo": "VSA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSAF", "teclas": ["V", "S", "A", "F"], "mensaje_en": "I'll Attack the Fire Giant!", "mensaje_es": "¡Yo ataco al Gigante de Fuego!", "grupo": "VSA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSAG", "teclas": ["V", "S", "A", "G"], "mensaje_en": "I'll Attack the Gold Fury!", "mensaje_es": "¡Yo ataco a la Furia Dorada!", "grupo": "VSA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSAM", "teclas": ["V", "S", "A", "M"], "mensaje_en": "I'll Attack the Titan!", "mensaje_es": "¡Yo ataco al Titán!", "grupo": "VSA", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSBB", "teclas": ["V", "S", "B", "B"], "mensaje_en": "I'm going for jungle buff!", "mensaje_es": "¡Voy por el bono de jungla!", "grupo": "VSB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSBN", "teclas": ["V", "S", "B", "N"], "mensaje_en": "I need the jungle buff.", "mensaje_es": "Necesito el bono de jungla.", "grupo": "VSB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSBT", "teclas": ["V", "S", "B", "T"], "mensaje_en": "Take this jungle buff.", "mensaje_es": "Toma este bono de jungla.", "grupo": "VSB", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSD1", "teclas": ["V", "S", "D", "1"], "mensaje_en": "I'll defend left lane!", "mensaje_es": "¡Yo defiendo la línea izquierda!", "grupo": "VSD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSD2", "teclas": ["V", "S", "D", "2"], "mensaje_en": "I'll defend middle lane!", "mensaje_es": "¡Yo defiendo la línea central!", "grupo": "VSD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSD3", "teclas": ["V", "S", "D", "3"], "mensaje_en": "I'll defend right lane!", "mensaje_es": "¡Yo defiendo la línea derecha!", "grupo": "VSD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSDD", "teclas": ["V", "S", "D", "D"], "mensaje_en": "I'll defend!", "mensaje_es": "¡Yo defiendo!", "grupo": "VSD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSDF", "teclas": ["V", "S", "D", "F"], "mensaje_en": "I'll defend the Fire Giant!", "mensaje_es": "¡Yo defiendo el Gigante de Fuego!", "grupo": "VSD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSDG", "teclas": ["V", "S", "D", "G"], "mensaje_en": "I'll defend the Gold Fury!", "mensaje_es": "¡Yo defiendo la Furia Dorada!", "grupo": "VSD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSDM", "teclas": ["V", "S", "D", "M"], "mensaje_en": "I'll defend the Titan!", "mensaje_es": "¡Yo defiendo al Titán!", "grupo": "VSD", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSG1", "teclas": ["V", "S", "G", "1"], "mensaje_en": "I'll gank left lane!", "mensaje_es": "¡Yo embosco la línea izquierda!", "grupo": "VSG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSG2", "teclas": ["V", "S", "G", "2"], "mensaje_en": "I'll gank middle lane!", "mensaje_es": "¡Yo embosco la línea central!", "grupo": "VSG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSG3", "teclas": ["V", "S", "G", "3"], "mensaje_en": "I'll gank right lane!", "mensaje_es": "¡Yo embosco la línea derecha!", "grupo": "VSG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSGG", "teclas": ["V", "S", "G", "G"], "mensaje_en": "I'll gank!", "mensaje_es": "¡Yo embosco!", "grupo": "VSG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSQ1", "teclas": ["V", "S", "Q", "1"], "mensaje_en": "I will ward left!", "mensaje_es": "¡Yo pongo centinela en la izquierda!", "grupo": "VSQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSQ2", "teclas": ["V", "S", "Q", "2"], "mensaje_en": "I will ward middle!", "mensaje_es": "¡Yo pongo centinela en la central!", "grupo": "VSQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSQ3", "teclas": ["V", "S", "Q", "3"], "mensaje_en": "I will ward right!", "mensaje_es": "¡Yo pongo centinela en la derecha!", "grupo": "VSQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSQQ", "teclas": ["V", "S", "Q", "Q"], "mensaje_en": "I will ward!", "mensaje_es": "¡Yo pongo centinela!", "grupo": "VSQ", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VST1", "teclas": ["V", "S", "T", "1"], "mensaje_en": "I'm returning left lane!", "mensaje_es": "¡Regreso a la línea izquierda!", "grupo": "VST", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VST2", "teclas": ["V", "S", "T", "2"], "mensaje_en": "I'm returning middle lane!", "mensaje_es": "¡Regreso a la línea central!", "grupo": "VST", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VST3", "teclas": ["V", "S", "T", "3"], "mensaje_en": "I'm returning right lane!", "mensaje_es": "¡Regreso a la línea derecha!", "grupo": "VST", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSTB", "teclas": ["V", "S", "T", "B"], "mensaje_en": "I'm returning to base!", "mensaje_es": "¡Regreso a la base!", "grupo": "VST", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VSTT", "teclas": ["V", "S", "T", "T"], "mensaje_en": "I have returned!", "mensaje_es": "¡Ya regresé!", "grupo": "VST", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VT1", "teclas": ["V", "T", "1"], "mensaje_en": "Enemies have returned left!", "mensaje_es": "¡Los enemigos regresaron a la izquierda!", "grupo": "VT", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VT2", "teclas": ["V", "T", "2"], "mensaje_en": "Enemies have returned middle!", "mensaje_es": "¡Los enemigos regresaron a la central!", "grupo": "VT", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VT3", "teclas": ["V", "T", "3"], "mensaje_en": "Enemies have returned right!", "mensaje_es": "¡Los enemigos regresaron a la derecha!", "grupo": "VT", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VTT", "teclas": ["V", "T", "T"], "mensaje_en": "Enemies have returned!", "mensaje_es": "¡Los enemigos regresaron!", "grupo": "VT", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVA", "teclas": ["V", "V", "A"], "mensaje_en": "Ok!", "mensaje_es": "¡Va!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVB", "teclas": ["V", "V", "B"], "mensaje_en": "Be right back!", "mensaje_es": "¡Ya vuelvo!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVC", "teclas": ["V", "V", "C"], "mensaje_en": "Completed!", "mensaje_es": "¡Listo!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVK", "teclas": ["V", "V", "K"], "mensaje_en": "Stepping away for a moment.", "mensaje_es": "Me ausento un momento.", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVM", "teclas": ["V", "V", "M"], "mensaje_en": "Out of mana!", "mensaje_es": "¡Sin maná!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVN", "teclas": ["V", "V", "N"], "mensaje_en": "No!", "mensaje_es": "¡No!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVP", "teclas": ["V", "V", "P"], "mensaje_en": "Please?", "mensaje_es": "¿Por favor?", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVS", "teclas": ["V", "V", "S"], "mensaje_en": "Sorry!", "mensaje_es": "¡Perdón!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVT", "teclas": ["V", "V", "T"], "mensaje_en": "Thanks!", "mensaje_es": "¡Gracias!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVW", "teclas": ["V", "V", "W"], "mensaje_en": "Wait!", "mensaje_es": "¡Esperen!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVX", "teclas": ["V", "V", "X"], "mensaje_en": "Cancel that!", "mensaje_es": "¡Cancelen eso!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVY", "teclas": ["V", "V", "Y"], "mensaje_en": "Yes!", "mensaje_es": "¡Sí!", "grupo": "VV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGB", "teclas": ["V", "V", "G", "B"], "mensaje_en": "Bye!", "mensaje_es": "¡Adiós!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGF", "teclas": ["V", "V", "G", "F"], "mensaje_en": "Have fun!", "mensaje_es": "¡Diviértanse!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGG", "teclas": ["V", "V", "G", "G"], "mensaje_en": "Good game!", "mensaje_es": "¡Buena partida!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGH", "teclas": ["V", "V", "G", "H"], "mensaje_en": "Hi!", "mensaje_es": "¡Hola!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGL", "teclas": ["V", "V", "G", "L"], "mensaje_en": "Good luck!", "mensaje_es": "¡Suerte!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGN", "teclas": ["V", "V", "G", "N"], "mensaje_en": "Nice Job!", "mensaje_es": "¡Bien hecho!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGO", "teclas": ["V", "V", "G", "O"], "mensaje_en": "Oops!", "mensaje_es": "¡Ups!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGQ", "teclas": ["V", "V", "G", "Q"], "mensaje_en": "Quiet!", "mensaje_es": "¡Silencio!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGR", "teclas": ["V", "V", "G", "R"], "mensaje_en": "No Problem!", "mensaje_es": "¡No hay problema!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGS", "teclas": ["V", "V", "G", "S"], "mensaje_en": "Curses!", "mensaje_es": "¡Maldición!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGT", "teclas": ["V", "V", "G", "T"], "mensaje_en": "That's too bad!", "mensaje_es": "¡Qué lástima!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVGW", "teclas": ["V", "V", "G", "W"], "mensaje_en": "You're welcome!", "mensaje_es": "¡De nada!", "grupo": "VVG", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVA", "teclas": ["V", "V", "V", "A"], "mensaje_en": "Set up an ambush here!", "mensaje_es": "¡Preparen una emboscada aquí!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVB", "teclas": ["V", "V", "V", "B"], "mensaje_en": "Behind us!", "mensaje_es": "¡Detrás de nosotros!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVC", "teclas": ["V", "V", "V", "C"], "mensaje_en": "Chase the enemy!", "mensaje_es": "¡Persigan al enemigo!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVD", "teclas": ["V", "V", "V", "D"], "mensaje_en": "Ultimate is down!", "mensaje_es": "Mi ulti está en enfriamiento.", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVE", "teclas": ["V", "V", "V", "E"], "mensaje_en": "On my way!", "mensaje_es": "¡Voy en camino!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVF", "teclas": ["V", "V", "V", "F"], "mensaje_en": "Follow me!", "mensaje_es": "¡Síganme!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVG", "teclas": ["V", "V", "V", "G"], "mensaje_en": "Group up!", "mensaje_es": "¡Júntense!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVJ", "teclas": ["V", "V", "V", "J"], "mensaje_en": "Going into the jungle!", "mensaje_es": "¡Voy a la jungla!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVP", "teclas": ["V", "V", "V", "P"], "mensaje_en": "Split push!", "mensaje_es": "¡Empujen por separado!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVR", "teclas": ["V", "V", "V", "R"], "mensaje_en": "Ultimate is ready!", "mensaje_es": "¡Mi ulti está lista!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVS", "teclas": ["V", "V", "V", "S"], "mensaje_en": "Stay here!", "mensaje_es": "¡Quédense aquí!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVT", "teclas": ["V", "V", "V", "T"], "mensaje_en": "It's a trap!", "mensaje_es": "¡Es una trampa!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVW", "teclas": ["V", "V", "V", "W"], "mensaje_en": "Place a Ward for teleport!", "mensaje_es": "¡Pon un centinela para teletransporte!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false},
+  {"codigo": "VVVX", "teclas": ["V", "V", "V", "X"], "mensaje_en": "Spread Out!", "mensaje_es": "¡Sepárense!", "grupo": "VVV", "modo": "", "control": null, "parche_verificado": "OB47", "fuente": "https://wiki.smite2.com/w/Neith_voicelines", "pendiente_verificar": false}
+ ]
+}

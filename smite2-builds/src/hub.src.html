@@ -94,6 +94,16 @@ a { color: var(--gold); }
 .foe .face.spr-a { width: 30px; height: 30px; }
 button.foe { font: inherit; color: inherit; }
 .inp { flex: 1 1 220px; min-width: 0; padding: 10px 14px; background: var(--void); border: 1px solid var(--line); border-radius: 2px; }
+.tw { overflow-x: auto; }
+.vgs { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+.vgs th { text-align: left; font-family: var(--font-head); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); padding: 6px 12px 8px 0; border-bottom: 1px solid var(--gold-deep); }
+.vgs td { padding: 8px 12px 8px 0; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: top; }
+.vgs .e2 { display: block; font-size: 13px; color: var(--muted); font-style: italic; }
+.vgs .why2 { display: block; font-size: 13.5px; color: #cfc9b8; margin-top: 2px; }
+.vgs .path { color: var(--muted); font-size: 13.5px; white-space: nowrap; }
+.vgs .fx { margin-left: 8px; }
+.keys { display: inline-flex; gap: 4px; flex-wrap: nowrap; }
+kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 7px; font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--gold); background: var(--void); border: 1px solid var(--gold-deep); box-shadow: inset 0 -3px 0 var(--gold-deep); }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
 .step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
@@ -299,6 +309,7 @@ footer p { max-width: 90ch; }
  <section class="gut hall" id="v-combos" hidden></section>
  <section class="gut hall" id="v-sinergias" hidden></section>
  <section class="gut hall" id="v-objetos" hidden></section>
+ <section class="gut hall" id="v-chat-rapido" hidden></section>
 </main>
 
 <footer class="gut">
@@ -866,8 +877,54 @@ function openItem(id, scroll) {
   if (scroll !== false) { const f = $("#itemFicha"); if (f) f.scrollIntoView({ block: "start" }); }
 }
 
+// ---------- Chat rápido / VGS (src/curado/chat_rapido.json) ----------
+const VGS = CURADO.chat_rapido || {};
+const VCMDS = VGS.comandos || [];
+const VCATS = Object.fromEntries((VGS.categorias || []).map(c => [c.codigo, c]));
+let vgsQ = "", vgsGroup = "all";
+const keycaps = keys => `<span class="keys">${(keys || []).map(k => `<kbd>${esc(k)}</kbd>`).join("")}</span>`;
+function vgsPath(c) {
+  const parts = [];
+  for (let i = 2; i < c.codigo.length; i++) { const cat = VCATS[c.codigo.slice(0, i)]; if (cat) parts.push(L(cat.nombre, cat.nombre_en)); }
+  return parts.join(" › ");
+}
+const vgsMsg = c => lang === "es" && c.mensaje_es ? c.mensaje_es : c.mensaje_en;
+function vgsRow(c, why) {
+  return `<tr><td>${keycaps(c.teclas)}</td><td>${c.control && c.control.length ? keycaps(c.control) : `<span class="muted">—</span>`}</td>
+    <td><b>${esc(vgsMsg(c))}</b>${lang === "es" && c.mensaje_es ? `<span class="e2">${esc(c.mensaje_en)}</span>` : ""}${c.modo ? `<span class="fx">${esc(L("Solo " + c.modo, c.modo + " only"))}</span>` : ""}${why ? `<span class="why2">${esc(why)}</span>` : ""}</td>
+    <td class="path">${esc(vgsPath(c))}</td></tr>`;
+}
+function renderChat() {
+  const el = $("#v-chat-rapido");
+  if (!VCMDS.length) { el.innerHTML = `<p class="empty">${L("Falta src/curado/chat_rapido.json.", "src/curado/chat_rapido.json is missing.")}</p>`; return; }
+  const ab = VGS.abrir || {}, kb = ab.teclado || {}, ct = ab.control || {};
+  const top = (VGS.top || []).map(x => [VCMDS.find(c => c.codigo === x.codigo), x.por_que]).filter(x => x[0]);
+  const groups = Object.values(VCATS).filter(c => c.codigo.length === 2);
+  const list = VCMDS.filter(c => (vgsGroup === "all" || c.codigo.startsWith(vgsGroup)) && (!vgsQ || norm(c.mensaje_en + " " + (c.mensaje_es || "") + " " + c.codigo).includes(vgsQ)));
+  const head = `<thead><tr><th>${L("Teclado", "Keyboard")}</th><th>${L("Control", "Controller")}</th><th>${L("Mensaje", "Message")}</th><th>${L("Ruta en el menú", "Menu path")}</th></tr></thead>`;
+  const focus = document.activeElement && document.activeElement.id === "vgsQ";
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Chat rápido (VGS)", "Quick chat (VGS)")}</span><h2>${L("Habla con tu equipo sin escribir", "Talk to your team without typing")}</h2>
+      <p>${L("El VGS manda mensajes de voz ya grabados con una combinación corta. La lista de comandos sale de la wiki oficial de Smite 2.", "VGS sends pre-recorded voice messages with a short combo. The command list comes from the official Smite 2 wiki.")}</p></div>
+    <div class="sits">
+      <article class="sit"><h3>${L("En teclado", "On keyboard")}</h3><p style="font-size:15px">${L("Abre el menú con", "Open the menu with")} ${keycaps([kb.tecla || "V"])}</p><p class="why">${esc(kb.nota || "")}</p></article>
+      <article class="sit${ct.pendiente_verificar ? " hot" : ""}"><h3>${L("En control", "On controller")}${pendTag(ct)}</h3>
+        <p style="font-size:15px">${ct.boton ? `${L("Abre el menú con", "Open the menu with")} ${keycaps([ct.boton])}` : L("Botón para abrir el menú: por verificar.", "Button that opens the menu: unverified.")}</p>
+        <p class="why">${esc(ct.nota || "")}</p>
+        <p class="why">${L("La «ruta en el menú» de la tabla son las categorías del VGS en teclado. En control deberían ser las mismas, pero falta confirmarlo en el juego.", "The \"menu path\" in the table shows the keyboard VGS categories. They should be the same on controller, but that still needs confirming in game.")}</p></article>
+      ${(ab.datos_control || []).length ? `<article class="sit"><h3>${L("Lo que sí está confirmado para control", "Confirmed for controller")}</h3><ul class="plain">${ab.datos_control.map(x => `<li>${esc(x.texto)} <span class="muted">(${esc(x.parche_verificado)})</span>${pendTag(x)}</li>`).join("")}</ul></article>` : ""}
+    </div>
+    <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Empieza por estos", "Start with these")}</span><h2>${L(`Los ${top.length} más útiles`, `The ${top.length} most useful`)}</h2></div>
+      <div class="tw"><table class="vgs">${head}<tbody>${top.map(([c, w]) => vgsRow(c, w)).join("")}</tbody></table></div></section>
+    <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Todos los comandos", "All commands")}</span><h2>${L("Tabla completa", "Full table")}</h2></div>
+      <div class="picker-row"><input id="vgsQ" class="inp" type="search" placeholder="${L("Buscar mensaje o atajo…", "Search message or shortcut…")}" value="${esc($("#vgsQ") ? $("#vgsQ").value : "")}" aria-label="${L("Buscar comando", "Search command")}"></div>
+      <div class="chips">${[["all", L("Todos", "All")], ...groups.map(g => [g.codigo, L(g.nombre, g.nombre_en)])].map(([k, l]) => `<button class="chip" type="button" data-vgsg="${k}" aria-pressed="${vgsGroup === k}">${esc(l)}</button>`).join("")}</div>
+      <p class="muted">${L(`${list.length} comandos. En Joust hay una sola línea, así que los de izquierda y derecha casi no se usan.`, `${list.length} commands. Joust has a single lane, so left and right callouts are rarely used.`)}</p>
+      <div class="tw"><table class="vgs">${head}<tbody>${list.map(c => vgsRow(c)).join("")}</tbody></table></div></section>`;
+  if (focus) { const q = $("#vgsQ"); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+}
+
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["chat-rapido", "Chat rápido", "Quick chat"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
@@ -880,6 +937,7 @@ function setView(v, keepHash) {
   if (view === "combos") renderCombos();
   if (view === "sinergias") renderSinergias();
   if (view === "objetos") renderObjetos();
+  if (view === "chat-rapido") renderChat();
   if (!keepHash) { try { history.replaceState(null, "", "#" + (view === "dioses" && cur ? cur.god.s : view)); } catch (e) {} }
 }
 
@@ -1017,6 +1075,8 @@ document.addEventListener("click", e => {
   const fm = t.closest("[data-fxmode]");
   if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
   if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
+  const vg = t.closest("[data-vgsg]");
+  if (vg) { vgsGroup = vg.dataset.vgsg; renderChat(); return; }
   const itb = t.closest("[data-ittab]");
   if (itb) { itTab = itb.dataset.ittab; renderObjetos(); return; }
   const icb = t.closest("[data-itcat]");
@@ -1064,6 +1124,7 @@ document.addEventListener("change", e => {
 document.addEventListener("input", e => {
   if (e.target.id === "q") { const g = findGod(e.target.value); if (g) { if (view !== "dioses") setView("dioses", true); select(g); } }
   if (e.target.id === "foeQ") tryAddFoe(e.target, false);
+  if (e.target.id === "vgsQ") { vgsQ = norm(e.target.value); renderChat(); }
   if (e.target.id === "itQ") { itQ = norm(e.target.value); renderObjetos(); }
   if (e.target.id === "comboQ") { comboQ = norm(e.target.value); renderCombos(); }
 });
