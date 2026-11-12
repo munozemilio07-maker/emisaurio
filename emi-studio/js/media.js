@@ -48,10 +48,15 @@ function loadVideoMeta(url) {
   });
 }
 
-export async function importFile(file, onUpdate) {
+let persistFn = null;
+export function setPersist(fn) { persistFn = fn; }
+
+// opts.id: reutilizar un id (al abrir un proyecto guardado o volver a vincular). opts.persist=false: no guardar copia.
+export async function importFile(file, onUpdate, opts = {}) {
   const kind = kindOf(file);
   if (!kind) throw new Error(`Formato no reconocido: ${file.name}`);
-  const id = uid('m');
+  const id = opts.id || uid('m');
+  if (opts.persist !== false && persistFn) persistFn(id, file);
   const url = URL.createObjectURL(file);
   const m = { id, name: file.name, type: kind, file, url, duration: 0, w: 0, h: 0, thumb: null, audio: null, peaks: null, loading: true };
   media.set(id, m);

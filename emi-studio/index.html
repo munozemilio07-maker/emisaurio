@@ -17,7 +17,9 @@
 <div id="app">
   <header class="topbar">
     <div class="brand"><span class="logo">◆</span><span class="brand-name">Emisaurio <b>Studio</b></span></div>
+    <button class="btn ghost small" id="projBtn" title="Mis proyectos">📁 Proyectos</button>
     <input id="projName" class="proj-name" value="Mi video" spellcheck="false" aria-label="Nombre del proyecto">
+    <span class="save-chip" id="saveState"></span>
     <div class="top-mid">
       <button class="btn ghost icon" id="undoBtn" title="Deshacer (Ctrl+Z)">↶</button>
       <button class="btn ghost icon" id="redoBtn" title="Rehacer (Ctrl+Shift+Z)">↷</button>
@@ -90,6 +92,7 @@
 </div>
 
 <div class="modal" id="exportModal" hidden></div>
+<div class="modal" id="projModal" hidden></div>
 <div class="toasts" id="toasts"></div>
 <input type="file" id="fileInput" multiple accept="video/*,audio/*,image/*" hidden>
 <div class="drop-overlay" id="dropOverlay" hidden><div>Suelta para importar</div></div>

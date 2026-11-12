@@ -69,6 +69,7 @@ class ExportFrames {
     for (const [id, p] of plan) for (const x of p.list) { if (!this.need.has(x.i)) this.need.set(x.i, []); this.need.get(x.i).push(id); }
     for (const [id, p] of plan) {
       const m = media.get(p.clip.mediaId);
+      if (!m || m.missing) continue;
       try {
         let inp = this.inputs.get(m.id);
         if (!inp) {
@@ -117,7 +118,7 @@ class ExportFrames {
     return {
       frame: (c) => {
         const m = media.get(c.mediaId);
-        if (!m) return null;
+        if (!m || m.missing) return null;
         if (m.type === 'image') return m.bitmap;
         return this.cur.get(c.id) || null;
       },

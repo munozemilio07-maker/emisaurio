@@ -7,7 +7,7 @@ export const clone = (o) => JSON.parse(JSON.stringify(o));
 
 export function newProject(aspect = { id: '9:16', w: 1080, h: 1920 }) {
   return {
-    version: 1,
+    version: 1, id: uid('p'),
     name: 'Mi video',
     aspect: aspect.id, width: aspect.w, height: aspect.h, fps: 30,
     bg: '#000000', platform: 'tiktok', masterGain: 1, autoDuck: false, duckAmount: 0.25,

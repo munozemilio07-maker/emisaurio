@@ -21,7 +21,7 @@ export class Player {
     this.provider = {
       frame: (c, st) => {
         const m = media.get(c.mediaId);
-        if (!m) return null;
+        if (!m || m.missing) return null;
         if (m.type === 'image') return m.bitmap;
         const e = this.els.get(c.id);
         return e && e.el.readyState >= 2 ? e.el : null;
@@ -95,7 +95,7 @@ export class Player {
     for (const c of P.clips) {
       if (c.kind !== 'video' && c.kind !== 'audio') continue;
       const m = media.get(c.mediaId);
-      if (!m) continue;
+      if (!m || m.missing || m.loading) continue;
       const tr = P.tracks.find((x) => x.id === c.trackId);
       const active = t >= c.start && t < clipEnd(c);
       const soon = this.playing && c.start > t && c.start - t < 1.2;

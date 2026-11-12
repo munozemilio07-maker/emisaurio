@@ -9,6 +9,7 @@ import { initUI } from './ui.js';
 import { createPanels } from './panels.js';
 import { renderInspector as drawInspector } from './inspector.js';
 import { TEXT_STYLES } from './presets.js';
+import { initProjects } from './projects.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -210,18 +211,19 @@ function renderMediaPanel() {
     <h3>Tus medios</h3>
     <button class="import-btn" id="impBtn">＋ Importar video, foto o audio</button>
     <div class="media-grid">${items.map((m) => `
-      <div class="mcard ${m.type === 'audio' ? 'audio' : ''} ${m.loading ? 'loading' : ''}" draggable="true" data-id="${m.id}" title="${m.name}">
+      ${m.missing ? `<div class="mcard missing" data-id="${m.id}" title="${m.name}"><span>⚠ Falta</span><small>${m.name}</small><button class="btn tiny" data-relink="${m.id}">Volver a vincular</button></div>` : `<div class="mcard ${m.type === 'audio' ? 'audio' : ''} ${m.loading ? 'loading' : ''}" draggable="true" data-id="${m.id}" title="${m.name}">
         ${m.thumb ? `<img src="${m.thumb}" alt="">` : m.type === 'audio' ? '♫' : ''}
         <span class="mtype">${{ video: 'Video', image: 'Foto', audio: 'Audio' }[m.type]}${m.type === 'video' && m.audioReady && !m.audio ? ' · sin audio' : ''}</span>
         <button class="madd" title="Añadir a la línea de tiempo">+</button>
         <div class="mmeta"><span>${m.name}</span><span>${m.type === 'image' ? '' : fmtTime(m.duration)}</span></div>
-      </div>`).join('')}
+      </div>`}`).join('')}
     </div>
     ${items.length ? '' : '<p class="sub" style="margin-top:12px">Formatos: MP4, MOV, WebM, MKV, JPG, PNG, WebP, MP3, WAV, M4A, OGG, FLAC… (lo que tu navegador pueda leer).</p>'}
     <h3 style="margin-top:20px">Fondos de color</h3>
     <div class="swatches">${GRADIENTS.map((g, i) => `<button class="swatch" data-g="${i}" style="background:linear-gradient(135deg,${g[0]},${g[1]})" title="Añadir fondo"></button>`).join('')}</div>`;
   $('#impBtn', el).addEventListener('click', () => $('#fileInput').click());
-  el.querySelectorAll('.mcard').forEach((card) => {
+  el.querySelectorAll('[data-relink]').forEach((b) => b.addEventListener('click', () => app.relink(b.dataset.relink)));
+  el.querySelectorAll('.mcard:not(.missing)').forEach((card) => {
     card.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/emi-media', card.dataset.id); e.dataTransfer.effectAllowed = 'copy'; });
     card.querySelector('.madd').addEventListener('click', (e) => { e.stopPropagation(); addMediaClip(card.dataset.id); });
     card.addEventListener('dblclick', () => addMediaClip(card.dataset.id));
@@ -388,4 +390,8 @@ syncPro();
 renderMediaPanel();
 app.refresh();
 setTimeout(() => app.timeline.zoomFit(), 50);
+const projects = initProjects(app, { renderMediaPanel });
+app.projects = projects;
+$('#projBtn').addEventListener('click', () => projects.showProjects());
+projects.restoreLast();
 if (!('VideoEncoder' in window)) toast('Tu navegador no soporta WebCodecs: la exportación no funcionará. Usa Chrome, Edge o Brave actualizados.', 'err', 12000);
