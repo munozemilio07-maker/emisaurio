@@ -145,6 +145,7 @@ async function importFiles(files, at = null) {
     } catch (e) { toast(e.message, 'err', 6000); }
   }
   renderMediaPanel();
+  if (wasEmpty && added) app.timeline.zoomFit();
   if (added) toast(`${added} archivo${added > 1 ? 's' : ''} importado${added > 1 ? 's' : ''}. Pulsa <b>+</b> o arrástralos a la línea de tiempo.`, 'ok');
 }
 
