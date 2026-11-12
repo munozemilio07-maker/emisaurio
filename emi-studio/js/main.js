@@ -11,6 +11,7 @@ import { renderInspector as drawInspector } from './inspector.js';
 import { TEXT_STYLES } from './presets.js';
 import { initProjects } from './projects.js';
 import { createTranscriptPanel } from './transcriptpanel.js';
+import { createBoostPanels } from './boostpanels.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -388,7 +389,9 @@ ui = initUI(app);
 {
   const base = createPanels(app, ui);
   const { viral, ...rest } = base;
-  panels = { viral, transcript: createTranscriptPanel(app), ...rest };
+  const boost = createBoostPanels(app);
+  app.mountScore = boost.mountScore;
+  panels = { viral, transcript: createTranscriptPanel(app), clips: boost.clips, fx: boost.fx, ...rest };
 }
 buildTabs();
 syncPro();

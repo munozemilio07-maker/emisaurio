@@ -17,6 +17,7 @@ export function newProject(aspect = { id: '9:16', w: 1080, h: 1920 }) {
       { id: 'tV2', type: 'video', name: 'Overlay', hidden: false, muted: false, locked: false },
       { id: 'tV1', type: 'video', name: 'Principal', hidden: false, muted: false, locked: false, main: true },
       { id: 'tG', type: 'audio', name: 'Sonido guía', hidden: false, muted: false, locked: false, music: true, guide: true },
+      { id: 'tS', type: 'audio', name: 'Efectos', hidden: false, muted: false, locked: false, sfx: true },
       { id: 'tA1', type: 'audio', name: 'Voz / Audio', hidden: false, muted: false, locked: false },
       { id: 'tA2', type: 'audio', name: 'Música', hidden: false, muted: false, locked: false, music: true },
     ],
@@ -144,4 +145,17 @@ export function fmtBytes(b) {
   if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
   if (b < 1073741824) return (b / 1048576).toFixed(1) + ' MB';
   return (b / 1073741824).toFixed(2) + ' GB';
+}
+
+// Añade a proyectos antiguos las pistas nuevas, en su posición
+export function migrate(P) {
+  const tpl = newProject().tracks;
+  tpl.forEach((t, i) => {
+    if (P.tracks.some((x) => x.id === t.id)) return;
+    const prevId = tpl[i - 1]?.id;
+    const at = prevId ? P.tracks.findIndex((x) => x.id === prevId) + 1 : 0;
+    P.tracks.splice(at, 0, { ...t });
+  });
+  P.markers = P.markers || [];
+  return P;
 }

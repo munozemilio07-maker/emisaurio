@@ -128,6 +128,7 @@ export function createPanels(app, ui) {
     $('#pbPos').addEventListener('click', (e) => { const b = e.target.closest('[data-k]'); if (b) { app.commit(() => { pb().pos = b.dataset.k; pb().on = true; }); renderViral(el); } });
     $('#pbCol').addEventListener('change', (e) => app.commit(() => { pb().color = e.target.value; pb().color2 = e.target.value; }));
     bindGuide(el, () => renderViral(el));
+    app.mountScore?.(el);
   }
 
   // ---------------- SONIDO VIRAL (guía) ----------------

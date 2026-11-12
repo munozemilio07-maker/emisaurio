@@ -59,6 +59,16 @@ function motionFor(c, t, W, H) {
     case 'punch': s = 1 + 0.18 * ease.out(clamp(lt / 0.18, 0, 1)); break;
     case 'shake': s = 1.06; dx = Math.sin(t * 47) * W * 0.008 + Math.sin(t * 13) * W * 0.004; dy = Math.cos(t * 39) * H * 0.006; break;
   }
+  // Zooms de énfasis (en tiempo de la fuente, así sobreviven a cortes y recortes)
+  if (c.zooms?.length) {
+    const st = c.in + (t - c.start) * c.speed;
+    for (const z of c.zooms) {
+      if (st < z.s0 - 0.01 || st > z.s1 + 0.25) continue;
+      const a = ease.out(clamp((st - z.s0) / 0.1, 0, 1));
+      const b = ease.inOut(clamp((z.s1 + 0.25 - st) / 0.25, 0, 1));
+      s *= 1 + (z.k - 1) * Math.min(a, b);
+    }
+  }
   return { s, dx, dy };
 }
 

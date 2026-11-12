@@ -14,7 +14,7 @@ export function voiceTrackId(P) {
   // La pista con más audio que no sea música: normalmente la principal, o la de voz en off
   let best = null, bestDur = 0;
   for (const tr of P.tracks) {
-    if (tr.type !== 'video' && tr.type !== 'audio' || tr.music) continue;
+    if (tr.type !== 'video' && tr.type !== 'audio' || tr.music || tr.sfx) continue;
     const d = P.clips.filter((c) => c.trackId === tr.id && media.get(c.mediaId)?.audio).reduce((a, c) => a + c.dur, 0);
     if (d > bestDur) { bestDur = d; best = tr.id; }
   }
@@ -88,6 +88,7 @@ export function applyLook(c, lookId, intensity = 1) {
 export async function normalizeLoudness(P) {
   const r = await loudnessGain(P, media);
   P.masterGain = +(r.gain).toFixed(3);
+  P.loudnessDone = true;
   return r;
 }
 

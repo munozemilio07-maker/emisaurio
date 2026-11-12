@@ -1,5 +1,5 @@
 // Mis proyectos: autoguardado, abrir, duplicar, borrar y volver a vincular archivos.
-import { newProject, projectDuration, fmtTime, fmtBytes, uid, History } from './state.js';
+import { newProject, projectDuration, fmtTime, fmtBytes, uid, History, migrate } from './state.js';
 import { ASPECTS } from './presets.js';
 import { media, importFile, setPersist } from './media.js';
 import { putFile, getFile, saveProject, getProject, listProjects, deleteProject, storageInfo, lastProjectId, setLastProjectId } from './storage.js';
@@ -69,7 +69,7 @@ export function initProjects(app, { renderMediaPanel }) {
     const rec = await getProject(id);
     if (!rec) throw new Error('No encontré ese proyecto.');
     resetWorkspace();
-    const P = JSON.parse(rec.data);
+    const P = migrate(JSON.parse(rec.data));
     app.P = P;
     lastJson = rec.data;
     const missing = [];

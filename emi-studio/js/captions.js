@@ -9,7 +9,7 @@ export const MODELS = [['onnx-community/whisper-base', 'Rápido (≈80 MB)'], ['
 
 // Audio de voz del proyecto a 16 kHz mono (sin la pista de música)
 export async function voiceAudio(P) {
-  const buf = await mixOffline({ ...P, autoDuck: false, masterGain: 1 }, media, 16000, 0, projectDuration(P), { channels: 1, filter: (c, tr) => !tr.music });
+  const buf = await mixOffline({ ...P, autoDuck: false, masterGain: 1 }, media, 16000, 0, projectDuration(P), { channels: 1, filter: (c, tr) => !tr.music && !tr.sfx });
   return buf.getChannelData(0).slice();
 }
 
@@ -45,7 +45,7 @@ export function toWords(res) {
   return out;
 }
 
-const EMOJI = {
+export const EMOJI = {
   dinero: '💰', money: '💰', plata: '💰', rico: '🤑', gratis: '🆓', free: '🆓', fuego: '🔥', fire: '🔥', increíble: '🤯', increible: '🤯', loco: '🤪', locura: '🤯',
   amor: '❤️', love: '❤️', corazón: '❤️', feliz: '😄', happy: '😄', triste: '😢', sad: '😢', risa: '😂', jaja: '😂', jajaja: '😂', lol: '😂',
   secreto: '🤫', secret: '🤫', ojo: '👀', mira: '👀', look: '👀', atención: '⚠️', cuidado: '⚠️', error: '❌', errores: '❌', mal: '❌', bien: '✅', correcto: '✅',
@@ -55,7 +55,7 @@ const EMOJI = {
   cerebro: '🧠', mente: '🧠', pensar: '🤔', pregunta: '❓', nuevo: '✨', new: '✨', magia: '✨', top: '🔝', mejor: '🔝', best: '🔝', cien: '💯', perfecto: '💯',
   boom: '💥', wow: '😮', guau: '😮', miedo: '😱', terror: '😱', regalo: '🎁', fiesta: '🎉', party: '🎉', cumpleaños: '🎂', estrella: '⭐', star: '⭐', rey: '👑', king: '👑',
 };
-const clean = (w) => w.toLowerCase().normalize('NFC').replace(/[^\p{L}\p{N}]/gu, '');
+export const clean = (w) => w.toLowerCase().normalize('NFC').replace(/[^\p{L}\p{N}]/gu, '');
 
 // Agrupa palabras en subtítulos cortos (estilo viral) y crea los clips
 export function buildCaptionClips(P, words, { maxWords = 3, styleId = 'hormozi', emojis = true, pos = 'low' } = {}) {
