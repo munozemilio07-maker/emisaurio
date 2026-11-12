@@ -80,7 +80,7 @@ export function initProjects(app, { renderMediaPanel }) {
       try {
         const f = await getFile(ref.id);
         if (!f) throw new Error('falta');
-        await importFile(new File([f.blob], f.name, { type: f.type }), () => renderMediaPanel(), { id: ref.id, persist: false });
+        await importFile(new File([f.blob], f.name, { type: f.type }), (w) => { renderMediaPanel(); if (w === 'audio') { app.timeline.render(); app.player.invalidate(); app.renderPanel?.(); } }, { id: ref.id, persist: false });
       } catch {
         media.set(ref.id, { ...ref, missing: true, loading: false, duration: 0 });
         missing.push(ref.name);

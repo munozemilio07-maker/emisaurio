@@ -5,7 +5,7 @@ import { drawClip } from './render.js';
 import { media } from './media.js';
 import { LANGS, MODELS, voiceAudio, transcribe, toWords, buildCaptionClips, parseSRT, captionClipsFromSegments, applyCaptionStyle, retimeCaption } from './captions.js';
 import { HOOKS, findSilences, removeSilences, alternateZoom, addHook, autoColor, applyLook, normalizeLoudness, beatMarkers, guideInfo, cutAtBeats, beatMontage, estimateBpm } from './viral.js';
-import { importFile } from './media.js';
+import { importFile, audioPending } from './media.js';
 import { voiceMedia, timelineWords, transcribeMedia } from './textedit.js';
 import { esc, pct } from './ui.js';
 
@@ -36,6 +36,7 @@ export function createPanels(app, ui) {
   let vStatus = '';
   async function makeViral() {
     if (!app.P.clips.length) return app.toast('Primero añade tu video.', 'warn');
+    if (audioPending(app.P).length) return app.toast('Todavía estoy analizando el audio de tu video. Espera unos segundos.', 'warn');
     const say = (t) => { vStatus = t; const e = document.getElementById('vStat'); if (e) e.innerHTML = t; };
     app.history.push(app.P);
     const P = app.P;
@@ -220,6 +221,7 @@ export function createPanels(app, ui) {
   // ---------------- SUBTÍTULOS ----------------
   async function generateCaptions(statusId = 'cStat', quiet = false) {
     if (capBusy) return false;
+    if (audioPending(app.P).length) { app.toast('Todavía estoy analizando el audio. Espera unos segundos.', 'warn'); return false; }
     const hasVoice = app.P.clips.some((c) => (c.kind === 'video' || c.kind === 'audio') && media.get(c.mediaId)?.audio && !app.P.tracks.find((t) => t.id === c.trackId)?.music);
     if (!hasVoice) { app.toast('No hay audio de voz para transcribir.', 'warn'); return false; }
     capBusy = true;

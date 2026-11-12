@@ -1,7 +1,7 @@
 // UI de la etapa 5: puntuación viral, efectos de sonido + zooms, y clips automáticos.
 import { FORMATS } from './presets.js';
 import { makeClip, clipsOnTrack, clipEnd, fmtTime, fmtBytes } from './state.js';
-import { media } from './media.js';
+import { media, audioPending } from './media.js';
 import { SFX, sfxMedia, previewSfx } from './sfx.js';
 import { autoZooms, autoSfx, viralScore, findClips, clipProject } from './boost.js';
 import { normalizeLoudness, voiceTrackId } from './viral.js';
@@ -14,6 +14,10 @@ export function createBoostPanels(app) {
 
   // ---------- Puntuación viral ----------
   function mountScore(el) {
+    if (audioPending(app.P).length) {
+      const n = document.createElement('div'); n.className = 'score-card'; n.innerHTML = '<b>Puntuación viral</b><span class="sub" style="display:block">Analizando el audio de tu video…</span>';
+      el.prepend(n); return;
+    }
     const { score, items, plat } = viralScore(app.P);
     const color = score >= 80 ? 'var(--ok)' : score >= 55 ? 'var(--warn)' : 'var(--bad)';
     const card = document.createElement('div');

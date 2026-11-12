@@ -23,7 +23,9 @@ export function transcribe(audio, { model, language }, onMsg) {
       else onMsg?.(m);
     };
     w.onerror = (e) => { w.terminate(); reject(new Error(e.message || 'No se pudo iniciar el transcriptor (¿sin conexión la primera vez?)')); };
-    w.postMessage({ audio, model, language, wordLevel: true }, [audio.buffer]);
+    let forceCpu = false;
+    try { forceCpu = localStorage.getItem('emi.cpu') === '1'; } catch {}
+    w.postMessage({ audio, model, language, wordLevel: true, forceCpu }, [audio.buffer]);
   });
 }
 

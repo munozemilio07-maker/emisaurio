@@ -1,7 +1,7 @@
 // Emisaurio Studio — punto de entrada: estado global, paneles, inspector y atajos.
 import { ASPECTS, GRADIENTS } from './presets.js';
 import { newProject, makeClip, History, clipEnd, splitClip, rippleDeleteRange, trackEnd, projectDuration, fmtTime, uid, clone, clamp } from './state.js';
-import { media, importFile } from './media.js';
+import { media, importFile, audioPending } from './media.js';
 import { Player } from './player.js';
 import { Timeline } from './timeline.js';
 import { openExport } from './exportui.js';
@@ -9,6 +9,7 @@ import { initUI, esc } from './ui.js';
 import { createPanels } from './panels.js';
 import { renderInspector as drawInspector } from './inspector.js';
 import { TEXT_STYLES } from './presets.js';
+import { ensureFonts } from './render.js';
 import { initProjects } from './projects.js';
 import { createTranscriptPanel } from './transcriptpanel.js';
 import { createBoostPanels } from './boostpanels.js';
@@ -38,6 +39,7 @@ const app = {
   },
   livePreview() { this.player.invalidate(); },
   refresh() {
+    ensureFonts(this.P).then(() => this.player.requestDraw());
     this.timeline.render();
     renderInspector();
     if (curTab !== 'media') renderPanel();
@@ -147,7 +149,7 @@ async function importFiles(files, at = null) {
   let added = 0;
   for (const f of list) {
     try {
-      const m = await importFile(f, (what) => { renderMediaPanel(); if (what === 'audio') { app.timeline.render(); app.player.invalidate(); } });
+      const m = await importFile(f, (what) => { renderMediaPanel(); if (what === 'audio') { app.timeline.render(); app.player.invalidate(); renderPanel(); } });
       added++;
       if (at) { addMediaClip(m.id, at.trackId, at.t); at.t += m.duration; }
       else if (wasEmpty) addMediaClip(m.id);
@@ -159,7 +161,14 @@ async function importFiles(files, at = null) {
 }
 
 function defaultTrackFor(m) {
-  if (m.type === 'audio') return app.P.tracks.find((t) => t.music && !t.guide)?.id || 'tA2';
+  if (m.type === 'audio') {
+    // proyecto sólo de audio (podcast, nota de voz): el primer audio es la voz, para poder transcribirlo
+    const voice = app.P.tracks.find((t) => t.type === 'audio' && !t.music && !t.guide && !t.sfx);
+    const hasVisual = app.P.clips.some((c) => c.kind === 'video' || c.kind === 'image');
+    const hasVoice = app.P.clips.some((c) => c.trackId === voice?.id);
+    if (!hasVisual && !hasVoice && voice) return voice.id;
+    return app.P.tracks.find((t) => t.music && !t.guide)?.id || 'tA2';
+  }
   return app.P.tracks.find((t) => t.main)?.id || 'tV1';
 }
 
@@ -216,7 +225,7 @@ function renderMediaPanel() {
     <div class="media-grid">${items.map((m) => `
       ${m.missing ? `<div class="mcard missing" data-id="${m.id}" title="${esc(m.name)}"><span>⚠ Falta</span><small>${esc(m.name)}</small><button class="btn tiny" data-relink="${m.id}">Volver a vincular</button></div>` : `<div class="mcard ${m.type === 'audio' ? 'audio' : ''} ${m.loading ? 'loading' : ''}" draggable="true" data-id="${m.id}" title="${esc(m.name)}">
         ${m.thumb ? `<img src="${m.thumb}" alt="">` : m.type === 'audio' ? '♫' : ''}
-        <span class="mtype">${{ video: 'Video', image: 'Foto', audio: 'Audio' }[m.type]}${m.type === 'video' && m.audioReady && !m.audio ? ' · sin audio' : ''}</span>
+        <span class="mtype">${{ video: 'Video', image: 'Foto', audio: 'Audio' }[m.type]}${m.type === 'video' && m.audioReady && !m.audio ? ' · sin audio' : ''}${(m.type === 'video' || m.type === 'audio') && !m.audioReady && !m.loading ? ' · analizando audio…' : ''}</span>
         <button class="madd" title="Añadir a la línea de tiempo">+</button>
         <div class="mmeta"><span>${esc(m.name)}</span><span>${m.type === 'image' ? '' : fmtTime(m.duration)}</span></div>
       </div>`}`).join('')}
@@ -329,6 +338,8 @@ $('#loopBtn').addEventListener('click', (e) => {
 $('#projName').addEventListener('change', (e) => { app.commit((P) => (P.name = e.target.value.trim() || 'Mi video')); });
 $('#exportBtn').addEventListener('click', () => {
   if (!app.P.clips.length) return toast('Añade algún clip antes de exportar.', 'warn');
+  const pend = audioPending(app.P);
+  if (pend.length) return toast(`Analizando el audio de ${pend.map((m) => esc(m.name)).join(', ')}… espera unos segundos y vuelve a exportar.`, 'warn', 5000);
   app.player.pause();
   openExport(app);
 });

@@ -3,6 +3,7 @@ import { fmtTime } from './state.js';
 import { LANGS, MODELS, buildCaptionClips } from './captions.js';
 import { voiceMedia, transcribeMedia, buildTokens, stats, rangesFor, cutRanges, timelineWords, matchScript, assembleScript } from './textedit.js';
 import { esc } from './ui.js';
+import { audioPending } from './media.js';
 
 export function createTranscriptPanel(app) {
   const prefs = { lang: 'spanish', model: MODELS[0][0], clean: { filler: true, repeat: true, sound: true, pause: true, maybe: false }, pauseMin: 0.6, query: '', script: '', matches: null };
@@ -46,7 +47,8 @@ export function createTranscriptPanel(app) {
           }
         });
       }
-      status = '✓ Transcripción lista. Selecciona palabras y pulsa Supr para cortarlas.';
+      const dev = Object.values(app.P.transcripts || {}).map((t) => t.device).filter(Boolean).pop();
+      status = `✓ Transcripción lista (${dev === 'webgpu' ? 'con la GPU' : 'con la CPU'}). Selecciona palabras y pulsa Supr para cortarlas.`;
       app.refresh();
       app.toast('¶ Transcripción lista.', 'ok');
     } catch (e) {
@@ -68,6 +70,10 @@ export function createTranscriptPanel(app) {
     const P = app.P;
     const vm = voiceMedia(P);
     const pending = vm.filter((m) => !P.transcripts?.[m.id]);
+    const analyzing = audioPending(P);
+    const isMusic = (c) => { const t = P.tracks.find((x) => x.id === c.trackId); return t?.music && !t.guide; };
+    const musicAudio = P.clips.filter((c) => c.kind === 'audio' && isMusic(c));
+    if (analyzing.length) status = `Analizando el audio de ${analyzing.map((m) => esc(m.name)).join(', ')}…`;
     tokens = buildTokens(P);
     const st = stats(tokens, prefs.pauseMin);
     const toCut = new Set(picked(st));
@@ -85,12 +91,13 @@ export function createTranscriptPanel(app) {
 
     root.innerHTML = `<h3 class="sec-h"><span>Editar con el texto</span><button class="btn tiny" id="txWide" title="Más espacio para leer">${document.querySelector('.workspace').classList.contains('wide-left') ? '⤡ Reducir' : '⤢ Ampliar'}</button></h3>
       <p class="sub">Borra palabras de la transcripción y el video se corta solo, como en Descript o Premiere.</p>
-      ${vm.length === 0 ? '<div class="tool"><b>Primero añade un video donde hables</b><span class="sub">Debe estar en la pista Principal o en Voz / Audio.</span></div>' : ''}
+      ${vm.length === 0 ? `<div class="tool"><b>Primero añade un video o audio donde hables</b><span class="sub">Debe estar en la pista Principal o en Voz / Audio.</span>${musicAudio.length ? '<button class="btn small" id="txMoveVoice">Mover el audio de Música a Voz</button>' : ''}</div>` : ''}
       ${pending.length ? `
         <div class="tool">
           <div class="field wide"><label>Idioma</label><select id="txLang">${LANGS.map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}</select></div>
           <div class="field wide"><label>Precisión</label><select id="txModel">${MODELS.map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}</select></div>
-          <button class="btn primary wide" id="txGo"${busy ? ' disabled' : ''}>¶ Transcribir ${pending.length} archivo${pending.length > 1 ? 's' : ''}</button>
+          <label class="chk"><input type="checkbox" id="txCpu"${(() => { try { return localStorage.getItem('emi.cpu') === '1'; } catch { return false; } })() ? ' checked' : ''}><span>Sólo CPU (más lento; úsalo si con la GPU sale texto raro o se traba)</span></label>
+          <button class="btn primary wide" id="txGo"${busy || analyzing.length ? ' disabled' : ''}>¶ Transcribir ${pending.length} archivo${pending.length > 1 ? 's' : ''}</button>
         </div>` : ''}
       <div class="vstatus" id="txStat">${status}</div>
       ${tokens.length ? `
@@ -124,6 +131,12 @@ export function createTranscriptPanel(app) {
     if ($('#txLang')) { $('#txLang').value = prefs.lang; $('#txLang').onchange = (e) => (prefs.lang = e.target.value); }
     if ($('#txModel')) { $('#txModel').value = prefs.model; $('#txModel').onchange = (e) => (prefs.model = e.target.value); }
     $('#txGo')?.addEventListener('click', transcribeAll);
+    $('#txCpu')?.addEventListener('change', (e) => { try { localStorage.setItem('emi.cpu', e.target.checked ? '1' : '0'); } catch {} });
+    $('#txMoveVoice')?.addEventListener('click', () => {
+      const voice = app.P.tracks.find((t) => t.type === 'audio' && !t.music && !t.guide && !t.sfx);
+      app.commit(() => musicAudio.forEach((c) => (c.trackId = voice.id)));
+      app.toast('Audio movido a la pista Voz / Audio. Ya puedes transcribirlo.', 'ok');
+    });
     $('#txWide').addEventListener('click', () => { document.querySelector('.workspace').classList.toggle('wide-left'); app.player.resize(); render(root); });
     root.querySelectorAll('.clean-tool input[data-k]').forEach((i) => i.addEventListener('change', () => { prefs.clean[i.dataset.k] = i.checked; render(root); }));
     $('#txClean')?.addEventListener('click', () => {

@@ -16,11 +16,11 @@ async function getPipe(model, device, onProgress) {
 }
 
 self.onmessage = async (e) => {
-  const { audio, model, language, wordLevel } = e.data;
+  const { audio, model, language, wordLevel, forceCpu } = e.data;
   const post = (m) => self.postMessage(m);
   const onProgress = (x) => { if (x.status === 'progress') post({ type: 'progress', file: x.file, progress: x.progress, loaded: x.loaded, total: x.total }); };
   const devices = [];
-  if (self.navigator?.gpu) { try { if (await navigator.gpu.requestAdapter()) devices.push('webgpu'); } catch {} }
+  if (!forceCpu && self.navigator?.gpu) { try { if (await navigator.gpu.requestAdapter()) devices.push('webgpu'); } catch {} }
   devices.push('wasm');
   let lastErr = null;
   for (const device of devices) {

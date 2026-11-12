@@ -23,7 +23,7 @@ export async function transcribeMedia(P, m, opts, onMsg) {
   const raw = toWords(res).map((w) => ({ w: w.w, s: w.s, e: w.e }));
   const words = refineWords(raw, m).map((w) => ({ w: w.w, s: +w.s.toFixed(3), e: +w.e.toFixed(3) }));
   P.transcripts = P.transcripts || {};
-  P.transcripts[m.id] = { words, lang: opts.language || 'auto', approx: !res.words };
+  P.transcripts[m.id] = { words, lang: opts.language || 'auto', approx: !res.words, device: res.device };
   return words;
 }
 

@@ -205,6 +205,13 @@ function rr(ctx, x, y, w, h, r) {
   ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
 }
 
+// Carga las fuentes que usan los textos (para que nunca salga una fuente de respaldo)
+export async function ensureFonts(P) {
+  const specs = new Set();
+  for (const c of P.clips) if (c.text) specs.add(`${c.text.italic ? 'italic ' : ''}${c.text.weight} 64px "${c.text.font}"`);
+  await Promise.all([...specs].map((s) => document.fonts.load(s).catch(() => {})));
+}
+
 export function textFontPx(P, T) { return T.size * Math.sqrt(P.width * P.height) * 0.85; }
 
 export function drawText(ctx, P, c, t) {

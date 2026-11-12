@@ -2,7 +2,7 @@
 import * as MB from 'mediabunny';
 import { GIFEncoder, quantize, applyPalette } from '../vendor/gifenc.esm.js';
 import { projectDuration, clipEnd } from './state.js';
-import { renderFrame, activeVisuals, sourceTime } from './render.js';
+import { renderFrame, activeVisuals, sourceTime, ensureFonts } from './render.js';
 import { mixOffline } from './audio.js';
 import { segmentPerson } from './vision.js';
 import { media } from './media.js';
@@ -13,6 +13,9 @@ async function ensureEncoders() {
   encodersReady = (async () => {
     if (!(await MB.canEncodeAudio('aac'))) {
       try { const m = await import('../vendor/mediabunny-aac-encoder.min.mjs'); m.registerAacEncoder(); } catch (e) { console.warn('AAC', e); }
+    }
+    if (!(await MB.canEncodeAudio('flac'))) {
+      try { const m = await import('../vendor/mediabunny-flac-encoder.min.mjs'); m.registerFlacEncoder(); } catch (e) { console.warn('FLAC', e); }
     }
     if (!(await MB.canEncodeAudio('mp3'))) {
       try { const m = await import('../vendor/mediabunny-mp3-encoder.min.mjs'); m.registerMp3Encoder(); } catch (e) { console.warn('MP3', e); }
@@ -162,7 +165,7 @@ export function evenDims(P, targetW, targetH) {
 
 // opts: { fmt, w, h, fps, mbps, range:[a,b], audioKbps }
 export async function exportProject(P, opts, onProgress, signal) {
-  await document.fonts.ready;
+  await ensureFonts(P);
   await ensureEncoders();
   const fmt = opts.fmt;
   const a = opts.range?.[0] ?? 0, b = opts.range?.[1] ?? projectDuration(P);
@@ -216,7 +219,10 @@ export async function exportProject(P, opts, onProgress, signal) {
     const s0 = a + chunkK * CH;
     if (s0 >= b - 1e-6) return null;
     chunkK++;
-    return mixOffline(P, media, 48000, s0, Math.min(b, s0 + CH), { includeGuide: !!opts.includeGuide });
+    // 0.5 s de precalentamiento: filtros y compresor llegan estables a la unión y no hay clics entre tramos
+    const PRE = 0.5;
+    const buf = await mixOffline(P, media, 48000, s0 - PRE, Math.min(b, s0 + CH), { includeGuide: !!opts.includeGuide });
+    return sliceBuffer(buf, Math.round(PRE * 48000), buf.length);
   };
   const pickAudio = async () => {
     for (const c of fmt.a || []) if (await MB.canEncodeAudio(c, { numberOfChannels: 2, sampleRate: 48000 }).catch(() => false)) return c;

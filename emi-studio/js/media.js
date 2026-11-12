@@ -49,6 +49,12 @@ function loadVideoMeta(url) {
   });
 }
 
+// Archivos usados en la línea de tiempo cuyo audio aún se está analizando
+export function audioPending(P) {
+  const ids = new Set(P.clips.map((c) => c.mediaId).filter(Boolean));
+  return [...ids].map((id) => media.get(id)).filter((m) => m && (m.type === 'video' || m.type === 'audio') && !m.missing && !m.audioReady);
+}
+
 let persistFn = null;
 export function setPersist(fn) { persistFn = fn; }
 

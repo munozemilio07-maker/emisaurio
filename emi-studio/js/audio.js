@@ -208,7 +208,7 @@ export function detectBeats(buffer) {
   for (let i = 0; i < d.length; i += hop) {
     let s = 0;
     for (let j = i; j < Math.min(d.length, i + hop); j++) s += d[j] * d[j];
-    energy.push(s);
+    energy.push(s / hop); // energía media: igual a 16 kHz que a 48 kHz
   }
   const beats = [];
   let last = -1;
@@ -217,7 +217,7 @@ export function detectBeats(buffer) {
     for (let j = i - 43; j < i; j++) avg += energy[j];
     avg /= 43;
     const t = i * 0.01;
-    if (energy[i] > avg * 1.6 && energy[i] > 0.01 && t - last > 0.28) { beats.push(t); last = t; }
+    if (energy[i] > avg * 1.6 && energy[i] > 2e-5 && t - last > 0.28) { beats.push(t); last = t; }
   }
   return beats;
 }
