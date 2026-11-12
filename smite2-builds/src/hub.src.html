@@ -94,6 +94,23 @@ a { color: var(--gold); }
 .foe .face.spr-a { width: 30px; height: 30px; }
 button.foe { font: inherit; color: inherit; }
 .inp { flex: 1 1 220px; min-width: 0; padding: 10px 14px; background: var(--void); border: 1px solid var(--line); border-radius: 2px; }
+.slots { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.slotb { position: relative; display: grid; gap: 5px; justify-items: center; text-align: center; padding: 8px 4px; background: var(--void); border: 1px dashed var(--line); min-width: 0; font: inherit; color: inherit; }
+.slotb.full { cursor: pointer; border-style: solid; border-color: var(--gold-deep); }
+.slotb .ic { width: 52px; height: 52px; max-width: 100%; aspect-ratio: 1; border: 1px solid var(--line); background-color: var(--stone); }
+.slotb.full .ic { border-color: var(--gold-deep); }
+.slotb .nm { font-size: 12px; line-height: 1.15; overflow-wrap: anywhere; }
+.slotb .x { position: absolute; top: 2px; right: 5px; color: var(--muted); font-size: 16px; }
+.slotb.full:hover { border-color: var(--ember); } .slotb.full:hover .x { color: var(--ember); }
+.bgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+.sugg { cursor: pointer; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; text-align: left; padding: 8px; background: rgba(6,7,12,.55); border: 1px solid var(--line); font: inherit; color: inherit; }
+.sugg:hover { border-color: var(--gold); }
+.sugg .ic { width: 44px; height: 44px; border: 1px solid var(--gold-deep); }
+.sugg .tx { display: grid; gap: 2px; min-width: 0; }
+.sugg .tx i { font-size: 12.5px; color: var(--muted); }
+.sugg .rs { font-size: 13px; color: #cfc9b8; }
+.sugg .plus { font-family: var(--font-head); font-size: 22px; color: var(--gold); padding: 0 6px; }
+@media (max-width: 520px) { .slots { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .tw { overflow-x: auto; }
 .vgs { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
 .vgs th { text-align: left; font-family: var(--font-head); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); padding: 6px 12px 8px 0; border-bottom: 1px solid var(--gold-deep); }
@@ -313,6 +330,7 @@ footer p { max-width: 90ch; }
  <section class="gut hall" id="v-combos" hidden></section>
  <section class="gut hall" id="v-sinergias" hidden></section>
  <section class="gut hall" id="v-objetos" hidden></section>
+ <section class="gut hall" id="v-creador" hidden></section>
  <section class="gut hall" id="v-chat-rapido" hidden></section>
 </main>
 
@@ -349,25 +367,8 @@ const SVG = {
 };
 
 // Qué comprar según el rival. Cada lista depende de cómo pega tu dios en ese rol.
-const SITS = [
-  { id: "heal", t: "Se curan mucho", why: "Curanderos o mucho robo de vida. El antiheal les baja 40% toda la curación; con uno en el equipo basta, pero que alguien lo lleve.",
-    picks: { mage: ["divine-ruin"], phys: ["brawlers-beat-stick"], aa: ["toxic-blade"], tank: ["stygian-anchor", "brawlers-beat-stick", "contagion"], any: ["sundering-arc"] } },
-  { id: "tank", t: "Tanques y mucha vida", why: "Si no les bajas la vida, compra daño por porcentaje de vida o penetración.",
-    picks: { mage: ["soul-reaver", "obsidian-shard"], phys: ["heartseeker", "titans-bane"], aa: ["qins-blade", "the-executioner", "dominance"], tank: ["void-shield", "void-stone", "stone-of-binding"] } },
-  { id: "magic", t: "Mucho daño mágico", why: "Dos o tres rivales pegan con magia, o su mago va muy adelantado.",
-    picks: { mage: ["genjis-guard", "sphere-of-negation"], phys: ["genjis-guard", "wyrmskin-hide"], aa: ["genjis-guard", "magis-cloak"], tank: ["genjis-guard", "oni-hunters-garb", "void-stone"] } },
-  { id: "phys", t: "Mucho daño físico", why: "Dos o tres rivales pegan físico, o su carry va muy adelantado.",
-    picks: { mage: ["breastplate-of-valor", "prophetic-cloak"], phys: ["breastplate-of-valor", "shifters-shield"], aa: ["prophetic-cloak", "freyas-tears"], tank: ["breastplate-of-valor", "leviathans-hide", "helm-of-radiance"] } },
-  { id: "aa", t: "Carries de ataque básico y críticos", why: "Su carry te derrite a golpes. Estos objetos castigan o frenan los ataques básicos.",
-    picks: { mage: ["hide-of-the-nemean-lion"], phys: ["hide-of-the-nemean-lion", "spectral-armor"], aa: ["spectral-armor"], tank: ["spectral-armor", "midgardian-mail", "hide-of-the-nemean-lion", "pharaohs-curse"], any: ["phantom-shell"] } },
-  { id: "cc", t: "Mucho control", why: "Aturdimientos, raíces y agarres en cadena. Si te atrapan, mueres sin jugar.",
-    picks: { mage: ["magis-cloak"], phys: ["magis-cloak", "spirit-robe"], aa: ["magis-cloak"], tank: ["spirit-robe", "talisman-of-purification", "resolute-mantle", "hussars-wings"], any: ["purification-beads"] } },
-  { id: "shield", t: "Usan escudos", why: "Dioses que se escudan a sí mismos o a su equipo. Rómpeles el escudo antes de gastar tu daño.",
-    picks: { mage: ["divine-ruin"], phys: ["shield-splitter"], aa: ["lernaean-bow"], tank: ["erosion", "mystical-mail", "pharaohs-curse"] },
-    note: { mage: "Los magos no tienen rompeescudos propio: pídele Erosión a tu tanque y guarda tu daño para cuando el escudo se acabe." }, skip: { mage: true } },
-  { id: "burst", t: "Asesinos que te saltan encima", why: "Te borran en un combo. Necesitas un segundo de vida extra para que tu equipo responda.",
-    picks: { mage: ["time-lock-aegis", "magis-cloak"], phys: ["shifters-shield", "mantle-of-discord"], aa: ["mantle-of-discord", "magis-cloak"], tank: ["draconic-scale", "prophetic-cloak"], any: ["aegis-of-acceleration"] } }
-];
+// Qué comprar según el rival: viene de src/curado/items_guia.json ("situaciones").
+const SITS = (((CURADO.items_guia || {}).situaciones) || []).map(x => ({ id: x.id, t: x.nombre, t_en: x.nombre_en, why: x.por_que, why_en: x.por_que_en, picks: x.sugerencias || {}, note: x.nota, note_en: x.nota_en, skip: x.omitir }));
 
 // Textos en inglés, indexados por el texto en español.
 const EN = {
@@ -496,10 +497,10 @@ function rivalHTML(r) {
     const list = (s.skip && s.skip[r.prof]) ? "" : ids.map(id => itemRow(id, { small: true, tag: IT[id].c === "x" ? t("reliquia") : have.has(id) ? t("ya en tu build") : "" })).join("");
     const hot = out[s.id];
     return `<article class="sit${hot ? " hot" : ""}">
-      <h3>${SVG[s.id]}${t(s.t)}</h3>
+      <h3>${SVG[s.id] || ""}${esc(L(s.t, s.t_en || s.t))}</h3>
       ${hot ? `<p class="because">${L("Aplica contra", "Applies against")}: ${esc(hot.join(", "))}</p>` : ""}
-      <p class="why">${t(s.why)}</p>
-      ${note ? `<p class="why">${t(note)}</p>` : ""}
+      <p class="why">${esc(L(s.why, s.why_en || s.why))}</p>
+      ${note ? `<p class="why">${esc(L(note, (s.note_en || {})[r.prof] || note))}</p>` : ""}
       <div class="list">${list}</div>
     </article>`;
   }).join("");
@@ -881,6 +882,111 @@ function openItem(id, scroll) {
   if (scroll !== false) { const f = $("#itemFicha"); if (f) f.scrollIntoView({ block: "start" }); }
 }
 
+// ---------- Creador de builds ----------
+// Usa: builds de Joust de data.json, catálogo y guía de objetos, y el equipo rival elegido en «Según el rival».
+let BLD = { god: "", role: "", items: [], q: "" };
+try { const sv = JSON.parse(localStorage.getItem("bld") || "null"); if (sv && bySlug(sv.god)) BLD = { god: sv.god, role: sv.role || "", items: (sv.items || []).filter(id => IBY[id]).slice(0, 6), q: "" }; } catch (e) {}
+const saveBld = () => { try { localStorage.setItem("bld", JSON.stringify({ god: BLD.god, role: BLD.role, items: BLD.items })); } catch (e) {} };
+const bldGod = () => bySlug(BLD.god);
+const bldRole = g => g.roles[BLD.role] || Object.values(g.roles)[0];
+const buildable = r => iComplete(r) && (r.tipo === "pasivo" || r.tipo === "activo") && r.categoria !== "de_un_dios";
+// Popularidad de cada objeto por estilo de juego (mago, carry, luchador, tanque): promedio de % de compra entre los dioses de ese estilo.
+const PROF_POP = {};
+{ const acc = {}, cnt = {};
+  for (const g of G) { const r = Object.values(g.roles)[0], seen = new Map(); cnt[r.prof] = (cnt[r.prof] || 0) + 1;
+    for (const b of Object.values(r.b)) for (const [id, pick, flag] of b || []) if (flag !== 2 && pick != null) seen.set(id, Math.max(seen.get(id) || 0, pick));
+    for (const [id, pk] of seen) { const m = acc[r.prof] || (acc[r.prof] = {}); m[id] = (m[id] || 0) + pk; } }
+  for (const p of Object.keys(acc)) { PROF_POP[p] = {}; for (const id of Object.keys(acc[p])) PROF_POP[p][id] = acc[p][id] / cnt[p]; } }
+const godPicks = (g, r) => { const m = new Map(); for (const b of Object.values(r.b)) for (const [id, pick, flag] of b || []) if (flag !== 2 && pick != null) m.set(id, Math.max(m.get(id) || 0, pick)); return m; };
+const inNeed = (id, needId) => needItems(needById(needId)).some(x => x.id === id);
+function bldTotals(g, ids) {
+  const tot = {}; let str = 0, int = 0; const adaptive = [];
+  for (const id of ids) { const r = IBY[id]; if (!r) continue;
+    for (const [tag0, val] of r.stats) { const tag = tag0 === "PhysicalProtectionItem" ? "PhysicalProtection" : tag0 === "MagicalProtectionItem" ? "MagicalProtection" : tag0; tot[tag] = (tot[tag] || 0) + val; if (tag === "PhysicalPower") str += val; if (tag === "MagicalPower") int += val; }
+    const ad = /Adaptive Stat: \+(\d+) Strength or \+(\d+) Intelligence/.exec(r.texto_en); if (ad) adaptive.push([+ad[1], +ad[2]]); }
+  const useInt = int > str || (int === str && g.dmg === "M");
+  for (const [a, b] of adaptive) { if (useInt) tot.MagicalPower = (tot.MagicalPower || 0) + b; else tot.PhysicalPower = (tot.PhysicalPower || 0) + a; }
+  return { tot, useInt, cost: ids.reduce((n, id) => n + (IBY[id] ? IBY[id].costo : 0), 0) };
+}
+function bldSuggest(g, r) {
+  const have = new Set(BLD.items), picks = godPicks(g, r), pop = PROF_POP[r.prof] || {}, { out } = analyse();
+  const cats = BLD.items.map(id => iCat(IBY[id])), nDef = cats.filter(c => c === "defensivo" || c === "hibrido").length;
+  const hasAnti = BLD.items.some(id => inNeed(id, "antiheal"));
+  const cand = new Map();
+  const add = (id, pts, why) => { const it = IBY[id]; if (!it || have.has(id) || !buildable(it)) return; if (hasAnti && inNeed(id, "antiheal")) return; const c = cand.get(id) || { id, pts: 0, why: [] }; c.pts += pts; c.why.push(why); cand.set(id, c); };
+  for (const [id, pk] of picks) add(id, pk, L(`Lo compran en el ${pk}% de las partidas con ${N(g)}`, `Bought in ${pk}% of ${N(g)} games`));
+  for (const [id, v] of Object.entries(pop)) if (v >= 4 && !picks.has(id)) add(id, v * 0.6, L(`Popular entre los dioses que se juegan como ${PROF[r.prof]}`, `Popular among gods played as ${t(PROF[r.prof])}`));
+  for (const st of SITS) { const hot = out[st.id]; if (!hot) continue;
+    const ids = [...(st.picks[r.prof] || []), ...(st.picks.any || [])], covered = BLD.items.some(id => Object.values(st.picks).flat().includes(id));
+    if (covered) continue;
+    for (const id of ids) add(id, 60, L(`${st.t}: aplica contra ${hot.join(", ")}`, `${st.t_en || st.t}: applies against ${hot.join(", ")}`)); }
+  if (BLD.items.length >= 3 && nDef === 0) for (const [id, v] of Object.entries(pop)) { const it = IBY[id]; if (it && (iCat(it) === "defensivo" || iCat(it) === "hibrido")) add(id, 25 + v, L("Tu build todavía no tiene ningún objeto de aguante", "Your build has no durability item yet")); }
+  if (BLD.items.length >= 3 && r.prof !== "tank" && !BLD.items.some(id => inNeed(id, "penetracion") || inNeed(id, "contra_tanques"))) for (const id of [...picks.keys(), ...Object.keys(pop)]) if (inNeed(id, "penetracion")) add(id, 18, L("Todavía no llevas penetración", "No penetration yet"));
+  return [...cand.values()].sort((a, b) => b.pts - a.pts).slice(0, 8);
+}
+function bldSummary(g, r) {
+  const ids = BLD.items; if (!ids.length) return `<p class="muted">${L("Agrega objetos para ver qué hace tu build.", "Add items to see what your build does.")}</p>`;
+  const { tot, useInt, cost } = bldTotals(g, ids), { out } = analyse();
+  const cats = ids.map(id => iCat(IBY[id])), nOff = cats.filter(c => c === "ofensivo").length, nDef = cats.filter(c => c === "defensivo").length, nHyb = ids.length - nOff - nDef;
+  const perfil = nDef >= Math.ceil(ids.length * 0.6) ? L("Build de aguante: vas a durar mucho, pero no esperes matar solo.", "Durability build: you last long, but don't expect solo kills.")
+    : nOff >= Math.ceil(ids.length * 0.75) ? L("Build de puro daño: pegas muy fuerte y mueres rápido si te atrapan.", "Pure damage build: you hit hard and die fast if caught.")
+    : L("Build equilibrada: daño suficiente con algo de aguante.", "Balanced build: enough damage with some durability.");
+  const order = ["PhysicalPower", "MagicalPower", "InhandPower", "AttackSpeedPercent", "CritChance", "MagicalPenetrationPercent", "MagicalPenetrationFlat", "LifeStealPercent", "CooldownReductionPercent", "MaxHealth", "PhysicalProtection", "MagicalProtection", "PhysicalProtectionItem", "MagicalProtectionItem", "MaxMana", "ManaPerTime", "HealthPerTime", "CrowdControlReductionItem", "Plating", "Dampening"];
+  const statRows = order.filter(k => tot[k]).map(k => `<tr><th>${L(STAT_L[k][0], STAT_L[k][1])}${k === "MagicalPenetrationFlat" ? L(" (fija)", " (flat)") : ""}</th><td>+${Math.round(tot[k] * 10) / 10}${PCT_STATS.has(k) ? "%" : ""}</td></tr>`).join("");
+  const covers = ["antiheal", "contra_tanques", "penetracion", "robo_vida", "quitar_control", "contra_escudos", "contra_basicos", "sobrevivir_burst", "apoyar_aliados", "movimiento"].map(nid => { const n = needById(nid); if (!n) return ""; const hit = ids.filter(id => inNeed(id, nid)); return hit.length ? `<li><b>${esc(L(n.nombre, n.nombre_en || n.nombre))}:</b> ${hit.map(id => esc(iName(IBY[id]))).join(", ")}</li>` : ""; }).join("");
+  const warns = [];
+  for (const st of SITS) { const hot = out[st.id]; if (!hot) continue; const all = Object.values(st.picks).flat(); if (!ids.some(id => all.includes(id))) warns.push(L(`${st.t} (${hot.join(", ")}) y tu build no lleva nada para eso.`, `${st.t_en || st.t} (${hot.join(", ")}) and your build has no answer.`)); }
+  if (ids.filter(id => inNeed(id, "antiheal")).length > 1) warns.push(L("Llevas más de un antiheal: sus efectos no se suman, sobra uno.", "More than one anti-heal: they do not stack."));
+  if (ids.length === 6 && nDef + nHyb === 0 && r.prof !== "aa") warns.push(L("Seis objetos de daño y ninguno de aguante: cualquier control te mata.", "Six damage items and no durability."));
+  if (ids.filter(id => IBY[id].tipo === "activo").length > 3) warns.push(L("Más de tres objetos activos: son muchos botones para usar en una pelea.", "More than three actives: a lot of buttons in a fight."));
+  const passives = ids.map(id => { const it = IBY[id]; const txt = lang === "es" && it.descripcion_es ? it.descripcion_es : (it.texto_en.split("\n").find(l => !/^Adaptive Stat/.test(l)) || ""); return `<li><b>${esc(iName(it))}:</b> ${esc(txt)}</li>`; }).join("");
+  return `<p class="lead" style="font-size:17px">${perfil}</p>
+    <div class="facts"><div><span class="v">${cost.toLocaleString("es-MX")}</span><span class="l">${L("Oro total", "Total gold")}</span></div><div><span class="v">${nOff}/${nHyb}/${nDef}</span><span class="l">${L("Daño / híbrido / aguante", "Damage / hybrid / durability")}</span></div><div><span class="v" style="font-size:18px">${useInt ? L("Inteligencia", "Intelligence") : L("Fuerza", "Strength")}</span><span class="l">${L("Tus adaptativos dan", "Adaptives give")}</span></div></div>
+    ${warns.length ? `<div class="fblock"><span class="eyebrow" style="color:var(--ember)">${L("Ojo", "Watch out")}</span><ul class="plain">${warns.map(w => `<li>${esc(w)}</li>`).join("")}</ul></div>` : ""}
+    <div class="fblock"><span class="eyebrow">${L("Stats que suma", "Total stats")}</span><table class="nums">${statRows}</table><p class="muted" style="font-size:13px">${L("Suma de stats fijas y adaptativas. No cuenta pasivas, cargas ni el inicial.", "Flat and adaptive stats only. Passives, stacks and the starter are not counted.")}</p></div>
+    ${covers ? `<div class="fblock"><span class="eyebrow">${L("Qué cubre", "What it covers")}</span><ul class="plain">${covers}</ul></div>` : ""}
+    <div class="fblock"><span class="eyebrow">${L("Efectos de cada objeto", "Each item's effect")}</span><ul class="plain">${passives}</ul></div>`;
+}
+function renderBuilder() {
+  const el = $("#v-creador");
+  if (!ITEMS.length) { el.innerHTML = `<p class="empty">${L("Falta src/curado/items_catalogo.json.", "Item catalog missing.")}</p>`; return; }
+  if (!bldGod()) { BLD.god = cur ? cur.god.s : G[0].s; BLD.role = ""; }
+  const g = bldGod(), r = bldRole(g), keys = Object.keys(g.roles), { E } = analyse();
+  const sug = BLD.items.length < 6 ? bldSuggest(g, r) : [];
+  const slots = Array.from({ length: 6 }, (_, i) => { const it = IBY[BLD.items[i]]; return it ? `<button class="slotb full" type="button" data-bldrm="${i}" title="${L("Quitar", "Remove")} ${esc(it.nombre)}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="nm">${esc(iName(it))}</span><span class="x" aria-hidden="true">×</span></button>` : `<div class="slotb"><span class="ic"></span><span class="nm muted">${i + 1}</span></div>`; }).join("");
+  const q = BLD.q, found = q ? ITEMS.filter(x => buildable(x) && !BLD.items.includes(x.id) && (norm(x.nombre).includes(q) || norm(x.nombre_es || "").includes(q))).slice(0, 18) : [];
+  const starter = r.st[0] && IT[r.st[0][0]], relic = r.re[0] && IT[r.re[0][0]];
+  const focusId = document.activeElement && document.activeElement.id;
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Creador de builds", "Build maker")}</span><h2>${L("Arma tu build y mira qué hace", "Make your build and see what it does")}</h2>
+      <p>${L("Elige un dios y ve agregando objetos. Las sugerencias salen de lo que se compra en Joust con ese dios, de lo que compran los dioses de su mismo estilo y del equipo rival que elijas.", "Pick a god and add items. Suggestions come from Joust purchases on that god, on gods of the same style, and from the enemy team you pick.")}</p></div>
+    <div class="panel">
+      <div class="picker-row">
+        <button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>
+        <input id="bldGodQ" class="inp" type="search" list="godlist" placeholder="${L("Cambiar de dios…", "Change god…")}" autocomplete="off" aria-label="${L("Dios", "God")}">
+        ${keys.length > 1 ? `<label class="selects" for="bldRole">${L("Variante", "Variant")} <select id="bldRole">${keys.map(k => `<option value="${k}"${g.roles[k] === r ? " selected" : ""}>${g.roles[k].var.k === "asp" ? L("Con aspecto", "With aspect") + ": " + esc(lang === "en" ? g.roles[k].var.e : g.roles[k].var.es) : L("Sin aspecto", "No aspect")}</option>`).join("")}</select></label>` : ""}
+      </div>
+      <p class="muted">${L(`${N(g)} se juega en Joust como ${PROF[r.prof]}.`, `${N(g)} is played in Joust as ${t(PROF[r.prof])}.`)}${starter ? L(` Inicial más usado: ${starter.n}.`, ` Most used starter: ${starter.e}.`) : ""}${relic ? L(` Reliquia más usada: ${relic.n}.`, ` Most used relic: ${relic.e}.`) : ""}</p>
+      <div class="slots">${slots}</div>
+      <div class="chips">
+        ${["off", "hyb", "def"].filter(k => r.b[k]).map(k => `<button class="chip" type="button" data-bldload="${k}">${L("Cargar la", "Load")} ${t(KIND[k].t).toLowerCase()}</button>`).join("")}
+        ${BLD.items.length ? `<button class="chip" type="button" data-bldclear="1">${L("Vaciar", "Clear")}</button><button class="copy" type="button" data-copy="${esc(BLD.items.map(id => L(`${iName(IBY[id])} (${IBY[id].nombre})`, IBY[id].nombre)).join(" > "))}">${L("Copiar lista", "Copy list")}</button>` : ""}
+      </div>
+    </div>
+    <div class="bgrid">
+      <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Siguiente objeto", "Next item")}</span><h2>${BLD.items.length >= 6 ? L("Build completa", "Build complete") : L("Sugerencias", "Suggestions")}</h2></div>
+        ${sug.length ? `<div class="list">${sug.map(c => { const it = IBY[c.id]; return `<button class="sugg" type="button" data-bldadd="${c.id}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="tx"><b>${esc(iName(it))}</b>${lang === "es" && it.nombre_es ? `<i>${esc(it.nombre)}</i>` : ""}${c.why.slice(0, 3).map(w => `<span class="rs">${esc(w)}</span>`).join("")}</span><span class="plus" aria-hidden="true">+</span></button>`; }).join("")}</div>` : `<p class="muted">${BLD.items.length >= 6 ? L("Ya tienes los 6 objetos. Quita uno para ver más sugerencias.", "You have all 6 items. Remove one to see more suggestions.") : L("Sin sugerencias.", "No suggestions.")}</p>`}
+        <div class="fblock"><span class="eyebrow">${L("O busca cualquier objeto", "Or search any item")}</span>
+          <input id="bldQ" class="inp" type="search" placeholder="${L("Buscar objeto…", "Search item…")}" value="${esc($("#bldQ") ? $("#bldQ").value : "")}" aria-label="${L("Buscar objeto", "Search item")}">
+          ${found.length ? `<div class="itiles">${found.map(x => `<button class="itile" type="button" data-bldadd="${x.id}" title="${esc(x.nombre)}"><span class="ic spr-a" style="${posA(x.i)}"></span><span class="nm">${esc(iName(x))}</span></button>`).join("")}</div>` : q ? `<p class="muted">${L("Nada con ese nombre.", "No match.")}</p>` : ""}</div>
+        <div class="fblock"><span class="eyebrow">${L("Equipo rival", "Enemy team")}</span>
+          <div class="picker-row"><input id="foeQ2" type="search" list="godlist" class="inp" placeholder="${t("Agregar rival (hasta 3)…")}" autocomplete="off" aria-label="${t("Agregar rival (hasta 3)…")}">${E.length ? `<button class="chip" type="button" id="foeClear">${t("Limpiar")}</button>` : ""}</div>
+          ${E.length ? `<div class="foes">${E.map(x => `<button class="foe" type="button" data-foe="${x.s}">${face(x)}<span>${esc(N(x))}</span><span class="x" aria-hidden="true">×</span></button>`).join("")}</div>` : `<p class="muted">${L("Agrega a los rivales para que las sugerencias y los avisos los tomen en cuenta.", "Add enemies so suggestions and warnings take them into account.")}</p>`}</div>
+      </section>
+      <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Resumen", "Summary")}</span><h2>${L("Qué hará tu build", "What your build does")}</h2></div>${bldSummary(g, r)}</section>
+    </div>`;
+  if (focusId === "bldQ" || focusId === "foeQ2") { const f = $("#" + focusId); if (f) { f.focus(); if (focusId === "bldQ") f.setSelectionRange(f.value.length, f.value.length); } }
+}
+
 // ---------- Chat rápido / VGS (src/curado/chat_rapido.json) ----------
 const VGS = CURADO.chat_rapido || {};
 const VCMDS = VGS.comandos || [];
@@ -932,7 +1038,7 @@ function renderChat() {
 }
 
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["chat-rapido", "Chat rápido", "Quick chat"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["creador", "Creador", "Build maker"], ["chat-rapido", "Chat rápido", "Quick chat"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
@@ -946,6 +1052,7 @@ function setView(v, keepHash) {
   if (view === "sinergias") renderSinergias();
   if (view === "objetos") renderObjetos();
   if (view === "chat-rapido") renderChat();
+  if (view === "creador") renderBuilder();
   if (!keepHash) { try { history.replaceState(null, "", "#" + (view === "dioses" && cur ? cur.god.s : view)); } catch (e) {} }
 }
 
@@ -1047,6 +1154,7 @@ function setFoes(next) {
   try { localStorage.setItem("foes", JSON.stringify(foes)); } catch (e) {}
   const y = window.scrollY;
   renderHall();
+  if (view === "creador") renderBuilder();
   window.scrollTo(0, y);
 }
 
@@ -1083,6 +1191,13 @@ document.addEventListener("click", e => {
   const fm = t.closest("[data-fxmode]");
   if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
   if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
+  const ba = t.closest("[data-bldadd]");
+  if (ba) { if (BLD.items.length < 6 && !BLD.items.includes(ba.dataset.bldadd)) { BLD.items.push(ba.dataset.bldadd); BLD.q = ""; const bq = $("#bldQ"); if (bq) bq.value = ""; saveBld(); renderBuilder(); } return; }
+  const br = t.closest("[data-bldrm]");
+  if (br) { BLD.items.splice(+br.dataset.bldrm, 1); saveBld(); renderBuilder(); return; }
+  const bl = t.closest("[data-bldload]");
+  if (bl) { const g0 = bldGod(), b0 = bldRole(g0).b[bl.dataset.bldload]; if (b0) { BLD.items = b0.map(x => x[0]).filter(id => IBY[id]).slice(0, 6); saveBld(); renderBuilder(); } return; }
+  if (t.closest("[data-bldclear]")) { BLD.items = []; saveBld(); renderBuilder(); return; }
   const vg = t.closest("[data-vgsg]");
   if (vg) { vgsGroup = vg.dataset.vgsg; renderChat(); return; }
   const itb = t.closest("[data-ittab]");
@@ -1122,16 +1237,19 @@ function tryAddFoe(inp, force) {
   const g = exact || (force ? findGod(v) : null);
   if (!g) return;
   if (!foes.includes(g.s) && foes.length < 3) setFoes([...foes, g.s]); else { inp.value = ""; return; }
-  const again = $("#foeQ"); if (again) again.focus();
+  const again = $(view === "creador" ? "#foeQ2" : "#foeQ"); if (again) again.focus();
 }
 document.addEventListener("change", e => {
+  if (e.target.id === "bldRole") { BLD.role = e.target.value; BLD.items = []; saveBld(); renderBuilder(); }
   if (e.target.id === "itNeed") { itNeed = e.target.value; itCat = "all"; renderObjetos(); }
   if (e.target.id === "fPan") { fPan = e.target.value; renderGods(); }
   if (e.target.id === "fSort") { fSort = e.target.value; renderGods(); }
 });
 document.addEventListener("input", e => {
   if (e.target.id === "q") { const g = findGod(e.target.value); if (g) { if (view !== "dioses") setView("dioses", true); select(g); } }
-  if (e.target.id === "foeQ") tryAddFoe(e.target, false);
+  if (e.target.id === "foeQ" || e.target.id === "foeQ2") tryAddFoe(e.target, false);
+  if (e.target.id === "bldQ") { BLD.q = norm(e.target.value); renderBuilder(); }
+  if (e.target.id === "bldGodQ") { const v = e.target.value.trim(), g2 = G.find(x => norm(x.n) === norm(v) || norm(x.e) === norm(v)); if (g2) { BLD.god = g2.s; BLD.role = ""; BLD.items = []; saveBld(); renderBuilder(); } }
   if (e.target.id === "vgsQ") { vgsQ = norm(e.target.value); renderChat(); }
   if (e.target.id === "itQ") { itQ = norm(e.target.value); renderObjetos(); }
   if (e.target.id === "comboQ") { comboQ = norm(e.target.value); renderCombos(); }
@@ -1139,7 +1257,7 @@ document.addEventListener("input", e => {
 document.addEventListener("keydown", e => {
   if (e.key !== "Enter") return;
   if (e.target.id === "q") { const g = findGod(e.target.value); if (g) select(g, null, true); }
-  if (e.target.id === "foeQ") tryAddFoe(e.target, true);
+  if (e.target.id === "foeQ" || e.target.id === "foeQ2") tryAddFoe(e.target, true);
 });
 
 function fromHash() {

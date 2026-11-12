@@ -1,5 +1,5 @@
 {
- "_como_editar": "Todo esto se escribe a mano. Los ids de objetos son los de items_catalogo.json. 'necesidades': cada una junta los objetos de 'items' más los que tengan alguna etiqueta de tienda de 'filtros'. 'counters': 'contra' y 'respuesta' aceptan {\"items\": [...]} y/o {\"necesidad\": \"id\"}. 'contra_control': objetos y reliquias que te protegen del control. 'notas_items': consejo de cuándo comprar un objeto concreto.",
+ "_como_editar": "Todo esto se escribe a mano. Los ids de objetos son los de items_catalogo.json. 'necesidades': cada una junta los objetos de 'items' más los que tengan alguna etiqueta de tienda de 'filtros'. 'counters': 'contra' y 'respuesta' aceptan {\"items\": [...]} y/o {\"necesidad\": \"id\"}. 'contra_control': objetos y reliquias que te protegen del control. 'notas_items': consejo de cuándo comprar un objeto concreto. 'situaciones': qué comprar según el equipo rival; 'sugerencias' se separa por cómo juega tu dios (mage, phys, aa, tank) más 'any' para todos. Las usa la sección «Según el rival» y el creador de builds.",
  "necesidades": [
   {
    "id": "movimiento",
@@ -627,6 +627,253 @@
    "fuente": "https://smite2.live/items",
    "pendiente_verificar": true,
    "nota": "Falta confirmar si se puede activar mientras estás aturdido."
+  }
+ ],
+ "situaciones": [
+  {
+   "id": "heal",
+   "nombre": "Se curan mucho",
+   "nombre_en": "They heal a lot",
+   "por_que": "Curanderos o mucho robo de vida. El antiheal les baja 40% toda la curación; con uno en el equipo basta, pero que alguien lo lleve.",
+   "por_que_en": "Healers or lots of lifesteal. Anti-heal cuts all their healing by 40%. One on your team is enough, but someone has to buy it.",
+   "sugerencias": {
+    "mage": [
+     "divine-ruin"
+    ],
+    "phys": [
+     "brawlers-beat-stick"
+    ],
+    "aa": [
+     "toxic-blade"
+    ],
+    "tank": [
+     "stygian-anchor",
+     "brawlers-beat-stick",
+     "contagion"
+    ],
+    "any": [
+     "sundering-arc"
+    ]
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "tank",
+   "nombre": "Tanques y mucha vida",
+   "nombre_en": "Tanks and big health pools",
+   "por_que": "Si no les bajas la vida, compra daño por porcentaje de vida o penetración.",
+   "por_que_en": "If you can't get through their health, buy percent-health damage or penetration.",
+   "sugerencias": {
+    "mage": [
+     "soul-reaver",
+     "obsidian-shard"
+    ],
+    "phys": [
+     "heartseeker",
+     "titans-bane"
+    ],
+    "aa": [
+     "qins-blade",
+     "the-executioner",
+     "dominance"
+    ],
+    "tank": [
+     "void-shield",
+     "void-stone",
+     "stone-of-binding"
+    ]
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "magic",
+   "nombre": "Mucho daño mágico",
+   "nombre_en": "Lots of magical damage",
+   "por_que": "Dos o tres rivales pegan con magia, o su mago va muy adelantado.",
+   "por_que_en": "Two or three enemies deal magical damage, or their mage is far ahead.",
+   "sugerencias": {
+    "mage": [
+     "genjis-guard",
+     "sphere-of-negation"
+    ],
+    "phys": [
+     "genjis-guard",
+     "wyrmskin-hide"
+    ],
+    "aa": [
+     "genjis-guard",
+     "magis-cloak"
+    ],
+    "tank": [
+     "genjis-guard",
+     "oni-hunters-garb",
+     "void-stone"
+    ]
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "phys",
+   "nombre": "Mucho daño físico",
+   "nombre_en": "Lots of physical damage",
+   "por_que": "Dos o tres rivales pegan físico, o su carry va muy adelantado.",
+   "por_que_en": "Two or three enemies deal physical damage, or their carry is far ahead.",
+   "sugerencias": {
+    "mage": [
+     "breastplate-of-valor",
+     "prophetic-cloak"
+    ],
+    "phys": [
+     "breastplate-of-valor",
+     "shifters-shield"
+    ],
+    "aa": [
+     "prophetic-cloak",
+     "freyas-tears"
+    ],
+    "tank": [
+     "breastplate-of-valor",
+     "leviathans-hide",
+     "helm-of-radiance"
+    ]
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "aa",
+   "nombre": "Carries de ataque básico y críticos",
+   "nombre_en": "Basic attack carries and crits",
+   "por_que": "Su carry te derrite a golpes. Estos objetos castigan o frenan los ataques básicos.",
+   "por_que_en": "Their carry shreds you with basic attacks. These items punish or slow basic attacks.",
+   "sugerencias": {
+    "mage": [
+     "hide-of-the-nemean-lion"
+    ],
+    "phys": [
+     "hide-of-the-nemean-lion",
+     "spectral-armor"
+    ],
+    "aa": [
+     "spectral-armor"
+    ],
+    "tank": [
+     "spectral-armor",
+     "midgardian-mail",
+     "hide-of-the-nemean-lion",
+     "pharaohs-curse"
+    ],
+    "any": [
+     "phantom-shell"
+    ]
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "cc",
+   "nombre": "Mucho control",
+   "nombre_en": "Lots of crowd control",
+   "por_que": "Aturdimientos, raíces y agarres en cadena. Si te atrapan, mueres sin jugar.",
+   "por_que_en": "Chained stuns, roots and grabs. If they catch you, you die without playing.",
+   "sugerencias": {
+    "mage": [
+     "magis-cloak"
+    ],
+    "phys": [
+     "magis-cloak",
+     "spirit-robe"
+    ],
+    "aa": [
+     "magis-cloak"
+    ],
+    "tank": [
+     "spirit-robe",
+     "talisman-of-purification",
+     "resolute-mantle",
+     "hussars-wings"
+    ],
+    "any": [
+     "purification-beads"
+    ]
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "shield",
+   "nombre": "Usan escudos",
+   "nombre_en": "They use shields",
+   "por_que": "Dioses que se escudan a sí mismos o a su equipo. Rómpeles el escudo antes de gastar tu daño.",
+   "por_que_en": "Gods that shield themselves or their team. Break the shield before you spend your damage.",
+   "sugerencias": {
+    "mage": [
+     "divine-ruin"
+    ],
+    "phys": [
+     "shield-splitter"
+    ],
+    "aa": [
+     "lernaean-bow"
+    ],
+    "tank": [
+     "erosion",
+     "mystical-mail",
+     "pharaohs-curse"
+    ]
+   },
+   "nota": {
+    "mage": "Los magos no tienen rompeescudos propio: pídele Erosión a tu tanque y guarda tu daño para cuando el escudo se acabe."
+   },
+   "nota_en": {
+    "mage": "Mages have no shield breaker of their own: ask your tank for Erosion and hold your damage until the shield is gone."
+   },
+   "omitir": {
+    "mage": true
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "burst",
+   "nombre": "Asesinos que te saltan encima",
+   "nombre_en": "Assassins that dive you",
+   "por_que": "Te borran en un combo. Necesitas un segundo de vida extra para que tu equipo responda.",
+   "por_que_en": "They delete you in one combo. You need one extra second alive so your team can respond.",
+   "sugerencias": {
+    "mage": [
+     "time-lock-aegis",
+     "magis-cloak"
+    ],
+    "phys": [
+     "shifters-shield",
+     "mantle-of-discord"
+    ],
+    "aa": [
+     "mantle-of-discord",
+     "magis-cloak"
+    ],
+    "tank": [
+     "draconic-scale",
+     "prophetic-cloak"
+    ],
+    "any": [
+     "aegis-of-acceleration"
+    ]
+   },
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
   }
  ],
  "notas_items": {
