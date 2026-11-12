@@ -15,6 +15,7 @@ while ($l.IsListening) {
   if ((Test-Path $f -PathType Leaf) -and ([IO.Path]::GetFullPath($f).StartsWith($root))) {
     $ext = [IO.Path]::GetExtension($f).ToLower()
     $c.Response.ContentType = if ($types.ContainsKey($ext)) { $types[$ext] } else { 'application/octet-stream' }
+    $c.Response.Headers.Add('Cache-Control', 'no-store')
     $b = [IO.File]::ReadAllBytes($f)
     $c.Response.ContentLength64 = $b.Length
     $c.Response.OutputStream.Write($b, 0, $b.Length)

@@ -39,7 +39,24 @@ El detalle de qué copiamos de cada editor de pago está en [INVESTIGACION.md](I
 
 > Los proyectos se guardan en el navegador para la dirección `http://localhost:8765`. Ábrelo siempre con los lanzadores y en el mismo navegador para ver tus proyectos.
 
-> Los subtítulos automáticos descargan el modelo de IA (≈80 MB) **una sola vez** y necesitan internet esa primera vez. Después funcionan sin conexión.
+> Los subtítulos automáticos descargan la librería y el modelo de IA (≈80 MB) **la primera vez** y necesitan internet en ese momento. El navegador los guarda en caché para las siguientes veces.
+
+## Estado de las pruebas (honesto)
+
+Probado de forma automática en Chromium (Linux) con archivos de prueba:
+
+- Whisper real con voz en español: unos 16 s de audio en ~9 s en CPU con el modelo ultraligero. Los tiempos por palabra se ajustan al audio real porque Whisper los entrega con hasta 0.5 s de desfase.
+- MP4 H.264/AAC con rotación de celular: la vista previa y la exportación salen iguales.
+- Video de 30 minutos: audio analizado en ~9 s y ~140 MB de memoria; exportar un tramo funciona.
+- Con el ratón: recortar, mover con imán, deshacer, cortar texto con subtítulos (siguen sincronizados) y recargar la página.
+- 150 clips: sólo 1–2 reproductores vivos a la vez.
+
+**Sin probar todavía:**
+
+- Tus propios videos en Windows o Mac.
+- El lanzador de Windows (`servidor.ps1`).
+- Exportar 4K y videos muy largos completos.
+- WebGPU (en el entorno de prueba sólo había CPU).
 
 ## Formatos de exportación
 
