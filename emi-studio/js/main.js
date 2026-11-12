@@ -5,7 +5,7 @@ import { media, importFile } from './media.js';
 import { Player } from './player.js';
 import { Timeline } from './timeline.js';
 import { openExport } from './exportui.js';
-import { initUI } from './ui.js';
+import { initUI, esc } from './ui.js';
 import { createPanels } from './panels.js';
 import { renderInspector as drawInspector } from './inspector.js';
 import { TEXT_STYLES } from './presets.js';
@@ -159,7 +159,7 @@ async function importFiles(files, at = null) {
 }
 
 function defaultTrackFor(m) {
-  if (m.type === 'audio') return app.P.tracks.find((t) => t.music)?.id || 'tA2';
+  if (m.type === 'audio') return app.P.tracks.find((t) => t.music && !t.guide)?.id || 'tA2';
   return app.P.tracks.find((t) => t.main)?.id || 'tV1';
 }
 
@@ -214,11 +214,11 @@ function renderMediaPanel() {
     <h3>Tus medios</h3>
     <button class="import-btn" id="impBtn">＋ Importar video, foto o audio</button>
     <div class="media-grid">${items.map((m) => `
-      ${m.missing ? `<div class="mcard missing" data-id="${m.id}" title="${m.name}"><span>⚠ Falta</span><small>${m.name}</small><button class="btn tiny" data-relink="${m.id}">Volver a vincular</button></div>` : `<div class="mcard ${m.type === 'audio' ? 'audio' : ''} ${m.loading ? 'loading' : ''}" draggable="true" data-id="${m.id}" title="${m.name}">
+      ${m.missing ? `<div class="mcard missing" data-id="${m.id}" title="${esc(m.name)}"><span>⚠ Falta</span><small>${esc(m.name)}</small><button class="btn tiny" data-relink="${m.id}">Volver a vincular</button></div>` : `<div class="mcard ${m.type === 'audio' ? 'audio' : ''} ${m.loading ? 'loading' : ''}" draggable="true" data-id="${m.id}" title="${esc(m.name)}">
         ${m.thumb ? `<img src="${m.thumb}" alt="">` : m.type === 'audio' ? '♫' : ''}
         <span class="mtype">${{ video: 'Video', image: 'Foto', audio: 'Audio' }[m.type]}${m.type === 'video' && m.audioReady && !m.audio ? ' · sin audio' : ''}</span>
         <button class="madd" title="Añadir a la línea de tiempo">+</button>
-        <div class="mmeta"><span>${m.name}</span><span>${m.type === 'image' ? '' : fmtTime(m.duration)}</span></div>
+        <div class="mmeta"><span>${esc(m.name)}</span><span>${m.type === 'image' ? '' : fmtTime(m.duration)}</span></div>
       </div>`}`).join('')}
     </div>
     ${items.length ? '' : '<p class="sub" style="margin-top:12px">Formatos: MP4, MOV, WebM, MKV, JPG, PNG, WebP, MP3, WAV, M4A, OGG, FLAC… (lo que tu navegador pueda leer).</p>'}

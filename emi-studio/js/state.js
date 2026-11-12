@@ -98,8 +98,9 @@ export function splitClip(P, clip, t) {
   clip.dur = offset;
   clip.fadeOut = 0;
   if (clip.words) {
-    right.words = clip.words.filter((w) => w.s >= t);
-    clip.words = clip.words.filter((w) => w.s < t);
+    // palabras relativas al inicio del clip
+    right.words = clip.words.filter((w) => w.s >= offset).map((w) => ({ ...w, s: w.s - offset, e: w.e - offset }));
+    clip.words = clip.words.filter((w) => w.s < offset);
   }
   P.clips.push(right);
   return right;
@@ -120,7 +121,8 @@ export function rippleDeleteRange(P, a, b, onlyTracks = null) {
   }
   P.clips = P.clips.filter((c) => !(affected(c) && c.start >= a - 1e-6 && clipEnd(c) <= b + 1e-6));
   for (const c of P.clips) if (affected(c) && c.start >= b - 1e-6) c.start -= len;
-  P.markers = P.markers.filter((m) => m.t < a || m.t >= b).map((m) => (m.t >= b ? { ...m, t: m.t - len } : m));
+  // los beats pertenecen a la música / sonido guía, que no se recorren: se quedan donde están
+  P.markers = P.markers.filter((m) => m.beat || m.t < a || m.t >= b).map((m) => (!m.beat && m.t >= b ? { ...m, t: m.t - len } : m));
 }
 
 // Inserta un clip al final de un track
@@ -157,5 +159,6 @@ export function migrate(P) {
     P.tracks.splice(at, 0, { ...t });
   });
   P.markers = P.markers || [];
+  for (const c of P.clips) if (c.words && !c.wrel) { c.words = c.words.map((w) => ({ ...w, s: w.s - c.start, e: w.e - c.start })); c.wrel = true; }
   return P;
 }

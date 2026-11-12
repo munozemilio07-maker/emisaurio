@@ -1,3 +1,4 @@
+import { decodeRange } from './audiostream.js';
 // Audio: decodificación, picos de onda, mezcla offline (exportación) y análisis.
 import { clipEnd, clamp } from './state.js';
 
@@ -131,7 +132,15 @@ export async function mixOffline(P, media, sampleRate = 48000, t0 = 0, t1 = null
     if (trk?.guide && !opts.includeGuide) continue;
     if (opts.filter && !opts.filter(c, trk)) continue;
     const src = ctx.createBufferSource();
-    src.buffer = m.audio;
+    const offset = c.in + (a - c.start) * c.speed, srcLen = (b - a) * c.speed;
+    if (sampleRate <= 16000) {
+      // análisis: basta la copia ligera a 16 kHz
+      const d = m.audio.getChannelData(0);
+      const i0 = Math.max(0, Math.floor(offset * 16000)), i1 = Math.min(d.length, Math.ceil((offset + srcLen) * 16000));
+      const bb = ctx.createBuffer(1, Math.max(1, i1 - i0), 16000);
+      bb.copyToChannel(d.subarray(i0, i1), 0);
+      src.buffer = bb;
+    } else src.buffer = await decodeRange(m, offset, offset + srcLen + 0.02);
     src.playbackRate.value = c.speed;
     const g = ctx.createGain();
     const tr = P.tracks.find((x) => x.id === c.trackId);
@@ -146,8 +155,7 @@ export async function mixOffline(P, media, sampleRate = 48000, t0 = 0, t1 = null
     if (c.enhance) { const ch = voiceChain(ctx); ch.set(true); src.connect(ch.input); ch.output.connect(g); }
     else src.connect(g);
     g.connect(master);
-    const offset = c.in + (a - c.start) * c.speed;
-    src.start(a - t0, offset, (b - a) * c.speed);
+    src.start(a - t0, 0, srcLen);
   }
   return await ctx.startRendering();
 }
@@ -163,7 +171,15 @@ export function rmsDb(buffer) {
 }
 
 // Detección de silencios en un AudioBuffer → [[a,b], ...] en tiempo de la fuente
-export function detectSilences(buffer, { thresholdDb = -38, minDur = 0.6, pad = 0.12 } = {}) {
+const silCache = new WeakMap();
+export function detectSilences(buffer, opts = {}) {
+  const key = JSON.stringify(opts);
+  let per = silCache.get(buffer);
+  if (!per) { per = new Map(); silCache.set(buffer, per); }
+  if (!per.has(key)) per.set(key, detectSilencesRaw(buffer, opts));
+  return per.get(key);
+}
+function detectSilencesRaw(buffer, { thresholdDb = -38, minDur = 0.6, pad = 0.12 } = {}) {
   const sr = buffer.sampleRate, win = Math.floor(sr * 0.02);
   const d = buffer.getChannelData(0);
   const thr = Math.pow(10, thresholdDb / 20);

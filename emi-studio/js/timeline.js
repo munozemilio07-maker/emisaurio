@@ -155,7 +155,7 @@ export class Timeline {
       const P = this.app.P;
       const m = media.get(c.mediaId);
       const x0 = e.clientX, y0 = e.clientY;
-      const orig = { start: c.start, dur: c.dur, in: c.in, trackId: c.trackId };
+      const orig = { start: c.start, dur: c.dur, in: c.in, trackId: c.trackId, words: c.words ? c.words.map((w) => ({ ...w })) : null };
       const group = [...this.app.selection].map((id) => P.clips.find((x) => x.id === id)).filter(Boolean);
       const origs = new Map(group.map((g) => [g.id, g.start]));
       const pts = this.snapPoints(new Set(group.map((g) => g.id)));
@@ -183,6 +183,7 @@ export class Timeline {
           ns = Math.min(ns, orig.start + orig.dur - 0.1);
           ns = Math.max(ns, 0, orig.start - orig.in / c.speed);
           c.start = ns; c.dur = orig.dur - (ns - orig.start); c.in = orig.in + (ns - orig.start) * c.speed;
+          if (orig.words) c.words = orig.words.map((w) => ({ ...w, s: w.s - (ns - orig.start), e: w.e - (ns - orig.start) })).filter((w) => w.e > 0);
         } else {
           let ne = this.snapT(orig.start + orig.dur + dx, pts);
           ne = Math.max(ne, orig.start + 0.1);

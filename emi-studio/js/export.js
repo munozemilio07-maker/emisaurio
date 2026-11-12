@@ -29,10 +29,10 @@ export async function supportMatrix(w = 1920, h = 1080) {
   return res;
 }
 
-function outFormat(container) {
+function outFormat(container, streaming = false) {
   switch (container) {
-    case 'mp4': return new MB.Mp4OutputFormat({ fastStart: 'in-memory' });
-    case 'mov': return new MB.MovOutputFormat({ fastStart: 'in-memory' });
+    case 'mp4': return new MB.Mp4OutputFormat({ fastStart: streaming ? false : 'in-memory' });
+    case 'mov': return new MB.MovOutputFormat({ fastStart: streaming ? false : 'in-memory' });
     case 'webm': return new MB.WebMOutputFormat();
     case 'mkv': return new MB.MkvOutputFormat();
     case 'ts': return new MB.MpegTsOutputFormat();
@@ -209,8 +209,15 @@ export async function exportProject(P, opts, onProgress, signal) {
   }
 
   // Audio
-  prog(0, 'Mezclando audio…');
-  const mix = await mixOffline(P, media, 48000, a, b, { includeGuide: !!opts.includeGuide });
+  // Audio mezclado por tramos de 10 s: la memoria no crece con la duración del video
+  const CH = 10;
+  let chunkK = 0;
+  const nextChunk = async () => {
+    const s0 = a + chunkK * CH;
+    if (s0 >= b - 1e-6) return null;
+    chunkK++;
+    return mixOffline(P, media, 48000, s0, Math.min(b, s0 + CH), { includeGuide: !!opts.includeGuide });
+  };
   const pickAudio = async () => {
     for (const c of fmt.a || []) if (await MB.canEncodeAudio(c, { numberOfChannels: 2, sampleRate: 48000 }).catch(() => false)) return c;
     return null;
@@ -218,7 +225,9 @@ export async function exportProject(P, opts, onProgress, signal) {
   const aCodec = await pickAudio();
   if (fmt.kind === 'audio' && !aCodec) throw new Error('Este navegador no puede codificar ' + fmt.label);
 
-  const output = new MB.Output({ format: outFormat(fmt.container), target: new MB.BufferTarget() });
+  // Archivos grandes: se escriben directo al disco (sin acumular GB en memoria)
+  const target = opts.writable ? new MB.StreamTarget(opts.writable, { chunked: true }) : new MB.BufferTarget();
+  const output = new MB.Output({ format: outFormat(fmt.container, !!opts.writable), target });
   let vSrc = null, cv = null, ctx = null, k = 1, fr = null, fps = opts.fps || P.fps;
   if (fmt.kind === 'video') {
     const d = evenDims(P, opts.w, opts.h);
@@ -244,27 +253,26 @@ export async function exportProject(P, opts, onProgress, signal) {
       fr = new ExportFrames(P, fps, a, b);
       prog(0, 'Preparando decodificadores…');
       await fr.prepare();
-      const sr = mix.sampleRate;
-      let aPos = 0;
+      let aTime = 0;
       for (let i = 0; i < fr.N; i++) {
         if (signal?.aborted) throw new DOMException('Cancelado', 'AbortError');
         await fr.load(i);
         renderFrame(ctx, P, a + i / fps, fr.provider(), k);
         await vSrc.add(i / fps, 1 / fps);
-        // audio intercalado (1 s por bloque)
-        if (aSrc && (i + 1) / fps * sr - aPos >= sr) {
-          const to = Math.min(mix.length, Math.floor(((i + 1) / fps) * sr));
-          if (to > aPos) { await aSrc.add(sliceBuffer(mix, aPos, to)); aPos = to; }
+        // audio intercalado: un tramo de 10 s cada vez que el video lo alcanza
+        while (aSrc && aTime < (i + 1) / fps) {
+          const ch = await nextChunk();
+          if (!ch) break;
+          await aSrc.add(ch); aTime += ch.duration;
         }
         if (i % 5 === 0) prog(i / fr.N, `Fotograma ${i} de ${fr.N}`);
       }
-      if (aSrc && aPos < mix.length) await aSrc.add(sliceBuffer(mix, aPos, mix.length));
+      if (aSrc) for (let ch; (ch = await nextChunk());) await aSrc.add(ch);
     } else {
-      const sr = mix.sampleRate;
-      for (let p = 0; p < mix.length; p += sr * 5) {
+      for (let ch, done = 0; (ch = await nextChunk());) {
         if (signal?.aborted) throw new DOMException('Cancelado', 'AbortError');
-        await aSrc.add(sliceBuffer(mix, p, Math.min(mix.length, p + sr * 5)));
-        prog(p / mix.length, 'Codificando audio…');
+        await aSrc.add(ch); done += ch.duration;
+        prog(done / (b - a), 'Mezclando y codificando audio…');
       }
     }
     prog(0.99, 'Finalizando archivo…');
@@ -275,6 +283,7 @@ export async function exportProject(P, opts, onProgress, signal) {
   }
   const ext = fmt.ext;
   const mime = fmt.id === 'm4a' ? MIME.m4a : MIME[fmt.container] || 'application/octet-stream';
+  if (opts.writable) { try { await opts.writable.close(); } catch {} return { streamed: true, name: `${P.name}.${ext}`, aCodec }; }
   return { blob: new Blob([output.target.buffer], { type: mime }), name: `${P.name}.${ext}`, aCodec };
 }
 

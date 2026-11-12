@@ -301,7 +301,7 @@ export function drawText(ctx, P, c, t) {
     for (const wd of line) {
       idx++;
       if (idx > visible) continue;
-      const active = wd.s !== undefined && t >= wd.s && t < wd.e;
+      const active = wd.s !== undefined && lt >= wd.s && lt < wd.e;
       const x = x0 + wd.x;
       if (active && T.hlBox) {
         ctx.save(); ctx.fillStyle = T.highlight;

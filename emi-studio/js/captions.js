@@ -85,7 +85,8 @@ export function buildCaptionClips(P, words, { maxWords = 3, styleId = 'hormozi',
     c.text.content = g.map((x) => x.w).join(' ');
     c.text.styleId = style.id;
     c.transform.y = y;
-    c.words = g;
+    c.words = g.map((x) => ({ ...x, s: x.s - s, e: x.e - s })); // relativas al inicio del clip
+    c.wrel = true;
     return c;
   });
 }
@@ -96,8 +97,9 @@ export function retimeCaption(c, text) {
   c.text.content = text;
   if (!ws.length) { c.words = []; return; }
   const total = ws.reduce((a, x) => a + x.length + 1, 0);
-  let t = c.start;
+  let t = 0;
   c.words = ws.map((w) => { const d = ((w.length + 1) / total) * c.dur; const o = { w, s: t, e: t + d }; t += d; return o; });
+  c.wrel = true;
 }
 
 export function parseSRT(txt) {

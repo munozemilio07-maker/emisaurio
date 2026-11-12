@@ -6,7 +6,7 @@ import { media } from './media.js';
 import { LANGS, MODELS, voiceAudio, transcribe, toWords, buildCaptionClips, parseSRT, captionClipsFromSegments, applyCaptionStyle, retimeCaption } from './captions.js';
 import { HOOKS, findSilences, removeSilences, alternateZoom, addHook, autoColor, applyLook, normalizeLoudness, beatMarkers, guideInfo, cutAtBeats, beatMontage, estimateBpm } from './viral.js';
 import { importFile } from './media.js';
-import { voiceMedia, timelineWords } from './textedit.js';
+import { voiceMedia, timelineWords, transcribeMedia } from './textedit.js';
 import { esc, pct } from './ui.js';
 
 export function createPanels(app, ui) {
@@ -236,24 +236,25 @@ export function createPanels(app, ui) {
         set(`✓ ${clips.length} subtítulos desde la transcripción guardada`);
         return true;
       }
-      set('Preparando el audio…');
-      const audio = await voiceAudio(app.P);
-      const files = {};
-      const res = await transcribe(audio, { model: prefs.capModel, language: prefs.capLang }, (m) => {
-        if (m.type === 'status') set(m.text);
-        if (m.type === 'progress' && m.total) {
-          files[m.file] = [m.loaded, m.total];
-          const [l, t] = Object.values(files).reduce((a, [x, y]) => [a[0] + x, a[1] + y], [0, 0]);
-          set(`Descargando modelo (sólo la primera vez)… ${Math.round((l / t) * 100)}% · ${(t / 1048576).toFixed(0)} MB`);
-        }
-      });
-      const words = toWords(res);
+      if (!quiet) app.history.push(app.P);
+      const todo = vm.filter((m) => !app.P.transcripts?.[m.id]);
+      for (let k = 0; k < todo.length; k++) {
+        const files = {};
+        await transcribeMedia(app.P, todo[k], { model: prefs.capModel, language: prefs.capLang }, (m) => {
+          if (m.type === 'status') set(`(${k + 1}/${todo.length}) ${m.text}`);
+          if (m.type === 'progress' && m.total) {
+            files[m.file] = [m.loaded, m.total];
+            const [l, t] = Object.values(files).reduce((a, [x, y]) => [a[0] + x, a[1] + y], [0, 0]);
+            set(`Descargando modelo (sólo la primera vez)… ${Math.round((l / t) * 100)}% · ${(t / 1048576).toFixed(0)} MB`);
+          }
+        });
+      }
+      const words = timelineWords(app.P);
       if (!words.length) throw new Error('No se detectó voz.');
       const clips = buildCaptionClips(app.P, words, { maxWords: prefs.capWords, styleId: prefs.capStyle, emojis: prefs.capEmoji, pos: prefs.capPos });
-      if (!quiet) app.history.push(app.P);
       app.P.clips = app.P.clips.filter((c) => c.kind !== 'caption').concat(clips);
       app.refresh();
-      set(`✓ ${clips.length} subtítulos · ${words.length} palabras${res.words ? '' : ' (tiempos aproximados)'} · ${res.device === 'webgpu' ? 'GPU' : 'CPU'}`);
+      set(`✓ ${clips.length} subtítulos · ${words.length} palabras`);
       if (!quiet) app.toast(`🎙 ${clips.length} subtítulos generados.`, 'ok');
       return true;
     } catch (e) {

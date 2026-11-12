@@ -77,6 +77,7 @@ export class Player {
     if (e) this.drop(c.id);
     const el = document.createElement(m.type === 'audio' || c.kind === 'audio' ? 'audio' : 'video');
     el.src = m.url; el.preload = 'auto'; el.playsInline = true; el.crossOrigin = 'anonymous';
+    el.preservesPitch = false; // igual que la exportación: la velocidad cambia también el tono
     el.addEventListener('seeked', () => this.requestDraw());
     el.addEventListener('loadeddata', () => this.requestDraw());
     e = { el, mediaId: c.mediaId, gain: null };
@@ -120,8 +121,8 @@ export class Player {
       const soon = this.playing && c.start > t && c.start - t < 1.2;
       const hold = holds.get(c.id);
       if (!active && !soon && !hold) {
-        const e = this.els.get(c.id);
-        if (e && !e.el.paused) e.el.pause();
+        // fuera de la ventana de reproducción: se libera el decodificador (vuelve a crearse al acercarse)
+        if (this.els.has(c.id)) this.drop(c.id);
         continue;
       }
       const e = this.el(c);

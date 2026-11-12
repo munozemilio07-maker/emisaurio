@@ -2,6 +2,7 @@
 import { PLATFORMS, FORMATS, ASPECTS } from './presets.js';
 import { projectDuration, fmtTime, fmtBytes } from './state.js';
 import { exportProject, supportMatrix, evenDims, download } from './export.js';
+import { esc } from './ui.js';
 
 const QUALITY = [['eco', 'Ligero', 0.6], ['high', 'Alta', 1], ['max', 'Máxima', 1.6]];
 let support = null;
@@ -32,7 +33,7 @@ export async function openExport(app) {
         </div>
         <div class="dlg-col">
           <h4>Ajustes</h4>
-          <div class="field wide"><label>Nombre</label><input type="text" id="exName" value="${P.name}"></div>
+          <div class="field wide"><label>Nombre</label><input type="text" id="exName" value="${esc(P.name)}"></div>
           <div class="field wide"><label>Resolución</label><select id="exRes"></select></div>
           <div class="field wide"><label>FPS</label><select id="exFps">${[24, 25, 30, 50, 60].map((f) => `<option value="${f}">${f} fps</option>`).join('')}</select></div>
           <div class="field wide"><label>Calidad</label><div class="chips" id="exQ">${QUALITY.map(([id, l]) => `<button class="chip" data-q="${id}">${l}</button>`).join('')}</div></div>
@@ -174,6 +175,15 @@ export async function openExport(app) {
   $('#exGo').addEventListener('click', async () => {
     const s = settings();
     const name = $('#exName').value.trim() || P.name;
+    // Videos grandes (≈ más de 1 GB): se guardan directo al disco para no llenar la memoria
+    let writable = null;
+    const estBytes = st.fmt.kind === 'video' ? (s.mbps * 1e6 / 8) * (s.range[1] - s.range[0]) : 0;
+    if (estBytes > 1e9 && window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({ suggestedName: `${name}.${st.fmt.ext}` });
+        writable = await handle.createWritable();
+      } catch { return; }
+    }
     const ctrl = new AbortController();
     st.abort = ctrl;
     $('#exGo').disabled = true;
@@ -185,7 +195,7 @@ export async function openExport(app) {
     const t0 = performance.now();
     try {
       const fps = st.fmt.kind === 'gif' ? Math.min(15, s.fps) : s.fps;
-      const res = await exportProject({ ...P, name }, { fmt: st.fmt, w: s.w, h: s.h, fps, mbps: s.mbps, range: s.range, at: app.player.t, includeGuide: !!modal.querySelector('#exGuide')?.checked }, ({ p, label, eta }) => {
+      const res = await exportProject({ ...P, name }, { fmt: st.fmt, w: s.w, h: s.h, fps, mbps: s.mbps, range: s.range, at: app.player.t, includeGuide: !!modal.querySelector('#exGuide')?.checked, writable }, ({ p, label, eta }) => {
         bar.style.width = (p * 100).toFixed(1) + '%';
         txt.textContent = `${Math.round(p * 100)}% · ${label}${eta != null ? ` · quedan ~${Math.ceil(eta)} s` : ''}`;
       }, ctrl.signal);
@@ -195,8 +205,13 @@ export async function openExport(app) {
       $('#exProg').classList.remove('on');
       const done = $('#exDone');
       done.classList.add('on');
+      if (res.streamed) {
+        done.innerHTML = `✓ <b>${esc(res.name)}</b> guardado en tu disco · ${secs} s`;
+        app.toast(`Exportado <b>${esc(res.name)}</b>`, 'ok');
+        return;
+      }
       const canShare = navigator.canShare && navigator.canShare({ files: [new File([res.blob], res.name, { type: res.blob.type })] });
-      done.innerHTML = `✓ <b>${res.name}</b> · ${fmtBytes(res.blob.size)} · ${secs} s ${res.aCodec ? `· audio ${res.aCodec.toUpperCase()}` : ''}
+      done.innerHTML = `✓ <b>${esc(res.name)}</b> · ${fmtBytes(res.blob.size)} · ${secs} s ${res.aCodec ? `· audio ${res.aCodec.toUpperCase()}` : ''}
         <button class="btn small" id="exDl">⬇ Descargar de nuevo</button>
         ${canShare ? '<button class="btn small" id="exShare">↗ Compartir</button>' : ''}`;
       download(res.blob, res.name);

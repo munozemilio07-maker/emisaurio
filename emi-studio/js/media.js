@@ -1,6 +1,7 @@
 // Biblioteca de medios: importación de vídeo, imagen y audio.
 import { uid } from './state.js';
 import { decodeFile, computePeaks } from './audio.js';
+import { analyzeAudio, analysisBuffer } from './audiostream.js';
 
 export const media = new Map();
 
@@ -52,6 +53,29 @@ let persistFn = null;
 export function setPersist(fn) { persistFn = fn; }
 
 // opts.id: reutilizar un id (al abrir un proyecto guardado o volver a vincular). opts.persist=false: no guardar copia.
+async function to16k(buf) {
+  const ctx = new OfflineAudioContext(1, Math.ceil(buf.duration * 16000), 16000);
+  const s = ctx.createBufferSource(); s.buffer = buf; s.connect(ctx.destination); s.start();
+  return (await ctx.startRendering()).getChannelData(0);
+}
+
+// Audio: lectura en streaming (sirve para archivos enormes). Si el navegador no puede, respaldo para archivos pequeños.
+async function loadAudio(m, file) {
+  try {
+    const r = await analyzeAudio(file);
+    if (!r) return;
+    Object.assign(m, { audio: analysisBuffer(r.a16, r.duration), peaks: r.peaks, sampleRate: r.sampleRate, channels: r.channels });
+    if (m.type === 'audio') m.duration = r.duration;
+  } catch (e) {
+    console.warn('Audio por streaming no disponible, uso el método clásico:', e);
+    if (file.size > 400 * 1024 * 1024) { m.audioError = 'Archivo demasiado grande para decodificar su audio en este navegador.'; return; }
+    const buf = await decodeFile(file);
+    if (!buf) return;
+    Object.assign(m, { fullAudio: buf, peaks: computePeaks(buf), audio: analysisBuffer(await to16k(buf), buf.duration), sampleRate: buf.sampleRate, channels: buf.numberOfChannels });
+    if (m.type === 'audio') m.duration = buf.duration;
+  }
+}
+
 export async function importFile(file, onUpdate, opts = {}) {
   const kind = kindOf(file);
   if (!kind) throw new Error(`Formato no reconocido: ${file.name}`);
@@ -65,10 +89,7 @@ export async function importFile(file, onUpdate, opts = {}) {
     Object.assign(m, await loadVideoMeta(url));
     m.loading = false; onUpdate?.();
     // Audio en segundo plano
-    decodeFile(file).then((buf) => {
-      if (buf) { m.audio = buf; m.peaks = computePeaks(buf); }
-      m.audioReady = true; onUpdate?.('audio', m);
-    });
+    loadAudio(m, file).finally(() => { m.audioReady = true; onUpdate?.('audio', m); });
   } else if (kind === 'image') {
     m.bitmap = await createImageBitmap(file);
     m.w = m.bitmap.width; m.h = m.bitmap.height; m.duration = 5;
@@ -80,9 +101,8 @@ export async function importFile(file, onUpdate, opts = {}) {
     m.stats = imageStats(c);
     m.loading = false; m.audioReady = true;
   } else {
-    const buf = await decodeFile(file);
-    if (!buf) throw new Error(`No se pudo decodificar el audio: ${file.name}`);
-    m.audio = buf; m.peaks = computePeaks(buf); m.duration = buf.duration;
+    await loadAudio(m, file);
+    if (!m.audio) { media.delete(id); throw new Error(`No se pudo leer el audio de ${file.name}`); }
     m.loading = false; m.audioReady = true;
   }
   onUpdate?.();

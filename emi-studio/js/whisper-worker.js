@@ -1,6 +1,7 @@
 // Worker de transcripción: Whisper (Transformers.js) corriendo en tu equipo (WebGPU o WASM).
 // El modelo se descarga una vez y queda en la caché del navegador.
-import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.1';
+// Se carga desde jsDelivr (versión fija). Los modelos y el motor quedan en la caché del navegador tras el primer uso.
+import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.1/dist/transformers.min.js';
 
 env.allowLocalModels = false;
 const cache = new Map();

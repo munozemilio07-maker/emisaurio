@@ -15,7 +15,7 @@ export function voiceTrackId(P) {
   let best = null, bestDur = 0;
   for (const tr of P.tracks) {
     if (tr.type !== 'video' && tr.type !== 'audio' || tr.music || tr.sfx) continue;
-    const d = P.clips.filter((c) => c.trackId === tr.id && media.get(c.mediaId)?.audio).reduce((a, c) => a + c.dur, 0);
+    const d = P.clips.filter((c) => c.trackId === tr.id && c.volume > 0 && media.get(c.mediaId)?.audio).reduce((a, c) => a + c.dur, 0);
     if (d > bestDur) { bestDur = d; best = tr.id; }
   }
   return best;
