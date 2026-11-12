@@ -1,0 +1,688 @@
+{
+ "_como_editar": "Todo esto se escribe a mano. Los ids de objetos son los de items_catalogo.json. 'necesidades': cada una junta los objetos de 'items' más los que tengan alguna etiqueta de tienda de 'filtros'. 'counters': 'contra' y 'respuesta' aceptan {\"items\": [...]} y/o {\"necesidad\": \"id\"}. 'contra_control': objetos y reliquias que te protegen del control. 'notas_items': consejo de cuándo comprar un objeto concreto.",
+ "necesidades": [
+  {
+   "id": "movimiento",
+   "nombre": "Velocidad de movimiento",
+   "nombre_en": "Movement speed",
+   "descripcion": "Objetos y reliquias que te mueven más rápido o te cambian de lugar.",
+   "cuando": "Si no alcanzas a los rivales, no logras escapar o tu dios no tiene salto.",
+   "filtros": [
+    "Pathfinding"
+   ],
+   "items": [
+    "stampede",
+    "regrowth-striders",
+    "damaru",
+    "gem-of-focus",
+    "tekko-kagi",
+    "musashis-dual-swords",
+    "arondight",
+    "circes-hexstone",
+    "helm-of-darkness",
+    "blinking-abyss",
+    "hastened-fatalis",
+    "agility-relic",
+    "blink-rune",
+    "aegis-of-acceleration"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "quitar_control",
+   "nombre": "Quitarme el control de masas",
+   "nombre_en": "Remove crowd control",
+   "descripcion": "Te limpian, te vuelven inmune o hacen que el control dure menos.",
+   "cuando": "Si mueres aturdido o enraizado sin poder jugar. Mira también la pestaña «Contra el control».",
+   "filtros": [
+    "Tenacity"
+   ],
+   "items": [
+    "purification-beads",
+    "magis-cloak",
+    "talisman-of-purification",
+    "spirit-robe",
+    "resolute-mantle",
+    "mantle-of-discord",
+    "hussars-wings",
+    "stampede",
+    "circes-hexstone",
+    "avatars-parashu",
+    "dreamers-idol"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "antiheal",
+   "nombre": "Antiheal",
+   "nombre_en": "Anti-heal",
+   "descripcion": "Reducen 40% la curación del rival al pegarle.",
+   "cuando": "Si el rival tiene curanderos o mucho robo de vida. Mientras antes lo compres, más sirve. Los efectos de antiheal no se suman entre sí.",
+   "items": [
+    "divine-ruin",
+    "brawlers-beat-stick",
+    "stygian-anchor",
+    "toxic-blade",
+    "sundering-arc",
+    "sundering-echo"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false,
+   "nota": "La tienda del juego también etiqueta Contagion y Avenging Blade como «reducción de curación», pero su texto actual no aplica antiheal, así que no están en esta lista."
+  },
+  {
+   "id": "contra_tanques",
+   "nombre": "Más daño contra tanques",
+   "nombre_en": "More damage against tanks",
+   "descripcion": "Daño por porcentaje de vida, penetración o reducción de protecciones.",
+   "cuando": "Si el rival compra mucha vida o protecciones y ya no le haces daño.",
+   "items": [
+    "soul-reaver",
+    "qins-blade",
+    "heartseeker",
+    "obsidian-shard",
+    "titans-bane",
+    "the-executioner",
+    "dominance",
+    "oath-sworn-spear",
+    "void-shield",
+    "void-stone",
+    "screeching-gargoyle",
+    "stone-of-binding",
+    "avenging-blade",
+    "ethereal-staff",
+    "contagion"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "contra_escudos",
+   "nombre": "Romper escudos",
+   "nombre_en": "Break shields",
+   "descripcion": "Reducen o derriten los escudos de vida enemigos.",
+   "cuando": "Si el rival se escuda a sí mismo o a su equipo.",
+   "items": [
+    "erosion",
+    "mystical-mail",
+    "pharaohs-curse",
+    "shield-splitter",
+    "lernaean-bow"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "contra_basicos",
+   "nombre": "Aguantar ataques básicos y críticos",
+   "nombre_en": "Survive basic attacks and crits",
+   "descripcion": "Reducen el daño de críticos, bajan la velocidad de ataque del rival o le regresan el daño.",
+   "cuando": "Si su carry de ataque básico es quien te mata.",
+   "items": [
+    "spectral-armor",
+    "midgardian-mail",
+    "leviathans-hide",
+    "hide-of-the-nemean-lion",
+    "pharaohs-curse",
+    "toxic-blade",
+    "stygian-anchor",
+    "phantom-shell"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "sobrevivir_burst",
+   "nombre": "Sobrevivir a un combo",
+   "nombre_en": "Survive a burst combo",
+   "descripcion": "Te dan un momento de inmunidad, un escudo o protecciones de golpe.",
+   "cuando": "Si un asesino o un mago te borra antes de que tu equipo reaccione.",
+   "items": [
+    "aegis-of-acceleration",
+    "time-lock-aegis",
+    "phantom-shell",
+    "mantle-of-discord",
+    "shifters-shield",
+    "berserkers-shield",
+    "xibalban-effigy",
+    "bloodforge",
+    "blood-bound-book",
+    "phoenix-feather"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "apoyar_aliados",
+   "nombre": "Curar y escudar aliados",
+   "nombre_en": "Heal and shield allies",
+   "descripcion": "Aumentan tu curación y escudos, o protegen a tu equipo al activarlos.",
+   "cuando": "Si juegas un dios que cura o cuida a su compañero.",
+   "items": [
+    "chandras-grace",
+    "rod-of-asclepius",
+    "heartwood-charm",
+    "lifebinder",
+    "soul-locket",
+    "amanita-charm",
+    "shell-of-rebuke",
+    "lotus-sickle"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "prot_magica",
+   "nombre": "Protección mágica",
+   "nombre_en": "Magical protection",
+   "descripcion": "Objetos que dan protección mágica.",
+   "cuando": "Si la mayoría del daño que recibes es mágico.",
+   "filtros": [
+    "MagicalProtection"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "prot_fisica",
+   "nombre": "Protección física",
+   "nombre_en": "Physical protection",
+   "descripcion": "Objetos que dan protección física.",
+   "cuando": "Si la mayoría del daño que recibes es físico.",
+   "filtros": [
+    "PhysicalProtection"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "vida",
+   "nombre": "Vida",
+   "nombre_en": "Health",
+   "descripcion": "Objetos que dan vida máxima.",
+   "cuando": "Para aguantar daño de cualquier tipo, sobre todo daño verdadero.",
+   "filtros": [
+    "Health"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "robo_vida",
+   "nombre": "Robo de vida",
+   "nombre_en": "Lifesteal",
+   "descripcion": "Te curan según el daño que haces.",
+   "cuando": "Para peleas largas. Ojo: el antiheal y Contagion lo castigan.",
+   "filtros": [
+    "LifeSteal"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "enfriamiento",
+   "nombre": "Enfriamiento",
+   "nombre_en": "Cooldown",
+   "descripcion": "Tus habilidades vuelven antes.",
+   "cuando": "Si tu dios depende de sus habilidades más que de sus básicos.",
+   "filtros": [
+    "CooldownReduction"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "penetracion",
+   "nombre": "Penetración",
+   "nombre_en": "Penetration",
+   "descripcion": "Ignoras parte de las protecciones del rival.",
+   "cuando": "Cuando el rival empieza a comprar protecciones.",
+   "filtros": [
+    "Penetration",
+    "MagicalPenetration",
+    "PhysicalPenetration"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "vel_ataque",
+   "nombre": "Velocidad de ataque",
+   "nombre_en": "Attack speed",
+   "descripcion": "Pegas básicos más rápido.",
+   "cuando": "Para dioses que hacen su daño con ataques básicos.",
+   "filtros": [
+    "AttackSpeed"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "critico",
+   "nombre": "Golpe crítico",
+   "nombre_en": "Critical strike",
+   "descripcion": "Probabilidad o daño de crítico.",
+   "cuando": "Para carries de ataque básico cuando ya tienen velocidad de ataque.",
+   "filtros": [
+    "CriticalStrikeChance"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "mana",
+   "nombre": "Maná",
+   "nombre_en": "Mana",
+   "descripcion": "Maná máximo o regeneración de maná.",
+   "cuando": "Si te quedas sin maná en línea.",
+   "filtros": [
+    "Mana",
+    "ManaRegen"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "inteligencia",
+   "nombre": "Inteligencia (daño mágico)",
+   "nombre_en": "Intelligence",
+   "descripcion": "Objetos de poder mágico.",
+   "cuando": "Para dioses que escalan con Inteligencia.",
+   "filtros": [
+    "MagicalPower"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "fuerza",
+   "nombre": "Fuerza (daño físico)",
+   "nombre_en": "Strength",
+   "descripcion": "Objetos de poder físico.",
+   "cuando": "Para dioses que escalan con Fuerza.",
+   "filtros": [
+    "PhysicalPower"
+   ],
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  }
+ ],
+ "counters": [
+  {
+   "id": "antiheal-vs-curacion",
+   "titulo": "Antiheal contra builds de curación y robo de vida",
+   "contra": {
+    "necesidad": "robo_vida",
+    "items": [
+     "chandras-grace",
+     "rod-of-asclepius",
+     "heartwood-charm",
+     "lifebinder",
+     "soul-locket",
+     "amanita-charm",
+     "yogis-necklace",
+     "phoenix-feather",
+     "shield-of-the-phoenix",
+     "regrowth-striders"
+    ]
+   },
+   "respuesta": {
+    "necesidad": "antiheal"
+   },
+   "explicacion": "Los objetos de antiheal aplican 40% de reducción de curación por 5 s al hacer daño. Eso recorta el robo de vida y las curaciones de los objetos de apoyo. Con uno en el equipo basta, porque estos efectos no se suman entre sí.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "contagion-vs-robo-vida",
+   "titulo": "Contagion contra robo de vida",
+   "contra": {
+    "necesidad": "robo_vida"
+   },
+   "respuesta": {
+    "items": [
+     "contagion"
+    ]
+   },
+   "explicacion": "Contagion acumula cargas en quien te pega y suma 5 de golpe si un enemigo te roba 100 de vida; al atacarlo o controlarlo le quitas 1% de su vida máxima por carga. En Smite 2 no es antiheal: castiga al que se cura pegándote.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": true,
+   "nota": "La tienda todavía lo etiqueta como reducción de curación, aunque su texto no la menciona. Falta confirmar en partida que no reduce curación."
+  },
+  {
+   "id": "penetracion-vs-protecciones",
+   "titulo": "Penetración contra objetos de protección",
+   "contra": {
+    "necesidad": "prot_fisica",
+    "items": []
+   },
+   "respuesta": {
+    "items": [
+     "titans-bane",
+     "obsidian-shard",
+     "the-executioner",
+     "dominance",
+     "oath-sworn-spear",
+     "void-shield",
+     "void-stone",
+     "avenging-blade",
+     "stone-of-binding",
+     "screeching-gargoyle"
+    ]
+   },
+   "explicacion": "Titan's Bane y Obsidian Shard dan +20% de penetración a tu primera habilidad. The Executioner quita 7% de protecciones por básico (hasta 4 veces) y Dominance da +20% de penetración a los básicos. Void Shield y Void Stone bajan 10% la protección de los enemigos cercanos, para todo tu equipo.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "penetracion-vs-prot-magica",
+   "titulo": "Penetración contra protección mágica",
+   "contra": {
+    "necesidad": "prot_magica"
+   },
+   "respuesta": {
+    "items": [
+     "obsidian-shard",
+     "the-executioner",
+     "void-stone",
+     "avenging-blade",
+     "stone-of-binding",
+     "screeching-gargoyle"
+    ]
+   },
+   "explicacion": "Lo mismo que contra la protección física, del lado mágico: Obsidian Shard para magos de habilidades y Void Stone como aura para todo el equipo.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "porcentaje-vs-vida",
+   "titulo": "Daño por porcentaje de vida contra objetos de vida",
+   "contra": {
+    "necesidad": "vida"
+   },
+   "respuesta": {
+    "items": [
+     "soul-reaver",
+     "qins-blade",
+     "heartseeker",
+     "ethereal-staff",
+     "contagion"
+    ]
+   },
+   "explicacion": "Soul Reaver (habilidades mágicas), Qin's Blade (básicos) y Heartseeker (habilidades físicas) pegan según la vida del rival, así que mientras más vida compre, más daño le hacen.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "spectral-vs-critico",
+   "titulo": "Spectral Armor contra críticos",
+   "contra": {
+    "necesidad": "critico"
+   },
+   "respuesta": {
+    "items": [
+     "spectral-armor"
+    ]
+   },
+   "explicacion": "Spectral Armor hace que recibas 30% menos daño de críticos y tus aliados cercanos 15% menos.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "frenar-vs-vel-ataque",
+   "titulo": "Frenar a los carries de velocidad de ataque",
+   "contra": {
+    "necesidad": "vel_ataque"
+   },
+   "respuesta": {
+    "items": [
+     "midgardian-mail",
+     "pharaohs-curse",
+     "toxic-blade",
+     "stygian-anchor",
+     "leviathans-hide",
+     "hide-of-the-nemean-lion"
+    ]
+   },
+   "explicacion": "Midgardian Mail quita 10% de velocidad de ataque por cada básico que recibes (hasta 4). Pharaoh's Curse, al activarlo, quita 40% a los enemigos cercanos. Leviathan's Hide le baja 10% el daño a quien te pega con básicos, y Hide of the Nemean Lion refleja 40% del daño de sus ataques por 4 s.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "rompeescudos-vs-escudos",
+   "titulo": "Rompeescudos contra objetos de escudo",
+   "contra": {
+    "items": [
+     "blood-bound-book",
+     "bloodforge",
+     "sphere-of-negation",
+     "glorious-pridwen",
+     "shell-of-rebuke",
+     "phantom-shell"
+    ]
+   },
+   "respuesta": {
+    "necesidad": "contra_escudos"
+   },
+   "explicacion": "Erosion reduce 30% los escudos que reciben los enemigos cercanos. Mystical Mail les quita 25% del escudo por segundo si están pegados a ti. Pharaoh's Curse y Lernaean Bow quitan 50% al activarlos, y Shield Splitter quita 70% y te lo da a ti.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "id": "inmunidad-vs-ralentizar",
+   "titulo": "Inmunidad a ralentizaciones",
+   "contra": {
+    "items": [
+     "gem-of-isolation"
+    ]
+   },
+   "respuesta": {
+    "items": [
+     "hussars-wings",
+     "stampede"
+    ]
+   },
+   "explicacion": "Hussar's Wings te hace inmune a las ralentizaciones siempre. Stampede lo hace al activarlo, para ti y tus aliados cercanos, además de dar velocidad.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  }
+ ],
+ "contra_control": [
+  {
+   "item": "purification-beads",
+   "tipo": "reliquia",
+   "efecto": "Inmune a control por 2 s. Enfriamiento de 150 s.",
+   "cuando": "Úsala justo antes de que caiga el control que te mata (una ulti, un agarre) o al entrar a pelear. No la gastes en una ralentización.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": true,
+   "nota": "La ficha no dice si se puede activar estando ya aturdido. Falta probarlo en partida."
+  },
+  {
+   "item": "magis-cloak",
+   "tipo": "pasivo",
+   "efecto": "Cada 90 s una burbuja bloquea el primer control fuerte que recibas y te da 1.5 s de inmunidad.",
+   "cuando": "No se activa: se gasta sola con el primer control. Si el rival tiene un control barato, lo usará para romperla antes del importante.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "talisman-of-purification",
+   "tipo": "activo",
+   "efecto": "Te limpia a ti y a tus aliados cercanos (6.4 m) de todo control y les da 1 s de inmunidad. Enfriamiento de 140 s.",
+   "cuando": "Es para el support: actívalo cuando atrapen a tu carry, no para ti solo.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "spirit-robe",
+   "tipo": "pasivo",
+   "efecto": "Al recibir control fuerte: +40 de protección física y mágica y te curas 4% de tu vida durante 6 s. También da tenacidad.",
+   "cuando": "No quita el control; hace que sobrevivas mientras dura. Bueno para quien va al frente y lo van a controlar de todos modos.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "resolute-mantle",
+   "tipo": "pasivo",
+   "efecto": "Cada control fuerte de habilidad te da regeneración de vida y tenacidad acumulable.",
+   "cuando": "Contra equipos que encadenan muchos controles seguidos: cada uno dura menos que el anterior.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "mantle-of-discord",
+   "tipo": "pasivo",
+   "efecto": "Si te pegan con menos de 40% de vida: aturdes 1 s a los enemigos cercanos y eres inmune a control 1 s. Enfriamiento de 110 s.",
+   "cuando": "Se activa solo. Te salva cuando te rematan pegados a ti.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "hussars-wings",
+   "tipo": "pasivo",
+   "efecto": "Eres inmune a las ralentizaciones.",
+   "cuando": "Contra equipos que te frenan todo el tiempo y no te dejan llegar o escapar.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "stampede",
+   "tipo": "activo",
+   "efecto": "Tú y tus aliados cercanos: inmunidad a ralentizaciones y mucha velocidad por 4 s. Enfriamiento de 90 s.",
+   "cuando": "Para entrar o salir de una pelea en equipo.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "circes-hexstone",
+   "tipo": "activo",
+   "efecto": "Te transformas: embistes, eres inmune a control y ganas +60 protecciones.",
+   "cuando": "Como escape o para iniciar cuando esperas que te respondan con control.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "avatars-parashu",
+   "tipo": "activo",
+   "efecto": "+25% de Fuerza e inmunidad a desplazamientos por 10 s.",
+   "cuando": "Contra dioses que jalan o levantan, cuando necesitas quedarte pegando.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "dreamers-idol",
+   "tipo": "activo",
+   "efecto": "+25% de Inteligencia e inmunidad a desplazamientos por 10 s.",
+   "cuando": "Lo mismo que Parashu, para magos: que no te saquen de tu ulti.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "aegis-of-acceleration",
+   "tipo": "reliquia",
+   "efecto": "Inmune al daño (y a la curación) por 1.5 s; solo puedes moverte. Enfriamiento de 140 s.",
+   "cuando": "No quita el control, pero evita el daño del combo. Úsala cuando el daño ya viene en camino.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": true,
+   "nota": "Falta confirmar si se puede activar mientras estás aturdido."
+  }
+ ],
+ "notas_items": {
+  "divine-ruin": {
+   "cuando": "Segundo o tercer objeto si el rival tiene curandero. Si nadie se cura, no lo compres: hay objetos con más daño.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "brawlers-beat-stick": {
+   "cuando": "El antiheal de luchadores y guerreros: da protecciones y poder mientras peleas.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "stygian-anchor": {
+   "cuando": "El antiheal del tanque o support, cuando tus compañeros de daño no quieren comprarlo.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "toxic-blade": {
+   "cuando": "El antiheal de los carries de ataque básico. También le baja la velocidad de ataque al carry rival.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "contagion": {
+   "cuando": "Para tanques contra carries con mucho robo de vida. No reduce la curación.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "soul-reaver": {
+   "cuando": "Para magos cuando el rival tiene dos tanques o mucha vida.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "qins-blade": {
+   "cuando": "Para carries de ataque básico contra tanques con mucha vida.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "magis-cloak": {
+   "cuando": "Para carries y magos que mueren en cuanto los atrapan con un control.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  },
+  "spectral-armor": {
+   "cuando": "Solo si el carry rival ya compró crítico. Antes de eso hay mejores protecciones físicas.",
+   "parche_verificado": "OB47",
+   "fuente": "https://smite2.live/items",
+   "pendiente_verificar": false
+  }
+ }
+}

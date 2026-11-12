@@ -73,6 +73,27 @@ a { color: var(--gold); }
 .pend { font-size: 11px; color: var(--ember); border: 1px solid var(--ember); padding: 0 6px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
 .orden { margin: 6px 0 0; padding-left: 22px; display: grid; gap: 5px; font-size: 14.5px; color: #d7d1bf; }
 .syn .foe { cursor: pointer; }
+.spr-a { background-image: url("img/items_all.webp"); background-size: calc(var(--ac) * 100%) calc(var(--ar) * 100%); background-color: var(--stone); }
+.it[data-item] { cursor: pointer; }
+.it[data-item]:hover .n { color: var(--gold); }
+.itiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 12px 8px; }
+.itile { cursor: pointer; background: none; border: 0; padding: 0; display: grid; gap: 5px; justify-items: center; text-align: center; min-width: 0; }
+.itile .ic { width: 56px; height: 56px; border: 1px solid var(--gold-deep); box-shadow: 0 4px 10px rgba(0,0,0,.5); }
+.itile .nm { font-size: 12.5px; line-height: 1.15; color: #d7d1bf; overflow-wrap: anywhere; }
+.itile:hover .ic, .itile[aria-current="true"] .ic { border-color: var(--gold-hi); box-shadow: 0 0 0 2px var(--gold); }
+.itile[aria-current="true"] .nm { color: var(--gold); }
+.iteminfo { grid-template-columns: minmax(0, 1fr); }
+.ihead { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; }
+.ic.big { width: 84px; height: 84px; border: 1px solid var(--gold); box-shadow: 0 0 30px rgba(236,198,112,.2); }
+.fblock { display: grid; gap: 6px; }
+.fblock .lead { font-size: 17px; }
+.gtext { font-size: 14px; color: #cfc9b8; display: grid; gap: 3px; border-left: 2px solid var(--line); padding-left: 12px; }
+.plain { margin: 0; padding-left: 20px; display: grid; gap: 5px; }
+.linkb { cursor: pointer; background: none; border: 0; padding: 0; color: var(--gold); text-decoration: underline; font: inherit; }
+.cline { display: grid; gap: 8px; }
+.foe .face.spr-a { width: 30px; height: 30px; }
+button.foe { font: inherit; color: inherit; }
+.inp { flex: 1 1 220px; min-width: 0; padding: 10px 14px; background: var(--void); border: 1px solid var(--line); border-radius: 2px; }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
 .step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
@@ -277,6 +298,7 @@ footer p { max-width: 90ch; }
  <section class="gut hall" id="v-habilidades" hidden></section>
  <section class="gut hall" id="v-combos" hidden></section>
  <section class="gut hall" id="v-sinergias" hidden></section>
+ <section class="gut hall" id="v-objetos" hidden></section>
 </main>
 
 <footer class="gut">
@@ -412,7 +434,7 @@ function itemRow(id, opts = {}) {
   const it = IT[id];
   if (!it) return "";
   const pk = opts.sug ? `<span class="pk sug">${t("sugerido")}</span>` : opts.pick != null ? `<span class="pk" title="Jugadores que lo compran">${opts.pick}%</span>` : opts.tag ? `<span class="pk">${opts.tag}</span>` : "";
-  return `<div class="it${opts.small ? " small" : ""}">
+  return `<div class="it${opts.small ? " small" : ""}"${IBY[id] ? ` data-item="${id}" role="button" tabindex="0" title="${L("Ver ficha del objeto", "Open item page")}"` : ""}>
     <span class="ic spr-i" style="${pos(it.i, DATA.ic, DATA.ir)}" role="img" aria-label="${esc(it.e)}"></span>
     <div><div class="n">${esc(IN(it))}</div>${lang === "es" && it.n !== it.e ? `<div class="e">${esc(it.e)}</div>` : ""}
       ${opts.noDesc || !L(it.d, it.de) ? "" : `<div class="d">${esc(L(it.d, it.de))}</div>`}
@@ -729,8 +751,123 @@ function renderCombos() {
   if (keepFocus) { const q = $("#comboQ"); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
 
+// ---------- Objetos (src/curado/items_catalogo.json + items_guia.json) ----------
+const ICAT = CURADO.items_catalogo || {};
+const ITEMS = ICAT.items || [];
+const IBY = Object.fromEntries(ITEMS.map(r => [r.id, r]));
+const GUIA = CURADO.items_guia || {};
+const NEEDS = GUIA.necesidades || [];
+const HOJA = ICAT.hoja || { columnas: 20, filas: 1 };
+document.documentElement.style.setProperty("--ac", HOJA.columnas);
+document.documentElement.style.setProperty("--ar", HOJA.filas);
+const STAT_L = { MaxHealth: ["Vida", "Health"], MagicalPower: ["Inteligencia", "Intelligence"], PhysicalPower: ["Fuerza", "Strength"], ManaPerTime: ["Reg. de maná", "MP5"], CooldownReductionPercent: ["Enfriamiento", "Cooldown Rate"],
+  AttackSpeedPercent: ["Vel. de ataque", "Attack Speed"], MaxMana: ["Maná", "Mana"], MagicalProtectionItem: ["Prot. mágica", "Magical Prot."], PhysicalProtectionItem: ["Prot. física", "Physical Prot."], LifeStealPercent: ["Robo de vida", "Lifesteal"],
+  PhysicalProtection: ["Prot. física", "Physical Prot."], MagicalProtection: ["Prot. mágica", "Magical Prot."], HealthPerTime: ["Reg. de vida", "HP5"], InhandPower: ["Daño de ataque", "Attack Damage"], MagicalPenetrationPercent: ["Penetración", "Penetration"],
+  MagicalPenetrationFlat: ["Penetración", "Penetration"], PhysicalPenetrationPercent: ["Penetración", "Penetration"], CritChance: ["Prob. de crítico", "Crit Chance"], Plating: ["Blindaje", "Plating"], CrowdControlReductionItem: ["Tenacidad", "Tenacity"],
+  Dampening: ["Amortiguación", "Dampening"], EchoItem: ["Eco", "Echo"], PathfindingItem: ["Movilidad", "Pathfinding"], MovementSpeed: ["Vel. de movimiento", "Movement Speed"] };
+const PCT_STATS = new Set(["CooldownReductionPercent", "AttackSpeedPercent", "LifeStealPercent", "MagicalPenetrationPercent", "PhysicalPenetrationPercent", "CritChance"]);
+const ICATS = { ofensivo: ["Ofensivos", "Offensive"], defensivo: ["Defensivos", "Defensive"], hibrido: ["Híbridos", "Hybrid"], especial: ["Reliquias mejoradas y especiales", "Upgraded relics and specials"], inicial: ["Iniciales", "Starters"], reliquia: ["Reliquias", "Relics"], consumible: ["Consumibles", "Consumables"], componente: ["Componentes", "Components"], de_un_dios: ["De un solo dios", "God-specific"] };
+const ICAT1 = { ofensivo: ["Ofensivo", "Offensive"], defensivo: ["Defensivo", "Defensive"], hibrido: ["Híbrido", "Hybrid"], especial: ["Especial", "Special"], inicial: ["Inicial", "Starter"], reliquia: ["Reliquia", "Relic"], consumible: ["Consumible", "Consumable"], componente: ["Componente", "Component"], de_un_dios: ["De un solo dios", "God-specific"] };
+const ITIPO = { pasivo: ["Pasivo", "Passive"], activo: ["Activo (se usa con botón)", "Active (button)"], inicial: ["Inicial", "Starter"], reliquia: ["Reliquia", "Relic"], consumible: ["Consumible", "Consumable"] };
+const iCat = r => r.categoria !== "otro" ? r.categoria : (r.nivel === "T1" || r.nivel === "T2") ? "componente" : "especial";
+const iComplete = r => r.nivel === "T3" || r.tipo === "reliquia" || (r.nivel === "" && (r.tipo === "pasivo" || r.tipo === "activo") && r.costo >= 2000);
+const iName = r => lang === "es" && r.nombre_es ? r.nombre_es : r.nombre;
+const posA = i => pos(i, HOJA.columnas, HOJA.filas);
+const needById = id => NEEDS.find(n => n.id === id);
+const needItems = n => !n ? [] : ITEMS.filter(r => (n.items || []).includes(r.id) || (iComplete(r) && (n.filtros || []).some(f => r.filtros.includes(f))));
+const sideItems = side => { const out = new Map(); for (const id of (side || {}).items || []) if (IBY[id]) out.set(id, IBY[id]); for (const r of needItems(needById((side || {}).necesidad))) out.set(r.id, r); return [...out.values()]; };
+const itemNeeds = r => NEEDS.filter(n => needItems(n).includes(r));
+// Quién compra cada objeto en Joust, según las builds de data.json.
+const BUYERS = {};
+for (const g of G) for (const role of Object.values(g.roles)) for (const b of Object.values(role.b)) for (const [id, pick, flag] of b || []) {
+  if (flag === 2 || pick == null) continue;
+  const m = BUYERS[id] || (BUYERS[id] = new Map());
+  if (!m.has(g.s) || m.get(g.s) < pick) m.set(g.s, pick);
+}
+let itTab = "catalogo", itCat = "all", itNeed = "", itSel = "", itQ = "";
+const iTile = r => `<button class="itile" type="button" data-item="${r.id}" title="${esc(r.nombre)}"${itSel === r.id ? ' aria-current="true"' : ""}><span class="ic spr-a" style="${posA(r.i)}"></span><span class="nm">${esc(iName(r))}</span></button>`;
+const iMini = r => `<button class="foe" type="button" data-item="${r.id}" title="${esc(r.nombre)}"><span class="face spr-a" style="${posA(r.i)}"></span><span>${esc(iName(r))}</span></button>`;
+function itemStats(r) {
+  const rows = r.stats.filter(st => st[1]).map(st => `+${st[1]}${PCT_STATS.has(st[0]) ? "%" : ""} ${STAT_L[st[0]] ? L(STAT_L[st[0]][0], STAT_L[st[0]][1]) : st[2]}`);
+  const ad = /Adaptive Stat: \+(\d+) Strength or \+(\d+) Intelligence/.exec(r.texto_en);
+  if (ad) rows.unshift(L(`+${ad[1]} Fuerza o +${ad[2]} Inteligencia (según lo que más tengas)`, `+${ad[1]} Strength or +${ad[2]} Intelligence`));
+  return rows;
+}
+function itemFicha(r) {
+  const cat = iCat(r), needs = itemNeeds(r), nota = (GUIA.notas_items || {})[r.id];
+  const counteredBy = (GUIA.counters || []).filter(c => sideItems(c.contra).includes(r) && !sideItems(c.respuesta).includes(r));
+  const countersWhat = (GUIA.counters || []).filter(c => sideItems(c.respuesta).includes(r));
+  const ctrl = (GUIA.contra_control || []).find(c => c.item === r.id);
+  const buyers = [...(BUYERS[r.id] || new Map()).entries()].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([sl, pk]) => [bySlug(sl), pk]).filter(x => x[0]);
+  const stats = itemStats(r);
+  const parts = r.componentes.map(id => IBY[id]).filter(Boolean);
+  const block = (title, html) => html ? `<div class="fblock"><span class="eyebrow">${title}</span>${html}</div>` : "";
+  return `<article class="shrine iteminfo" id="itemFicha">
+    <div class="shrine-body">
+      <div class="ihead"><span class="ic big spr-a" style="${posA(r.i)}" role="img" aria-label="${esc(r.nombre)}"></span>
+        <div class="name"><span class="eyebrow">${L(ICAT1[cat][0], ICAT1[cat][1])}${r.nivel ? " · " + r.nivel : ""}</span><h2>${esc(iName(r))}</h2>${lang === "es" && r.nombre_es ? `<p class="en">${esc(r.nombre)}</p>` : ""}</div></div>
+      <div class="facts">
+        <div><span class="v">${r.costo ? r.costo.toLocaleString("es-MX") : "—"}</span><span class="l">${L("Oro", "Gold")}</span></div>
+        <div><span class="v" style="font-size:18px">${L(ITIPO[r.tipo][0], ITIPO[r.tipo][1])}</span><span class="l">${L("Tipo", "Type")}</span></div>
+      </div>
+      ${block(L("Stats", "Stats"), stats.length ? `<div class="fxs">${stats.map(x => `<span class="fx on">${esc(x)}</span>`).join("")}</div>` : `<p class="muted">${L("No da stats fijas.", "No flat stats.")}</p>`)}
+      ${block(L("Qué hace", "What it does"), `${lang === "es" && r.descripcion_es ? `<p class="lead">${esc(r.descripcion_es)}</p>` : ""}${r.texto_en ? `<div class="gtext"><span class="muted">${L("Texto del juego:", "In-game text:")}</span>${r.texto_en.split("\n").map(l => `<p>${esc(l)}</p>`).join("")}</div>` : `<p class="muted">${L("Sin pasiva ni activa: solo da stats.", "No passive or active: stats only.")}</p>`}`)}
+      ${block(L("Cuándo comprarlo", "When to buy it"), (nota || needs.length) ? `<ul class="plain">${nota ? `<li>${esc(nota.cuando)}</li>` : ""}${needs.map(n => `<li><button class="linkb" type="button" data-need="${n.id}">${esc(L(n.nombre, n.nombre_en || n.nombre))}</button>: ${esc(n.cuando)}</li>`).join("")}</ul>` : `<p class="muted">${L("Todavía no hay consejo escrito para este objeto.", "No buying advice written yet.")}</p>`)}
+      ${ctrl ? block(L("Contra el control", "Against crowd control"), `<p>${esc(ctrl.efecto)}</p><p class="muted">${esc(ctrl.cuando)}</p>`) : ""}
+      ${block(L("Qué lo contrarresta", "What counters it"), counteredBy.map(c => `<div class="cline"><p>${esc(c.explicacion)}</p><div class="foes">${sideItems(c.respuesta).slice(0, 10).map(iMini).join("")}</div></div>`).join(""))}
+      ${block(L("A qué contrarresta", "What it counters"), countersWhat.map(c => `<div class="cline"><p><b>${esc(c.titulo)}.</b> ${esc(c.explicacion)}</p><div class="foes">${sideItems(c.contra).filter(x => x !== r).slice(0, 10).map(iMini).join("")}</div></div>`).join(""))}
+      ${block(L("Se arma con", "Builds from"), parts.length ? `<div class="foes">${parts.map(iMini).join("")}</div>` : "")}
+      ${block(L("Quién lo compra en Joust", "Who buys it in Joust"), buyers.length ? `<div class="foes">${buyers.map(([g, pk]) => `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))} · ${pk}%</span></button>`).join("")}</div>` : "")}
+      <p class="muted" style="font-size:13px">${esc(r.parche_verificado || "")} · <a href="${esc(safeUrl(r.fuente))}" target="_blank" rel="noopener">${L("Fuente", "Source")}</a></p>
+    </div></article>`;
+}
+function renderObjetos() {
+  const el = $("#v-objetos");
+  if (!ITEMS.length) { el.innerHTML = `<p class="empty">${L("Falta src/curado/items_catalogo.json.", "src/curado/items_catalogo.json is missing.")}</p>`; return; }
+  const tabs = [["catalogo", L("Catálogo", "Catalog")], ["counters", "Counters"], ["control", L("Contra el control", "Against crowd control")]];
+  const seg = `<div class="seg" role="group">${tabs.map(([k, l]) => `<button type="button" data-ittab="${k}" aria-pressed="${itTab === k}">${l}</button>`).join("")}</div>`;
+  let body = "";
+  if (itTab === "catalogo") {
+    const need = needById(itNeed), pool = need ? needItems(need) : ITEMS;
+    const list = pool.filter(r => (itCat === "all" ? (need || itQ ? true : iComplete(r)) : iCat(r) === itCat) && (!itQ || norm(r.nombre).includes(itQ) || norm(r.nombre_es || "").includes(itQ)))
+      .sort((a, b) => iName(a).localeCompare(iName(b), lang));
+    const cats = Object.keys(ICATS).filter(c => ITEMS.some(r => iCat(r) === c));
+    const sel = IBY[itSel];
+    body = `${sel ? itemFicha(sel) : ""}
+      <div class="panel">
+        <div class="picker-row">
+          <input id="itQ" type="search" placeholder="${L("Buscar objeto…", "Search item…")}" value="${esc($("#itQ") ? $("#itQ").value : "")}" aria-label="${L("Buscar objeto", "Search item")}" class="inp">
+          <label class="selects" for="itNeed">${L("Necesito", "I need")} <select id="itNeed"><option value="">${L("cualquier cosa", "anything")}</option>${NEEDS.map(n => `<option value="${n.id}"${n.id === itNeed ? " selected" : ""}>${esc(L(n.nombre, n.nombre_en || n.nombre))}</option>`).join("")}</select></label>
+        </div>
+        <div class="chips">${[["all", L(need ? "Todos" : "Completos", need ? "All" : "Finished")], ...cats.map(c => [c, L(ICATS[c][0], ICATS[c][1])])].map(([k, l]) => `<button class="chip" type="button" data-itcat="${k}" aria-pressed="${itCat === k}">${l}</button>`).join("")}</div>
+        ${need ? `<p class="rule"><b>${esc(L(need.nombre, need.nombre_en || need.nombre))}.</b> ${esc(need.descripcion)} ${esc(need.cuando)}${need.nota ? " " + esc(need.nota) : ""}${need.pendiente_verificar ? pendTag(need) : ""}</p>` : ""}
+        <p class="muted">${L(`${list.length} objetos. Toca uno para ver su ficha.`, `${list.length} items. Tap one to open it.`)}</p>
+        <div class="itiles">${list.map(iTile).join("") || `<p class="empty">${L("Ningún objeto con esos filtros.", "No items match.")}</p>`}</div>
+      </div>`;
+  } else if (itTab === "counters") {
+    body = `<div class="combos">${(GUIA.counters || []).map(c => `<article class="sit"><h3>${esc(c.titulo)}${pendTag(c)}</h3><p class="why" style="color:#d7d1bf;font-size:15px">${esc(c.explicacion)}</p>
+      <div><span class="eyebrow">${L("El problema", "The problem")}</span><div class="foes" style="margin-top:6px">${sideItems(c.contra).slice(0, 16).map(iMini).join("")}</div></div>
+      <div><span class="eyebrow">${L("La respuesta", "The answer")}</span><div class="foes" style="margin-top:6px">${sideItems(c.respuesta).slice(0, 16).map(iMini).join("")}</div></div>
+      ${c.nota ? `<p class="why">${esc(c.nota)}</p>` : ""}</article>`).join("") || `<p class="empty">${L("Todavía no hay counters: se agregan en src/curado/items_guia.json.", "No counters yet.")}</p>`}</div>`;
+  } else {
+    body = `<p class="rule">${L("Control fuerte es lo que te impide actuar: aturdir, enraizar, silenciar, levantar o jalar. La ralentización es control suave. Estos objetos y reliquias te lo quitan, te vuelven inmune o te ayudan a sobrevivirlo.", "Hard crowd control stops you from acting: stun, root, silence, knock up or pull. Slows are soft control. These items and relics remove it, make you immune or help you survive it.")}</p>
+      <div class="sits">${(GUIA.contra_control || []).map(c => { const r = IBY[c.item]; if (!r) return ""; return `<article class="sit"><h3>${iMini(r)}<span class="diff o-derivado">${L(ITIPO[c.tipo] ? ITIPO[c.tipo][0].split(" ")[0] : c.tipo, c.tipo)}</span>${pendTag(c)}</h3>
+        <p style="font-size:15px">${esc(c.efecto)}</p><p class="why"><b>${L("Cuándo", "When")}:</b> ${esc(c.cuando)}</p>${c.nota ? `<p class="why">${esc(c.nota)}</p>` : ""}</article>`; }).join("")}</div>`;
+  }
+  const focus = document.activeElement && document.activeElement.id === "itQ";
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Objetos", "Items")}</span><h2>${L("Qué hace cada objeto y qué lo contrarresta", "What every item does and what counters it")}</h2>
+    <p>${L("Catálogo completo del parche, con las etiquetas de la tienda del juego. Los nombres en español son traducción propia; el texto del juego va en inglés.", "Full patch catalog with the in-game store tags.")}</p></div>${seg}${body}`;
+  if (focus) { const q = $("#itQ"); if (q) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }
+}
+function openItem(id, scroll) {
+  if (!IBY[id]) return;
+  itSel = id; itTab = "catalogo";
+  setView("objetos");
+  if (scroll !== false) { const f = $("#itemFicha"); if (f) f.scrollIntoView({ block: "start" }); }
+}
+
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
@@ -742,6 +879,7 @@ function setView(v, keepHash) {
   if (view === "habilidades") renderHabilidades();
   if (view === "combos") renderCombos();
   if (view === "sinergias") renderSinergias();
+  if (view === "objetos") renderObjetos();
   if (!keepHash) { try { history.replaceState(null, "", "#" + (view === "dioses" && cur ? cur.god.s : view)); } catch (e) {} }
 }
 
@@ -879,6 +1017,14 @@ document.addEventListener("click", e => {
   const fm = t.closest("[data-fxmode]");
   if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
   if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
+  const itb = t.closest("[data-ittab]");
+  if (itb) { itTab = itb.dataset.ittab; renderObjetos(); return; }
+  const icb = t.closest("[data-itcat]");
+  if (icb) { itCat = icb.dataset.itcat; renderObjetos(); return; }
+  const nb = t.closest("[data-need]");
+  if (nb) { itNeed = nb.dataset.need; itCat = "all"; itSel = ""; renderObjetos(); window.scrollTo(0, $(".views").offsetTop); return; }
+  const ib = t.closest("[data-item]");
+  if (ib) { openItem(ib.dataset.item); return; }
   const stp = t.closest("[data-sintipo]");
   if (stp) { sinTipo = stp.dataset.sintipo; renderSinergias(); return; }
   const cd = t.closest("[data-cdiff]");
@@ -911,12 +1057,14 @@ function tryAddFoe(inp, force) {
   const again = $("#foeQ"); if (again) again.focus();
 }
 document.addEventListener("change", e => {
+  if (e.target.id === "itNeed") { itNeed = e.target.value; itCat = "all"; renderObjetos(); }
   if (e.target.id === "fPan") { fPan = e.target.value; renderGods(); }
   if (e.target.id === "fSort") { fSort = e.target.value; renderGods(); }
 });
 document.addEventListener("input", e => {
   if (e.target.id === "q") { const g = findGod(e.target.value); if (g) { if (view !== "dioses") setView("dioses", true); select(g); } }
   if (e.target.id === "foeQ") tryAddFoe(e.target, false);
+  if (e.target.id === "itQ") { itQ = norm(e.target.value); renderObjetos(); }
   if (e.target.id === "comboQ") { comboQ = norm(e.target.value); renderCombos(); }
 });
 document.addEventListener("keydown", e => {
