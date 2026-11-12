@@ -95,14 +95,20 @@ a { color: var(--gold); }
 button.foe { font: inherit; color: inherit; }
 .inp { flex: 1 1 220px; min-width: 0; padding: 10px 14px; background: var(--void); border: 1px solid var(--line); border-radius: 2px; }
 .slots { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-.slotb { position: relative; display: grid; gap: 5px; justify-items: center; text-align: center; padding: 8px 4px; background: var(--void); border: 1px dashed var(--line); min-width: 0; font: inherit; color: inherit; }
-.slotb.full { cursor: pointer; border-style: solid; border-color: var(--gold-deep); }
+.slotb { position: relative; background: var(--void); border: 1px dashed var(--line); min-width: 0; }
+.slotb .pick { cursor: pointer; width: 100%; display: grid; gap: 5px; justify-items: center; text-align: center; padding: 10px 4px 8px; background: none; border: 0; font: inherit; color: inherit; }
+.slotb.full { border-style: solid; border-color: var(--gold-deep); }
+.slotb.on { border: 1px solid var(--gold-hi); box-shadow: 0 0 0 2px var(--gold), 0 0 26px rgba(236,198,112,.25); }
 .slotb .ic { width: 52px; height: 52px; max-width: 100%; aspect-ratio: 1; border: 1px solid var(--line); background-color: var(--stone); }
 .slotb.full .ic { border-color: var(--gold-deep); }
 .slotb .nm { font-size: 12px; line-height: 1.15; overflow-wrap: anywhere; }
-.slotb .x { position: absolute; top: 2px; right: 5px; color: var(--muted); font-size: 16px; }
-.slotb.full:hover { border-color: var(--ember); } .slotb.full:hover .x { color: var(--ember); }
-.bgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+.slotb.ghost .ic, .slotb.ghost .nm { opacity: .38; }
+.slotb.ghost:hover .ic, .slotb.ghost:hover .nm { opacity: .8; }
+.slotb .tag { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.slotb .rm { cursor: pointer; position: absolute; top: 0; right: 0; width: 26px; height: 26px; background: none; border: 0; color: var(--muted); font-size: 18px; line-height: 1; }
+.slotb .rm:hover { color: var(--ember); }
+.bgrid2 { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.suggs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; }
 .sugg { cursor: pointer; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; text-align: left; padding: 8px; background: rgba(6,7,12,.55); border: 1px solid var(--line); font: inherit; color: inherit; }
 .sugg:hover { border-color: var(--gold); }
 .sugg .ic { width: 44px; height: 44px; border: 1px solid var(--gold-deep); }
@@ -110,7 +116,14 @@ button.foe { font: inherit; color: inherit; }
 .sugg .tx i { font-size: 12.5px; color: var(--muted); }
 .sugg .rs { font-size: 13px; color: #cfc9b8; }
 .sugg .plus { font-family: var(--font-head); font-size: 22px; color: var(--gold); padding: 0 6px; }
+.itile.used { opacity: .3; cursor: default; }
+@media (max-width: 860px) { .bgrid2 { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 520px) { .slots { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* Ficha de objeto: usa todo el ancho, en dos columnas cuando cabe */
+.shrine.iteminfo { grid-template-columns: minmax(0, 1fr); }
+.iteminfo .name h2 { overflow-wrap: normal; word-break: normal; font-size: clamp(26px, 4vw, 44px); }
+.iteminfo .fcols { columns: 2 360px; column-gap: 32px; }
+.iteminfo .fcols > .fblock { break-inside: avoid; margin-bottom: 18px; }
 .tw { overflow-x: auto; }
 .vgs { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
 .vgs th { text-align: left; font-family: var(--font-head); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); padding: 6px 12px 8px 0; border-bottom: 1px solid var(--gold-deep); }
@@ -826,6 +839,7 @@ function itemFicha(r) {
         <div><span class="v">${r.costo ? r.costo.toLocaleString("es-MX") : "—"}</span><span class="l">${L("Oro", "Gold")}</span></div>
         <div><span class="v" style="font-size:18px">${L(ITIPO[r.tipo][0], ITIPO[r.tipo][1])}</span><span class="l">${L("Tipo", "Type")}</span></div>
       </div>
+      <div class="fcols">
       ${block(L("Stats", "Stats"), stats.length ? `<div class="fxs">${stats.map(x => `<span class="fx on">${esc(x)}</span>`).join("")}</div>` : `<p class="muted">${L("No da stats fijas.", "No flat stats.")}</p>`)}
       ${block(L("Qué hace", "What it does"), `${lang === "es" && r.descripcion_es ? `<p class="lead">${esc(r.descripcion_es)}</p>` : ""}${r.texto_en ? `<div class="gtext"><span class="muted">${L("Texto del juego:", "In-game text:")}</span>${r.texto_en.split("\n").map(l => `<p>${esc(l)}</p>`).join("")}</div>` : `<p class="muted">${L("Sin pasiva ni activa: solo da stats.", "No passive or active: stats only.")}</p>`}`)}
       ${block(L("Cuándo comprarlo", "When to buy it"), (nota || needs.length) ? `<ul class="plain">${nota ? `<li>${esc(nota.cuando)}</li>` : ""}${needs.map(n => `<li><button class="linkb" type="button" data-need="${n.id}">${esc(L(n.nombre, n.nombre_en || n.nombre))}</button>: ${esc(n.cuando)}</li>`).join("")}</ul>` : `<p class="muted">${L("Todavía no hay consejo escrito para este objeto.", "No buying advice written yet.")}</p>`)}
@@ -834,6 +848,7 @@ function itemFicha(r) {
       ${block(L("A qué contrarresta", "What it counters"), countersWhat.map(c => `<div class="cline"><p><b>${esc(c.titulo)}.</b> ${esc(c.explicacion)}</p><div class="foes">${sideItems(c.contra).filter(x => x !== r).slice(0, 10).map(iMini).join("")}</div></div>`).join(""))}
       ${block(L("Se arma con", "Builds from"), parts.length ? `<div class="foes">${parts.map(iMini).join("")}</div>` : "")}
       ${block(L("Quién lo compra en Joust", "Who buys it in Joust"), buyers.length ? `<div class="foes">${buyers.map(([g, pk]) => `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))} · ${pk}%</span></button>`).join("")}</div>` : "")}
+      </div>
       <p class="muted" style="font-size:13px">${esc(r.parche_verificado || "")} · <a href="${esc(safeUrl(r.fuente))}" target="_blank" rel="noopener">${L("Fuente", "Source")}</a></p>
     </div></article>`;
 }
@@ -947,18 +962,45 @@ function bldSummary(g, r) {
     ${covers ? `<div class="fblock"><span class="eyebrow">${L("Qué cubre", "What it covers")}</span><ul class="plain">${covers}</ul></div>` : ""}
     <div class="fblock"><span class="eyebrow">${L("Efectos de cada objeto", "Each item's effect")}</span><ul class="plain">${passives}</ul></div>`;
 }
+function bldActive() { return BLD.slot != null && BLD.slot >= 0 && BLD.slot < 6 ? Math.min(BLD.slot, BLD.items.length) : (BLD.items.length < 6 ? BLD.items.length : -1); }
 function renderBuilder() {
   const el = $("#v-creador");
   if (!ITEMS.length) { el.innerHTML = `<p class="empty">${L("Falta src/curado/items_catalogo.json.", "Item catalog missing.")}</p>`; return; }
   if (!bldGod()) { BLD.god = cur ? cur.god.s : G[0].s; BLD.role = ""; }
   const g = bldGod(), r = bldRole(g), keys = Object.keys(g.roles), { E } = analyse();
-  const sug = BLD.items.length < 6 ? bldSuggest(g, r) : [];
-  const slots = Array.from({ length: 6 }, (_, i) => { const it = IBY[BLD.items[i]]; return it ? `<button class="slotb full" type="button" data-bldrm="${i}" title="${L("Quitar", "Remove")} ${esc(it.nombre)}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="nm">${esc(iName(it))}</span><span class="x" aria-hidden="true">×</span></button>` : `<div class="slotb"><span class="ic"></span><span class="nm muted">${i + 1}</span></div>`; }).join("");
-  const q = BLD.q, found = q ? ITEMS.filter(x => buildable(x) && !BLD.items.includes(x.id) && (norm(x.nombre).includes(q) || norm(x.nombre_es || "").includes(q))).slice(0, 18) : [];
+  const act = bldActive(), replacing = act >= 0 && act < BLD.items.length ? IBY[BLD.items[act]] : null;
+  const sug = bldSuggest(g, r);
+  const ghostFor = i => sug[i - BLD.items.length];
+  const slots = Array.from({ length: 6 }, (_, i) => {
+    const it = IBY[BLD.items[i]], on = i === act ? " on" : "";
+    if (it) return `<div class="slotb full${on}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="nm">${esc(iName(it))}</span></button><button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
+    const gh = ghostFor(i), gi = gh && IBY[gh.id];
+    if (i === act) return `<div class="slotb on"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm">${L("Elige abajo", "Pick below")}</span></button></div>`;
+    return gi ? `<div class="slotb ghost"><button class="pick" type="button" data-bldslot="${i}" data-ghost="${gi.id}" title="${L("Sugerido", "Suggested")}: ${esc(gi.nombre)}"><span class="ic spr-a" style="${posA(gi.i)}"></span><span class="nm">${esc(iName(gi))}</span><span class="tag">${L("sugerido", "suggested")}</span></button></div>`
+      : `<div class="slotb"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm muted">${i + 1}</span></button></div>`;
+  }).join("");
   const starter = r.st[0] && IT[r.st[0][0]], relic = r.re[0] && IT[r.re[0][0]];
+  // Tienda: sugerencias para la casilla activa + catálogo completo
+  let shop = "";
+  if (act >= 0) {
+    let list = sug.slice();
+    if (BLD.ghost) { const k = list.findIndex(c => c.id === BLD.ghost); if (k > 0) list.unshift(list.splice(k, 1)[0]); }
+    const sugHTML = `<div class="fblock"><span class="eyebrow">${L("Sugerencias para esta casilla", "Suggestions for this slot")}</span>
+      ${list.length ? `<div class="suggs">${list.slice(0, 6).map(c => { const it = IBY[c.id]; return `<button class="sugg" type="button" data-bldadd="${c.id}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="tx"><b>${esc(iName(it))}</b>${lang === "es" && it.nombre_es ? `<i>${esc(it.nombre)}</i>` : ""}${c.why.slice(0, 3).map(w => `<span class="rs">${esc(w)}</span>`).join("")}</span><span class="plus" aria-hidden="true">+</span></button>`; }).join("")}</div>` : `<p class="muted">${L("Sin sugerencias para esta casilla.", "No suggestions for this slot.")}</p>`}</div>`;
+    const q = BLD.q, cat = BLD.cat || "all", cats = ["ofensivo", "defensivo", "hibrido", "especial"];
+    const all = ITEMS.filter(x => buildable(x) && (cat === "all" || iCat(x) === cat) && (!q || norm(x.nombre).includes(q) || norm(x.nombre_es || "").includes(q))).sort((x, y) => iName(x).localeCompare(iName(y), lang));
+    const storeHTML = `<div class="fblock"><span class="eyebrow">${L("Tienda completa", "Full store")}</span>
+      <div class="picker-row"><input id="bldQ" class="inp" type="search" placeholder="${L("Buscar objeto…", "Search item…")}" value="${esc($("#bldQ") ? $("#bldQ").value : "")}" aria-label="${L("Buscar objeto", "Search item")}"></div>
+      <div class="chips">${[["all", L("Todos", "All")], ...cats.map(c => [c, L(ICATS[c][0], ICATS[c][1])])].map(([k, l]) => `<button class="chip" type="button" data-bldcat="${k}" aria-pressed="${cat === k}">${l}</button>`).join("")}</div>
+      <div class="itiles">${all.map(x => { const used = BLD.items.includes(x.id); return `<button class="itile${used ? " used" : ""}" type="button" ${used ? "disabled" : `data-bldadd="${x.id}"`} title="${esc(x.nombre)}${used ? L(" (ya está en tu build)", " (already in your build)") : ""}"><span class="ic spr-a" style="${posA(x.i)}"></span><span class="nm">${esc(iName(x))}</span></button>`; }).join("") || `<p class="muted">${L("Nada con ese filtro.", "No match.")}</p>`}</div></div>`;
+    shop = `<section class="panel" id="bldShop"><div class="sec-head"><span class="eyebrow">${L("Casilla", "Slot")} ${act + 1}</span><h2>${replacing ? L(`Cambiar ${iName(replacing)}`, `Replace ${iName(replacing)}`) : L("Elige un objeto", "Pick an item")}</h2></div>
+      ${BLD.items.length === 0 ? storeHTML + sugHTML : sugHTML + storeHTML}</section>`;
+  } else {
+    shop = `<section class="panel" id="bldShop"><div class="sec-head"><span class="eyebrow">${L("Build completa", "Build complete")}</span><h2>${L("Ya tienes los 6 objetos", "You have all 6 items")}</h2><p>${L("Toca una casilla para cambiar ese objeto, o la × para quitarlo.", "Tap a slot to change that item, or × to remove it.")}</p></div></section>`;
+  }
   const focusId = document.activeElement && document.activeElement.id;
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Creador de builds", "Build maker")}</span><h2>${L("Arma tu build y mira qué hace", "Make your build and see what it does")}</h2>
-      <p>${L("Elige un dios y ve agregando objetos. Las sugerencias salen de lo que se compra en Joust con ese dios, de lo que compran los dioses de su mismo estilo y del equipo rival que elijas.", "Pick a god and add items. Suggestions come from Joust purchases on that god, on gods of the same style, and from the enemy team you pick.")}</p></div>
+      <p>${L("Toca una casilla para abrir la tienda. Las casillas vacías muestran en fantasma lo que te sugiero según lo que se compra en Joust con ese dios, su estilo y el equipo rival.", "Tap a slot to open the store. Empty slots show a ghost of what is suggested from Joust purchases on that god, their style and the enemy team.")}</p></div>
     <div class="panel">
       <div class="picker-row">
         <button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>
@@ -969,19 +1011,14 @@ function renderBuilder() {
       <div class="slots">${slots}</div>
       <div class="chips">
         ${["off", "hyb", "def"].filter(k => r.b[k]).map(k => `<button class="chip" type="button" data-bldload="${k}">${L("Cargar la", "Load")} ${t(KIND[k].t).toLowerCase()}</button>`).join("")}
+        ${sug.length && BLD.items.length < 6 ? `<button class="chip" type="button" data-bldfill="1">${L("Aceptar las sugeridas", "Accept suggestions")}</button>` : ""}
         ${BLD.items.length ? `<button class="chip" type="button" data-bldclear="1">${L("Vaciar", "Clear")}</button><button class="copy" type="button" data-copy="${esc(BLD.items.map(id => L(`${iName(IBY[id])} (${IBY[id].nombre})`, IBY[id].nombre)).join(" > "))}">${L("Copiar lista", "Copy list")}</button>` : ""}
       </div>
+      <div class="fblock"><span class="eyebrow">${L("Equipo rival", "Enemy team")}</span>
+        <div class="picker-row"><input id="foeQ2" type="search" list="godlist" class="inp" placeholder="${t("Agregar rival (hasta 3)…")}" autocomplete="off" aria-label="${t("Agregar rival (hasta 3)…")}">${E.length ? `<button class="chip" type="button" id="foeClear">${t("Limpiar")}</button>` : ""}</div>
+        ${E.length ? `<div class="foes">${E.map(x => `<button class="foe" type="button" data-foe="${x.s}">${face(x)}<span>${esc(N(x))}</span><span class="x" aria-hidden="true">×</span></button>`).join("")}</div>` : `<p class="muted">${L("Agrega a los rivales para que las sugerencias y los avisos los tomen en cuenta.", "Add enemies so suggestions and warnings take them into account.")}</p>`}</div>
     </div>
-    <div class="bgrid">
-      <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Siguiente objeto", "Next item")}</span><h2>${BLD.items.length >= 6 ? L("Build completa", "Build complete") : L("Sugerencias", "Suggestions")}</h2></div>
-        ${sug.length ? `<div class="list">${sug.map(c => { const it = IBY[c.id]; return `<button class="sugg" type="button" data-bldadd="${c.id}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="tx"><b>${esc(iName(it))}</b>${lang === "es" && it.nombre_es ? `<i>${esc(it.nombre)}</i>` : ""}${c.why.slice(0, 3).map(w => `<span class="rs">${esc(w)}</span>`).join("")}</span><span class="plus" aria-hidden="true">+</span></button>`; }).join("")}</div>` : `<p class="muted">${BLD.items.length >= 6 ? L("Ya tienes los 6 objetos. Quita uno para ver más sugerencias.", "You have all 6 items. Remove one to see more suggestions.") : L("Sin sugerencias.", "No suggestions.")}</p>`}
-        <div class="fblock"><span class="eyebrow">${L("O busca cualquier objeto", "Or search any item")}</span>
-          <input id="bldQ" class="inp" type="search" placeholder="${L("Buscar objeto…", "Search item…")}" value="${esc($("#bldQ") ? $("#bldQ").value : "")}" aria-label="${L("Buscar objeto", "Search item")}">
-          ${found.length ? `<div class="itiles">${found.map(x => `<button class="itile" type="button" data-bldadd="${x.id}" title="${esc(x.nombre)}"><span class="ic spr-a" style="${posA(x.i)}"></span><span class="nm">${esc(iName(x))}</span></button>`).join("")}</div>` : q ? `<p class="muted">${L("Nada con ese nombre.", "No match.")}</p>` : ""}</div>
-        <div class="fblock"><span class="eyebrow">${L("Equipo rival", "Enemy team")}</span>
-          <div class="picker-row"><input id="foeQ2" type="search" list="godlist" class="inp" placeholder="${t("Agregar rival (hasta 3)…")}" autocomplete="off" aria-label="${t("Agregar rival (hasta 3)…")}">${E.length ? `<button class="chip" type="button" id="foeClear">${t("Limpiar")}</button>` : ""}</div>
-          ${E.length ? `<div class="foes">${E.map(x => `<button class="foe" type="button" data-foe="${x.s}">${face(x)}<span>${esc(N(x))}</span><span class="x" aria-hidden="true">×</span></button>`).join("")}</div>` : `<p class="muted">${L("Agrega a los rivales para que las sugerencias y los avisos los tomen en cuenta.", "Add enemies so suggestions and warnings take them into account.")}</p>`}</div>
-      </section>
+    <div class="bgrid2">${shop}
       <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Resumen", "Summary")}</span><h2>${L("Qué hará tu build", "What your build does")}</h2></div>${bldSummary(g, r)}</section>
     </div>`;
   if (focusId === "bldQ" || focusId === "foeQ2") { const f = $("#" + focusId); if (f) { f.focus(); if (focusId === "bldQ") f.setSelectionRange(f.value.length, f.value.length); } }
@@ -1192,12 +1229,17 @@ document.addEventListener("click", e => {
   if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
   if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
   const ba = t.closest("[data-bldadd]");
-  if (ba) { if (BLD.items.length < 6 && !BLD.items.includes(ba.dataset.bldadd)) { BLD.items.push(ba.dataset.bldadd); BLD.q = ""; const bq = $("#bldQ"); if (bq) bq.value = ""; saveBld(); renderBuilder(); } return; }
+  if (ba) { const id = ba.dataset.bldadd, at = bldActive(); if (at >= 0 && !BLD.items.includes(id)) { if (at < BLD.items.length) BLD.items[at] = id; else BLD.items.push(id); BLD.slot = null; BLD.ghost = ""; BLD.q = ""; const bq = $("#bldQ"); if (bq) bq.value = ""; saveBld(); const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); } return; }
   const br = t.closest("[data-bldrm]");
-  if (br) { BLD.items.splice(+br.dataset.bldrm, 1); saveBld(); renderBuilder(); return; }
+  if (br) { BLD.items.splice(+br.dataset.bldrm, 1); BLD.slot = null; BLD.ghost = ""; saveBld(); renderBuilder(); return; }
+  const bs = t.closest("[data-bldslot]");
+  if (bs) { BLD.slot = +bs.dataset.bldslot; BLD.ghost = bs.dataset.ghost || ""; renderBuilder(); const sh = $("#bldShop"); if (sh && sh.getBoundingClientRect().top > innerHeight * 0.7) sh.scrollIntoView({ block: "start" }); return; }
+  const bc = t.closest("[data-bldcat]");
+  if (bc) { BLD.cat = bc.dataset.bldcat; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); return; }
+  if (t.closest("[data-bldfill]")) { const g0 = bldGod(); for (const c of bldSuggest(g0, bldRole(g0))) { if (BLD.items.length >= 6) break; if (!BLD.items.includes(c.id)) BLD.items.push(c.id); } BLD.slot = null; saveBld(); renderBuilder(); return; }
   const bl = t.closest("[data-bldload]");
-  if (bl) { const g0 = bldGod(), b0 = bldRole(g0).b[bl.dataset.bldload]; if (b0) { BLD.items = b0.map(x => x[0]).filter(id => IBY[id]).slice(0, 6); saveBld(); renderBuilder(); } return; }
-  if (t.closest("[data-bldclear]")) { BLD.items = []; saveBld(); renderBuilder(); return; }
+  if (bl) { const g0 = bldGod(), b0 = bldRole(g0).b[bl.dataset.bldload]; if (b0) { BLD.items = b0.map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.slot = null; saveBld(); renderBuilder(); } return; }
+  if (t.closest("[data-bldclear]")) { BLD.items = []; BLD.slot = null; saveBld(); renderBuilder(); return; }
   const vg = t.closest("[data-vgsg]");
   if (vg) { vgsGroup = vg.dataset.vgsg; renderChat(); return; }
   const itb = t.closest("[data-ittab]");
