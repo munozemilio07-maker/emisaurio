@@ -103,6 +103,10 @@ button.foe { font: inherit; color: inherit; }
 .vgs .path { color: var(--muted); font-size: 13.5px; white-space: nowrap; }
 .vgs .fx { margin-left: 8px; }
 .keys { display: inline-flex; gap: 4px; flex-wrap: nowrap; }
+kbd.pad { border-radius: 999px; min-width: 30px; height: 30px; box-shadow: none; color: #0b0d14; border-color: transparent; }
+kbd.xa { background: #6fcf6f; } kbd.xb { background: #e8695f; } kbd.xx { background: #6aa8f0; } kbd.xy { background: #f0cf5a; }
+kbd.xs { background: var(--stone-2); color: var(--ink); border-color: var(--line); border-radius: 6px; font-size: 12px; }
+.vgs .pend { margin-left: 8px; }
 kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 7px; font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--gold); background: var(--void); border: 1px solid var(--gold-deep); box-shadow: inset 0 -3px 0 var(--gold-deep); }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
@@ -882,6 +886,8 @@ const VGS = CURADO.chat_rapido || {};
 const VCMDS = VGS.comandos || [];
 const VCATS = Object.fromEntries((VGS.categorias || []).map(c => [c.codigo, c]));
 let vgsQ = "", vgsGroup = "all";
+const XB = { A: "xa", B: "xb", X: "xx", Y: "xy" };
+const padcaps = keys => `<span class="keys">${(keys || []).map(k => `<kbd class="pad ${XB[k] || "xs"}">${esc(k)}</kbd>`).join("")}</span>`;
 const keycaps = keys => `<span class="keys">${(keys || []).map(k => `<kbd>${esc(k)}</kbd>`).join("")}</span>`;
 function vgsPath(c) {
   const parts = [];
@@ -890,7 +896,7 @@ function vgsPath(c) {
 }
 const vgsMsg = c => lang === "es" && c.mensaje_es ? c.mensaje_es : c.mensaje_en;
 function vgsRow(c, why) {
-  return `<tr><td>${keycaps(c.teclas)}</td><td>${c.control && c.control.length ? keycaps(c.control) : `<span class="muted">—</span>`}</td>
+  return `<tr><td>${keycaps(c.teclas)}</td><td>${c.control && c.control.length ? padcaps(c.control) + (c.control_pendiente_verificar ? `<span class="pend" title="${esc(c.control_parche || "")}">${L("por verificar", "unverified")}</span>` : "") : `<span class="muted">—</span>`}</td>
     <td><b>${esc(vgsMsg(c))}</b>${lang === "es" && c.mensaje_es ? `<span class="e2">${esc(c.mensaje_en)}</span>` : ""}${c.modo ? `<span class="fx">${esc(L("Solo " + c.modo, c.modo + " only"))}</span>` : ""}${why ? `<span class="why2">${esc(why)}</span>` : ""}</td>
     <td class="path">${esc(vgsPath(c))}</td></tr>`;
 }
@@ -901,18 +907,20 @@ function renderChat() {
   const top = (VGS.top || []).map(x => [VCMDS.find(c => c.codigo === x.codigo), x.por_que]).filter(x => x[0]);
   const groups = Object.values(VCATS).filter(c => c.codigo.length === 2);
   const list = VCMDS.filter(c => (vgsGroup === "all" || c.codigo.startsWith(vgsGroup)) && (!vgsQ || norm(c.mensaje_en + " " + (c.mensaje_es || "") + " " + c.codigo).includes(vgsQ)));
-  const head = `<thead><tr><th>${L("Teclado", "Keyboard")}</th><th>${L("Control", "Controller")}</th><th>${L("Mensaje", "Message")}</th><th>${L("Ruta en el menú", "Menu path")}</th></tr></thead>`;
+  const head = `<thead><tr><th>${L("Teclado", "Keyboard")}</th><th>${L("Xbox", "Xbox")}</th><th>${L("Mensaje", "Message")}</th><th>${L("Ruta en el menú", "Menu path")}</th></tr></thead>`;
   const focus = document.activeElement && document.activeElement.id === "vgsQ";
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Chat rápido (VGS)", "Quick chat (VGS)")}</span><h2>${L("Habla con tu equipo sin escribir", "Talk to your team without typing")}</h2>
       <p>${L("El VGS manda mensajes de voz ya grabados con una combinación corta. La lista de comandos sale de la wiki oficial de Smite 2.", "VGS sends pre-recorded voice messages with a short combo. The command list comes from the official Smite 2 wiki.")}</p></div>
     <div class="sits">
       <article class="sit"><h3>${L("En teclado", "On keyboard")}</h3><p style="font-size:15px">${L("Abre el menú con", "Open the menu with")} ${keycaps([kb.tecla || "V"])}</p><p class="why">${esc(kb.nota || "")}</p></article>
       <article class="sit${ct.pendiente_verificar ? " hot" : ""}"><h3>${L("En control", "On controller")}${pendTag(ct)}</h3>
-        <p style="font-size:15px">${ct.boton ? `${L("Abre el menú con", "Open the menu with")} ${keycaps([ct.boton])}` : L("Botón para abrir el menú: por verificar.", "Button that opens the menu: unverified.")}</p>
+        <p style="font-size:15px">${ct.boton ? `${L("Abre el menú con", "Open the menu with")} ${padcaps([ct.boton])}` : L("Botón para abrir el menú: por verificar.", "Button that opens the menu: unverified.")}</p>
         <p class="why">${esc(ct.nota || "")}</p>
         <p class="why">${L("La «ruta en el menú» de la tabla son las categorías del VGS en teclado. En control deberían ser las mismas, pero falta confirmarlo en el juego.", "The \"menu path\" in the table shows the keyboard VGS categories. They should be the same on controller, but that still needs confirming in game.")}</p></article>
       ${(ab.datos_control || []).length ? `<article class="sit"><h3>${L("Lo que sí está confirmado para control", "Confirmed for controller")}</h3><ul class="plain">${ab.datos_control.map(x => `<li>${esc(x.texto)} <span class="muted">(${esc(x.parche_verificado)})</span>${pendTag(x)}</li>`).join("")}</ul></article>` : ""}
     </div>
+    ${(() => { const con = ab.consola, rows = VCMDS.filter(c => c.control && c.control.length); if (!con || !rows.length) return ""; return `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Con control", "With a controller")}</span><h2>${esc(con.titulo || "Consola")}${pendTag(con)}</h2><p>${esc(con.nota || "")}</p></div>
+      <div class="tw"><table class="vgs">${head}<tbody>${rows.map(c => vgsRow(c)).join("")}</tbody></table></div></section>`; })()}
     <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Empieza por estos", "Start with these")}</span><h2>${L(`Los ${top.length} más útiles`, `The ${top.length} most useful`)}</h2></div>
       <div class="tw"><table class="vgs">${head}<tbody>${top.map(([c, w]) => vgsRow(c, w)).join("")}</tbody></table></div></section>
     <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Todos los comandos", "All commands")}</span><h2>${L("Tabla completa", "Full table")}</h2></div>
