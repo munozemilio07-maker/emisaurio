@@ -3,7 +3,7 @@ import { fmtTime } from './state.js';
 import { LANGS, MODELS, buildCaptionClips } from './captions.js';
 import { voiceMedia, transcribeMedia, buildTokens, stats, rangesFor, cutRanges, timelineWords, matchScript, assembleScript } from './textedit.js';
 import { esc } from './ui.js';
-import { audioPending } from './media.js';
+import { audioPending, media } from './media.js';
 
 export function createTranscriptPanel(app) {
   const prefs = { lang: 'spanish', model: MODELS[0][0], clean: { filler: true, repeat: true, sound: false, pause: true, maybe: false }, pauseMin: 0.6, query: '', script: '', matches: null };
@@ -75,6 +75,17 @@ export function createTranscriptPanel(app) {
     const analyzing = audioPending(P);
     const isMusic = (c) => { const t = P.tracks.find((x) => x.id === c.trackId); return t?.music && !t.guide; };
     const musicAudio = P.clips.filter((c) => c.kind === 'audio' && isMusic(c));
+    // Explica por qué no hay nada que transcribir, con los nombres de los archivos
+    const whyNoVoice = () => {
+      const used = [...new Set(P.clips.map((c) => c.mediaId).filter(Boolean))].map((id) => media.get(id)).filter(Boolean);
+      const photos = used.filter((m) => m.type === 'image');
+      const mute = used.filter((m) => m.type === 'video' && m.audioReady && !m.audio);
+      const parts = [];
+      if (photos.length) parts.push(`${photos.map((m) => '«' + esc(m.name) + '»').join(', ')} ${photos.length > 1 ? 'son fotos' : 'es una foto'}: no ${photos.length > 1 ? 'tienen' : 'tiene'} sonido.`);
+      if (mute.length) parts.push(`${mute.map((m) => '«' + esc(m.name) + '»').join(', ')}: ${mute.map((m) => m.audioError ? esc(m.audioError) : 'no tiene pista de audio').join(' ')}`);
+      if (!used.length) parts.push('Tu línea de tiempo está vacía.');
+      return (parts.join(' ') + ' Importa el video (.mp4, .mov…) donde hablas; debe quedar en la pista Principal o en Voz / Audio.').trim();
+    };
     const shownStatus = analyzing.length ? `Analizando el audio de ${analyzing.map((m) => esc(m.name)).join(', ')}…` : status;
     tokens = buildTokens(P);
     const st = stats(tokens, prefs.pauseMin);
@@ -93,7 +104,7 @@ export function createTranscriptPanel(app) {
 
     root.innerHTML = `<h3 class="sec-h"><span>Editar con el texto</span><button class="btn tiny" id="txWide" title="Más espacio para leer">${document.querySelector('.workspace').classList.contains('wide-left') ? '⤡ Reducir' : '⤢ Ampliar'}</button></h3>
       <p class="sub">Borra palabras de la transcripción y el video se corta solo, como en Descript o Premiere.</p>
-      ${vm.length === 0 ? `<div class="tool"><b>Primero añade un video o audio donde hables</b><span class="sub">Debe estar en la pista Principal o en Voz / Audio.</span>${musicAudio.length ? '<button class="btn small" id="txMoveVoice">Mover el audio de Música a Voz</button>' : ''}</div>` : ''}
+      ${vm.length === 0 ? `<div class="tool"><b>Primero añade un video o audio donde hables</b><span class="sub">${whyNoVoice()}</span>${musicAudio.length ? '<button class="btn small" id="txMoveVoice">Mover el audio de Música a Voz</button>' : ''}</div>` : ''}
       ${pending.length ? `
         <div class="tool">
           <div class="field wide"><label>Idioma</label><select id="txLang">${LANGS.map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}</select></div>
