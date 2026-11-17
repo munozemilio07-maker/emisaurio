@@ -34,7 +34,7 @@
     "Dark Portal: daño inicial baja de 180–500 a 170–450 y su escalado de 40% a 30%.",
     "Con el aspecto: 6% menos velocidad de ataque base y 5% menos daño de ataque base."
    ],
-   "efecto": "Era S en el OB47 con su aspecto: es el nerf más grande del parche. Su tier en esta página todavía es del OB47.",
+   "efecto": "Es el nerf más grande del parche. En Joust estaba en tier B en el OB47; su tier en esta página todavía es de ese parche.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
@@ -77,13 +77,14 @@
     "Shadow Lock: daño por pulso 45–105 y 12% de Inteligencia; ya no pega al aplicarse (4 pulsos en vez de 5).",
     "Siphon Darkness: escalado sube de 90% a 100% y se activa más rápido (0.4 s; 0 s con aspecto).",
     "Night Terror: golpe inicial sube de 40% a 50% de Inteligencia; un pulso menos.",
-    "Shadow Lock y Shadow Step se pueden cancelar reactivándolos. Muchos arreglos y efectos visuales nuevos."
+    "Shadow Lock y Shadow Step se pueden cancelar reactivándolos. Muchos arreglos y efectos visuales nuevos.",
+    "La fuente muestra enfriamientos nuevos que las notas no mencionan: Siphon Darkness 13 s (antes 10 s) y Shadow Step 15 s en su última fila (antes 10 s)."
    ],
    "efecto": "Más daño de golpe y menos daño en el tiempo.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
-   "pendiente_verificar": false
+   "pendiente_verificar": true
   },
   {
    "tipo": "dios",

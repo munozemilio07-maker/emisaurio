@@ -353,7 +353,7 @@ footer p { max-width: 90ch; }
 
 <footer class="gut">
   <div class="frieze" aria-hidden="true"></div>
-  <p id="tF1">Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí.</p>
+  <p id="tF1">Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí, salvo el retrato y la carta de Kumbhakarna, que son de la wiki oficial de Smite 2.</p>
   <p id="tF2">Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.</p>
 </footer>
 
@@ -436,7 +436,7 @@ const EN = {
   "Zeus, Atenea, Anubis…": "Zeus, Athena, Anubis…",
   "Habilidades y objetos del OB48 · builds y tiers con partidas de Joust del OB47": "OB48 abilities and items · builds and tiers from OB47 Joust games",
   "Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.": "Pick your god and get their <b>offensive</b>, <b>hybrid</b> and <b>defensive</b> build, with what each item does and what to buy against the enemy team.",
-  "Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí.": "Builds come from each god's most recent Joust matches published on Smite2.live: which items were bought and in how many games. The item catalog and images come from there too.",
+  "Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí, salvo el retrato y la carta de Kumbhakarna, que son de la wiki oficial de Smite 2.": "Builds come from each god's most recent Joust matches published on Smite2.live: which items were bought and in how many games. The item catalog and images come from there too, except Kumbhakarna's portrait and card, which come from the official Smite 2 wiki.",
   "Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.": "Item text in English is the in-game description. Fan site, not affiliated with Hi-Rez or Titan Forge Games."
 };
 let lang = "es";
@@ -706,7 +706,7 @@ function renderHabilidades() {
   const summary = !fxSel.length ? L("Elige uno o más efectos para ver qué dioses los tienen y con qué habilidad.", "Pick one or more effects to see which gods have them and on which ability.")
     : L(`${count} dioses, ${nab} habilidades`, `${count} gods, ${nab} abilities`);
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Habilidades por efecto", "Abilities by effect")}</span><h2>${L("¿Quién aturde, silencia o jala?", "Who stuns, silences or pulls?")}</h2>
-      <p>${L("Los efectos salen de la ficha de cada habilidad en Smite2.live (parche OB48). El nombre y el texto de la habilidad están en inglés, como en el juego.", "Effects come from each ability's page on Smite2.live (patch OB47).")}</p></div>
+      <p>${L("Los efectos salen de la ficha de cada habilidad en Smite2.live (parche OB48). El nombre y el texto de la habilidad están en inglés, como en el juego.", "Effects come from each ability's page on Smite2.live (patch OB48).")}</p></div>
     <div class="panel">
       <div class="chips" role="group" aria-label="${L("Efectos", "Effects")}">${chips}</div>
       <div class="bar">
