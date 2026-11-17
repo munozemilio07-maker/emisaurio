@@ -1,5 +1,5 @@
 {
- "_como_editar": "Resumen escrito a mano de lo que cambió en el parche. 'tipo' es dios, objeto o general; 'ref' es el slug del dios (data.json) o el id del objeto (items_catalogo.json). 'efecto' es la lectura práctica para Joust. Lo que solo afecta a otros modos va con aplica_joust: false.",
+ "_como_editar": "Resumen escrito a mano de lo que cambió en el parche. 'tipo' es dios, objeto o general; 'ref' es el slug del dios (data.json) o el id del objeto (items_catalogo.json). 'efecto' es la lectura práctica para Joust. Lo que solo afecta a otros modos va con aplica_joust: false. 'a_probar' son deducciones nuestras (no estadísticas): 'confianza' alta, media o baja; 'posiblemente_roto' marca lo que podría estar demasiado fuerte; 'build' es opcional y se puede abrir en el creador (dios, 6 objetos e inicial mejorado).",
  "parche": "OB48",
  "nombre": "Sleeping Giant Update",
  "fecha": "2026-11-17",
@@ -287,6 +287,200 @@
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
    "pendiente_verificar": false
+  }
+ ],
+ "a_probar": [
+  {
+   "id": "qins-carries",
+   "titulo": "Qin's Blade en carries de ataque básico contra tanques",
+   "tipo": "build",
+   "confianza": "media",
+   "posiblemente_roto": true,
+   "resumen": "El buff hace que Qin's Blade pegue más mientras más Fuerza y daño de ataque lleves. En el OB47 casi nadie lo aprovechaba (ganaba 46.5% de 361 partidas de Joust); ahora con una build de daño puro vale la pena probarlo cuando el rival tiene uno o dos tanques.",
+   "numeros": [
+    "Con Qin's Blade, Tyrfing, The Executioner, Dominance, Riptalon y Devourer's Gauntlet sumas 200 de Fuerza y daño de ataque de objetos (255 con Hunter's Cowl).",
+    "Lectura más probable de la nota: el 5% de la vida de objetos del rival sube 1 punto por cada 30, o sea de 5% a unos 11.7% (13.5% con el inicial). Más del doble contra tanques.",
+    "Si «+1%» fuera relativo y no en puntos, el aumento sería pequeño. Las notas no lo aclaran: hay que probarlo en partida.",
+    "No sabemos si cuentan las cargas de Devourer's Gauntlet ni el inicial; el cálculo de arriba solo usa stats fijas y adaptativas."
+   ],
+   "dioses": [
+    "hachiman",
+    "artemis",
+    "apollo",
+    "xbalanque",
+    "cupid"
+   ],
+   "build": {
+    "dios": "artemis",
+    "items": [
+     "qins-blade",
+     "tyrfing",
+     "the-executioner",
+     "dominance",
+     "riptalon",
+     "devourers-gauntlet"
+    ],
+    "inicial": "hunters-cowl"
+   },
+   "parche_verificado": "OB48",
+   "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
+   "pendiente_verificar": true
+  },
+  {
+   "id": "soul-reaver-magos",
+   "titulo": "Soul Reaver en magos con mucha Inteligencia",
+   "tipo": "build",
+   "confianza": "media",
+   "posiblemente_roto": true,
+   "resumen": "Mismo tipo de buff para magos: Soul Reaver pega más mientras más Inteligencia lleves. En el OB47 era de los objetos con peor resultado en Joust (40.5% de 474 partidas). Con una build de Inteligencia pura puede volverse la respuesta contra equipos con dos tanques.",
+   "numeros": [
+    "Soul Reaver, Rod of Tahuti, Spear of Desolation, Obsidian Shard, Divine Ruin y The World Stone suman 470 de Inteligencia de objetos (560 con Archmage's Gem).",
+    "Lectura más probable: el 3% de la vida de objetos del rival sube 1 punto por cada 80, de 3% a unos 8.9% (10% con el inicial), aplicado en cada habilidad.",
+    "No sabemos si cuenta el 25% extra de Rod of Tahuti; si cuenta, sube un poco más."
+   ],
+   "dioses": [
+    "eset",
+    "baron-samedi",
+    "hel",
+    "discordia",
+    "ah-puch"
+   ],
+   "build": {
+    "dios": "eset",
+    "items": [
+     "soul-reaver",
+     "rod-of-tahuti",
+     "spear-of-desolation",
+     "obsidian-shard",
+     "divine-ruin",
+     "the-world-stone"
+    ],
+    "inicial": "archmages-gem"
+   },
+   "parche_verificado": "OB48",
+   "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
+   "pendiente_verificar": true
+  },
+  {
+   "id": "hou-yi-inteligencia",
+   "titulo": "Hou Yi de habilidades con Inteligencia (experimento)",
+   "tipo": "build",
+   "confianza": "baja",
+   "posiblemente_roto": false,
+   "resumen": "Las habilidades de Hou Yi escalan con Fuerza e Inteligencia a la vez, y el parche subió la parte de Inteligencia. Casi nadie lo juega así: solo 7 de sus 124 partidas de Joust del OB47 llevaban algún objeto de Inteligencia. Es lo más raro de probar, y también lo que más podría sorprender.",
+   "numeros": [
+    "Ricochet al rango 5 con su build normal (95 de Fuerza): unos 322 de daño. Con una build de Inteligencia (405): unos 548.",
+    "Divebomb al rango 5: unos 287 contra unos 493.",
+    "La contra: sus básicos pegan menos (60 de daño de ataque en vez de 125). Nimble Ring compensa algo: da 1 de daño de ataque y 1% de velocidad por cada 10 de Inteligencia.",
+    "Cálculo con stats fijas y adaptativas, sin el 25% de Rod of Tahuti ni pasivas."
+   ],
+   "dioses": [
+    "hou-yi"
+   ],
+   "build": {
+    "dios": "hou-yi",
+    "items": [
+     "nimble-ring",
+     "rod-of-tahuti",
+     "soul-reaver",
+     "spear-of-desolation",
+     "obsidian-shard",
+     "the-executioner"
+    ],
+    "inicial": "sharpshooters-arrow"
+   },
+   "parche_verificado": "OB48",
+   "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
+   "pendiente_verificar": true
+  },
+  {
+   "id": "khepri-tanque",
+   "titulo": "Khepri tanque de verdad",
+   "tipo": "dios",
+   "confianza": "media",
+   "posiblemente_roto": false,
+   "resumen": "Su Rising Dawn ahora da más mitigación a los aliados según las protecciones de objetos de Khepri. En Joust casi siempre se le arma como mago, así que el buff casi no le sirve a esa build: la prueba es ponerle protecciones.",
+   "numeros": [
+    "Con Breastplate of Valor, Genji's Guard, Kinetic Cuirass, Shell of Rebuke y Amanita Charm suma 240 de protecciones de objetos: +7.2 puntos de mitigación.",
+    "En el rango 5 la mitigación pasaría de 30% a unos 37%."
+   ],
+   "dioses": [
+    "khepri"
+   ],
+   "build": {
+    "dios": "khepri",
+    "items": [
+     "gauntlet-of-thebes",
+     "breastplate-of-valor",
+     "genjis-guard",
+     "kinetic-cuirass",
+     "shell-of-rebuke",
+     "amanita-charm"
+    ],
+    "inicial": "heroism"
+   },
+   "parche_verificado": "OB48",
+   "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
+   "pendiente_verificar": true
+  },
+  {
+   "id": "contagion-nerf",
+   "titulo": "Contagion pega menos: los carries con robo de vida respiran",
+   "tipo": "objeto",
+   "confianza": "alta",
+   "posiblemente_roto": false,
+   "resumen": "La cuenta aquí es segura. Los tanques que lo compraban contra carries (Kuzenbo, Ymir, Bacchus) pierden casi la mitad de su golpe máximo. Los carries con Riptalon o Devourer's Gauntlet sufren menos al pegarle a un tanque.",
+   "numeros": [
+    "Golpe máximo antes: 10 cargas × 1% = 10% de la vida máxima del rival.",
+    "Ahora: 8 cargas × 0.7% = 5.6%."
+   ],
+   "dioses": [
+    "kuzenbo",
+    "ymir",
+    "bacchus",
+    "artemis",
+    "hachiman"
+   ],
+   "parche_verificado": "OB48",
+   "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
+   "pendiente_verificar": true
+  },
+  {
+   "id": "izanami-baja",
+   "titulo": "Izanami probablemente baja",
+   "tipo": "dios",
+   "confianza": "media",
+   "posiblemente_roto": false,
+   "resumen": "El nerf va al Aspecto de la Hoz, y en Joust el 88% de sus partidas del OB47 lo usaban (ganando 53%; sin aspecto, 46%). Toca casi toda su forma de jugar: menos alcance del enraizamiento, menos daño de la ulti y menos velocidad de ataque.",
+   "numeros": [
+    "Radio del enraizamiento de Sickle Storm: 1.8 m → 1.4 m.",
+    "Daño inicial de Dark Portal al rango 5: 500 → 450, y su escalado de 40% a 30%.",
+    "Velocidad de ataque base −6% y daño de ataque base −5% con el aspecto."
+   ],
+   "dioses": [
+    "izanami"
+   ],
+   "parche_verificado": "OB48",
+   "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
+   "pendiente_verificar": true
+  },
+  {
+   "id": "nox-dudosa",
+   "titulo": "Nox: más daño de golpe, pero con dudas",
+   "tipo": "dios",
+   "confianza": "baja",
+   "posiblemente_roto": false,
+   "resumen": "Pega más fuerte de golpe (Siphon Darkness y Night Terror), pero pierde daño en el tiempo y la fuente muestra enfriamientos más largos que las notas no mencionan. Venía de tier D en Joust (43%), así que no esperamos que suba mucho.",
+   "numeros": [
+    "Siphon Darkness: escalado de 90% a 100% de Inteligencia y sale en 0.4 s.",
+    "Enfriamientos en la fuente: Siphon Darkness 13 s y Shadow Step 15 s (antes 10 s); por verificar."
+   ],
+   "dioses": [
+    "nox"
+   ],
+   "parche_verificado": "OB48",
+   "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
+   "pendiente_verificar": true
   }
  ]
 }

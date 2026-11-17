@@ -140,6 +140,12 @@ kbd.xs { background: var(--stone-2); color: var(--ink); border-color: var(--line
 kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 7px; font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--gold); background: var(--void); border: 1px solid var(--gold-deep); box-shadow: inset 0 -3px 0 var(--gold-deep); }
 .novb { border: 1px solid var(--ember); background: rgba(255,125,69,.06); padding: 10px 14px; display: grid; gap: 6px; }
 .novb .eyebrow { color: var(--ember); }
+.build li.evo { border-top: 1px dashed var(--gold-deep); padding-top: 10px; }
+.evobox { display: grid; gap: 6px; }
+.evobox select { padding: 8px 10px; background: var(--stone); color: var(--ink); border: 1px solid var(--gold-deep); border-radius: 2px; font: inherit; max-width: 100%; }
+.evoic { width: 40px; height: 40px; border: 1px solid var(--gold-deep); flex: none; }
+.probar.roto { border-color: var(--ember); box-shadow: 0 0 0 1px rgba(255,125,69,.4), 0 0 30px rgba(255,125,69,.12); }
+.roto-tag { color: var(--ember); } .c-alta { color: var(--ok); } .c-media { color: var(--gold); } .c-baja { color: var(--muted); }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
 .step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
@@ -334,6 +340,9 @@ footer p { max-width: 90ch; }
       <div class="chips" id="roleChips" role="group" aria-label="Filtrar por clase"></div>
       <div class="chips" id="tierChips" role="group" aria-label="Filtrar por tier"></div>
     </div>
+    <div class="bar">
+      <input id="godFilter" class="inp" type="search" autocomplete="off" aria-label="Buscar dios por nombre" placeholder="Buscar dios por nombre…">
+    </div>
     <div class="gods" id="gods"></div>
   </section>
 
@@ -475,6 +484,21 @@ function itemRow(id, opts = {}) {
     ${pk}</div>`;
 }
 
+// Objeto 7: la mejora del inicial más usado (cuesta lo que falta para la versión mejorada).
+const STARTER_BASE = {};
+for (const x of (CURADO.items_catalogo || {}).items || []) if (x.tipo === "inicial") for (const c of x.componentes || []) STARTER_BASE[x.id] = c;
+const UPGRADED_STARTERS = ((CURADO.items_catalogo || {}).items || []).filter(x => x.tipo === "inicial" && STARTER_BASE[x.id]);
+const evoCost = up => { const a = IBY[up], b = IBY[STARTER_BASE[up]]; return a && b ? a.costo - b.costo : null; };
+function evoRow(r) {
+  const it = r.evo && IBY[r.evo[0]]; if (!it) return "";
+  const base = IBY[STARTER_BASE[it.id]], cost = evoCost(it.id), lvl = /Requires Level (\d+)/.exec(it.texto_en || "");
+  return `<li class="evo"><div class="it" data-item="${it.id}" role="button" tabindex="0" title="${L("Ver ficha del objeto", "Open item page")}">
+    <span class="ic spr-a" style="${posA(it.i)}" role="img" aria-label="${esc(it.nombre)}"></span>
+    <div><div class="n">${esc(iName(it))}</div>${lang === "es" && it.nombre_es ? `<div class="e">${esc(it.nombre)}</div>` : ""}
+      <div class="d">${L(`Mejora de tu inicial${base ? ` (${esc(iName(base))})` : ""}${cost ? `: ${cost.toLocaleString("es-MX")} de oro` : ""}${lvl ? `, desde nivel ${lvl[1]}` : ""}. Lo usan en el ${r.evo[1]}% de las partidas.`, `Upgrade of your starter${base ? ` (${esc(base.nombre)})` : ""}${cost ? `: ${cost} gold` : ""}${lvl ? `, from level ${lvl[1]}` : ""}. Used in ${r.evo[1]}% of games.`)}</div></div>
+    <span class="pk sug">${L("objeto 7", "item 7")}</span></div></li>`;
+}
+
 function buildHTML(kind, r) {
   const b = r.b[kind], isMeta = r.meta === kind;
   if (r.nodata) return `<article class="build ${kind}"><header><h3>${t(KIND[kind].t)}</h3></header><p class="na">${L("Todavía no hay partidas de Joust con este dios. Usa el creador de builds: sugiere objetos según su estilo y el equipo rival.", "No Joust games with this god yet. Use the build maker: it suggests items from their style and the enemy team.")}</p></article>`;
@@ -482,8 +506,9 @@ function buildHTML(kind, r) {
     return `<article class="build ${kind}"><header><h3>${t(KIND[kind].t)}</h3></header>
       <p class="na">${L(`No aplica: con lo que compran los jugadores, esta versión queda igual que la ${KIND[r.meta].t.toLowerCase()}.`, `Not applicable: with what players actually buy, this version ends up the same as the ${t(KIND[r.meta].t).toLowerCase()} one.`)}</p></article>`;
   }
-  const rows = b.map(([id, pick, flag]) => `<li>${itemRow(id, { pick, sug: flag === 2, stats: true })}</li>`).join("");
-  const txt = b.map(([id]) => L(`${IT[id].n} (${IT[id].e})`, IT[id].e)).join(" > ");
+  const rows = b.map(([id, pick, flag]) => `<li>${itemRow(id, { pick, sug: flag === 2, stats: true })}</li>`).join("") + evoRow(r);
+  const evo = r.evo && IBY[r.evo[0]];
+  const txt = b.map(([id]) => L(`${IT[id].n} (${IT[id].e})`, IT[id].e)).concat(evo ? [L(`${iName(evo)} (${evo.nombre})`, evo.nombre)] : []).join(" > ");
   return `<article class="build ${kind}${isMeta ? " meta" : ""}">
     <header><h3>${t(KIND[kind].t)}${isMeta ? `<span class="crown">${t("La más jugada en Joust")}</span>` : ""}</h3>
     <p class="when">${t(KIND[kind].w)}</p></header>
@@ -906,9 +931,9 @@ function openItem(id, scroll) {
 
 // ---------- Creador de builds ----------
 // Usa: builds de Joust de data.json, catálogo y guía de objetos, y el equipo rival elegido en «Según el rival».
-let BLD = { god: "", role: "", items: [], q: "" };
-try { const sv = JSON.parse(localStorage.getItem("bld") || "null"); if (sv && bySlug(sv.god)) BLD = { god: sv.god, role: sv.role || "", items: (sv.items || []).filter(id => IBY[id]).slice(0, 6), q: "" }; } catch (e) {}
-const saveBld = () => { try { localStorage.setItem("bld", JSON.stringify({ god: BLD.god, role: BLD.role, items: BLD.items })); } catch (e) {} };
+let BLD = { god: "", role: "", items: [], q: "", starter: "" };
+try { const sv = JSON.parse(localStorage.getItem("bld") || "null"); if (sv && bySlug(sv.god)) BLD = { god: sv.god, role: sv.role || "", items: (sv.items || []).filter(id => IBY[id]).slice(0, 6), q: "", starter: IBY[sv.starter] ? sv.starter : "" }; } catch (e) {}
+const saveBld = () => { try { localStorage.setItem("bld", JSON.stringify({ god: BLD.god, role: BLD.role, items: BLD.items, starter: BLD.starter })); } catch (e) {} };
 const bldGod = () => bySlug(BLD.god);
 const bldRole = g => g.roles[BLD.role] || Object.values(g.roles)[0];
 const buildable = r => iComplete(r) && (r.tipo === "pasivo" || r.tipo === "activo") && r.categoria !== "de_un_dios";
@@ -921,6 +946,7 @@ const PROF_POP = {};
   for (const p of Object.keys(acc)) { PROF_POP[p] = {}; for (const id of Object.keys(acc[p])) PROF_POP[p][id] = acc[p][id] / cnt[p]; } }
 const godPicks = (g, r) => { const m = new Map(); for (const b of Object.values(r.b)) for (const [id, pick, flag] of b || []) if (flag !== 2 && pick != null) m.set(id, Math.max(m.get(id) || 0, pick)); return m; };
 const inNeed = (id, needId) => needItems(needById(needId)).some(x => x.id === id);
+const bldStarter = r => BLD.starter && IBY[BLD.starter] ? BLD.starter : (r && r.evo && IBY[r.evo[0]] ? r.evo[0] : "");
 function bldTotals(g, ids) {
   const tot = {}; let str = 0, int = 0; const adaptive = [];
   for (const id of ids) { const r = IBY[id]; if (!r) continue;
@@ -948,7 +974,7 @@ function bldSuggest(g, r) {
 }
 function bldSummary(g, r) {
   const ids = BLD.items; if (!ids.length) return `<p class="muted">${L("Agrega objetos para ver qué hace tu build.", "Add items to see what your build does.")}</p>`;
-  const { tot, useInt, cost } = bldTotals(g, ids), { out } = analyse();
+  const st = bldStarter(r), { tot, useInt, cost } = bldTotals(g, st ? ids.concat([st]) : ids), { out } = analyse();
   const cats = ids.map(id => iCat(IBY[id])), nOff = cats.filter(c => c === "ofensivo").length, nDef = cats.filter(c => c === "defensivo").length, nHyb = ids.length - nOff - nDef;
   const perfil = nDef >= Math.ceil(ids.length * 0.6) ? L("Build de aguante: vas a durar mucho, pero no esperes matar solo.", "Durability build: you last long, but don't expect solo kills.")
     : nOff >= Math.ceil(ids.length * 0.75) ? L("Build de puro daño: pegas muy fuerte y mueres rápido si te atrapan.", "Pure damage build: you hit hard and die fast if caught.")
@@ -965,7 +991,7 @@ function bldSummary(g, r) {
   return `<p class="lead" style="font-size:17px">${perfil}</p>
     <div class="facts"><div><span class="v">${cost.toLocaleString("es-MX")}</span><span class="l">${L("Oro total", "Total gold")}</span></div><div><span class="v">${nOff}/${nHyb}/${nDef}</span><span class="l">${L("Daño / híbrido / aguante", "Damage / hybrid / durability")}</span></div><div><span class="v" style="font-size:18px">${useInt ? L("Inteligencia", "Intelligence") : L("Fuerza", "Strength")}</span><span class="l">${L("Tus adaptativos dan", "Adaptives give")}</span></div></div>
     ${warns.length ? `<div class="fblock"><span class="eyebrow" style="color:var(--ember)">${L("Ojo", "Watch out")}</span><ul class="plain">${warns.map(w => `<li>${esc(w)}</li>`).join("")}</ul></div>` : ""}
-    <div class="fblock"><span class="eyebrow">${L("Stats que suma", "Total stats")}</span><table class="nums">${statRows}</table><p class="muted" style="font-size:13px">${L("Suma de stats fijas y adaptativas. No cuenta pasivas, cargas ni el inicial.", "Flat and adaptive stats only. Passives, stacks and the starter are not counted.")}</p></div>
+    <div class="fblock"><span class="eyebrow">${L("Stats que suma", "Total stats")}</span><table class="nums">${statRows}</table><p class="muted" style="font-size:13px">${L("Suma de stats fijas y adaptativas, incluido el inicial mejorado. No cuenta pasivas ni cargas.", "Flat and adaptive stats, upgraded starter included. Passives and stacks are not counted.")}</p></div>
     ${covers ? `<div class="fblock"><span class="eyebrow">${L("Qué cubre", "What it covers")}</span><ul class="plain">${covers}</ul></div>` : ""}
     <div class="fblock"><span class="eyebrow">${L("Efectos de cada objeto", "Each item's effect")}</span><ul class="plain">${passives}</ul></div>`;
 }
@@ -1016,10 +1042,13 @@ function renderBuilder() {
       </div>
       <p class="muted">${L(`${N(g)} se juega en Joust como ${PROF[r.prof]}.`, `${N(g)} is played in Joust as ${t(PROF[r.prof])}.`)}${starter ? L(` Inicial más usado: ${starter.n}.`, ` Most used starter: ${starter.e}.`) : ""}${relic ? L(` Reliquia más usada: ${relic.n}.`, ` Most used relic: ${relic.e}.`) : ""}</p>
       <div class="slots">${slots}</div>
+      <div class="evobox"><span class="eyebrow">${L("Objeto 7: inicial mejorado", "Item 7: upgraded starter")}</span>
+        <div class="picker-row">${(() => { const st = bldStarter(r), it = IBY[st]; return it ? `<span class="ic spr-a evoic" style="${posA(it.i)}"></span>` : ""; })()}
+        <select id="bldStarter" aria-label="${L("Inicial mejorado", "Upgraded starter")}">${UPGRADED_STARTERS.slice().sort((a, b) => iName(a).localeCompare(iName(b), lang)).map(x => `<option value="${x.id}"${x.id === bldStarter(r) ? " selected" : ""}>${esc(iName(x))}${evoCost(x.id) ? ` · ${evoCost(x.id)} ${L("de oro", "gold")}` : ""}${r.evo && r.evo[0] === x.id ? L(" · el más usado", " · most used") : ""}</option>`).join("")}</select></div></div>
       <div class="chips">
         ${["off", "hyb", "def"].filter(k => r.b[k]).map(k => `<button class="chip" type="button" data-bldload="${k}">${L("Cargar la", "Load")} ${t(KIND[k].t).toLowerCase()}</button>`).join("")}
         ${sug.length && BLD.items.length < 6 ? `<button class="chip" type="button" data-bldfill="1">${L("Aceptar las sugeridas", "Accept suggestions")}</button>` : ""}
-        ${BLD.items.length ? `<button class="chip" type="button" data-bldclear="1">${L("Vaciar", "Clear")}</button><button class="copy" type="button" data-copy="${esc(BLD.items.map(id => L(`${iName(IBY[id])} (${IBY[id].nombre})`, IBY[id].nombre)).join(" > "))}">${L("Copiar lista", "Copy list")}</button>` : ""}
+        ${BLD.items.length ? `<button class="chip" type="button" data-bldclear="1">${L("Vaciar", "Clear")}</button><button class="copy" type="button" data-copy="${esc(BLD.items.concat(bldStarter(r) ? [bldStarter(r)] : []).map(id => L(`${iName(IBY[id])} (${IBY[id].nombre})`, IBY[id].nombre)).join(" > "))}">${L("Copiar lista", "Copy list")}</button>` : ""}
       </div>
       <div class="fblock"><span class="eyebrow">${L("Equipo rival", "Enemy team")}</span>
         <div class="picker-row"><input id="foeQ2" type="search" list="godlist" class="inp" placeholder="${t("Agregar rival (hasta 3)…")}" autocomplete="off" aria-label="${t("Agregar rival (hasta 3)…")}">${E.length ? `<button class="chip" type="button" id="foeClear">${t("Limpiar")}</button>` : ""}</div>
@@ -1089,6 +1118,28 @@ function novBanner(tipo, ref) {
   if (!c) return "";
   return `<div class="novb"><span class="eyebrow">${L(`Cambió en el ${esc(NOV.parche || "")}`, `Changed in ${esc(NOV.parche || "")}`)}</span><ul class="plain">${c.cambios.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${c.efecto ? `<p class="muted">${esc(c.efecto)}</p>` : ""}${pendTag(c)}</div>`;
 }
+const CONF = { alta: ["Confianza alta", "High confidence"], media: ["Confianza media", "Medium confidence"], baja: ["Confianza baja", "Low confidence"] };
+function probarHTML() {
+  const L2 = NOV.a_probar || []; if (!L2.length) return "";
+  const card = x => {
+    const gs = (x.dioses || []).map(bySlug).filter(Boolean), b = x.build, bg = b && bySlug(b.dios);
+    const items = b ? b.items.map(id => IBY[id]).filter(Boolean) : [], st = b && IBY[b.inicial];
+    return `<article class="sit probar${x.posiblemente_roto ? " roto" : ""}">
+      <h3>${esc(x.titulo)}</h3>
+      <div class="chips">${x.posiblemente_roto ? `<span class="diff roto-tag">${L("Puede estar roto", "Could be broken")}</span>` : ""}<span class="diff c-${esc(x.confianza)}">${L(...(CONF[x.confianza] || [x.confianza, x.confianza]))}</span><span class="diff o-derivado">${L("Deducción nuestra", "Our deduction")}</span></div>
+      <p style="font-size:15px">${esc(x.resumen)}</p>
+      ${(x.numeros || []).length ? `<div><span class="eyebrow">${L("Los números", "The numbers")}</span><ul class="plain">${x.numeros.map(n => `<li>${esc(n)}</li>`).join("")}</ul></div>` : ""}
+      ${gs.length ? `<div><span class="eyebrow">${L("A quién le queda mejor", "Who it suits best")}</span><div class="foes" style="margin-top:6px">${gs.map(g => `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}${g.tier && g.tier !== "?" ? ` · ${g.tier}` : ""}</span></button>`).join("")}</div></div>` : ""}
+      ${items.length ? `<div><span class="eyebrow">${L("Build para probar", "Build to try")}${bg ? ` · ${esc(N(bg))}` : ""}</span><div class="foes" style="margin-top:6px">${items.map(iMini).join("")}${st ? iMini(st) : ""}</div>
+        <button class="chip" type="button" data-trybuild="${esc(x.id)}" style="margin-top:8px">${L("Abrir en el creador", "Open in the build maker")}</button></div>` : ""}
+    </article>`;
+  };
+  const roto = L2.filter(x => x.posiblemente_roto), resto = L2.filter(x => !x.posiblemente_roto);
+  return `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Para probar este parche", "Worth trying this patch")}</span><h2>${L("Lo que puede estar fuerte (y lo que baja)", "What could be strong (and what drops)")}</h2>
+      <p>${L("Son deducciones nuestras con los números del parche, no estadísticas: todavía no hay partidas del OB48. Cada una dice qué tan seguros estamos.", "These are our deductions from the patch numbers, not stats: there are no OB48 games yet.")}</p></div>
+    ${roto.length ? `<div class="sits">${roto.map(card).join("")}</div>` : ""}
+    ${resto.length ? `<div class="sits">${resto.map(card).join("")}</div>` : ""}</section>`;
+}
 function renderNovedades() {
   const el = $("#v-novedades");
   if (!NOVC.length) { el.innerHTML = `<p class="empty">${L("Todavía no hay notas de parche: se agregan en src/curado/novedades.json.", "No patch notes yet.")}</p>`; return; }
@@ -1102,6 +1153,7 @@ function renderNovedades() {
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Novedades", "Patch notes")}</span><h2>${esc(NOV.parche || "")}${NOV.nombre ? " · " + esc(NOV.nombre) : ""}</h2>
       <p>${L("Lo que cambió en el parche y cómo afecta a Joust. Resumen escrito a mano desde las notas oficiales.", "What changed in the patch and how it affects Joust. Hand-written summary of the official notes.")} ${safeUrl(NOV.fuente) ? `<a href="${esc(NOV.fuente)}" target="_blank" rel="noopener">${L("Notas completas", "Full notes")}</a>` : ""}</p></div>
     ${NOV.nota_stats ? `<p class="rule">${esc(NOV.nota_stats)}</p>` : ""}
+    ${probarHTML()}
     ${grp("dios", L("Dioses", "Gods"))}${grp("objeto", L("Objetos", "Items"))}${grp("general", L("Otros modos", "Other modes"))}`;
 }
 
@@ -1190,7 +1242,8 @@ let fTier = "all", fPan = "all", fSort = "name";
 
 function renderGods() {
   const rank = t => { const i = TIERS.indexOf(t); return i < 0 ? 9 : i; };
-  const list = G.filter(g => (roleFilter === "all" || g.cls === roleFilter) && (fTier === "all" || g.tier === fTier) && (fPan === "all" || g.p === fPan));
+  const gq = norm(($("#godFilter") || {}).value || "");
+  const list = G.filter(g => (!gq || norm(g.n).includes(gq) || norm(g.e).includes(gq)) && (roleFilter === "all" || g.cls === roleFilter) && (fTier === "all" || g.tier === fTier) && (fPan === "all" || g.p === fPan));
   const byName = (a, b) => N(a).localeCompare(N(b), lang);
   list.sort(fSort === "tier" ? (a, b) => rank(a.tier) - rank(b.tier) || b.wr - a.wr || byName(a, b)
     : fSort === "wr" ? (a, b) => (b.wr || 0) - (a.wr || 0) || byName(a, b)
@@ -1238,6 +1291,8 @@ function applyLang() {
   set("#tSub", $("#tSub").dataset.es || $("#tSub").innerHTML, true);
   for (const id of ["#tPatch", "#tAsk", "#tPan", "#tSort", "#tF1", "#tF2"]) set(id, $(id).dataset.es || $(id).textContent);
   $("#q").placeholder = t("Zeus, Atenea, Anubis…");
+  $("#godFilter").placeholder = L("Buscar dios por nombre…", "Search gods by name…");
+  $("#godFilter").setAttribute("aria-label", L("Buscar dios por nombre", "Search gods by name"));
   const so = $("#fSort"); [...so.options].forEach(o => { if (!o.dataset.es) o.dataset.es = o.textContent; o.textContent = t(o.dataset.es); });
   const pan = $("#fPan"), keep = pan.value || "all";
   const pans = [...new Map(G.map(g => [g.p, g.pe])).entries()].sort((a, b) => L(a[0], a[1]).localeCompare(L(b[0], b[1]), lang));
@@ -1276,6 +1331,8 @@ document.addEventListener("click", e => {
   const bl = t.closest("[data-bldload]");
   if (bl) { const g0 = bldGod(), b0 = bldRole(g0).b[bl.dataset.bldload]; if (b0) { BLD.items = b0.map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.slot = null; saveBld(); renderBuilder(); } return; }
   if (t.closest("[data-bldclear]")) { BLD.items = []; BLD.slot = null; saveBld(); renderBuilder(); return; }
+  const tb = t.closest("[data-trybuild]");
+  if (tb) { const x = (NOV.a_probar || []).find(y => y.id === tb.dataset.trybuild); if (x && x.build && bySlug(x.build.dios)) { BLD.god = x.build.dios; BLD.role = ""; BLD.items = x.build.items.filter(id => IBY[id]).slice(0, 6); BLD.starter = IBY[x.build.inicial] ? x.build.inicial : ""; BLD.slot = null; saveBld(); setView("creador"); window.scrollTo(0, $(".views").offsetTop); } return; }
   const vg = t.closest("[data-vgsg]");
   if (vg) { vgsGroup = vg.dataset.vgsg; renderChat(); return; }
   const itb = t.closest("[data-ittab]");
@@ -1318,6 +1375,7 @@ function tryAddFoe(inp, force) {
   const again = $(view === "creador" ? "#foeQ2" : "#foeQ"); if (again) again.focus();
 }
 document.addEventListener("change", e => {
+  if (e.target.id === "bldStarter") { BLD.starter = e.target.value; saveBld(); renderBuilder(); }
   if (e.target.id === "bldRole") { BLD.role = e.target.value; BLD.items = []; saveBld(); renderBuilder(); }
   if (e.target.id === "itNeed") { itNeed = e.target.value; itCat = "all"; renderObjetos(); }
   if (e.target.id === "fPan") { fPan = e.target.value; renderGods(); }
@@ -1327,7 +1385,8 @@ document.addEventListener("input", e => {
   if (e.target.id === "q") { const g = findGod(e.target.value); if (g) { if (view !== "dioses") setView("dioses", true); select(g); } }
   if (e.target.id === "foeQ" || e.target.id === "foeQ2") tryAddFoe(e.target, false);
   if (e.target.id === "bldQ") { BLD.q = norm(e.target.value); renderBuilder(); }
-  if (e.target.id === "bldGodQ") { const v = e.target.value.trim(), g2 = G.find(x => norm(x.n) === norm(v) || norm(x.e) === norm(v)); if (g2) { BLD.god = g2.s; BLD.role = ""; BLD.items = []; saveBld(); renderBuilder(); } }
+  if (e.target.id === "bldGodQ") { const v = e.target.value.trim(), g2 = G.find(x => norm(x.n) === norm(v) || norm(x.e) === norm(v)); if (g2) { BLD.god = g2.s; BLD.role = ""; BLD.items = []; BLD.starter = ""; saveBld(); renderBuilder(); } }
+  if (e.target.id === "godFilter") renderGods();
   if (e.target.id === "vgsQ") { vgsQ = norm(e.target.value); renderChat(); }
   if (e.target.id === "itQ") { itQ = norm(e.target.value); renderObjetos(); }
   if (e.target.id === "comboQ") { comboQ = norm(e.target.value); renderCombos(); }

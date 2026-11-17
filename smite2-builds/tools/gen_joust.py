@@ -91,11 +91,25 @@ def build_role(rn,r):
         a=max(r['aspects'],key=lambda x:x[1]); nm=items.get(a[0],{}).get('name',a[0]).replace('Aspect of ','').strip()
         none=r.get('aspect_none') or [0,0]
         asp=dict(n=nm,p=round(a[1]),w=round(a[2]),np=round(none[0]),nw=round(none[1]))
-    return dict(t=r['rtier'],wr=round(r['wr'],1),n=r['n'],prof=prof,flav=flav,meta=kind,st=top(r['starters']),re=top(r['relics']),asp=asp,b=b)
+    return dict(t=r['rtier'],wr=round(r['wr'],1),n=r['n'],prof=prof,flav=flav,meta=kind,st=top(r['starters']),re=top(r['relics']),asp=asp,b=b,evo=r.get('evo'))
 raw=open('dl/items_latest.js',encoding='utf8').read()
 IDB,_=json.JSONDecoder().raw_decode(raw[raw.find('{'):])
 def _sl(n): return re.sub(r'[^a-z0-9]+','-',n.lower().replace("'",'').replace('\u2019','')).strip('-')
 ID2SL={k:_sl(v['data']['name']) for k,v in IDB.items() if 'data' in v}
+# Familia de iniciales: cada inicial básico apunta a su versión mejorada (sale del catálogo).
+_CAT=json.load(open(os.path.join(os.path.dirname(OUT.rstrip('/')) if False else OUT,'src','curado','items_catalogo.json'),encoding='utf8'))['items']
+STARTER_UP={}
+for _r in _CAT:
+    if _r['tipo']=='inicial':
+        for _c in _r['componentes']: STARTER_UP[_c]=_r['id']
+def starter_family(st,n):
+    fam=Counter()
+    for sl,c in st.items():
+        up=STARTER_UP.get(sl,sl)
+        if up in STARTER_UP.values(): fam[up]+=c
+    if not fam: return None
+    up,c=fam.most_common(1)[0]
+    return [up,round(100*c/n)]
 def joust_stats(ms):
     n=len(ms); wins=sum(m['w'] for m in ms)
     cnt=Counter(); win=Counter(); slot=Counter(); st=Counter(); stw=Counter(); re_=Counter(); rew=Counter(); asp=Counter(); aspw=Counter()
@@ -110,7 +124,7 @@ def joust_stats(ms):
             if sl: c[sl]+=1; cw[sl]+=m['w']
     pc=lambda c:100*c/n
     slots={'1':[[sl,pc(c),100*win[sl]/c] for sl,c in cnt.most_common() if c>=2]}
-    r=dict(rtier='',wr=100*wins/n,n=n,slots={},starters=[[sl,pc(c),100*stw[sl]/c] for sl,c in st.most_common(6)],relics=[[sl,pc(c),100*rew[sl]/c] for sl,c in re_.most_common(6)],aspects=[[sl,pc(c),100*aspw[sl]/c] for sl,c in asp.most_common(3)])
+    r=dict(rtier='',wr=100*wins/n,n=n,evo=starter_family(st,n),slots={},starters=[[sl,pc(c),100*stw[sl]/c] for sl,c in st.most_common(6)],relics=[[sl,pc(c),100*rew[sl]/c] for sl,c in re_.most_common(6)],aspects=[[sl,pc(c),100*aspw[sl]/c] for sl,c in asp.most_common(3)])
     na=n-sum(asp.values()); naw=wins-sum(aspw.values())
     if asp and na>0: r['aspect_none']=[pc(na),100*naw/na]
     r['_pool']=[dict(id=sl,pick=round(pc(c)),win=round(100*win[sl]/c),slot=slot[sl]/c,cat=None) for sl,c in cnt.most_common() if c>=2]
