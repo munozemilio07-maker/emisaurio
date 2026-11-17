@@ -1,0 +1,3366 @@
+{
+ "_como_editar": "Generado con tools/gen_stats.py. 'base' es el nivel 1 y 'por_nivel' lo que suma cada nivel (crece en línea recta, comprobado con el nivel 10). 'basico.escalado' es el texto del juego para el ataque básico.",
+ "dioses": {
+  "achilles": {
+   "base": {
+    "vida": 661.0,
+    "mana": 292.64,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.73,
+    "prot_magica": 29.58,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.5
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 38.64,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.45,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Achilles Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hi",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Achilles/info",
+   "pendiente_verificar": false
+  },
+  "agni": {
+   "base": {
+    "vida": 526.15,
+    "mana": 334.1,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 79.9,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Agni Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 36 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damage",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Agni/info",
+   "pendiente_verificar": false
+  },
+  "ah-puch": {
+   "base": {
+    "vida": 569.48,
+    "mana": 319.68,
+    "reg_vida": 1.82,
+    "reg_mana": 1.56,
+    "prot_fisica": 19.24,
+    "prot_magica": 27.73,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 35.81
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.7247,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>AhPuch Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 35 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/AhPuch/info",
+   "pendiente_verificar": false
+  },
+  "aladdin": {
+   "base": {
+    "vida": 569.5,
+    "mana": 279.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 17.5,
+    "prot_magica": 25.4,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 39.0
+   },
+   "por_nivel": {
+    "vida": 86.4789,
+    "mana": 45.3684,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 2.7579,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.3684
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Aladdin Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 39 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "fuerza": 1.0,
+    "inteligencia": 0.3
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Aladdin/info",
+   "pendiente_verificar": false
+  },
+  "amaterasu": {
+   "base": {
+    "vida": 661.0,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Amaterasu Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 44 + 0 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be h",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Amaterasu/info",
+   "pendiente_verificar": false
+  },
+  "anhur": {
+   "base": {
+    "vida": 611.48,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 20.04,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.05
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.76
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Anhur Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 39 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Anhur/info",
+   "pendiente_verificar": false
+  },
+  "anubis": {
+   "base": {
+    "vida": 532.73,
+    "mana": 319.68,
+    "reg_vida": 1.82,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.72,
+    "prot_magica": 29.8,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.7253,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Anubis Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Anubis/info",
+   "pendiente_verificar": false
+  },
+  "aphrodite": {
+   "base": {
+    "vida": 562.9,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.65,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 79.9,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Aphrodite Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 5 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. D",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Aphrodite/info",
+   "pendiente_verificar": false
+  },
+  "apollo": {
+   "base": {
+    "vida": 569.48,
+    "mana": 322.62,
+    "reg_vida": 1.7,
+    "reg_mana": 1.44,
+    "prot_fisica": 20.04,
+    "prot_magica": 25.3,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 48.3,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Apollo Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 38 Physical Damage to the first enemy hit. Damage Scaling : 100% Strength or Inhand Power and 20% Intelligence Range : 8.8m R",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Apollo/info",
+   "pendiente_verificar": false
+  },
+  "ares": {
+   "base": {
+    "vida": 668.52,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.73,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.45,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Ares Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. NO",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ares/info",
+   "pendiente_verificar": false
+  },
+  "artemis": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.02,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Artemis Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 38 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Da",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Artemis/info",
+   "pendiente_verificar": false
+  },
+  "artio": {
+   "base": {
+    "vida": 668.52,
+    "mana": 319.68,
+    "reg_vida": 1.82,
+    "reg_mana": 1.65,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "",
+    "texto": "data-ability-heading>Artio Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals Magical Damage to the first enemy hit. Damage Scaling : 100% Strength or Inhand Power and 20% Intelligence Range : 8.8m Bear Range",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Artio/info",
+   "pendiente_verificar": false
+  },
+  "athena": {
+   "base": {
+    "vida": 668.52,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.73,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.19
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.45,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Athena Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 36 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Athena/info",
+   "pendiente_verificar": false
+  },
+  "atlas": {
+   "base": {
+    "vida": 705.27,
+    "mana": 299.36,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Atlas Basic Attack BASIC Aspect of the Unburdened Aspect of the Unburdened Your basic attack now throws your astrolabe. Unburden is used to reposition the astrolabe. Gravity no longer pulls when the astrolabe is deployed. Kinetic Charge can be used to kick the astrolabe forward. Your passive now reduces the cooldown of Gamma-Ray Burst. Click to activate Aspect of the Unburdene",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Atlas/info",
+   "pendiente_verificar": false
+  },
+  "awilix": {
+   "base": {
+    "vida": 619.0,
+    "mana": 334.1,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 18.76,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Awilix Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Awilix/info",
+   "pendiente_verificar": false
+  },
+  "bacchus": {
+   "base": {
+    "vida": 668.52,
+    "mana": 319.68,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.8,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.7253,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Bacchus Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Bacchus/info",
+   "pendiente_verificar": false
+  },
+  "baron-samedi": {
+   "base": {
+    "vida": 569.48,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.57,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1384,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Baron Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damag",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/BaronSamedi/info",
+   "pendiente_verificar": false
+  },
+  "bastet": {
+   "base": {
+    "vida": 100.0,
+    "mana": 100.0,
+    "velocidad": 400.0,
+    "dano_ataque": 1.0
+   },
+   "por_nivel": {
+    "vida": 0.0,
+    "mana": 0.0,
+    "velocidad": 0.0,
+    "dano_ataque": 0.0
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Bastet Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 1 Physical Damage to an enemy in front of you. Cooldown: 0s Cost: 0 .god p { margin-top: 4px; } .PhysicalPower, .PhysicalProtection, .PhysicalPenetra",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Bastet/info",
+   "pendiente_verificar": true,
+   "nota": "La fuente trae stats base incompletos o de relleno para este dios."
+  },
+  "bellona": {
+   "base": {
+    "vida": 661.0,
+    "mana": 272.32,
+    "reg_vida": 1.82,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.73,
+    "prot_magica": 29.58,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 38.64,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.45,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "",
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Bellona/info",
+   "pendiente_verificar": false
+  },
+  "cabrakan": {
+   "base": {
+    "vida": 661.0,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.44,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 41.04
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.1105,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Cabrakan Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 41 Magical Damage to an enemy in front of you. NOTE 1: Cost: 0 NOTE 2: Cost: 0 Damage Scaling : 100% Strength or Inhand Power and 20% Intelligence ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Cabrakan/info",
+   "pendiente_verificar": false
+  },
+  "cerberus": {
+   "base": {
+    "vida": 668.52,
+    "mana": 299.36,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.8,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.7253,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Cerberus Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Cerberus/info",
+   "pendiente_verificar": false
+  },
+  "cernunnos": {
+   "base": {
+    "vida": 611.48,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.05
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.76
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Cernunnos Basic Attack BASIC Aspect of Strife Aspect of Strife Your Basic Attacks are now melee and deal increased damage, cleave, and apply stronger Shifter of Seasons effects to all enemies hit. In addition, Horn Charge's cooldown is reduced when hitting a god or Jungle Monster and applies Shifter of Seasons. Click to activate Aspect of Strife Your Basic Attacks are now mele",
+    "fuerza": 1.15,
+    "inteligencia": 0.25
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Cernunnos/info",
+   "pendiente_verificar": false
+  },
+  "chaac": {
+   "base": {
+    "vida": 661.0,
+    "mana": 299.36,
+    "reg_vida": 1.7,
+    "reg_mana": 1.47,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1379,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Chaac Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Chaac/info",
+   "pendiente_verificar": false
+  },
+  "charon": {
+   "base": {
+    "vida": 668.52,
+    "mana": 299.36,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.29,
+    "dano_ataque": 33.31
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.2879,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "",
+    "texto": "data-ability-heading>Charon Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals Magical Damage to the first enemy hit. Damage Scaling : 0 Range : 8.8m Cooldown: 0s Cost: 0 .god p { margin-top: 4px; } .Physical",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Charon/info",
+   "pendiente_verificar": false
+  },
+  "chiron": {
+   "base": {
+    "vida": 569.48,
+    "mana": 322.62,
+    "reg_vida": 1.94,
+    "reg_mana": 1.45,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 381.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 48.3,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Chiron Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 36 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dam",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Chiron/info",
+   "pendiente_verificar": false
+  },
+  "chronos": {
+   "base": {
+    "vida": 577.0,
+    "mana": 316.0,
+    "reg_vida": 1.82,
+    "reg_mana": 1.57,
+    "prot_fisica": 17.5,
+    "prot_magica": 27.4,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 44.0
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1384,
+    "prot_fisica": 2.7579,
+    "prot_magica": 1.3789,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.2105
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Chronos Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 44 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dam",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Chronos/info",
+   "pendiente_verificar": false
+  },
+  "cu-chulainn": {
+   "base": {
+    "vida": 661.0,
+    "mana": 100.0,
+    "reg_vida": 1.93,
+    "prot_fisica": 19.24,
+    "prot_magica": 29.58,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 0.0,
+    "reg_vida": 0.1995,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>CuChulainn Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/CuChulainn/info",
+   "pendiente_verificar": false
+  },
+  "cupid": {
+   "base": {
+    "vida": 569.48,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Cupid Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 38 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Cupid/info",
+   "pendiente_verificar": false
+  },
+  "da-ji": {
+   "base": {
+    "vida": 569.48,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 17.72,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Daji Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. D",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Daji/info",
+   "pendiente_verificar": false
+  },
+  "danzaburou": {
+   "base": {
+    "vida": 611.48,
+    "mana": 322.62,
+    "reg_vida": 1.7,
+    "reg_mana": 1.45,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 48.3,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Danzaburou Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 38 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls.",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Danzaburou/info",
+   "pendiente_verificar": false
+  },
+  "discordia": {
+   "base": {
+    "vida": 526.15,
+    "mana": 334.1,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 79.9,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Discordia Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. D",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Discordia/info",
+   "pendiente_verificar": false
+  },
+  "eset": {
+   "base": {
+    "vida": 532.73,
+    "mana": 319.68,
+    "reg_vida": 1.7,
+    "reg_mana": 1.65,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 33.31
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "",
+    "texto": "data-ability-heading>Eset Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals Magical Damage to the first enemy hit. Damage Scaling : 100% Strength or Inhand Power and 20% Intelligence Enhanced Damage : 150% S",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Eset/info",
+   "pendiente_verificar": false
+  },
+  "fenrir": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.93,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.1995,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Fenrir Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Fenrir/info",
+   "pendiente_verificar": false
+  },
+  "ganesha": {
+   "base": {
+    "vida": 668.52,
+    "mana": 337.46,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Ganesha Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 5 + 37 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "fuerza": 1.05,
+    "inteligencia": 0.21
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ganesha/info",
+   "pendiente_verificar": false
+  },
+  "geb": {
+   "base": {
+    "vida": 705.27,
+    "mana": 299.36,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Geb Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 36 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. Dam",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Geb/info",
+   "pendiente_verificar": false
+  },
+  "gilgamesh": {
+   "base": {
+    "vida": 661.0,
+    "mana": 296.0,
+    "reg_vida": 1.82,
+    "reg_mana": 1.45,
+    "prot_fisica": 21.64,
+    "prot_magica": 29.58,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Gilgamesh Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be h",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Gilgamesh/info",
+   "pendiente_verificar": false
+  },
+  "guan-yu": {
+   "base": {
+    "vida": 668.52,
+    "mana": 334.1,
+    "reg_vida": 1.82,
+    "reg_mana": 1.46,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.58,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Guan Yu Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/GuanYu/info",
+   "pendiente_verificar": false
+  },
+  "hachiman": {
+   "base": {
+    "vida": 569.5,
+    "mana": 302.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.8,
+    "prot_magica": 25.3,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.4789,
+    "mana": 48.3158,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.7579,
+    "prot_magica": 1.3789,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4211
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Hachiman Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 36 Physical Damage to the first enemy hit. NOTE 1: Damage falls off from 100% at half range down to 65% at max range Damage",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Hachiman/info",
+   "pendiente_verificar": false
+  },
+  "hades": {
+   "base": {
+    "vida": 626.52,
+    "mana": 319.68,
+    "reg_vida": 1.82,
+    "reg_mana": 1.56,
+    "prot_fisica": 19.24,
+    "prot_magica": 27.73,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 35.81
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.7247,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Hades Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 35 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damag",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Hades/info",
+   "pendiente_verificar": false
+  },
+  "hecate": {
+   "base": {
+    "vida": 569.48,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.57,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1384,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Hecate Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Hecate/info",
+   "pendiente_verificar": false
+  },
+  "hel": {
+   "base": {
+    "vida": 569.5,
+    "mana": 316.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.4789,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4211
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Hel Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 5 + 36 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damage ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Hel/info",
+   "pendiente_verificar": false
+  },
+  "hercules": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.85,
+    "reg_mana": 1.45,
+    "prot_fisica": 19.0,
+    "prot_magica": 26.5,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.23,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Hercules Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hi",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Hercules/info",
+   "pendiente_verificar": false
+  },
+  "horus": {
+   "base": {
+    "vida": 661.0,
+    "mana": 296.0,
+    "reg_vida": 1.82,
+    "reg_mana": 1.45,
+    "prot_fisica": 21.64,
+    "prot_magica": 29.58,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Horus Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Horus/info",
+   "pendiente_verificar": false
+  },
+  "hou-yi": {
+   "base": {
+    "vida": 577.0,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 20.04,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 41.23
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Hou Yi Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 41 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dam",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/HouYi/info",
+   "pendiente_verificar": false
+  },
+  "hua-mulan": {
+   "base": {
+    "vida": 668.52,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.73,
+    "prot_magica": 29.58,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.45,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Hua Mulan Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 41 + 0 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be h",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Mulan/info",
+   "pendiente_verificar": false
+  },
+  "hun-batz": {
+   "base": {
+    "vida": 619.0,
+    "mana": 275.68,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 41.04
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Hun Batz Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 41 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hi",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/HunBatz/info",
+   "pendiente_verificar": false
+  },
+  "ishtar": {
+   "base": {
+    "vida": 569.48,
+    "mana": 275.68,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "",
+    "texto": "data-ability-heading>Ishtar Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max .god p { margin-top: 4px; } .PhysicalPower, .PhysicalProtection, .PhysicalPenetrationPercent, .PhysicalDamage, .DamagePhysical, .Damage{ color: #ff5f5f; } .Go",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ishtar/info",
+   "pendiente_verificar": false
+  },
+  "ix-chel": {
+   "base": {
+    "vida": 569.48,
+    "mana": 319.68,
+    "reg_vida": 1.82,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.72,
+    "prot_magica": 29.8,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.7253,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>IxChel Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/IxChel/info",
+   "pendiente_verificar": false
+  },
+  "izanami": {
+   "base": {
+    "vida": 569.48,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.02,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Izanami Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Throw a piercing projectile that deals 0 + 27 Physical Damage to all enemies hit. The projectile returns to you after reaching its max range or hitting a wal",
+    "fuerza": 0.75,
+    "inteligencia": 0.15
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Izanami/info",
+   "pendiente_verificar": false
+  },
+  "janus": {
+   "base": {
+    "vida": 532.73,
+    "mana": 319.68,
+    "reg_vida": 1.7,
+    "reg_mana": 1.66,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Janus Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 5 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damag",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Janus/info",
+   "pendiente_verificar": false
+  },
+  "jing-wei": {
+   "base": {
+    "vida": 562.9,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 41.23
+   },
+   "por_nivel": {
+    "vida": 79.9,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Jing Wei Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 41 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. N",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/JingWei/info",
+   "pendiente_verificar": false
+  },
+  "jormungandr": {
+   "base": {
+    "vida": 668.52,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 20.0
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 4.0
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Jormungandr Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 8 Magical Damage to all enemies in front of you. As you attack, your Overheat increases causing your firing rate to decrease. • Increasing Attac",
+    "fuerza": 0.4,
+    "inteligencia": 0.08
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Jormungandr/info",
+   "pendiente_verificar": false
+  },
+  "kali": {
+   "base": {
+    "vida": 577.0,
+    "mana": 272.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.02,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.19
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 38.64,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Kali Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 0 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. NO",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Kali/info",
+   "pendiente_verificar": false
+  },
+  "khepri": {
+   "base": {
+    "vida": 705.27,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Khepri Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 36 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Khepri/info",
+   "pendiente_verificar": false
+  },
+  "kukulkan": {
+   "base": {
+    "vida": 569.48,
+    "mana": 322.62,
+    "reg_vida": 1.7,
+    "reg_mana": 1.57,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 48.3,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Kukulkan Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Da",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Kukulkan/info",
+   "pendiente_verificar": false
+  },
+  "kumbhakarna": {
+   "base": {
+    "vida": 675.1,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.5,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 108.1,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.2421,
+    "prot_magica": 1.6211,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5789
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Kumbhakarna Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 36 Magical Damage to an enemy in front of you. NOTE 1: Has a 3 hit chain. Attacks in order of 1, 0.75, 1.25x damage. First 2 hits cleave. Cooldo",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Kumbhakarna/info",
+   "pendiente_verificar": false
+  },
+  "kuzenbo": {
+   "base": {
+    "vida": 705.3,
+    "mana": 299.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.5,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 101.5211,
+    "mana": 45.3684,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.2421,
+    "prot_magica": 1.6211,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4211
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Kuzenbo Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 36 Magical Damage to an enemy in front of you. NOTE 1: Cost: 0 NOTE 2: Cost: 0 Damage Scaling : 100% Strength or Inhand Power and 20% Intelligence C",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Kuzenbo/info",
+   "pendiente_verificar": false
+  },
+  "loki": {
+   "base": {
+    "vida": 569.5,
+    "mana": 296.0,
+    "reg_vida": 1.73,
+    "reg_mana": 1.46,
+    "prot_fisica": 18.8,
+    "prot_magica": 25.4,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.0
+   },
+   "por_nivel": {
+    "vida": 86.4789,
+    "mana": 42.0,
+    "reg_vida": 0.23,
+    "reg_mana": 0.1295,
+    "prot_fisica": 2.7579,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.3684
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Loki Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 39 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. N",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Loki/info",
+   "pendiente_verificar": false
+  },
+  "medusa": {
+   "base": {
+    "vida": 569.48,
+    "mana": 302.3,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 48.3,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Medusa Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 5 + 36 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dam",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Medusa/info",
+   "pendiente_verificar": false
+  },
+  "mercury": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 18.76,
+    "prot_magica": 27.5,
+    "velocidad": 383.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Mercury Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 0 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Mercury/info",
+   "pendiente_verificar": false
+  },
+  "merlin": {
+   "base": {
+    "vida": 532.73,
+    "mana": 337.46,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Merlin Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Merlin/info",
+   "pendiente_verificar": false
+  },
+  "mordred": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.82,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 31.4,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Mordred Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Mordred/info",
+   "pendiente_verificar": false
+  },
+  "morgan-le-fay": {
+   "base": {
+    "vida": 532.73,
+    "mana": 316.32,
+    "reg_vida": 1.82,
+    "reg_mana": 1.57,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 35.81
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1384,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Morgan Le Fay Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 35 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through wall",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/MorganLeFay/info",
+   "pendiente_verificar": false
+  },
+  "ne-zha": {
+   "base": {
+    "vida": 577.0,
+    "mana": 296.0,
+    "reg_vida": 1.85,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.23,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Ne Zha Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: Ne Zha has a 4 hit chain. Attacks in an order of 1 / 1 / 1.5x / 2x damage and swing time. The",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/NeZha/info",
+   "pendiente_verificar": false
+  },
+  "neith": {
+   "base": {
+    "vida": 569.48,
+    "mana": 334.1,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Neith Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 36 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Neith/info",
+   "pendiente_verificar": false
+  },
+  "nemesis": {
+   "base": {
+    "vida": 661.0,
+    "mana": 296.0,
+    "reg_vida": 1.93,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.1995,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Nemesis Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Nemesis/info",
+   "pendiente_verificar": false
+  },
+  "nike": {
+   "base": {
+    "vida": 668.5,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.7,
+    "prot_magica": 29.6,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.0
+   },
+   "por_nivel": {
+    "vida": 101.5211,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.4526,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.3684
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Nike Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 39 Physical Damage to an enemy in front of you. NOTE 1: Nike has a 3 hit chain. Attacks in an order of 1 / 1 / 1.5x damage and swing time. The first 2 ",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Nike/info",
+   "pendiente_verificar": false
+  },
+  "nox": {
+   "base": {
+    "vida": 569.5,
+    "mana": 320.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.45,
+    "prot_fisica": 18.8,
+    "prot_magica": 27.4,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.29,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.4789,
+    "mana": 45.3684,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.7579,
+    "prot_magica": 1.3789,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.2879,
+    "dano_ataque": 2.4211
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Nox Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 5 + 36 Magical Damage to the first enemy hit. Projectile stops on first target hit, and does not pass through walls. Projectile stop",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Nox/info",
+   "pendiente_verificar": false
+  },
+  "nu-wa": {
+   "base": {
+    "vida": 569.48,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.36
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.76
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Nu Wa Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 36 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damag",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/NuWa/info",
+   "pendiente_verificar": false
+  },
+  "nut": {
+   "base": {
+    "vida": 577.0,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 39.05
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.76
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Nut Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 39 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damage ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Nut/info",
+   "pendiente_verificar": false
+  },
+  "odin": {
+   "base": {
+    "vida": 661.0,
+    "mana": 319.68,
+    "reg_vida": 1.82,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 31.4,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.5
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Odin Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. N",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Odin/info",
+   "pendiente_verificar": false
+  },
+  "osiris": {
+   "base": {
+    "vida": 619.0,
+    "mana": 299.36,
+    "reg_vida": 1.84,
+    "reg_mana": 1.56,
+    "prot_fisica": 19.24,
+    "prot_magica": 27.5,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 45.36,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Osiris Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: 4 Hit Chain. Attacks in order of 0.5, 1, 0.5, 1x damage swing time. Attacks 3 & 4 hit all ene",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Osiris/info",
+   "pendiente_verificar": false
+  },
+  "pele": {
+   "base": {
+    "vida": 577.0,
+    "mana": 279.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.0
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 45.3684,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.3684
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Pele Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 39 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. N",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Pele/info",
+   "pendiente_verificar": false
+  },
+  "poseidon": {
+   "base": {
+    "vida": 532.73,
+    "mana": 316.32,
+    "reg_vida": 1.82,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Poseidon Basic Attack BASIC Aspect of the Trident Aspect of the Trident Poseidon’s basic attacks always fire side waves. Trident no longer affects Tidal Surge but can be activated to focus the side waves, causing them to pierce enemies, and both abilities deal extra basic attack damage. Click to activate Aspect of the Trident Poseidon’s basic attacks always fire side waves. Tr",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Poseidon/info",
+   "pendiente_verificar": false
+  },
+  "princess-bari": {
+   "base": {
+    "vida": 577.0,
+    "reg_vida": 1.7,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.64,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "reg_vida": 0.2,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.7253,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Princess Bari Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 36 Magical Damage to the first enemy hit. • Mystic Surge: Deals 50% Damage to enemies within 2.4m of where the project",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Bari/info",
+   "pendiente_verificar": false
+  },
+  "ra": {
+   "base": {
+    "vida": 569.48,
+    "mana": 322.62,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 48.3,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Ra Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damage S",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ra/info",
+   "pendiente_verificar": false
+  },
+  "rama": {
+   "base": {
+    "vida": 569.48,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.33,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1105,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Rama Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 38 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Damag",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Rama/info",
+   "pendiente_verificar": false
+  },
+  "ratatoskr": {
+   "base": {
+    "vida": 577.0,
+    "mana": 279.0,
+    "reg_vida": 1.93,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.0
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 45.3684,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.3684
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Ratatoskr Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 39 Physical Damage to an enemy in front of you. NOTE 1: Has a 4 hit chain. Attacks in order of 1, 0.5, 0.5, 1.25x damage and swing time. The final",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ratatoskr/info",
+   "pendiente_verificar": false
+  },
+  "ravana": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.82,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.0
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.3684
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Ravana Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 29 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "fuerza": 0.75,
+    "inteligencia": 0.15
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ravana/info",
+   "pendiente_verificar": false
+  },
+  "scylla": {
+   "base": {
+    "vida": 532.73,
+    "mana": 322.62,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 48.3,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Scylla Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Scylla/info",
+   "pendiente_verificar": false
+  },
+  "sobek": {
+   "base": {
+    "vida": 626.52,
+    "mana": 299.36,
+    "reg_vida": 1.93,
+    "reg_mana": 1.56,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 45.36,
+    "reg_vida": 0.1995,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Sobek Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. D",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Sobek/info",
+   "pendiente_verificar": false
+  },
+  "sol": {
+   "base": {
+    "vida": 532.73,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.36
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.76
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Sol Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 36 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. NOTE 2:",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Sol/info",
+   "pendiente_verificar": false
+  },
+  "sun-wukong": {
+   "base": {
+    "vida": 619.0,
+    "mana": 322.62,
+    "reg_vida": 1.7,
+    "reg_mana": 1.57,
+    "prot_fisica": 19.24,
+    "prot_magica": 27.5,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.29,
+    "dano_ataque": 38.5
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 48.3,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.2879,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Sun Wukong Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/SunWukong/info",
+   "pendiente_verificar": false
+  },
+  "susano": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 18.76,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 41.04
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Susano Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 41 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit.",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Susano/info",
+   "pendiente_verificar": false
+  },
+  "sylvanus": {
+   "base": {
+    "vida": 705.27,
+    "mana": 296.0,
+    "reg_vida": 1.82,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.9,
+    "vel_ataque_pct": 0.74,
+    "dano_ataque": 33.31
+   },
+   "por_nivel": {
+    "vida": 101.52,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 0.74,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Sylvanus Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Lob a projectile at a target location that explodes, dealing 0 + 33 Magical Damage to all enemies. NOTE 1: Can be thrown over walls. Damage Scaling : 100% S",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Sylvanus/info",
+   "pendiente_verificar": false
+  },
+  "thanatos": {
+   "base": {
+    "vida": 591.1,
+    "mana": 296.0,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 108.1,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Thanatos Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: Thanatos has a 3 hit chain. Attacks in an order of 1 / 0.75 / 1.5x damage and swing time. T",
+    "pendiente_verificar": true,
+    "fuerza": 1.0,
+    "inteligencia": 0.2,
+    "por_defecto": true
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Thanatos/info",
+   "pendiente_verificar": false
+  },
+  "the-morrigan": {
+   "base": {
+    "vida": 569.48,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>The Morrigan Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 38 Magical Damage to the first enemy hit. NOTE 1: The Morrigan has a 3 hit chain. Attacks in an order of 1 / 1 / 1x dam",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/TheMorrigan/info",
+   "pendiente_verificar": false
+  },
+  "thor": {
+   "base": {
+    "vida": 619.0,
+    "mana": 296.0,
+    "reg_vida": 1.82,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 38.69
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Thor Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 38 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. C",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Thor/info",
+   "pendiente_verificar": false
+  },
+  "tsukuyomi": {
+   "base": {
+    "vida": 619.0,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.46,
+    "prot_fisica": 19.0,
+    "prot_magica": 25.42,
+    "velocidad": 380.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 39.05
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.1295,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.76
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Tsukuyomi Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 39 Physical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be h",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Tsukuyomi/info",
+   "pendiente_verificar": false
+  },
+  "ullr": {
+   "base": {
+    "vida": 577.0,
+    "mana": 312.96,
+    "reg_vida": 1.85,
+    "reg_mana": 1.55,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 375.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 36.0
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 38.64,
+    "reg_vida": 0.23,
+    "reg_mana": 0.11,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Ullr Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Ullr's Basic attacks change depending on his current stance. Bow: Fire a projectile that deals 0 + 36 [100% Strength and 20% Intelligence and 100% InhandPower] ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ullr/info",
+   "pendiente_verificar": false
+  },
+  "vulcan": {
+   "base": {
+    "vida": 577.0,
+    "mana": 316.32,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 17.48,
+    "prot_magica": 27.38,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 33.12
+   },
+   "por_nivel": {
+    "vida": 94.0,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.2079
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Vulcan Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 5 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. Dama",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Vulcan/info",
+   "pendiente_verificar": false
+  },
+  "xbalanque": {
+   "base": {
+    "vida": 569.48,
+    "mana": 312.96,
+    "reg_vida": 1.7,
+    "reg_mana": 1.56,
+    "prot_fisica": 18.76,
+    "prot_magica": 25.3,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 38.88
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 38.64,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 2.76,
+    "prot_magica": 1.38,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Physical",
+    "texto": "data-ability-heading>Xbalanque Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 38 Physical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. ",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Xbalanque/info",
+   "pendiente_verificar": false
+  },
+  "xing-tian": {
+   "base": {
+    "vida": 705.3,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.7,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.96,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 39.0
+   },
+   "por_nivel": {
+    "vida": 101.5211,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.4526,
+    "prot_magica": 1.6211,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.4,
+    "dano_ataque": 2.3684
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>XingTian Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 39 Magical Damage to an enemy in front of you. Damage Scaling : 100% Strength or Inhand Power and 20% Intelligence Cooldown: 0s Cost: 0 .god p { ma",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/XingTian/info",
+   "pendiente_verificar": false
+  },
+  "yemoja": {
+   "base": {
+    "vida": 633.1,
+    "mana": 299.36,
+    "reg_vida": 1.82,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.29,
+    "dano_ataque": 33.31
+   },
+   "por_nivel": {
+    "vida": 108.1,
+    "mana": 45.36,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.2879,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Yemoja Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 33 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. NOTE",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Yemoja/info",
+   "pendiente_verificar": false
+  },
+  "ymir": {
+   "base": {
+    "vida": 675.1,
+    "mana": 296.0,
+    "reg_vida": 1.84,
+    "reg_mana": 1.45,
+    "prot_fisica": 20.52,
+    "prot_magica": 29.7,
+    "velocidad": 370.0,
+    "vel_ataque_base": 0.98,
+    "vel_ataque_pct": 1.51,
+    "dano_ataque": 36.19
+   },
+   "por_nivel": {
+    "vida": 108.1,
+    "mana": 42.0,
+    "reg_vida": 0.2158,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.24,
+    "prot_magica": 1.62,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.5121,
+    "dano_ataque": 2.5921
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Ymir Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Deal 0 + 36 Magical Damage to an enemy in front of you. NOTE 1: If multiple enemies are in the area, the enemy closest to the center of the area will be hit. Da",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Ymir/info",
+   "pendiente_verificar": false
+  },
+  "zeus": {
+   "base": {
+    "vida": 569.48,
+    "mana": 316.32,
+    "reg_vida": 1.82,
+    "reg_mana": 1.56,
+    "prot_fisica": 19.0,
+    "prot_magica": 27.5,
+    "velocidad": 375.0,
+    "vel_ataque_base": 1.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 44.4
+   },
+   "por_nivel": {
+    "vida": 86.48,
+    "mana": 42.0,
+    "reg_vida": 0.2,
+    "reg_mana": 0.12,
+    "prot_fisica": 3.0,
+    "prot_magica": 1.5,
+    "velocidad": 0.0,
+    "vel_ataque_base": 0.0,
+    "vel_ataque_pct": 1.61,
+    "dano_ataque": 2.4
+   },
+   "basico": {
+    "tipo": "Magical",
+    "texto": "data-ability-heading>Zeus Basic Attack BASIC Level input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } input[type=number] { -moz-appearance: textfield; } Max Fire a projectile that deals 0 + 44 Magical Damage to the first enemy hit. NOTE 1: Projectile stops on first target hit, and does not pass through walls. NOTE 2",
+    "fuerza": 1.0,
+    "inteligencia": 0.2
+   },
+   "parche_verificado": "OB48",
+   "fuente": "https://smite2.live/god/Zeus/info",
+   "pendiente_verificar": false
+  }
+ }
+}

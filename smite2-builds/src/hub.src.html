@@ -154,6 +154,22 @@ kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; 
 .flag.fs { color: var(--ice); } .flag.fc { color: var(--ember); }
 .tier.it-t { position: static; display: inline-grid; margin-left: 6px; }
 @media (max-width: 520px) { .tierrow { grid-template-columns: 48px minmax(0, 1fr); } .tierlbl { height: 44px; font-size: 20px; } }
+.alt { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--ok); background: rgba(127,214,154,.06); }
+.alt p { margin: 6px 0 0; } .alt-its { display: inline-flex; flex-wrap: wrap; gap: 6px; vertical-align: middle; margin-left: 6px; }
+.calc { display: grid; gap: 16px; }
+.calc-ctl { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font-size: 14.5px; }
+.calc-ctl input[type=range] { width: 180px; max-width: 60vw; margin-left: 8px; vertical-align: middle; accent-color: var(--gold); }
+.calc-ctl select { margin-left: 6px; padding: 5px 8px; background: var(--stone); color: var(--ink); border: 1px solid var(--line); font: inherit; }
+.calc-ctl .chk { display: inline-flex; gap: 6px; align-items: center; }
+.calc-facts .v { font-size: 20px; }
+.calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.calc .big { font-family: var(--font-head); font-size: 34px; color: var(--gold); line-height: 1.1; }
+.calc .big small { font-family: var(--font-body); font-size: 15px; color: var(--muted); }
+.calc-t { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; font-variant-numeric: tabular-nums; }
+.calc-t th { text-align: left; font-family: var(--font-head); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); padding: 6px 10px 6px 0; border-bottom: 1px solid var(--gold-deep); }
+.calc-t td { padding: 6px 10px 6px 0; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: middle; }
+.calc-t td.v { font-weight: 700; font-size: 16px; } .calc-t td.dmg { color: var(--ember); } .calc-t td.heal { color: var(--ok); } .calc-t td.shield { color: var(--ice); }
+.slot.sm { display: inline-grid; width: 22px; height: 22px; font-size: 12px; vertical-align: middle; }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
 .step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
@@ -1113,10 +1129,146 @@ function renderBuilder() {
         <div class="picker-row"><input id="foeQ2" type="search" list="godlist" class="inp" placeholder="${t("Agregar rival (hasta 3)…")}" autocomplete="off" aria-label="${t("Agregar rival (hasta 3)…")}">${E.length ? `<button class="chip" type="button" id="foeClear">${t("Limpiar")}</button>` : ""}</div>
         ${E.length ? `<div class="foes">${E.map(x => `<button class="foe" type="button" data-foe="${x.s}">${face(x)}<span>${esc(N(x))}</span><span class="x" aria-hidden="true">×</span></button>`).join("")}</div>` : `<p class="muted">${L("Agrega a los rivales para que las sugerencias y los avisos los tomen en cuenta.", "Add enemies so suggestions and warnings take them into account.")}</p>`}</div>
     </div>
+    <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Calculadora", "Calculator")}</span><h2>${L(`Cuánto pega ${esc(N(g))} con esta build`, `How hard ${esc(N(g))} hits with this build`)}</h2></div>${calcHTML(g, r)}</section>
     <div class="bgrid2">${shop}
       <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Resumen", "Summary")}</span><h2>${L("Qué hará tu build", "What your build does")}</h2></div>${bldSummary(g, r)}</section>
     </div>`;
   if (focusId === "bldQ" || focusId === "foeQ2") { const f = $("#" + focusId); if (f) { f.focus(); if (focusId === "bldQ") f.setSelectionRange(f.value.length, f.value.length); } }
+}
+
+// ---------- Calculadora (stats_base.json + calc_objetos.json) ----------
+const SB = ((CURADO.stats_base || {}).dioses) || {};
+const CO = CURADO.calc_objetos || {};
+const byItem = arr => Object.fromEntries((arr || []).map(x => [x.item, x]));
+const C_STACK = byItem(CO.cargas), C_FIGHT = byItem(CO.en_pelea), C_CONV = byItem(CO.conversiones), C_PCT = byItem(CO.pct_todo), C_HIT = byItem(CO.al_pegar);
+let CALC = { lvl: 20, rank: 5, stacks: true, fight: false };
+const TAGMAP = { PhysicalPower: "str", MagicalPower: "int", InhandPower: "ad", AttackSpeedPercent: "as", CritChance: "crit", EchoItem: "echo", LifeStealPercent: "ls", MaxHealth: "hp", MaxMana: "mana",
+  PhysicalProtection: "pf", PhysicalProtectionItem: "pf", MagicalProtection: "pm", MagicalProtectionItem: "pm", Plating: "plating", Dampening: "damp", MagicalPenetrationFlat: "pen", MagicalPenetrationPercent: "penp", PhysicalPenetrationPercent: "penp", CooldownReductionPercent: "cdr" };
+// Con qué escala más el dios (para el desempate del stat adaptativo): Fuerza salvo que sus habilidades escalen más con Inteligencia.
+function godMain(g) {
+  let s = 0, i = 0;
+  for (const a of ABILS.filter(a => a.dios === g.s)) for (const [k, v] of a.datos || []) if (/Scaling/.test(k)) { const ms = /([\d.]+)% Strength/.exec(v), mi = /([\d.]+)% Intelligence/.exec(v); if (ms) s += +ms[1]; if (mi) i += +mi[1]; }
+  return i > s ? "int" : "str";
+}
+function calcStats(g, items, starter, o) {
+  const base = SB[g.s] || {}, B = base.base || {}, P = base.por_nivel || {}, L1 = o.lvl - 1;
+  const at = k => (B[k] || 0) + (P[k] || 0) * L1;
+  const it = {}; const add = (k, v) => { it[k] = (it[k] || 0) + v; };
+  const ids = items.concat(starter ? [starter] : []).filter(id => IBY[id]);
+  const adapt = [];
+  for (const id of ids) { const r = IBY[id];
+    for (const [tag, v] of r.stats) if (TAGMAP[tag]) add(TAGMAP[tag], v);
+    const ad = /Adaptive Stat: \+(\d+) Strength or \+(\d+) Intelligence/.exec(r.texto_en); if (ad) adapt.push([+ad[1], +ad[2]]);
+    if (o.stacks && C_STACK[id]) for (const [k, v] of Object.entries(C_STACK[id].suma || {})) { if (k === "pen") add("pen", v); else add(k, v); }
+    if (o.stacks && C_STACK[id] && C_STACK[id].pen) add("pen", C_STACK[id].pen);
+    if (C_FIGHT[id] && C_FIGHT[id].adaptativo) adapt.push(C_FIGHT[id].adaptativo);
+    if (o.fight && C_FIGHT[id] && C_FIGHT[id].suma) for (const [k, v] of Object.entries(C_FIGHT[id].suma)) add(k, v);
+  }
+  const useInt = (it.int || 0) > (it.str || 0) || ((it.int || 0) === (it.str || 0) && godMain(g) === "int");
+  for (const [a, b] of adapt) add(useInt ? "int" : "str", useInt ? b : a);
+  const pctAll = ids.reduce((n, id) => n + (C_PCT[id] ? C_PCT[id].pct : 0), 0);
+  if (pctAll) for (const k of ["str", "int", "ad", "as", "hp", "mana", "pf", "pm", "ls", "crit"]) if (it[k]) it[k] *= 1 + pctAll / 100;
+  for (const id of ids) { const c = C_CONV[id]; if (!c) continue;
+    if (c.int_por_mana) add("int", (it.mana || 0) * (c.int_por_mana + (o.stacks && C_STACK[id] ? (C_STACK[id].int_por_mana_extra || 0) : 0)));
+    if (c.str_por_mana) add("str", (it.mana || 0) * c.str_por_mana); }
+  if (ids.includes("rod-of-tahuti")) add("int", (it.int || 0) * 0.25);
+  if (o.fight && ids.includes("brawlers-beat-stick")) { for (const k of ["str", "int", "pf", "pm"]) if (it[k]) it[k] *= 1.1; }
+  if (ids.includes("nimble-ring")) { add("ad", (it.int || 0) * 0.1); add("as", (it.int || 0) * 0.1); }
+  const S = { useInt, pctAll, it, lvl: o.lvl,
+    str: it.str || 0, int: it.int || 0,
+    hp: at("vida") + (it.hp || 0), mana: at("mana") + (it.mana || 0),
+    pf: at("prot_fisica") + (it.pf || 0), pm: at("prot_magica") + (it.pm || 0),
+    plating: Math.min(35, it.plating || 0), damp: Math.min(35, it.damp || 0), ls: it.ls || 0, crit: Math.min(100, it.crit || 0), echo: it.echo || 0, pen: it.pen || 0, penp: it.penp || 0, cdr: it.cdr || 0 };
+  const bb = (base.basico || {});
+  S.inhand = at("dano_ataque") + (it.ad || 0);
+  S.basic = S.inhand + (bb.fuerza ?? 1) * S.str + (bb.inteligencia ?? 0.2) * S.int;
+  S.basicType = bb.tipo === "Magical" ? L("mágico", "magical") : bb.tipo === "Physical" ? L("físico", "physical") : "";
+  S.basicDefault = !!bb.por_defecto;
+  S.asPct = at("vel_ataque_pct") + (it.as || 0);
+  S.aps = (B.vel_ataque_base || 1) * (1 + S.asPct / 100);
+  S.deathbringer = ids.includes("deathbringer");
+  S.onhit = ids.filter(id => C_HIT[id]).map(id => { const h = C_HIT[id]; let v = 0;
+    if (h.int_pct) v = S.int * h.int_pct / 100; else if (h.por_nivel) v = h.base + h.por_nivel * o.lvl;
+    else if (h.extra_por_carga) v = h.base + (o.stacks ? h.extra_por_carga * Math.min(h.max_cargas, Math.floor(o.lvl / h.por_nivel_cada)) : 0);
+    return [id, v, h]; });
+  S.basicHit = S.basic + S.onhit.reduce((n, x) => n + x[1], 0);
+  S.partial = !SB[g.s] || base.pendiente_verificar;
+  return S;
+}
+// Une filas base + escalado por posición (la fila de escalado va justo después de su número).
+function abilityLines(a, S, rank) {
+  const out = [], rows = a.datos || [];
+  for (let i = 0; i < rows.length - 1; i++) {
+    const [k, v] = rows[i], [k2, v2] = rows[i + 1];
+    if (!/Scaling/i.test(k2) || /Scaling/i.test(k)) continue;
+    const nums = v.split("/").map(x => parseFloat(x)); if (nums.some(isNaN)) continue;
+    const base = nums[Math.min(rank, nums.length) - 1];
+    let add = 0, done = true, txt = v2.replace(/\s+/g, " ");
+    const parts = txt.split(/ and /);
+    for (const p0 of parts) { const p = p0.trim(); const m = /^([\d.]+)% (Strength(?: or Inhand Power)?|Intelligence|Int|Max ?Health)$/i.exec(p);
+      if (!m) { done = false; continue; }
+      const pct = +m[1] / 100, w = m[2].toLowerCase();
+      add += pct * (w.startsWith("str") ? S.str : w.startsWith("int") ? S.int : S.hp); }
+    const kind = /Heal/i.test(k) ? "heal" : /Shield/i.test(k) ? "shield" : "dmg";
+    out.push({ key: k, base, total: base + add, scal: v2, partial: !done, perTick: /Tick|Per Second/i.test(k), kind });
+    i++;
+  }
+  return out;
+}
+const fmt = n => Math.round(n).toLocaleString("es-MX");
+function calcHTML(g, r) {
+  if (!SB[g.s]) return `<p class="muted">${L("Todavía no hay stats base de este dios.", "No base stats for this god yet.")}</p>`;
+  const st = bldStarter(r), items = BLD.items, S = calcStats(g, items, st, CALC);
+  const abil = ABILS.filter(a => a.dios === g.s && a.ranura !== "P" && (a.datos || []).some(d => /Scaling/.test(d[0]))).sort((a, b) => SLOT_ORDER.indexOf(a.ranura) - SLOT_ORDER.indexOf(b.ranura));
+  const rowsA = abil.map(a => abilityLines(a, S, CALC.rank).map(l => `<tr><td><span class="slot sm">${esc(a.ranura === "otra" ? "+" : a.ranura)}</span> ${esc(a.nombre)}</td><td>${esc(trKey(l.key))}${l.perTick ? L(" (por pulso)", " (per tick)") : ""}</td>
+    <td class="v ${l.kind}">${fmt(l.total)}${l.partial ? "*" : ""}</td><td class="muted">${fmt(l.base)} + ${esc(trVal(l.scal))}</td></tr>`).join("")).join("");
+  const mitig = p => Math.round(100 * 100 / (100 + Math.max(0, p)));
+  const critA = S.basic * 1.5 * (S.deathbringer ? 1.35 : 1), critB = S.basic * 2.5 * (S.deathbringer ? 1.35 : 1);
+  // Sin cada objeto: recalcula todo (quitar uno puede cambiar el stat adaptativo).
+  const key0 = abil.map(a => [a, abilityLines(a, S, CALC.rank)[0]]).filter(x => x[1] && x[1].kind === "dmg").slice(0, 4);
+  const without = items.concat(st ? [st] : []).map(id => {
+    const it2 = items.filter(x => x !== id), st2 = id === st ? "" : st, S2 = calcStats(g, it2, st2, CALC);
+    const d = (a, b) => { const x = Math.round(a - b); return x === 0 ? "—" : (x > 0 ? "−" : "+") + Math.abs(x).toLocaleString("es-MX"); };
+    return `<tr><td>${iMini(IBY[id])}</td><td>${d(S.basicHit, S2.basicHit)}</td>${key0.map(([a, l]) => { const l2 = abilityLines(a, S2, CALC.rank).find(x => x.key === l.key); return `<td>${l2 ? d(l.total, l2.total) : "—"}</td>`; }).join("")}<td>${d(S.hp, S2.hp)}</td><td>${d(S.pf + S.pm, S2.pf + S2.pm)}</td></tr>`;
+  }).join("");
+  const F = CO.formulas || {};
+  return `<div class="calc">
+    <div class="calc-ctl">
+      <label for="calcLvl">${L("Nivel", "Level")} <b id="calcLvlV">${CALC.lvl}</b><input id="calcLvl" type="range" min="1" max="20" value="${CALC.lvl}"></label>
+      <label for="calcRank">${L("Rango de habilidades", "Ability rank")} <select id="calcRank">${[1, 2, 3, 4, 5].map(n => `<option${n === CALC.rank ? " selected" : ""}>${n}</option>`).join("")}</select></label>
+      <label class="chk"><input id="calcStacks" type="checkbox"${CALC.stacks ? " checked" : ""}> ${L("Objetos con cargas al máximo", "Stacking items at max")}</label>
+      <label class="chk"><input id="calcFight" type="checkbox"${CALC.fight ? " checked" : ""}> ${L("En pelea (bonos de combate y de poca vida)", "In combat (combat and low-health bonuses)")}</label>
+    </div>
+    ${S.partial ? `<p class="rule">${L("Los stats base de este dios en la fuente están incompletos: los números de vida, protección y básico pueden salir mal.", "This god's base stats are incomplete in the source.")}</p>` : ""}
+    <div class="facts calc-facts">
+      <div><span class="v">${fmt(S.str)}</span><span class="l">${L("Fuerza", "Strength")}</span></div>
+      <div><span class="v">${fmt(S.int)}</span><span class="l">${L("Inteligencia", "Intelligence")}</span></div>
+      <div><span class="v">${fmt(S.hp)}</span><span class="l">${L("Vida", "Health")}</span></div>
+      <div><span class="v">${fmt(S.pf)} / ${fmt(S.pm)}</span><span class="l">${L("Prot. física / mágica", "Phys. / mag. prot.")}</span></div>
+      <div><span class="v">${Math.round(S.cdr)}%</span><span class="l">${L("Enfriamiento", "Cooldown rate")}</span></div>
+      <div><span class="v">${Math.round(S.ls)}%</span><span class="l">${L("Robo de vida", "Lifesteal")}</span></div>
+    </div>
+    <div class="calc-grid">
+      <section class="fblock"><span class="eyebrow">${L("Ataque básico", "Basic attack")}</span>
+        <p class="big">${fmt(S.basic)} <small>${L("de daño", "damage")}${S.basicType ? " " + S.basicType : ""}</small></p>
+        <p class="muted">${L(`${fmt(S.inhand)} de daño de ataque + ${fmt(S.str)} de Fuerza + 20% de ${fmt(S.int)} de Inteligencia${S.basicDefault ? " (escalado por defecto de la wiki)" : ""}.`, `${fmt(S.inhand)} attack damage + Strength + 20% Intelligence.`)}</p>
+        <p>${L("Velocidad", "Speed")}: <b>${S.aps.toFixed(2)}</b> ${L("ataques/s", "attacks/s")} <span class="muted">(+${Math.round(S.asPct)}%)</span> · ${L("Por segundo", "Per second")}: <b>${fmt(S.basic * S.aps)}</b> <span class="pend">${L("estimado", "estimate")}</span></p>
+        ${S.crit ? `<p>${L("Crítico", "Crit")}: <b>${Math.round(S.crit)}%</b> · ${L("golpe crítico", "crit hit")} <b>${fmt(critA)}</b> ${L("o", "or")} <b>${fmt(critB)}</b> <span class="pend" title="${esc(F.critico ? F.critico.texto : "")}">${L("la wiki no es clara", "wiki unclear")}</span></p>` : ""}
+        ${S.onhit.length ? `<ul class="plain">${S.onhit.map(([id, v, h]) => `<li>${esc(iName(IBY[id]))}: +${fmt(v)} <span class="muted">${esc(h.texto || "")}</span></li>`).join("")}</ul>` : ""}
+      </section>
+      <section class="fblock"><span class="eyebrow">${L("Defensa", "Defense")}</span>
+        <p>${L("Vida", "Health")} <b>${fmt(S.hp)}</b> · ${L("Blindaje", "Plating")} <b>${S.plating}</b> · ${L("Amortiguación", "Dampening")} <b>${S.damp}</b></p>
+        <p>${L(`Recibirías cerca del ${mitig(S.pf)}% del daño físico y del ${mitig(S.pm)}% del mágico, antes de la penetración del rival.`, `You'd take about ${mitig(S.pf)}% of physical and ${mitig(S.pm)}% of magical damage, before enemy penetration.`)} <span class="pend" title="${esc(F.proteccion ? F.proteccion.texto : "")}">${L("fórmula supuesta", "assumed formula")}</span></p>
+        ${S.plating || S.damp ? `<p class="muted">${L(`El blindaje quita ${S.plating}% del daño de básicos y la amortiguación ${S.damp}% del de habilidades.`, `Plating removes ${S.plating}% of basic damage and dampening ${S.damp}% of ability damage.`)}</p>` : ""}
+      </section>
+    </div>
+    <div class="fblock"><span class="eyebrow">${L("Habilidades", "Abilities")} · ${L("rango", "rank")} ${CALC.rank}</span>
+      <div class="tw"><table class="calc-t"><thead><tr><th>${L("Habilidad", "Ability")}</th><th>${L("Parte", "Part")}</th><th>${L("Total", "Total")}</th><th>${L("Base + escalado", "Base + scaling")}</th></tr></thead><tbody>${rowsA || `<tr><td colspan="4" class="muted">${L("Sin datos de escalado.", "No scaling data.")}</td></tr>`}</tbody></table></div>
+      <p class="muted" style="font-size:13px">${L("Daño antes de protecciones del rival. Rojo = daño, verde = curación, azul = escudo. * = la habilidad también escala con algo que la calculadora no cuenta (protecciones, nivel, cargas…).", "Damage before enemy protections. Red = damage, green = healing, blue = shield. * = also scales with something not counted.")}${S.echo ? L(` Con ${Math.round(S.echo)}% de Eco, cada habilidad tiene esa probabilidad de pegar 15% más.`, ` With ${Math.round(S.echo)}% Echo, abilities have that chance to deal 15% more.`) : ""}</p></div>
+    ${without ? `<div class="fblock"><span class="eyebrow">${L("Sin cada objeto", "Without each item")}</span><p class="muted">${L("Cuánto pierdes si quitas ese objeto (− es lo que dejas de tener).", "What you lose by removing that item.")}</p>
+      <div class="tw"><table class="calc-t"><thead><tr><th>${L("Objeto", "Item")}</th><th>${L("Básico", "Basic")}</th>${key0.map(([a]) => `<th>${esc(a.ranura)}</th>`).join("")}<th>${L("Vida", "Health")}</th><th>${L("Prot.", "Prot.")}</th></tr></thead><tbody>${without}</tbody></table></div></div>` : ""}
+    <details class="orig"><summary>${L("Cómo se calcula", "How it's calculated")}</summary><ul class="plain">${Object.values(F).map(f => `<li>${esc(f.texto)}${f.pendiente_verificar ? ` <span class="pend">${L("por verificar", "unverified")}</span>` : ""}</li>`).join("")}${S.pctAll ? `<li>${L(`Tus objetos de «% de todos los stats» suman ${S.pctAll}% (contando adaptativos y cargas; no sabemos si el juego los cuenta).`, `Your "% of all stats" items add ${S.pctAll}%.`)}</li>` : ""}</ul></details>
+  </div>`;
 }
 
 // ---------- Chat rápido / VGS (src/curado/chat_rapido.json) ----------
@@ -1172,10 +1324,16 @@ function renderChat() {
 // ---------- Novedades del parche (src/curado/novedades.json) ----------
 const NOV = CURADO.novedades || {};
 const NOVC = NOV.cambios || [];
+// Qué hacer con un objeto nerfeado: seguir usándolo o cambiarlo.
+function altHTML(c) {
+  const a = c.alternativa; if (!a) return "";
+  const its = (a.items || []).filter(id => IBY[id]).map(id => iMini(IBY[id])).join(" ");
+  return `<div class="alt"><b>${a.mantener ? L("¿Lo sigo comprando? Sí", "Keep buying it? Yes") : L("Mejor cambia a", "Better switch to")}</b> ${its ? `<span class="alt-its">${its}</span>` : ""}<p>${esc(a.texto)}</p>${a.pendiente_verificar ? `<span class="pend">${L("deducción", "deduction")}</span>` : ""}</div>`;
+}
 function novBanner(tipo, ref) {
   const c = NOVC.find(x => x.tipo === tipo && x.ref === ref && x.aplica_joust !== false);
   if (!c) return "";
-  return `<div class="novb"><span class="eyebrow">${L(`Cambió en el ${esc(NOV.parche || "")}`, `Changed in ${esc(NOV.parche || "")}`)}</span><ul class="plain">${c.cambios.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${c.efecto ? `<p class="muted">${esc(c.efecto)}</p>` : ""}${pendTag(c)}</div>`;
+  return `<div class="novb"><span class="eyebrow">${L(`Cambió en el ${esc(NOV.parche || "")}`, `Changed in ${esc(NOV.parche || "")}`)}</span><ul class="plain">${c.cambios.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${c.efecto ? `<p class="muted">${esc(c.efecto)}</p>` : ""}${altHTML(c)}${pendTag(c)}</div>`;
 }
 const CONF = { alta: ["Confianza alta", "High confidence"], media: ["Confianza media", "Medium confidence"], baja: ["Confianza baja", "Low confidence"] };
 function probarHTML() {
@@ -1206,7 +1364,7 @@ function renderNovedades() {
     const g = c.tipo === "dios" ? bySlug(c.ref) : null, it = c.tipo === "objeto" ? IBY[c.ref] : null;
     const who = g ? `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>` : it ? iMini(it) : "";
     return `<article class="sit${c.aplica_joust === false ? "" : " hot"}"><h3>${esc(c.titulo)}${c.aplica_joust === false ? `<span class="diff o-derivado">${L("No aplica a Joust", "Not in Joust")}</span>` : ""}${pendTag(c)}</h3>${who ? `<div class="foes">${who}</div>` : ""}
-      <ul class="plain">${c.cambios.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${c.efecto ? `<p class="why"><b>${L("En Joust", "In Joust")}:</b> ${esc(c.efecto)}</p>` : ""}</article>`;
+      <ul class="plain">${c.cambios.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${c.efecto ? `<p class="why"><b>${L("En Joust", "In Joust")}:</b> ${esc(c.efecto)}</p>` : ""}${altHTML(c)}</article>`;
   };
   const grp = (tipo, title) => { const xs = NOVC.filter(c => c.tipo === tipo); return xs.length ? `<section class="panel"><div class="sec-head"><span class="eyebrow">${title}</span></div><div class="sits">${xs.map(card).join("")}</div></section>` : ""; };
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Novedades", "Patch notes")}</span><h2>${esc(NOV.parche || "")}${NOV.nombre ? " · " + esc(NOV.nombre) : ""}</h2>
@@ -1287,6 +1445,7 @@ function renderHall() {
     <div class="sec-head"><span class="eyebrow">${t("Las tres builds")}</span><h2>${L(`${esc(g.n)} en Joust`, `${esc(g.e)} in Joust`)}</h2>
       <p>${L(`El porcentaje es en cuántas partidas de Joust compraron ese objeto con ${esc(g.n)}. Los que dicen «sugerido» casi nadie los compra con este dios: los agrego para completar la versión.`, `The percentage is how many Joust games that item was bought in with ${esc(g.e)}. Items marked "suggested" are rarely bought on this god: they are added to complete that version.`)}</p></div>
     <div class="builds">${buildHTML("off", r)}${buildHTML("hyb", r)}${buildHTML("def", r)}</div>
+    ${!r.nodata && r.b[r.meta] ? `<button class="chip" type="button" data-calcgod="${g.s}" data-calcrole="${role}">${L("Ver cuánto pega con la build más jugada", "See how hard the most played build hits")}</button>` : ""}
     ${godCombosHTML(g)}
     ${godAbilsHTML(g)}
     ${comboHTML(g)}
@@ -1390,6 +1549,8 @@ document.addEventListener("click", e => {
   const bl = t.closest("[data-bldload]");
   if (bl) { const g0 = bldGod(), b0 = bldRole(g0).b[bl.dataset.bldload]; if (b0) { BLD.items = b0.map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.slot = null; saveBld(); renderBuilder(); } return; }
   if (t.closest("[data-bldclear]")) { BLD.items = []; BLD.slot = null; saveBld(); renderBuilder(); return; }
+  const cg = t.closest("[data-calcgod]");
+  if (cg) { const g0 = bySlug(cg.dataset.calcgod), r0 = g0 && g0.roles[cg.dataset.calcrole]; if (r0) { BLD.god = g0.s; BLD.role = cg.dataset.calcrole; BLD.items = r0.b[r0.meta].map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.starter = ""; BLD.slot = null; saveBld(); setView("creador"); window.scrollTo(0, $(".views").offsetTop); } return; }
   const tb = t.closest("[data-trybuild]");
   if (tb) { const x = (NOV.a_probar || []).find(y => y.id === tb.dataset.trybuild); if (x && x.build && bySlug(x.build.dios)) { BLD.god = x.build.dios; BLD.role = ""; BLD.items = x.build.items.filter(id => IBY[id]).slice(0, 6); BLD.starter = IBY[x.build.inicial] ? x.build.inicial : ""; BLD.slot = null; saveBld(); setView("creador"); window.scrollTo(0, $(".views").offsetTop); } return; }
   const vg = t.closest("[data-vgsg]");
@@ -1434,6 +1595,9 @@ function tryAddFoe(inp, force) {
   const again = $(view === "creador" ? "#foeQ2" : "#foeQ"); if (again) again.focus();
 }
 document.addEventListener("change", e => {
+  if (e.target.id === "calcRank") { CALC.rank = +e.target.value; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); }
+  if (e.target.id === "calcStacks") { CALC.stacks = e.target.checked; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); }
+  if (e.target.id === "calcFight") { CALC.fight = e.target.checked; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); }
   if (e.target.id === "bldStarter") { BLD.starter = e.target.value; saveBld(); renderBuilder(); }
   if (e.target.id === "bldRole") { BLD.role = e.target.value; BLD.items = []; saveBld(); renderBuilder(); }
   if (e.target.id === "itNeed") { itNeed = e.target.value; itCat = "all"; renderObjetos(); }
@@ -1446,6 +1610,7 @@ document.addEventListener("input", e => {
   if (e.target.id === "bldQ") { BLD.q = norm(e.target.value); renderBuilder(); }
   if (e.target.id === "bldGodQ") { const v = e.target.value.trim(), g2 = G.find(x => norm(x.n) === norm(v) || norm(x.e) === norm(v)); if (g2) { BLD.god = g2.s; BLD.role = ""; BLD.items = []; BLD.starter = ""; saveBld(); renderBuilder(); } }
   if (e.target.id === "godFilter") renderGods();
+  if (e.target.id === "calcLvl") { CALC.lvl = +e.target.value; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); const r2 = $("#calcLvl"); if (r2) r2.focus(); }
   if (e.target.id === "vgsQ") { vgsQ = norm(e.target.value); renderChat(); }
   if (e.target.id === "itQ") { itQ = norm(e.target.value); renderObjetos(); }
   if (e.target.id === "comboQ") { comboQ = norm(e.target.value); renderCombos(); }

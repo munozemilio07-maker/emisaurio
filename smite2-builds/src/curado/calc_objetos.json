@@ -1,0 +1,262 @@
+{
+ "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (se activa con la casilla «cargas al máximo»). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana).",
+ "cargas": [
+  {
+   "suma": {
+    "mana": 600
+   },
+   "int_por_mana_extra": 0.02,
+   "pen": 5,
+   "texto": "50 cargas: +500 de maná, y al evolucionar +100 de maná, +5 de penetración y 2% más de maná convertido en Inteligencia.",
+   "item": "book-of-thoth",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "mana": 600
+   },
+   "pen": 10,
+   "texto": "50 cargas: +500 de maná, y al evolucionar +100 de maná y +10 de penetración.",
+   "item": "transcendence",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "str": 40,
+    "ls": 6.75
+   },
+   "pen": 5,
+   "texto": "75 cargas: +30 de Fuerza y +3.75% de robo de vida, y al completarse +10 de Fuerza, +3% de robo de vida y +5 de penetración.",
+   "item": "devourers-gauntlet",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "hp": 700,
+    "pf": 10,
+    "pm": 10
+   },
+   "texto": "40 cargas: +600 de vida, y al evolucionar +100 de vida y +10 de protecciones.",
+   "item": "gauntlet-of-thebes",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "int": 40
+   },
+   "texto": "5 cargas: +40 de Inteligencia (duran 10 s).",
+   "item": "doom-orb",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "int": 180
+   },
+   "texto": "6 cargas: +180 de Inteligencia (pierdes 4 al morir).",
+   "item": "necronomicon",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "ad": 64
+   },
+   "texto": "8 cargas al pegarle a dioses: +64 de daño de ataque por 10 s.",
+   "item": "bracer-of-the-abyss",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  }
+ ],
+ "en_pelea": [
+  {
+   "pct": {
+    "str": 10,
+    "int": 10,
+    "prot": 10
+   },
+   "texto": "En pelea, hasta 5 cargas de +2%: +10% de Fuerza, Inteligencia y protecciones.",
+   "item": "brawlers-beat-stick",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "adaptativo": [
+    30,
+    40
+   ],
+   "texto": "Con más de 75% de vida: +30 de Fuerza o +40 de Inteligencia (se cuenta así en la calculadora).",
+   "item": "shifters-shield",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "pf": 15,
+    "pm": 15,
+    "as": 25
+   },
+   "solo_en_pelea": true,
+   "texto": "Con menos de 60% de vida: +15 de protecciones y +25% de velocidad de ataque por 8 s.",
+   "item": "berserkers-shield",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  }
+ ],
+ "conversiones": [
+  {
+   "int_pct_objetos": 25,
+   "texto": "+25% de la Inteligencia de tus objetos.",
+   "pendiente_verificar": true,
+   "nota": "No sabemos si cuenta adaptativos y cargas; la calculadora sí los cuenta.",
+   "item": "rod-of-tahuti",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "int_por_mana": 0.05,
+   "texto": "Inteligencia igual a 5% del maná de tus objetos.",
+   "item": "book-of-thoth",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "str_por_mana": 0.03,
+   "texto": "Fuerza igual a 3% del maná de tus objetos.",
+   "item": "transcendence",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "ad_por_int": 0.1,
+   "as_por_int": 0.1,
+   "texto": "Por cada 10 de Inteligencia: +1 de daño de ataque y +1% de velocidad de ataque.",
+   "item": "nimble-ring",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  }
+ ],
+ "pct_todo": [
+  {
+   "pct": 7.5,
+   "item": "shell-of-rebuke",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "pct": 7.5,
+   "item": "sundering-echo",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "pct": 7.5,
+   "item": "talisman-of-purification",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "pct": 7.5,
+   "item": "agility-greaves",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "pct": 6,
+   "item": "time-lock-aegis",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "pct": 5,
+   "item": "blinking-abyss",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  }
+ ],
+ "al_pegar": [
+  {
+   "int_pct": 80,
+   "texto": "Después de usar una habilidad, tu siguiente básico pega 80% de tu Inteligencia extra (cada 2 s).",
+   "item": "polynomicon",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "base": 10,
+   "por_nivel": 3,
+   "texto": "Cada básico pega 10 + 3 por nivel de daño mágico extra.",
+   "item": "bragis-harp",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "base": 15,
+   "por_nivel_cada": 4,
+   "extra_por_carga": 15,
+   "max_cargas": 6,
+   "texto": "Cada básico pega 15 extra; al pegarle a un dios sube +15 por carga (una carga por cada 4 niveles, máximo 6).",
+   "item": "tyrfing",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  }
+ ],
+ "formulas": {
+  "basico": {
+   "texto": "Daño del básico = daño de ataque base del dios (sube por nivel) + daño de ataque de objetos + su escalado de Fuerza (100% casi siempre) + su escalado de Inteligencia (20% casi siempre).",
+   "fuente": "https://wiki.smite2.com/w/Stats",
+   "pendiente_verificar": false
+  },
+  "vel_ataque": {
+   "texto": "Ataques por segundo ≈ velocidad base × (1 + % de velocidad de ataque del nivel y de objetos).",
+   "fuente": "Deducción propia",
+   "pendiente_verificar": true
+  },
+  "critico": {
+   "texto": "La wiki dice que el crítico «aumenta el daño 150%»: puede ser ×1.5 o ×2.5. Mostramos las dos lecturas.",
+   "fuente": "https://wiki.smite2.com/w/Stats",
+   "pendiente_verificar": true
+  },
+  "eco": {
+   "texto": "Cuando una habilidad hace Eco pega 15% más; la probabilidad de Eco sale de los objetos.",
+   "fuente": "https://wiki.smite2.com/w/Stats",
+   "pendiente_verificar": false
+  },
+  "proteccion": {
+   "texto": "La wiki no da la fórmula de reducción por protecciones. Como guía usamos daño recibido = 100 / (100 + protección), que es una suposición.",
+   "fuente": "Suposición (la wiki no la da)",
+   "pendiente_verificar": true
+  },
+  "blindaje": {
+   "texto": "Cada punto de blindaje quita 1% del daño de ataques básicos (máximo 35); cada punto de amortiguación quita 1% del daño de habilidades (máximo 35).",
+   "fuente": "https://wiki.smite2.com/w/Stats",
+   "pendiente_verificar": false
+  }
+ }
+}

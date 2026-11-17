@@ -1,5 +1,5 @@
 {
- "_como_editar": "Resumen escrito a mano de lo que cambió en el parche. 'tipo' es dios, objeto o general; 'ref' es el slug del dios (data.json) o el id del objeto (items_catalogo.json). 'efecto' es la lectura práctica para Joust. Lo que solo afecta a otros modos va con aplica_joust: false. 'a_probar' son deducciones nuestras (no estadísticas): 'confianza' alta, media o baja; 'posiblemente_roto' marca lo que podría estar demasiado fuerte; 'build' es opcional y se puede abrir en el creador (dios, 6 objetos e inicial mejorado).",
+ "_como_editar": "Resumen escrito a mano de lo que cambió en el parche. 'tipo' es dios, objeto o general; 'ref' es el slug del dios (data.json) o el id del objeto (items_catalogo.json). 'efecto' es la lectura práctica para Joust. Lo que solo afecta a otros modos va con aplica_joust: false. 'a_probar' son deducciones nuestras (no estadísticas): 'confianza' alta, media o baja; 'posiblemente_roto' marca lo que podría estar demasiado fuerte; 'build' es opcional y se puede abrir en el creador (dios, 6 objetos e inicial mejorado). Un cambio de objeto puede llevar 'alternativa' {mantener, items, texto}: qué comprar en su lugar o si conviene seguir usándolo.",
  "parche": "OB48",
  "nombre": "Sleeping Giant Update",
  "fecha": "2026-11-17",
@@ -221,7 +221,17 @@
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
-   "pendiente_verificar": false
+   "pendiente_verificar": false,
+   "alternativa": {
+    "mantener": true,
+    "items": [
+     "stygian-anchor",
+     "mystical-mail"
+    ],
+    "texto": "Sigue usándolo contra carries con robo de vida (Garra Desgarradora / Riptalon, Guantelete del Devorador): sus stats no cambiaron y era tier A. Si lo que buscas es cortarles la curación, Ancla Estigia (Stygian Anchor) quita 40% de curación al pegarles, aunque en Joust rindió poco (tier D). Si el rival no roba vida, Cota Mística (Mystical Mail) te da protección física y daño de área sin depender de cargas.",
+    "fuente": "Deducción a partir del catálogo del OB48 y la lista de objetos de esta página (tiers del OB47)",
+    "pendiente_verificar": true
+   }
   },
   {
    "tipo": "objeto",
@@ -234,7 +244,14 @@
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
-   "pendiente_verificar": false
+   "pendiente_verificar": false,
+   "alternativa": {
+    "mantener": true,
+    "items": [],
+    "texto": "Sigue usándolo: solo necesita un golpe más para cargarse y sus stats (25/25 de protecciones, 5 de blindaje y 300 de vida) no cambiaron. No hay otro objeto de tanque con ese reparto que rinda mejor en Joust.",
+    "fuente": "Deducción a partir del catálogo del OB48 y la lista de objetos de esta página (tiers del OB47)",
+    "pendiente_verificar": true
+   }
   },
   {
    "tipo": "objeto",
