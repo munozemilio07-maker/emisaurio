@@ -495,7 +495,7 @@ function evoRow(r) {
   return `<li class="evo"><div class="it" data-item="${it.id}" role="button" tabindex="0" title="${L("Ver ficha del objeto", "Open item page")}">
     <span class="ic spr-a" style="${posA(it.i)}" role="img" aria-label="${esc(it.nombre)}"></span>
     <div><div class="n">${esc(iName(it))}</div>${lang === "es" && it.nombre_es ? `<div class="e">${esc(it.nombre)}</div>` : ""}
-      <div class="d">${L(`Mejora de tu inicial${base ? ` (${esc(iName(base))})` : ""}${cost ? `: ${cost.toLocaleString("es-MX")} de oro` : ""}${lvl ? `, desde nivel ${lvl[1]}` : ""}. Lo usan en el ${r.evo[1]}% de las partidas.`, `Upgrade of your starter${base ? ` (${esc(base.nombre)})` : ""}${cost ? `: ${cost} gold` : ""}${lvl ? `, from level ${lvl[1]}` : ""}. Used in ${r.evo[1]}% of games.`)}</div></div>
+      <div class="d">${L(`Mejora de tu inicial${base ? ` (${esc(iName(base))})` : ""}${cost ? `: ${cost.toLocaleString("es-MX")} de oro` : ""}${lvl ? `, desde nivel ${lvl[1]}` : ""}. Este inicial (básico o mejorado) sale en el ${r.evo[1]}% de las partidas.`, `Upgrade of your starter${base ? ` (${esc(base.nombre)})` : ""}${cost ? `: ${cost} gold` : ""}${lvl ? `, from level ${lvl[1]}` : ""}. This starter (base or upgraded) shows up in ${r.evo[1]}% of games.`)}</div></div>
     <span class="pk sug">${L("objeto 7", "item 7")}</span></div></li>`;
 }
 

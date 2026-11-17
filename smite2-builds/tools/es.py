@@ -22,7 +22,7 @@ ES = {
  'soul-gem': ("Gema de Almas", "Tras acertar 3 habilidades, la siguiente pega extra y cura a ti y a tus aliados cercanos."),
  'heartseeker': ("Buscacorazones", "Tus habilidades pegan según la vida máxima del rival. Bueno contra tanques."),
  'the-crusher': ("La Trituradora", "Tus habilidades hacen daño físico extra (35% de tu Fuerza) durante 1 s."),
- 'contagion': ("Contagio", "Castiga a quien te pega y a quien te roba vida: acumula cargas (hasta 8) y luego les quita 0.7% de su vida máxima por carga."),
+ 'contagion': ("Contagio", "Castiga a quien te pega y a quien te roba vida: acumula cargas (hasta 8) y luego explota haciendo 0.7% de vida máxima por carga."),
  'gauntlet-of-thebes': ("Guantelete de Tebas", "Se carga con asistencias: da mucha vida. Al completarse suma protecciones."),
  'ancient-signet': ("Sello Antiguo", "Cada 15 s tu habilidad hace daño mágico extra. Se recarga antes si farmeas."),
  'hydras-lament': ("Lamento de la Hidra", "Después de usar una habilidad, tu siguiente ataque básico pega +30% (+20% a distancia)."),

@@ -215,7 +215,7 @@
    "cambios": [
     "Cargas máximas bajan de 10 a 8.",
     "El robo de vida de 100 da 4 cargas (antes 5).",
-    "El daño baja de 1% a 0.7% de vida máxima por carga."
+    "El daño baja de 1% a 0.7% de vida máxima por carga (el texto no aclara de quién)."
    ],
    "efecto": "Castiga menos a los carries con robo de vida.",
    "aplica_joust": true,
@@ -296,12 +296,13 @@
    "tipo": "build",
    "confianza": "media",
    "posiblemente_roto": true,
-   "resumen": "El buff hace que Qin's Blade pegue más mientras más Fuerza y daño de ataque lleves. En el OB47 casi nadie lo aprovechaba (ganaba 46.5% de 361 partidas de Joust); ahora con una build de daño puro vale la pena probarlo cuando el rival tiene uno o dos tanques.",
+   "resumen": "El buff hace que Qin's Blade pegue más mientras más Fuerza y daño de ataque lleves. En el OB47 casi nadie lo aprovechaba (ganaba 46.5% en 361 partidas de Joust); ahora con una build de daño puro vale la pena probarlo cuando el rival tiene uno o dos tanques.",
    "numeros": [
     "Con Qin's Blade, Tyrfing, The Executioner, Dominance, Riptalon y Devourer's Gauntlet sumas 200 de Fuerza y daño de ataque de objetos (255 con Hunter's Cowl).",
     "Lectura más probable de la nota: el 5% de la vida de objetos del rival sube 1 punto por cada 30, o sea de 5% a unos 11.7% (13.5% con el inicial). Más del doble contra tanques.",
     "Si «+1%» fuera relativo y no en puntos, el aumento sería pequeño. Las notas no lo aclaran: hay que probarlo en partida.",
-    "No sabemos si cuentan las cargas de Devourer's Gauntlet ni el inicial; el cálculo de arriba solo usa stats fijas y adaptativas."
+    "No sabemos si cuentan las cargas de Devourer's Gauntlet ni el inicial; el cálculo de arriba solo usa stats fijas y adaptativas.",
+    "La etiqueta «puede estar roto» solo vale con la lectura en puntos; si fuera relativo, el buff es menor."
    ],
    "dioses": [
     "hachiman",
@@ -332,11 +333,12 @@
    "tipo": "build",
    "confianza": "media",
    "posiblemente_roto": true,
-   "resumen": "Mismo tipo de buff para magos: Soul Reaver pega más mientras más Inteligencia lleves. En el OB47 era de los objetos con peor resultado en Joust (40.5% de 474 partidas). Con una build de Inteligencia pura puede volverse la respuesta contra equipos con dos tanques.",
+   "resumen": "Mismo tipo de buff para magos: Soul Reaver pega más mientras más Inteligencia lleves. En el OB47 estaba entre los 6 objetos con peor resultado en Joust (40.5% en 474 partidas; de 88 objetos completos con más de 100 partidas). Con una build de Inteligencia pura puede volverse la respuesta contra equipos con dos tanques.",
    "numeros": [
     "Soul Reaver, Rod of Tahuti, Spear of Desolation, Obsidian Shard, Divine Ruin y The World Stone suman 470 de Inteligencia de objetos (560 con Archmage's Gem).",
     "Lectura más probable: el 3% de la vida de objetos del rival sube 1 punto por cada 80, de 3% a unos 8.9% (10% con el inicial), aplicado en cada habilidad.",
-    "No sabemos si cuenta el 25% extra de Rod of Tahuti; si cuenta, sube un poco más."
+    "No sabemos si cuenta el 25% extra de Rod of Tahuti; si cuenta, sube un poco más.",
+    "La etiqueta «puede estar roto» solo vale con la lectura en puntos; si fuera relativo, el buff es menor."
    ],
    "dioses": [
     "eset",
@@ -371,7 +373,7 @@
    "numeros": [
     "Ricochet al rango 5 con su build normal (95 de Fuerza): unos 322 de daño. Con una build de Inteligencia (405): unos 548.",
     "Divebomb al rango 5: unos 287 contra unos 493.",
-    "La contra: sus básicos pegan menos (60 de daño de ataque en vez de 125). Nimble Ring compensa algo: da 1 de daño de ataque y 1% de velocidad por cada 10 de Inteligencia.",
+    "Sus básicos escalan 100% con Fuerza o daño de ataque y 20% con Inteligencia. Con la build de Inteligencia pierde daño de ataque de objetos (60 contra 125), pero Nimble Ring da +1 de daño de ataque y +1% de velocidad por cada 10 de Inteligencia, y el 20% de 405 suma unos 81. Sin probarlo no sabemos cuánto pierde en básicos.",
     "Cálculo con stats fijas y adaptativas, sin el 25% de Rod of Tahuti ni pasivas."
    ],
    "dioses": [
@@ -399,10 +401,11 @@
    "tipo": "dios",
    "confianza": "media",
    "posiblemente_roto": false,
-   "resumen": "Su Rising Dawn ahora da más mitigación a los aliados según las protecciones de objetos de Khepri. En Joust casi siempre se le arma como mago, así que el buff casi no le sirve a esa build: la prueba es ponerle protecciones.",
+   "resumen": "Su Rising Dawn ahora da más mitigación a los aliados según las protecciones de objetos de Khepri. En Joust casi no se le arma así: en 51 de sus 87 partidas del OB47 no llevaba ningún objeto con protecciones, y en 63 llevaba dos o más de Inteligencia. La prueba es ponerle protecciones.",
    "numeros": [
-    "Con Breastplate of Valor, Genji's Guard, Kinetic Cuirass, Shell of Rebuke y Amanita Charm suma 240 de protecciones de objetos: +7.2 puntos de mitigación.",
-    "En el rango 5 la mitigación pasaría de 30% a unos 37%."
+    "La ficha dice «mitigación extra = 3% de tus protecciones de objetos».",
+    "Con Breastplate of Valor, Genji's Guard, Kinetic Cuirass, Shell of Rebuke y Amanita Charm suma 240 de protecciones de objetos: 3% de 240 = +7.2 de mitigación.",
+    "Si se suma en puntos, en el rango 5 pasaría de 30% a unos 37%."
    ],
    "dioses": [
     "khepri"
@@ -429,10 +432,11 @@
    "tipo": "objeto",
    "confianza": "alta",
    "posiblemente_roto": false,
-   "resumen": "La cuenta aquí es segura. Los tanques que lo compraban contra carries (Kuzenbo, Ymir, Bacchus) pierden casi la mitad de su golpe máximo. Los carries con Riptalon o Devourer's Gauntlet sufren menos al pegarle a un tanque.",
+   "resumen": "La cuenta del recorte es segura: el golpe máximo de Contagion baja casi a la mitad. Los tanques que lo compraban contra carries (Kuzenbo, Ymir, Bacchus) pierden fuerza, y los carries con Riptalon o Devourer's Gauntlet sufren menos al pegarles.",
    "numeros": [
-    "Golpe máximo antes: 10 cargas × 1% = 10% de la vida máxima del rival.",
-    "Ahora: 8 cargas × 0.7% = 5.6%."
+    "Golpe máximo antes: 10 cargas × 1% = 10% de vida máxima.",
+    "Ahora: 8 cargas × 0.7% = 5.6% de vida máxima.",
+    "El texto del juego no dice si es la vida máxima del rival o la de quien lleva el objeto; la proporción (−44%) es la misma en los dos casos."
    ],
    "dioses": [
     "kuzenbo",

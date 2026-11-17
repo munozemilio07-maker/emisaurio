@@ -97,18 +97,20 @@ IDB,_=json.JSONDecoder().raw_decode(raw[raw.find('{'):])
 def _sl(n): return re.sub(r'[^a-z0-9]+','-',n.lower().replace("'",'').replace('\u2019','')).strip('-')
 ID2SL={k:_sl(v['data']['name']) for k,v in IDB.items() if 'data' in v}
 # Familia de iniciales: cada inicial básico apunta a su versión mejorada (sale del catálogo).
-_CAT=json.load(open(os.path.join(os.path.dirname(OUT.rstrip('/')) if False else OUT,'src','curado','items_catalogo.json'),encoding='utf8'))['items']
+# Necesita src/curado/items_catalogo.json: corre tools/gen_items.py antes que este script.
+_CAT=json.load(open(os.path.join(OUT,'src','curado','items_catalogo.json'),encoding='utf8'))['items']
 STARTER_UP={}
 for _r in _CAT:
     if _r['tipo']=='inicial':
         for _c in _r['componentes']: STARTER_UP[_c]=_r['id']
 def starter_family(st,n):
-    fam=Counter()
-    for sl,c in st.items():
-        up=STARTER_UP.get(sl,sl)
-        if up in STARTER_UP.values(): fam[up]+=c
-    if not fam: return None
-    up,c=fam.most_common(1)[0]
+    # Objeto 7: la mejora del inicial más usado (el mismo que se muestra como «Objeto inicial»).
+    # El porcentaje es de la familia completa (básico + mejorado).
+    if not st: return None
+    top=st.most_common(1)[0][0]
+    up=STARTER_UP.get(top,top)
+    if up not in STARTER_UP.values(): return None
+    c=sum(v for sl,v in st.items() if STARTER_UP.get(sl,sl)==up)
     return [up,round(100*c/n)]
 def joust_stats(ms):
     n=len(ms); wins=sum(m['w'] for m in ms)

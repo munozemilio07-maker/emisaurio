@@ -95,8 +95,7 @@
     "screeching-gargoyle",
     "stone-of-binding",
     "avenging-blade",
-    "ethereal-staff",
-    "contagion"
+    "ethereal-staff"
    ],
    "parche_verificado": "OB47",
    "fuente": "https://smite2.live/items",
@@ -366,11 +365,11 @@
      "contagion"
     ]
    },
-   "explicacion": "Contagion acumula cargas en quien te pega (hasta 8) y suma 4 de golpe si un enemigo te roba 100 de vida; al atacarlo o controlarlo le quitas 0.7% de su vida máxima por carga. En Smite 2 no es antiheal: castiga al que se cura pegándote. En el OB48 bajó: antes eran 10 cargas, 5 por robo de vida y 1% por carga.",
+   "explicacion": "Contagion acumula cargas en quien te pega (hasta 8) y suma 4 de golpe si un enemigo te roba 100 de vida; al atacarlo o controlarlo, la explosión hace 0.7% de vida máxima por carga a su alrededor. El texto del juego no dice de quién es esa vida máxima. En el OB48 bajó: antes eran 10 cargas, 5 por robo de vida y 1% por carga.",
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
    "pendiente_verificar": true,
-   "nota": "La tienda todavía lo etiqueta como reducción de curación, aunque su texto no la menciona. Falta confirmar en partida que no reduce curación."
+   "nota": "La tienda del juego y la wiki oficial lo catalogan como antiheal, pero su texto no reduce curación. Falta confirmar en partida."
   },
   {
    "id": "penetracion-vs-protecciones",
@@ -430,8 +429,7 @@
      "soul-reaver",
      "qins-blade",
      "heartseeker",
-     "ethereal-staff",
-     "contagion"
+     "ethereal-staff"
     ]
    },
    "explicacion": "Soul Reaver (habilidades mágicas), Qin's Blade (básicos) y Heartseeker (habilidades físicas) pegan según la vida del rival, así que mientras más vida compre, más daño le hacen.",
