@@ -176,6 +176,8 @@ body.noscroll { overflow: hidden; }
 .stk small { font-family: var(--font-head); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .stk i { font-style: normal; font-size: 12.5px; color: var(--muted); line-height: 1.35; }
 .stk.on { border: 1px solid var(--gold); box-shadow: 0 0 18px rgba(232,190,110,.15); }
+.stk.act.on { border-color: var(--ember); box-shadow: 0 0 18px rgba(255,120,80,.18); } .stk.act.on small { color: var(--ember); }
+.stkmini.act.on { color: var(--ember); border-color: var(--ember); background: rgba(255,120,80,.08); }
 .stk.on .ic { opacity: 1; border-color: var(--gold); } .stk.on small { color: var(--gold); }
 .stkmini { display: block; width: calc(100% - 8px); margin: 0 4px 6px; padding: 3px 2px; font: inherit; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; background: var(--void); color: var(--muted); border: 1px dashed var(--line); cursor: pointer; }
 .stkmini.on { color: var(--gold); border: 1px solid var(--gold-deep); background: rgba(232,190,110,.08); }
@@ -197,6 +199,9 @@ body.noscroll { overflow: hidden; }
 .gsteps li > :nth-child(2) { min-width: 0; justify-self: start; max-width: 100%; }
 .gsteps .muted { font-size: 13px; text-align: right; white-space: nowrap; }
 .gstep { display: inline-grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--gold-deep); color: var(--gold); font-size: 13px; }
+.evo-tag { font-family: var(--font-head); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-hi); border: 1px solid var(--gold-deep); padding: 2px 6px; white-space: nowrap; }
+.gsteps li { grid-template-columns: 24px minmax(0, 1fr) auto auto auto; }
+@media (max-width: 600px) { .evo-tag { font-size: 0; padding: 2px 5px; } .evo-tag::before { content: "⟳"; font-size: 14px; letter-spacing: 0; } }
 .gain { font-weight: 700; color: var(--ok); min-width: 52px; font-variant-numeric: tabular-nums; }
 .calc { display: grid; gap: 16px; }
 .calc-ctl { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font-size: 14.5px; }
@@ -1075,7 +1080,8 @@ function bldSuggest(g, r) {
   const cats = BLD.items.map(id => iCat(IBY[id])), nDef = cats.filter(c => c === "defensivo" || c === "hibrido").length;
   const hasAnti = BLD.items.some(id => inNeed(id, "antiheal"));
   const cand = new Map();
-  const add = (id, pts, why) => { const it = IBY[id]; if (!it || have.has(id) || !buildable(it)) return; if (hasAnti && inNeed(id, "antiheal")) return; const c = cand.get(id) || { id, pts: 0, why: [] }; c.pts += pts; c.why.push(why); cand.set(id, c); };
+  const nEvo = BLD.items.filter(id => isEvoItem(id)).length;
+  const add = (id, pts, why) => { const it = IBY[id]; if (!it || have.has(id) || !buildable(it)) return; if (isEvoItem(id) && nEvo >= MAX_EVO) return; if (hasAnti && inNeed(id, "antiheal")) return; const c = cand.get(id) || { id, pts: 0, why: [] }; c.pts += pts; c.why.push(why); cand.set(id, c); };
   for (const [id, pk] of picks) add(id, pk, L(`Lo compran en el ${pk}% de las partidas con ${N(g)}`, `Bought in ${pk}% of ${N(g)} games`));
   for (const [id, v] of Object.entries(pop)) if (v >= 4 && !picks.has(id)) add(id, v * 0.6, L(`Popular entre los dioses que se juegan como ${PROF[r.prof]}`, `Popular among gods played as ${t(PROF[r.prof])}`));
   for (const st of SITS) { const hot = out[st.id]; if (!hot) continue;
@@ -1126,7 +1132,7 @@ function renderBuilder() {
   const ghostFor = i => sug[i - BLD.items.length];
   const slots = Array.from({ length: 6 }, (_, i) => {
     const it = IBY[BLD.items[i]], on = i === act ? " on" : "";
-    if (it) return `<div class="slotb full${on}${isEvo(it) ? " evo" : ""}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span ${icAttr(it)}></span><span class="nm">${esc(iName(it))}</span></button>${hasStacks(it.id) ? `<button class="stkmini${STK_OFF.has(it.id) ? "" : " on"}" type="button" data-stk="${it.id}" aria-pressed="${!STK_OFF.has(it.id)}" title="${esc((C_STACK[it.id] || C_HIT[it.id]).texto || "")}">${STK_OFF.has(it.id) ? L("sin cargas", "no stacks") : L("con cargas", "stacked")}</button>` : ""}<button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
+    if (it) return `<div class="slotb full${on}${isEvo(it) ? " evo" : ""}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span ${icAttr(it)}></span><span class="nm">${esc(iName(it))}</span></button>${hasStacks(it.id) ? `<button class="stkmini${STK_OFF.has(it.id) ? "" : " on"}" type="button" data-stk="${it.id}" aria-pressed="${!STK_OFF.has(it.id)}" title="${esc((C_STACK[it.id] || C_HIT[it.id]).texto || "")}">${STK_OFF.has(it.id) ? L("sin cargas", "no stacks") : L("con cargas", "stacked")}</button>` : ""}${C_ACT[it.id] ? `<button class="stkmini act${ACT_ON.has(it.id) ? " on" : ""}" type="button" data-act="${it.id}" aria-pressed="${ACT_ON.has(it.id)}" title="${esc(C_ACT[it.id].texto)}">${ACT_ON.has(it.id) ? L("activa usada", "active used") : L("usar activa", "use active")}</button>` : ""}<button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
     const gh = ghostFor(i), gi = gh && IBY[gh.id];
     if (i === act) return `<div class="slotb on"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm">${L("Eligiendo…", "Picking…")}</span></button></div>`;
     return gi ? `<div class="slotb ghost"><button class="pick" type="button" data-bldslot="${i}" data-ghost="${gi.id}" title="${L("Sugerido", "Suggested")}: ${esc(gi.nombre)}"><span class="ic spr-a" style="${posA(gi.i)}"></span><span class="nm">${esc(iName(gi))}</span><span class="tag">${L("sugerido", "suggested")}</span></button></div>`
@@ -1189,13 +1195,17 @@ function renderBuilder() {
 const SB = ((CURADO.stats_base || {}).dioses) || {};
 const CO = CURADO.calc_objetos || {};
 const byItem = arr => Object.fromEntries((arr || []).map(x => [x.item, x]));
-const C_CRITX = byItem(CO.dano_critico), C_STACK = byItem(CO.cargas), C_FIGHT = byItem(CO.en_pelea), C_CONV = byItem(CO.conversiones), C_PCT = byItem(CO.pct_todo), C_HIT = byItem(CO.al_pegar);
+const C_ACT = byItem(CO.activos), C_CRITX = byItem(CO.dano_critico), C_STACK = byItem(CO.cargas), C_FIGHT = byItem(CO.en_pelea), C_CONV = byItem(CO.conversiones), C_PCT = byItem(CO.pct_todo), C_HIT = byItem(CO.al_pegar);
 let CALC = { lvl: 20, rank: 5, stacks: true, fight: false, critMult: 1.5 };
 // Objetos que el usuario puso «sin cargas» (por defecto todos van con cargas, como al final de la partida).
 const STK_OFF = new Set(); try { for (const id of JSON.parse(localStorage.getItem("stkoff") || "[]")) STK_OFF.add(id); } catch (e) {}
 const saveStk = () => { try { localStorage.setItem("stkoff", JSON.stringify([...STK_OFF])); } catch (e) {} };
 const hasStacks = id => !!(C_STACK[id] || (C_HIT[id] && C_HIT[id].extra_por_carga));
 CALC.off = STK_OFF;
+// Activas que el usuario marcó como «usada» (por defecto ninguna: duran unos segundos).
+const ACT_ON = new Set(); try { for (const id of JSON.parse(localStorage.getItem("acton") || "[]")) ACT_ON.add(id); } catch (e) {}
+const saveAct = () => { try { localStorage.setItem("acton", JSON.stringify([...ACT_ON])); } catch (e) {} };
+CALC.act = ACT_ON;
 const TAGMAP = { PhysicalPower: "str", MagicalPower: "int", InhandPower: "ad", AttackSpeedPercent: "as", CritChance: "crit", EchoItem: "echo", LifeStealPercent: "ls", MaxHealth: "hp", MaxMana: "mana",
   PhysicalProtection: "pf", PhysicalProtectionItem: "pf", MagicalProtection: "pm", MagicalProtectionItem: "pm", Plating: "plating", Dampening: "damp", MagicalPenetrationFlat: "pen", MagicalPenetrationPercent: "penp", PhysicalPenetrationPercent: "penp", CooldownReductionPercent: "cdr" };
 // Con qué escala más el dios (para el desempate del stat adaptativo): Fuerza salvo que sus habilidades escalen más con Inteligencia.
@@ -1209,7 +1219,7 @@ function calcStats(g, items, starter, o) {
   const at = k => (B[k] || 0) + (P[k] || 0) * L1;
   const it = {}; const add = (k, v) => { it[k] = (it[k] || 0) + v; };
   const ids = items.concat(starter ? [starter] : []).filter(id => IBY[id]);
-  const adapt = [], stk = id => o.stacks && !(o.off && o.off.has(id));
+  const adapt = [], stk = id => o.stacks && !(o.off && o.off.has(id)), act = id => !!C_ACT[id] && (o.actAll || !!(o.act && o.act.has(id)));
   let shred = 0;
   for (const id of ids) { const r = IBY[id];
     if (stk(id) && C_STACK[id] && C_STACK[id].reduce_prot_rival) shred += C_STACK[id].reduce_prot_rival;
@@ -1217,6 +1227,7 @@ function calcStats(g, items, starter, o) {
     const ad = /Adaptive Stat: \+(\d+) Strength or \+(\d+) Intelligence/.exec(r.texto_en); if (ad) adapt.push([+ad[1], +ad[2]]);
     if (stk(id) && C_STACK[id]) for (const [k, v] of Object.entries(C_STACK[id].suma || {})) add(k, v);
     if (stk(id) && C_STACK[id] && C_STACK[id].pen) add("pen", C_STACK[id].pen);
+    if (act(id)) { const a = C_ACT[id]; for (const [k, v] of Object.entries(a.suma || {})) add(k, v + ((a.por_nivel || {})[k] || 0) * o.lvl); if (a.reduce_prot_rival) shred += a.reduce_prot_rival; }
     if (C_FIGHT[id] && C_FIGHT[id].adaptativo) adapt.push(C_FIGHT[id].adaptativo);
     if (o.fight && C_FIGHT[id] && C_FIGHT[id].suma) for (const [k, v] of Object.entries(C_FIGHT[id].suma)) add(k, v);
   }
@@ -1230,6 +1241,9 @@ function calcStats(g, items, starter, o) {
   for (const id of ids) { const c = C_CONV[id]; if (c && c.int_pct_objetos) add("int", (it.int || 0) * c.int_pct_objetos / 100); }
   if (o.fight) for (const id of ids) { const f = C_FIGHT[id]; if (f && f.pct) for (const [k, v] of Object.entries(f.pct)) for (const kk of k === "prot" ? ["pf", "pm"] : [k]) if (it[kk]) it[kk] *= 1 + v / 100; }
   for (const id of ids) { const c = C_CONV[id]; if (!c) continue; const i0 = it.int || 0; if (c.ad_por_int) add("ad", i0 * c.ad_por_int); if (c.as_por_int) add("as", i0 * c.as_por_int); }
+  const strItems = it.str || 0, intItems = it.int || 0, protItems = (it.pf || 0) + (it.pm || 0);
+  for (const id of ids) if (act(id)) { const a = C_ACT[id]; for (const [k, v] of Object.entries(a.pct || {})) if (it[k]) it[k] *= 1 + v / 100;
+    if (a.int_a_str && !o.actAll) { add("str", (it.int || 0) * a.int_a_str); it.int = 0; } }  // en las metas no: el optimizador compraría Inteligencia solo para convertirla 6 s
   const S = { useInt, pctAll, it, lvl: o.lvl,
     str: it.str || 0, int: it.int || 0,
     hp: at("vida") + (it.hp || 0), mana: at("mana") + (it.mana || 0),
@@ -1249,6 +1263,9 @@ function calcStats(g, items, starter, o) {
     else if (h.extra_por_carga) v = h.base + (stk(id) ? h.extra_por_carga * Math.min(h.max_cargas, (h.cargas_iniciales || 0) + Math.floor(o.lvl / h.por_nivel_cada)) : 0);
     return [id, v, h]; });
   // Polynomicon solo pega en el básico que sigue a una habilidad (enfriamiento 2 s): cuenta en el combo, no en cada básico.
+  S.actives = ids.filter(id => act(id));
+  S.burstN = S.actives.reduce((n, id) => Math.max(n, C_ACT[id].ataques || 0), 0) || 5;
+  S.shield = S.actives.reduce((n, id) => { const e = C_ACT[id].escudo; return e ? n + (e.hp_pct || 0) / 100 * S.hp + (e.str_items_pct || 0) / 100 * strItems + (e.int_items_pct || 0) / 100 * intItems + (e.prot_items_pct || 0) / 100 * protItems : n; }, 0);
   S.basicHit = S.basic + S.onhit.filter(x => !x[2].tras_habilidad).reduce((n, x) => n + x[1], 0);
   S.afterAbility = S.onhit.filter(x => x[2].tras_habilidad).reduce((n, x) => n + x[1], 0);
   S.partial = !SB[g.s] || base.pendiente_verificar;
@@ -1300,6 +1317,7 @@ function calcHTML(g, r) {
       <label for="calcCrit">${L("Crítico", "Crit")} <select id="calcCrit"><option value="1.5"${CALC.critMult === 1.5 ? " selected" : ""}>×1.5</option><option value="2.5"${CALC.critMult === 2.5 ? " selected" : ""}>×2.5</option></select></label>
     </div>
     ${stkHTML(items.concat(st ? [st] : []), true)}
+    ${actHTML(items.concat(st ? [st] : []))}
     <div id="calcOut" class="calc">
     ${S.partial ? `<p class="rule">${L("Los stats base de este dios en la fuente están incompletos: los números de vida, protección y básico pueden salir mal.", "This god's base stats are incomplete in the source.")}</p>` : ""}
     <div class="facts calc-facts">
@@ -1316,10 +1334,12 @@ function calcHTML(g, r) {
         <p class="muted">${L(`${fmt(S.inhand)} de daño de ataque + ${fmt(S.str)} de Fuerza + 20% de ${fmt(S.int)} de Inteligencia${S.basicDefault ? " (escalado por defecto de la wiki)" : ""}.`, `${fmt(S.inhand)} attack damage + Strength + 20% Intelligence.`)}</p>
         <p>${L("Velocidad", "Speed")}: <b>${S.aps.toFixed(2)}</b> ${L("ataques/s", "attacks/s")} <span class="muted">(+${Math.round(S.asPct)}%)</span> · ${L("Por segundo", "Per second")}: <b>${fmt(S.basic * S.aps)}</b> <span class="pend">${L("estimado", "estimate")}</span></p>
         ${S.crit ? `<p>${L("Crítico", "Crit")}: <b>${Math.round(S.crit)}%</b> · ${L("golpe crítico", "crit hit")} <b>${fmt(CALC.critMult === 2.5 ? critB : critA)}</b> <span class="pend" title="${esc(F.critico ? F.critico.texto : "")}">${L("la wiki no es clara", "wiki unclear")}</span></p>` : ""}
+        <p class="burst">${L(`<b>Ráfaga:</b> ${S.burstN} básicos seguidos hacen <b>${fmt(S.basicHit * critFactor(S) * S.burstN)}</b> de daño en ${(S.burstN / S.aps).toFixed(1)} s`, `<b>Burst:</b> ${S.burstN} basics in a row deal <b>${fmt(S.basicHit * critFactor(S) * S.burstN)}</b> in ${(S.burstN / S.aps).toFixed(1)}s`)} <span class="muted">${L("(promedio contando el crítico, antes de protecciones; es lo que le metes a alguien aturdido)", "(average incl. crit, before protections)")}</span></p>
         ${S.shred ? `<p>${L(`Le quitas <b>${S.shred}%</b> de sus protecciones al rival con tus cargas: tus golpes le entran más.`, `You strip <b>${S.shred}%</b> of the enemy's protections.`)}</p>` : ""}
         ${S.onhit.length ? `<ul class="plain">${S.onhit.map(([id, v, h]) => `<li>${esc(iName(IBY[id]))}: +${fmt(v)} <span class="muted">${esc(h.texto || "")}</span></li>`).join("")}</ul>` : ""}
       </section>
       <section class="fblock"><span class="eyebrow">${L("Defensa", "Defense")}</span>
+        ${S.shield ? `<p>${L("Escudo de tus activas", "Shield from actives")}: <b>${fmt(S.shield)}</b></p>` : ""}
         <p>${L("Vida", "Health")} <b>${fmt(S.hp)}</b> · ${L("Blindaje", "Plating")} <b>${S.plating}</b> · ${L("Amortiguación", "Dampening")} <b>${S.damp}</b></p>
         <p>${L(`Recibirías cerca del ${mitig(S.pf)}% del daño físico y del ${mitig(S.pm)}% del mágico, antes de la penetración del rival.`, `You'd take about ${mitig(S.pf)}% of physical and ${mitig(S.pm)}% of magical damage, before enemy penetration.`)} <span class="pend" title="${esc(F.proteccion ? F.proteccion.texto : "")}">${L("fórmula supuesta", "assumed formula")}</span></p>
         ${S.plating || S.damp ? `<p class="muted">${L(`El blindaje quita ${S.plating}% del daño de básicos y la amortiguación ${S.damp}% del de habilidades.`, `Plating removes ${S.plating}% of basic damage and dampening ${S.damp}% of ability damage.`)}</p>` : ""}
@@ -1346,6 +1366,13 @@ function stkHTML(ids, withText) {
 const EVO_IC = { "book-of-thoth": 0, "devourers-gauntlet": 1, "gauntlet-of-thebes": 2, "prophetic-cloak": 3, "rage": 4, "transcendence": 5 };
 const isEvo = it => EVO_IC[it.id] !== undefined && !STK_OFF.has(it.id);
 const icAttr = it => isEvo(it) ? `class="ic spr-e" style="${pos(EVO_IC[it.id], 6, 1)}"` : `class="ic spr-a" style="${posA(it.i)}"`;
+function actHTML(ids) {
+  const xs = ids.filter(id => IBY[id] && C_ACT[id]);
+  if (!xs.length) return "";
+  return `<div class="stk-box"><span class="eyebrow">${L("Activas", "Actives")}</span>
+    <div class="stk-list">${xs.map(id => { const on = ACT_ON.has(id), a = C_ACT[id];
+      return `<button class="stk act${on ? " on" : ""}" type="button" data-act="${id}" aria-pressed="${on}">${iMiniIc(IBY[id])}<span><b>${esc(iName(IBY[id]))}</b><small>${on ? L("activa usada", "active used") : L("toca para usarla", "tap to use it")}</small><i>${esc(a.texto)}</i>${a.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : ""}</span></button>`; }).join("")}</div></div>`;
+}
 const iMiniIc = it => `<span ${icAttr(it)}></span>`;
 // Solo cambia los resultados, no los controles: así la barra de nivel se puede arrastrar.
 function calcRefresh() {
@@ -1381,7 +1408,7 @@ function renderCalc() {
 const RIVAL_PROT = 60;   // protección supuesta del rival para medir el daño (no viene del juego)
 const GOALS = [
   { id: "as", ico: "»", es: "La metralleta tartamuda", en: "The stuttering machine gun", d_es: "Básicos rapidísimos: el mayor daño por segundo con ataques básicos.", d_en: "Fast basics: most basic-attack damage per second." },
-  { id: "crit", ico: "✦", es: "El crítico que pega como chancla de mamá", en: "The crit that hits like mom's sandal", d_es: "Cada básico pega lo más fuerte posible, contando la probabilidad de crítico.", d_en: "Each basic hits as hard as possible, crit chance included." },
+  { id: "crit", ico: "✦", es: "El crítico que pega como padrastro pedo", en: "The crit that hits like a drunk stepdad", d_es: "Cada básico pega lo más fuerte posible, contando la probabilidad de crítico.", d_en: "Each basic hits as hard as possible, crit chance included." },
   { id: "burst", ico: "☄", es: "One Punch Man", en: "One Punch Man", d_es: "Todo el daño posible en un combo de habilidades más un básico.", d_en: "Most damage in one ability combo plus a basic." },
   { id: "gojo", ico: "◉", es: "Satoru Gojo", en: "Satoru Gojo", d_es: "Magia dura: el combo de habilidades más fuerte usando solo objetos de Inteligencia.", d_en: "Hard magic: strongest ability combo with Intelligence items only." },
   { id: "tank", ico: "⛨", es: "El tanque de gordas", en: "The chonky tank", d_es: "La vida efectiva más alta: lo que te tienen que pegar para matarte.", d_en: "Highest effective health." },
@@ -1390,17 +1417,18 @@ const GOALS = [
 let GOAL = null;
 const vsProt = S => { const eff = Math.max(0, RIVAL_PROT * (1 - S.shred / 100) * (1 - Math.min(100, S.penp) / 100) - S.pen); return 100 / (100 + eff); };
 const critFactor = S => 1 + Math.min(100, S.crit) / 100 * (CALC.critMult - 1 + S.critExtra);
-function goalParts(g, items, st) {
-  const S = calcStats(g, items, st, { lvl: 20, rank: 5, stacks: true, fight: false }), m = vsProt(S);
+function goalParts(g, items, st, goal) {
+  const S = calcStats(g, items, st, { lvl: 20, rank: 5, stacks: true, fight: false, actAll: goal !== "as" }), m = vsProt(S);
   const hit = S.basicHit * critFactor(S) * m;
   let combo = 0;
   for (const a of ABILS.filter(a => a.dios === g.s && /^[1-4]$/.test(a.ranura))) { const ls = abilityLines(a, S, 5).filter(l => l.kind === "dmg" && !l.perTick); if (ls.length) combo += Math.max(...ls.map(l => l.total)); }
   combo = combo * m * (1 + Math.min(100, S.echo) / 100 * 0.15) + hit + S.afterAbility * m;
-  const ehp = S.hp * ((100 + S.pf) / 100 / (1 - S.plating / 200) + (100 + S.pm) / 100 / (1 - S.damp / 200)) / 2;
+  const ehp = S.shield + S.hp * ((100 + S.pf) / 100 / (1 - S.plating / 200) + (100 + S.pm) / 100 / (1 - S.damp / 200)) / 2;
   return { S, hit, dps: hit * S.aps, combo, ehp };
 }
 const goalScore = (id, P) => id === "as" ? P.dps : id === "crit" ? P.hit : id === "burst" || id === "gojo" ? P.combo : id === "tank" ? P.ehp : Math.sqrt(P.combo * P.ehp);
-const GOAL_CACHE = new Map();
+const GOAL_CACHE = new Map(), MAX_EVO = 2;
+const isEvoItem = id => EVO_IC[id] !== undefined;
 function goalBuild(g, r, goal) {
   const ck = [g.s, BLD.role, goal, bldStarter(r), CALC.critMult].join("|");
   if (!GOAL_CACHE.has(ck)) GOAL_CACHE.set(ck, goalBuild0(g, r, goal));
@@ -1410,28 +1438,31 @@ function goalBuild0(g, r, goal) {
   const st = bldStarter(r), picks = godPicks(g, r);
   const noStr = x => !x.stats.some(s0 => s0[0] === "PhysicalPower" || s0[0] === "InhandPower");  // los adaptativos dan Inteligencia si es tu stat más alto
   const pool = ITEMS.filter(x => buildable(x) && x.stats && x.stats.length && (goal !== "gojo" || noStr(x))).map(x => x.id);
-  const score = items => goalScore(goal, goalParts(g, items, st)) * (1 + 1e-6 * items.reduce((n, id) => n + (picks.get(id) || 0), 0));  // desempate: lo que más se compra con ese dios
+  const score = items => goalScore(goal, goalParts(g, items, st, goal)) * (1 + 1e-6 * items.reduce((n, id) => n + (picks.get(id) || 0), 0));  // desempate: lo que más se compra con ese dios
+  // Los evolucionados cuentan ya con sus cargas llenas (la build es la del final de la partida), máximo 2 por build.
+  const okEvo = xs => xs.filter(isEvoItem).length <= MAX_EVO;
   let cur = [];
-  for (let k = 0; k < 6; k++) { let best = null, bv = -1; for (const id of pool) { if (cur.includes(id)) continue; const v = score(cur.concat([id])); if (v > bv) { bv = v; best = id; } } cur.push(best); }
+  for (let k = 0; k < 6; k++) { let best = null, bv = -1; for (const id of pool) { if (cur.includes(id) || !okEvo(cur.concat([id]))) continue; const v = score(cur.concat([id])); if (v > bv) { bv = v; best = id; } } cur.push(best); }
   for (let pass = 0; pass < 2; pass++) { let changed = false;
     for (let k = 0; k < 6; k++) { let bv = score(cur), best = null;
-      for (const id of pool) { if (cur.includes(id)) continue; const t2 = cur.slice(); t2[k] = id; const v = score(t2); if (v > bv * 1.001) { bv = v; best = id; } }
+      for (const id of pool) { if (cur.includes(id)) continue; const t2 = cur.slice(); t2[k] = id; if (!okEvo(t2)) continue; const v = score(t2); if (v > bv * 1.001) { bv = v; best = id; } }
       if (best) { cur[k] = best; changed = true; } }
     if (!changed) break; }
-  // orden de compra: en cada paso, lo que más sube la meta
-  const order = [], left = cur.slice(), steps = [];
-  let prev = goalScore(goal, goalParts(g, [], st));
-  while (left.length) { let bi = 0, bv = -1; left.forEach((id, i) => { const v = goalScore(goal, goalParts(g, order.concat([id]), st)); if (v > bv) { bv = v; bi = i; } });
-    const id = left.splice(bi, 1)[0]; order.push(id); const P = goalParts(g, order, st); steps.push({ id, gain: prev > 0 ? (goalScore(goal, P) / prev - 1) * 100 : 0, P }); prev = goalScore(goal, P); }
-  return { items: order, steps, P: goalParts(g, order, st) };
+  // orden de compra: primero los evolucionados (necesitan tiempo para juntar cargas), luego lo que más sube la meta en cada paso
+  const order = cur.filter(isEvoItem), left = cur.filter(id => !isEvoItem(id)), steps = [];
+  { let prev0 = goalScore(goal, goalParts(g, [], st, goal)); order.forEach((id, i) => { const P = goalParts(g, order.slice(0, i + 1), st, goal); steps.push({ id, evo: true, gain: prev0 > 0 ? (goalScore(goal, P) / prev0 - 1) * 100 : 0, P }); prev0 = goalScore(goal, P); }); }
+  let prev = goalScore(goal, goalParts(g, order, st, goal));
+  while (left.length) { let bi = 0, bv = -1; left.forEach((id, i) => { const v = goalScore(goal, goalParts(g, order.concat([id]), st, goal)); if (v > bv) { bv = v; bi = i; } });
+    const id = left.splice(bi, 1)[0]; order.push(id); const P = goalParts(g, order, st, goal); steps.push({ id, gain: prev > 0 ? (goalScore(goal, P) / prev - 1) * 100 : 0, P }); prev = goalScore(goal, P); }
+  return { items: order, steps, P: goalParts(g, order, st, goal) };
 }
 // Comparación: la misma meta llenando todo con un solo tipo de stat.
 function pureBuild(g, r, goal, stat) {
   const st = bldStarter(r), has = x => x.stats.some(s => TAGMAP[s[0]] === stat);
   const pool = ITEMS.filter(x => buildable(x) && has(x)).map(x => x.id);
   let cur = [];
-  for (let k = 0; k < 6 && cur.length < pool.length; k++) { let best = null, bv = -1; for (const id of pool) { if (cur.includes(id)) continue; const v = goalScore(goal, goalParts(g, cur.concat([id]), st)); if (v > bv) { bv = v; best = id; } } if (!best) break; cur.push(best); }
-  return cur.length === 6 ? { items: cur, P: goalParts(g, cur, st) } : null;
+  for (let k = 0; k < 6 && cur.length < pool.length; k++) { let best = null, bv = -1; for (const id of pool) { if (cur.includes(id)) continue; const v = goalScore(goal, goalParts(g, cur.concat([id]), st, goal)); if (v > bv) { bv = v; best = id; } } if (!best) break; cur.push(best); }
+  return cur.length === 6 ? { items: cur, P: goalParts(g, cur, st, goal) } : null;
 }
 function goalsHTML(g, r) {
   const head = `<section class="panel goals"><div class="sec-head"><span class="eyebrow">${L("¿Qué quieres ser?", "What do you want to be?")}</span><h2>${L("Build según tu meta", "Build by goal")}</h2>
@@ -1447,16 +1478,16 @@ function goalsHTML(g, r) {
   if (pure && pure.items.join() !== res.items.join()) { const a = goalScore(GOAL, P), b = goalScore(GOAL, pure.P), d = Math.round((a / b - 1) * 100);
     cmp = `<p>${L(`Comparada con seis objetos que dan ${pureName} (${pure.items.map(id => iName(IBY[id])).join(", ")}), esta build ${Math.abs(d) < 1 ? "rinde casi igual" : d > 0 ? "rinde " + d + "% más" : "rinde " + Math.abs(d) + "% menos"} para esta meta.`, `Compared with six ${pureName} items, this build is ${d >= 0 ? d + "% better" : Math.abs(d) + "% worse"} for this goal.`)}</p>`; }
   const stepTxt = res.steps.map((x, i) => { const S2 = x.P.S; const extra = GOAL === "as" ? `${S2.aps.toFixed(2)}/s` : GOAL === "crit" ? `${Math.round(Math.min(100, S2.crit))}% ${L("crít.", "crit")}` : GOAL === "tank" ? `${fmt(x.P.ehp)}` : `${fmt(x.P.combo)}`;
-    return `<li><span class="gstep">${i + 1}</span>${iMini(IBY[x.id])}<span class="gain">+${x.gain < 1 && x.gain > 0 ? x.gain.toFixed(1) : Math.round(x.gain)}%</span><span class="muted">${extra}</span></li>`; }).join("");
+    return `<li><span class="gstep">${i + 1}</span>${iMini(IBY[x.id])}${x.evo ? `<span class="evo-tag" title="${L("Cómpralo pronto para juntar cargas; al principio rinde menos.", "Buy early to stack it; weaker at first.")}">${L("evoluciona", "evolves")}</span>` : "<span></span>"}<span class="gain">+${x.gain < 1 && x.gain > 0 ? x.gain.toFixed(1) : Math.round(x.gain)}%</span><span class="muted">${extra}</span></li>`; }).join("");
   const capNote = GOAL === "crit" || GOAL === "as" ? `<p class="muted" style="font-size:13px">${L(`El crítico es una probabilidad: pasar de 100% no sirve de nada, así que la calculadora deja de sumarlo ahí. El blindaje y la amortiguación se topan en 35. La wiki no dice que la velocidad de ataque tenga tope, así que aquí no se topa.`, `Crit is a chance: past 100% it does nothing. Plating and dampening cap at 35. The wiki states no attack speed cap.`)}</p>` : GOAL === "tank" ? `<p class="muted" style="font-size:13px">${L("Cada punto de protección rinde un poco menos que el anterior y el blindaje y la amortiguación se topan en 35; por eso la build mezcla vida y protecciones.", "Each protection point is worth slightly less; plating and dampening cap at 35.")}</p>` : "";
   return head + `<div class="goal-res">
       <div class="goal-top"><span class="gi big" aria-hidden="true">${gl.ico}</span><div><span class="eyebrow">${L(gl.es, gl.en)} · ${esc(N(g))} · ${L("nivel 20", "level 20")}</span>
         <p class="big">${fmt(unit[1])} <small>${unit[0]}${GOAL === "bruiser" ? ` ${fmt(P.ehp)} ${L("de vida efectiva", "effective health")}` : ""}</small></p></div></div>
       <ol class="gsteps">${stepTxt}</ol>
-      <p class="muted">${L("El % es cuánto sube la meta al comprar ese objeto, en ese orden. Cuando baja mucho, ese tipo de stat ya está rindiendo poco.", "The % is how much each item raises the goal, in that order.")}</p>
+      <p class="muted">${L("El % es cuánto sube la meta al comprar ese objeto, en ese orden. Cuando baja mucho, ese tipo de stat ya está rindiendo poco.", "The % is how much each item raises the goal, in that order.")}${res.steps.some(x => x.evo) ? L(" Los objetos que evolucionan van primero aunque al principio rindan poco: necesitan tiempo para juntar cargas, y la build se calcula con ellos ya evolucionados (máximo 2 por build).", " Evolving items go first: they need time to stack, and the build counts them evolved (max 2).") : ""}</p>
       ${cmp}${capNote}
       <div class="chips"><button class="chip" type="button" data-goaluse="1">${L("Usar esta build", "Use this build")}</button></div>
-      <p class="muted" style="font-size:13px">${L(`Supuestos: nivel 20, rango 5, cargas al máximo, rival con ${RIVAL_PROT} de protección, crítico ×${CALC.critMult} (se cambia en la calculadora). Solo cuenta stats, cargas y los efectos de la calculadora; pasivas como ralentizar, quitar curación o dar escudo no entran, así que revisa los avisos del Creador.`, `Assumptions: level 20, rank 5, max stacks, enemy with ${RIVAL_PROT} protection, crit ×${CALC.critMult}. Only stats and calculator effects count.`)}</p>
+      <p class="muted" style="font-size:13px">${L(`Supuestos: nivel 20, rango 5, cargas al máximo, ${GOAL === "as" ? "sin usar activas (daño sostenido)" : "con las activas usadas (pelea corta)"}, rival con ${RIVAL_PROT} de protección, crítico ×${CALC.critMult} (se cambia en la calculadora). Solo cuenta stats, cargas y los efectos de la calculadora; pasivas como ralentizar, quitar curación o dar escudo no entran, así que revisa los avisos del Creador.`, `Assumptions: level 20, rank 5, max stacks, enemy with ${RIVAL_PROT} protection, crit ×${CALC.critMult}. Only stats and calculator effects count.`)}</p>
     </div></section>`;
 }
 
@@ -1743,6 +1774,9 @@ document.addEventListener("click", e => {
   if (t.closest("[data-bldclear]")) { BLD.items = []; BLD.slot = null; saveBld(); renderBuilder(); return; }
   const cg = t.closest("[data-calcgod]");
   if (cg) { const g0 = bySlug(cg.dataset.calcgod), r0 = g0 && g0.roles[cg.dataset.calcrole]; if (r0) { BLD.god = g0.s; BLD.role = cg.dataset.calcrole; BLD.items = r0.b[r0.meta].map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.starter = ""; BLD.slot = null; saveBld(); setView("calculadora"); window.scrollTo(0, $(".views").offsetTop); } return; }
+  const ac = t.closest("[data-act]");
+  if (ac) { const id = ac.dataset.act; if (ACT_ON.has(id)) ACT_ON.delete(id); else ACT_ON.add(id); saveAct();
+    const y = window.scrollY; if (view === "calculadora") renderCalc(); else renderBuilder(); window.scrollTo(0, y); return; }
   const sk = t.closest("[data-stk]");
   if (sk) { const id = sk.dataset.stk; if (STK_OFF.has(id)) STK_OFF.delete(id); else STK_OFF.add(id); saveStk();
     if (view === "calculadora") { const y = window.scrollY; renderCalc(); window.scrollTo(0, y); } else { const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); } return; }

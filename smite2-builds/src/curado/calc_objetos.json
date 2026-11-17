@@ -1,5 +1,5 @@
 {
- "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (cada objeto se puede poner con o sin cargas en la calculadora y en el creador; 'reduce_prot_rival' = % de protecciones que le quita al rival). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana). 'dano_critico': objetos que suben el daño de los críticos (pct).",
+ "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (cada objeto se puede poner con o sin cargas en la calculadora y en el creador; 'reduce_prot_rival' = % de protecciones que le quita al rival). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana). 'dano_critico': objetos que suben el daño de los críticos (pct). 'activos': lo que da la activa de un objeto mientras dura (suma, por_nivel, pct de str/int, escudo, int_a_str, reduce_prot_rival, ataques = cuántos básicos dura).",
  "cargas": [
   {
    "suma": {
@@ -339,6 +339,114 @@
    "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
    "pendiente_verificar": true,
    "nota": "No sabemos si el 35% se suma al multiplicador o lo multiplica; aquí se suma."
+  }
+ ],
+ "activos": [
+  {
+   "item": "dagger-of-frenzy",
+   "suma": {
+    "ad": 10,
+    "as": 20
+   },
+   "por_nivel": {
+    "ad": 4,
+    "as": 1
+   },
+   "ataques": 6,
+   "texto": "Activa: +10 (+4 por nivel) de daño de ataque y +20% (+1% por nivel) de velocidad de ataque durante 6 ataques. Enfriamiento 15 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "avatars-parashu",
+   "pct": {
+    "str": 25
+   },
+   "texto": "Activa: +25% de Fuerza e inmune a empujones por 10 s. Enfriamiento 120 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "dreamers-idol",
+   "pct": {
+    "int": 25
+   },
+   "texto": "Activa: +25% de Inteligencia e inmune a empujones por 10 s. Enfriamiento 120 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "death-metal",
+   "int_a_str": 0.66,
+   "suma": {
+    "crit": 25
+   },
+   "texto": "Activa: pierdes toda tu Inteligencia, ganas 66% de ella como Fuerza y +25% de crítico por 6 s. Enfriamiento 45 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "bloodforge",
+   "escudo": {
+    "hp_pct": 10,
+    "str_items_pct": 150
+   },
+   "suma": {
+    "ls": 10
+   },
+   "texto": "Activa: escudo de 10% de tu vida máxima + 150% de la Fuerza de tus objetos por 6 s, y +10% de robo de vida mientras dura. Enfriamiento 80 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "blood-bound-book",
+   "escudo": {
+    "hp_pct": 7.5,
+    "int_items_pct": 75
+   },
+   "suma": {
+    "ls": 10,
+    "penp": 10
+   },
+   "texto": "Activa: escudo de 7.5% de tu vida máxima + 75% de la Inteligencia de tus objetos por 6 s, con +10% de robo de vida y 10% de penetración. Enfriamiento 80 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "glorious-pridwen",
+   "escudo": {
+    "prot_items_pct": 125
+   },
+   "texto": "Activa: escudo de 125% de tus protecciones por 5 s (y explota al ponerlo y al romperse). Enfriamiento 45 s.",
+   "pendiente_verificar": true,
+   "nota": "El texto dice «Protections» sin aclarar cuáles; aquí se usan las protecciones de tus objetos, física + mágica.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "circes-hexstone",
+   "suma": {
+    "pf": 60,
+    "pm": 60
+   },
+   "texto": "Activa: te lanzas hacia adelante con +60 de protección física y mágica e inmune a control. Enfriamiento 120 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  },
+  {
+   "item": "screeching-gargoyle",
+   "reduce_prot_rival": 10,
+   "texto": "Activa: silencia 1 s a los de enfrente y les quita 10% de protecciones por 4 s. Enfriamiento 90 s.",
+   "pendiente_verificar": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
   }
  ]
 }
