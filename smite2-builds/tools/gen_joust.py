@@ -116,22 +116,40 @@ def joust_stats(ms):
     r['_pool']=[dict(id=sl,pick=round(pc(c)),win=round(100*win[sl]/c),slot=slot[sl]/c,cat=None) for sl,c in cnt.most_common() if c>=2]
     return r
 gen.pool=lambda r:[dict(x) for x in r['_pool']]
+def aspinfo(sl):
+    en=items[sl]['name'].replace('Aspect of ','').strip(); es=ASPECTS_ES.get(en,(en,''))
+    return dict(e=en,es=es[0],d=es[1],de=clean_en(items[sl]['desc'],300))
+STATS_PATCH='ob47'  # parche de las partidas usadas; cambiar al re-descargar
+GAME_PATCH='OB48'
 G0={g['key']:g for g in json.load(open('gods.json'))}
 gods=[]
 for key,g in G0.items():
     fn=f'joust/{key}.json'
-    if not os.path.exists(fn): continue
-    allm=json.load(open(fn)); ms=[m for m in allm if m['patch']=='ob47']
+    allm=json.load(open(fn)) if os.path.exists(fn) else []
+    ms=[m for m in allm if m['patch']==STATS_PATCH]
     old=False
     if len(ms)<70 and len(allm)>len(ms): ms=allm; old=True
-    if len(ms)<12: print('pocas partidas',key,len(ms)); continue
     tags=[x for l in re.findall(r'\[[^\]]*\]',g['filt']) for x in ast.literal_eval(l)]
+    if len(ms)<12:
+        # Sin partidas suficientes (p. ej. un dios recién salido): se publica sin builds y la página lo dice.
+        print('sin datos de Joust',key,len(ms))
+        cls=CLASS_OF.get(g['name'],'Mago'); prof={'Guardián':'tank','Cazador':'aa','Mago':'mage'}.get(cls,'phys')
+        asp=None
+        an=((IDB.get(key) or {}).get('aspect_data') or {}).get('name')
+        if an and _sl(an) in items:
+            asp=dict(n=an.replace('Aspect of ','').strip(),p=0,w=0,np=0,nw=0,nuevo=True); asp.update(aspinfo(_sl(an)))
+        role=dict(t='',wr=None,n=len(ms),prof=prof,flav='M' if 'magical' in tags else 'P',meta='def' if prof=='tank' else 'off',st=[],re=[],asp=asp,b={'off':None,'hyb':None,'def':None},old=False,nodata=True)
+        tr=[]
+        if 'healing' in tags or 'sustain' in tags: tr.append('heal')
+        if 'shielding' in tags: tr.append('shield')
+        if 'lockdown' in tags or 'crowd control' in tags: tr.append('cc')
+        if prof=='tank': tr.append('tank')
+        slug=re.sub(r'[^a-z0-9]+','-',g['name'].lower()).strip('-')
+        gods.append(dict(k=key,s=slug,n=GODS_ES.get(g['name'],g['name']),e=g['name'],p=PAN_ES.get(g['pan'],g['pan']),pe=g['pan'],dmg='M' if 'magical' in tags else 'P',tr=tr,cls=cls,tier='?',wr=None,tn=len(ms),nuevo=True,roles={'all':role}))
+        continue
     def asp_of(m):
         sl=ID2SL.get((m['ids'].split('|')+['']*4)[3]); return sl if sl and sl.startswith('aspect') else None
     ac=Counter(asp_of(m) for m in ms); ac.pop(None,None)
-    def aspinfo(sl):
-        en=items[sl]['name'].replace('Aspect of ','').strip(); es=ASPECTS_ES.get(en,(en,''))
-        return dict(e=en,es=es[0],d=es[1],de=clean_en(items[sl]['desc'],300))
     roles={}
     if ac:
         topa=ac.most_common(1)[0][0]; A=[m for m in ms if asp_of(m)==topa]; B=[m for m in ms if asp_of(m) is None]
@@ -190,12 +208,12 @@ for i,k in enumerate(ids):
     es=ES.get(k,(x['name'],''))
     I[k]=dict(n=es[0],e=x['name'].strip(),d=es[1],de=clean_en(x['desc']),s=chips[:4],se=chipsE[:4],c=cat(k) if x['type'] in('Passive','Active') else 'x',i=i,g=round(x['cost']))
 sh.save(OUT+'/img/items.webp',quality=84,method=6)
-data=dict(patch='OB47',mode='joust',gc=GC,gr=sheet.height//S,ic=IC,ir=sh.height//T,items=I,gods=gods)
+data=dict(patch=STATS_PATCH.upper(),parche_juego=GAME_PATCH,mode='joust',gc=GC,gr=sheet.height//S,ic=IC,ir=sh.height//T,items=I,gods=gods)
 json.dump(data,open('data.json','w'),ensure_ascii=False,separators=(',',':'))
 print(len(gods),'dioses',len(ids),'items')
 
 print('null builds',Counter(k for g in gods for r in g['roles'].values() for k,v in r['b'].items() if v is None))
-print('n partidas: min',min(g['tn'] for g in gods),'mediana',sorted(g['tn'] for g in gods)[len(gods)//2])
+print('n partidas: min',min(g['tn'] for g in gods if not g.get('nuevo')),'mediana',sorted(g['tn'] for g in gods)[len(gods)//2])
 print(Counter(g['tier'] for g in gods),Counter(g['cls'] for g in gods),'con dos variantes',[g['e'] for g in gods if len(g['roles'])>1])
 for nm in ['Zeus','Ares','Anubis','Hel']:
     g=next((x for x in gods if x['e']==nm),None)

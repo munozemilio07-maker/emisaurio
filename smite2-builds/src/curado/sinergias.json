@@ -28,7 +28,7 @@
     ]
    },
    "tipo": "proteccion",
-   "explicacion": "Los que pelean pegados al rival son los que más mueren y los que más aprovechan a Khepri. Su pasiva da un escudo de 2% de vida a él y a los aliados cercanos cada 5 s. Su 2 les da mitigación de daño y le baja la protección física al enemigo. Su ulti bendice a un aliado 5 s: le quita el control, le da Fuerza, Inteligencia y velocidad, y si muere en ese tiempo revive junto a Khepri.",
+   "explicacion": "Los que pelean pegados al rival son los que más mueren y los que más aprovechan a Khepri. Su pasiva da un escudo de 2% de vida a él y a los aliados cercanos cada 5 s. Su 2 les da mitigación de daño (desde el OB48 crece con 3% de las protecciones de objetos de Khepri, así que mientras más tanque vaya, más protege) y le baja la protección física al enemigo. Su ulti bendice a un aliado 5 s: le quita el control, le da Fuerza, Inteligencia y velocidad, y si muere en ese tiempo revive junto a Khepri.",
    "claves": [
     {
      "dios": "khepri",
@@ -40,7 +40,7 @@
      "dios": "khepri",
      "ranura": "2",
      "habilidad": "Rising Dawn",
-     "papel": "Mitigación para aliados y menos protección física para enemigos."
+     "papel": "Mitigación para aliados (más alta si Khepri lleva protecciones) y menos protección física para enemigos."
     },
     {
      "dios": "khepri",
@@ -56,7 +56,7 @@
     "Cuando a tu compañero le quede poca vida, Khepri le pone la ulti. Si muere, revive al lado de Khepri."
    ],
    "media_url": "",
-   "parche_verificado": "OB47",
+   "parche_verificado": "OB48",
    "fuente": "https://smite2.live/god/Khepri/info",
    "pendiente_verificar": false
   },

@@ -138,6 +138,8 @@ kbd.xa { background: #6fcf6f; } kbd.xb { background: #e8695f; } kbd.xx { backgro
 kbd.xs { background: var(--stone-2); color: var(--ink); border-color: var(--line); border-radius: 6px; font-size: 12px; }
 .vgs .pend { margin-left: 8px; }
 kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 7px; font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--gold); background: var(--void); border: 1px solid var(--gold-deep); box-shadow: inset 0 -3px 0 var(--gold-deep); }
+.novb { border: 1px solid var(--ember); background: rgba(255,125,69,.06); padding: 10px 14px; display: grid; gap: 6px; }
+.novb .eyebrow { color: var(--ember); }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
 .step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
@@ -201,6 +203,7 @@ kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; 
 .tier { position: absolute; right: -5px; bottom: -5px; min-width: 20px; height: 20px; padding: 0 4px; display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; font-size: 12px; background: var(--void); border: 1px solid var(--gold-deep); color: var(--gold); }
 .tier.tS { background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: #1a1305; border-color: var(--gold-hi); }
 .tier.tA { color: var(--gold-hi); }
+.tier.tN { min-width: 0; padding: 0 5px; font-size: 9px; letter-spacing: .08em; background: var(--ember); color: #1a0d05; border-color: var(--ember); }
 .tier.tD, .tier.tF { color: var(--muted); border-color: var(--line); }
 .empty { color: var(--muted); padding: 8px 0; }
 
@@ -303,7 +306,7 @@ footer p { max-width: 90ch; }
   <div class="gut hero-in">
     <h1><small>Smite 2 · Joust 3 vs 3</small>Panteón de Builds</h1>
     <p class="sub" id="tSub">Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.</p>
-    <p class="patch"><b id="patch">OB47</b><span id="tPatch">Datos de partidas de Joust · actualizado el 11 nov 2026</span></p>
+    <p class="patch"><b id="patch">OB48</b><span id="tPatch">Habilidades y objetos del OB48 · builds y tiers con partidas de Joust del OB47</span></p>
     <div class="oracle">
       <label class="eyebrow" for="q" id="tAsk">¿A quién invocas?</label>
       <input id="q" type="search" list="godlist" placeholder="Zeus, Atenea, Anubis…" autocomplete="off">
@@ -339,6 +342,7 @@ footer p { max-width: 90ch; }
   <section class="gut hall" id="hall" aria-live="polite"></section>
  </div>
 
+ <section class="gut hall" id="v-novedades" hidden></section>
  <section class="gut hall" id="v-habilidades" hidden></section>
  <section class="gut hall" id="v-combos" hidden></section>
  <section class="gut hall" id="v-sinergias" hidden></section>
@@ -430,7 +434,7 @@ const EN = {
   "Nombre": "Name", "Tier (mejor primero)": "Tier (best first)", "% de victorias": "Win rate", "Más jugados": "Most played",
   "Panteón": "Pantheon", "Ordenar por": "Sort by", "¿A quién invocas?": "Who do you summon?",
   "Zeus, Atenea, Anubis…": "Zeus, Athena, Anubis…",
-  "Datos de partidas de Joust · actualizado el 11 nov 2026": "Joust match data · updated Nov 11, 2026",
+  "Habilidades y objetos del OB48 · builds y tiers con partidas de Joust del OB47": "OB48 abilities and items · builds and tiers from OB47 Joust games",
   "Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.": "Pick your god and get their <b>offensive</b>, <b>hybrid</b> and <b>defensive</b> build, with what each item does and what to buy against the enemy team.",
   "Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí.": "Builds come from each god's most recent Joust matches published on Smite2.live: which items were bought and in how many games. The item catalog and images come from there too.",
   "Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.": "Item text in English is the in-game description. Fan site, not affiliated with Hi-Rez or Titan Forge Games."
@@ -473,6 +477,7 @@ function itemRow(id, opts = {}) {
 
 function buildHTML(kind, r) {
   const b = r.b[kind], isMeta = r.meta === kind;
+  if (r.nodata) return `<article class="build ${kind}"><header><h3>${t(KIND[kind].t)}</h3></header><p class="na">${L("Todavía no hay partidas de Joust con este dios. Usa el creador de builds: sugiere objetos según su estilo y el equipo rival.", "No Joust games with this god yet. Use the build maker: it suggests items from their style and the enemy team.")}</p></article>`;
   if (!b) {
     return `<article class="build ${kind}"><header><h3>${t(KIND[kind].t)}</h3></header>
       <p class="na">${L(`No aplica: con lo que compran los jugadores, esta versión queda igual que la ${KIND[r.meta].t.toLowerCase()}.`, `Not applicable: with what players actually buy, this version ends up the same as the ${t(KIND[r.meta].t).toLowerCase()} one.`)}</p></article>`;
@@ -547,7 +552,8 @@ const roleMap = k => Object.fromEntries((ROLES[k] || []).map(r => [r.dios, r]));
 const R_PREP = roleMap("prepara"), R_REM = roleMap("remata"), R_PROT = roleMap("protege");
 const CARE = new Set(((ROLES.necesita_cuidado || {}).dioses) || []);
 const bySlug = s => G.find(g => g.s === s);
-const byTier = (a, b) => "SABCD".indexOf(a.tier) - "SABCD".indexOf(b.tier) || b.wr - a.wr;
+const tierRank = x => { const i = "SABCD".indexOf(x); return i < 0 ? 9 : i; };
+const byTier = (a, b) => tierRank(a.tier) - tierRank(b.tier) || (b.wr || 0) - (a.wr || 0);
 const roleTxt = r => `${L(r.texto, r.texto_en || r.texto)} (${r.ranura === "otra" ? "" : r.ranura + " · "}${r.habilidad})`;
 const pendTag = x => x && x.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : "";
 
@@ -700,7 +706,7 @@ function renderHabilidades() {
   const summary = !fxSel.length ? L("Elige uno o más efectos para ver qué dioses los tienen y con qué habilidad.", "Pick one or more effects to see which gods have them and on which ability.")
     : L(`${count} dioses, ${nab} habilidades`, `${count} gods, ${nab} abilities`);
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Habilidades por efecto", "Abilities by effect")}</span><h2>${L("¿Quién aturde, silencia o jala?", "Who stuns, silences or pulls?")}</h2>
-      <p>${L("Los efectos salen de la ficha de cada habilidad en Smite2.live (parche OB47). El nombre y el texto de la habilidad están en inglés, como en el juego.", "Effects come from each ability's page on Smite2.live (patch OB47).")}</p></div>
+      <p>${L("Los efectos salen de la ficha de cada habilidad en Smite2.live (parche OB48). El nombre y el texto de la habilidad están en inglés, como en el juego.", "Effects come from each ability's page on Smite2.live (patch OB47).")}</p></div>
     <div class="panel">
       <div class="chips" role="group" aria-label="${L("Efectos", "Effects")}">${chips}</div>
       <div class="bar">
@@ -839,6 +845,7 @@ function itemFicha(r) {
         <div><span class="v">${r.costo ? r.costo.toLocaleString("es-MX") : "—"}</span><span class="l">${L("Oro", "Gold")}</span></div>
         <div><span class="v" style="font-size:18px">${L(ITIPO[r.tipo][0], ITIPO[r.tipo][1])}</span><span class="l">${L("Tipo", "Type")}</span></div>
       </div>
+      ${novBanner("objeto", r.id)}
       <div class="fcols">
       ${block(L("Stats", "Stats"), stats.length ? `<div class="fxs">${stats.map(x => `<span class="fx on">${esc(x)}</span>`).join("")}</div>` : `<p class="muted">${L("No da stats fijas.", "No flat stats.")}</p>`)}
       ${block(L("Qué hace", "What it does"), `${lang === "es" && r.descripcion_es ? `<p class="lead">${esc(r.descripcion_es)}</p>` : ""}${r.texto_en ? `<div class="gtext"><span class="muted">${L("Texto del juego:", "In-game text:")}</span>${r.texto_en.split("\n").map(l => `<p>${esc(l)}</p>`).join("")}</div>` : `<p class="muted">${L("Sin pasiva ni activa: solo da stats.", "No passive or active: stats only.")}</p>`}`)}
@@ -1074,8 +1081,32 @@ function renderChat() {
   if (focus) { const q = $("#vgsQ"); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
 
+// ---------- Novedades del parche (src/curado/novedades.json) ----------
+const NOV = CURADO.novedades || {};
+const NOVC = NOV.cambios || [];
+function novBanner(tipo, ref) {
+  const c = NOVC.find(x => x.tipo === tipo && x.ref === ref && x.aplica_joust !== false);
+  if (!c) return "";
+  return `<div class="novb"><span class="eyebrow">${L(`Cambió en el ${esc(NOV.parche || "")}`, `Changed in ${esc(NOV.parche || "")}`)}</span><ul class="plain">${c.cambios.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${c.efecto ? `<p class="muted">${esc(c.efecto)}</p>` : ""}${pendTag(c)}</div>`;
+}
+function renderNovedades() {
+  const el = $("#v-novedades");
+  if (!NOVC.length) { el.innerHTML = `<p class="empty">${L("Todavía no hay notas de parche: se agregan en src/curado/novedades.json.", "No patch notes yet.")}</p>`; return; }
+  const card = c => {
+    const g = c.tipo === "dios" ? bySlug(c.ref) : null, it = c.tipo === "objeto" ? IBY[c.ref] : null;
+    const who = g ? `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>` : it ? iMini(it) : "";
+    return `<article class="sit${c.aplica_joust === false ? "" : " hot"}"><h3>${esc(c.titulo)}${c.aplica_joust === false ? `<span class="diff o-derivado">${L("No aplica a Joust", "Not in Joust")}</span>` : ""}${pendTag(c)}</h3>${who ? `<div class="foes">${who}</div>` : ""}
+      <ul class="plain">${c.cambios.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${c.efecto ? `<p class="why"><b>${L("En Joust", "In Joust")}:</b> ${esc(c.efecto)}</p>` : ""}</article>`;
+  };
+  const grp = (tipo, title) => { const xs = NOVC.filter(c => c.tipo === tipo); return xs.length ? `<section class="panel"><div class="sec-head"><span class="eyebrow">${title}</span></div><div class="sits">${xs.map(card).join("")}</div></section>` : ""; };
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Novedades", "Patch notes")}</span><h2>${esc(NOV.parche || "")}${NOV.nombre ? " · " + esc(NOV.nombre) : ""}</h2>
+      <p>${L("Lo que cambió en el parche y cómo afecta a Joust. Resumen escrito a mano desde las notas oficiales.", "What changed in the patch and how it affects Joust. Hand-written summary of the official notes.")} ${safeUrl(NOV.fuente) ? `<a href="${esc(NOV.fuente)}" target="_blank" rel="noopener">${L("Notas completas", "Full notes")}</a>` : ""}</p></div>
+    ${NOV.nota_stats ? `<p class="rule">${esc(NOV.nota_stats)}</p>` : ""}
+    ${grp("dios", L("Dioses", "Gods"))}${grp("objeto", L("Objetos", "Items"))}${grp("general", L("Otros modos", "Other modes"))}`;
+}
+
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["creador", "Creador", "Build maker"], ["chat-rapido", "Chat rápido", "Quick chat"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["novedades", "Novedades", "Patch"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["creador", "Creador", "Build maker"], ["chat-rapido", "Chat rápido", "Quick chat"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
@@ -1085,6 +1116,7 @@ function setView(v, keepHash) {
   view = VIEWS.some(x => x[0] === v) ? v : "dioses";
   renderViews();
   if (view === "habilidades") renderHabilidades();
+  if (view === "novedades") renderNovedades();
   if (view === "combos") renderCombos();
   if (view === "sinergias") renderSinergias();
   if (view === "objetos") renderObjetos();
@@ -1108,6 +1140,8 @@ function renderHall() {
     asp = r.var.k === "asp"
       ? `<div class="aspect">${aspHead(r.var)}<span class="muted">${t("Estas builds son de partidas jugadas con el aspecto activado.")}</span></div>`
       : `<div class="aspect"><span class="n">${t("Sin aspecto")}</span><span class="muted">${L(`Estas builds son de partidas sin el aspecto. Si lo activas (${esc(r.var.es)}), mira la otra pestaña: cambia qué conviene comprar.`, `These builds come from games without the aspect. If you turn it on (${esc(r.var.e)}), check the other tab: the best items change.`)}</span></div>`;
+  } else if (r.asp && r.asp.e && r.asp.nuevo) {
+    asp = `<div class="aspect">${aspHead(r.asp)}<span class="muted">${L("Todavía sin datos de uso en Joust.", "No Joust usage data yet.")}</span></div>`;
   } else if (r.asp && r.asp.e) {
     const a = r.asp, rec = a.p >= 50 || (a.w - a.nw >= 5 && a.p >= 20);
     asp = `<div class="aspect">${aspHead(a)}
@@ -1123,11 +1157,13 @@ function renderHall() {
           <h2>${esc(N(g))}</h2><p class="en">${lang === "es" && g.n !== g.e ? `${esc(g.e)} en inglés · ` : ""}${t(g.cls)}</p></div>
         ${tabs}
         <div class="facts">
-          <div><span class="v">${g.tier}</span><span class="l">${t("Tier en Joust")}</span></div>
-          <div><span class="v">${Math.round(r.wr)}%</span><span class="l">${t("Victorias")}</span></div>
-          <div><span class="v">${r.n}</span><span class="l">${t("Partidas analizadas")}${small}</span></div>
+          <div><span class="v">${g.tier === "?" ? "—" : g.tier}</span><span class="l">${t("Tier en Joust")}</span></div>
+          <div><span class="v">${r.wr == null ? "—" : Math.round(r.wr) + "%"}</span><span class="l">${t("Victorias")}</span></div>
+          <div><span class="v">${r.n}</span><span class="l">${t("Partidas analizadas")}${r.nodata ? "" : small}</span></div>
           <div><span class="v">${t(PROF_SHORT[r.prof])}</span><span class="l">${t("Así lo juegan")}</span></div>
         </div>
+        ${r.nodata ? `<p class="rule">${L(`${esc(g.n)} salió en el OB48 y todavía no hay partidas de Joust suficientes para calcular su tier y sus builds. Sí están sus habilidades.`, `${esc(g.e)} was released in OB48 and there are not enough Joust games yet for a tier or builds. Abilities are listed.`)}</p>` : ""}
+        ${novBanner("dios", g.s)}
         ${r.old ? `<p class="muted">${L(`Hay pocas partidas de este parche con ${esc(g.n)}, así que incluí las de parches anteriores.`, `There are few games on this patch for ${esc(g.e)}, so earlier patches are included.`)}</p>` : ""}
         <div class="kit">
           <div><span class="l">${t("Objeto inicial")}</span>${kitList(r.st)}</div>
@@ -1153,14 +1189,14 @@ const CLASS_PL = { Mago: "Magos", Cazador: "Cazadores", Asesino: "Asesinos", Gue
 let fTier = "all", fPan = "all", fSort = "name";
 
 function renderGods() {
-  const rank = t => TIERS.indexOf(t);
+  const rank = t => { const i = TIERS.indexOf(t); return i < 0 ? 9 : i; };
   const list = G.filter(g => (roleFilter === "all" || g.cls === roleFilter) && (fTier === "all" || g.tier === fTier) && (fPan === "all" || g.p === fPan));
   const byName = (a, b) => N(a).localeCompare(N(b), lang);
   list.sort(fSort === "tier" ? (a, b) => rank(a.tier) - rank(b.tier) || b.wr - a.wr || byName(a, b)
-    : fSort === "wr" ? (a, b) => b.wr - a.wr || byName(a, b)
+    : fSort === "wr" ? (a, b) => (b.wr || 0) - (a.wr || 0) || byName(a, b)
     : fSort === "n" ? (a, b) => b.tn - a.tn || byName(a, b) : byName);
-  $("#gods").innerHTML = list.map(g => `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)} · ${t(g.cls)} · ${g.wr}%">
-      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"><span class="tier t${g.tier}">${g.tier}</span></span><span class="nm">${esc(N(g))}</span></button>`).join("") || `<p class="empty">${t("Ningún dios cumple esos filtros.")}</p>`;
+  $("#gods").innerHTML = list.map(g => `<button class="god" type="button" data-slug="${g.s}"${cur && cur.god === g ? ' aria-current="true"' : ""} title="${esc(g.e)} · ${t(g.cls)}${g.wr != null ? ` · ${g.wr}%` : ""}">
+      <span class="face spr-g" style="${pos(g.i, DATA.gc, DATA.gr)}"><span class="tier t${g.tier === "?" ? "N" : g.tier}">${g.tier === "?" ? L("NUEVO", "NEW") : g.tier}</span></span><span class="nm">${esc(N(g))}</span></button>`).join("") || `<p class="empty">${t("Ningún dios cumple esos filtros.")}</p>`;
   $("#count").textContent = list.length === G.length ? L(`Los ${G.length} dioses`, `All ${G.length} gods`) : L(`${list.length} de ${G.length} dioses`, `${list.length} of ${G.length} gods`);
 }
 
@@ -1315,7 +1351,7 @@ function fromHash() {
 }
 window.addEventListener("hashchange", fromHash);
 
-$("#patch").textContent = DATA.patch;
+$("#patch").textContent = DATA.parche_juego || DATA.patch;
 $("#godlist").innerHTML = G.map(g => `<option value="${esc(g.n)}">${g.n !== g.e ? `<option value="${esc(g.e)}">` : ""}`).join("");
 fromHash();
 applyLang();

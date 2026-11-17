@@ -1,0 +1,44 @@
+{
+ "_como_editar": "Lo que va aquí se aplica encima de lo que genera tools/gen_efectos.py, así que no se pierde al regenerar. 'corregir' cambia campos de una habilidad existente (por dios y nombre). 'agregar' mete una habilidad que la fuente no trae; reemplaza la de la misma ranura.",
+ "corregir": [
+  {
+   "dios": "ix-chel",
+   "nombre": "Lunar Invocation",
+   "campos": {
+    "costo": "65/70/75/80/85"
+   },
+   "motivo": "La fuente todavía trae el costo del OB47; las notas del OB48 lo bajan en el rango 5.",
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48"
+  },
+  {
+   "dios": "ix-chel",
+   "nombre": "Threads of Light",
+   "campos": {
+    "costo": "50/55/60/65/70"
+   },
+   "motivo": "La fuente todavía trae el costo del OB47; las notas del OB48 lo suben.",
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48"
+  }
+ ],
+ "agregar": [
+  {
+   "dios": "kumbhakarna",
+   "ranura": "3",
+   "nombre": "Mighty Yawn",
+   "efectos": [
+    "otro_control",
+    "slow"
+   ],
+   "detalle": {
+    "otro_control": "Mesmeriza"
+   },
+   "texto_en": "Let out a mighty yawn, Mesmerizing nearby enemies. Enemies that take damage wake early, taking magical damage, are slowed and lose attack speed for the duration. You can use this ability while asleep.",
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": true,
+   "nota": "La ficha de la fuente no trae esta habilidad todavía: el texto sale de las notas del parche, sin números."
+  }
+ ]
+}

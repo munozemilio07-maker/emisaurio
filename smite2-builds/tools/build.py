@@ -19,7 +19,7 @@ src_dir = os.path.join(root, "src")
 cur_dir = os.path.join(src_dir, "curado")
 
 # Archivos que la página sabe mostrar. Uno que falte se trata como vacío.
-ESPERADOS = ["efectos_habilidades", "combos", "sinergias", "items_guia", "chat_rapido"]
+ESPERADOS = ["efectos_habilidades", "combos", "sinergias", "items_guia", "chat_rapido", "novedades"]
 
 
 def incrustable(texto):

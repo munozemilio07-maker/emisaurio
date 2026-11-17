@@ -3,7 +3,7 @@ ASPECTS_ES = {
  "Agony": ("Agonía", "Deja el sigilo: ciega en vez de sangrar y puede proteger a aliados. Estilo de apoyo con más vida."),
  "Calamity": ("Calamidad", "Geb ataca a distancia y pega críticos; su escudo es solo para él. Lo vuelve un dios de daño."),
  "Combustion": ("Combustión", "Tus básicos prenden fuego (hasta 5 cargas) y tus habilidades lo detonan. Agni de ataque básico."),
- "Conflagration": ("Conflagración", "El Calor da Inteligencia y daño de habilidades en vez de velocidad de ataque. Sol de mago puro."),
+ "Conflagration": ("Conflagración", "El Calor da Inteligencia y daño de habilidades en vez de velocidad de ataque. Su Radiance se coloca a distancia y dura más, y su Stellar Burst rebota hacia cada charco de Radiance. Sol de mago puro (rehecho en OB48)."),
  "Disruption": ("Disrupción", "Sus golpes ralentizan y aturden, pero pega menos. Hun Batz de control."),
  "Divergence": ("Divergencia", "Te fijas en la forma Oscura (daño) o Luz (curación) toda la partida, con habilidades mejoradas y nueva ulti."),
  "Downpour": ("Aguacero", "Sus habilidades escalan más con Inteligencia y su curación ahora daña enemigos. Yemayá de daño."),
@@ -57,6 +57,7 @@ ASPECTS_ES = {
  "the Nightstalker": ("el Acechador Nocturno", "Sus bolas son 3 proyectiles de habilidad y gana daño de habilidades. Xbalanqué de habilidades."),
  "the Rakshasa King": ("el Rey Rakshasa", "Acumula Combo sin límite y lo gasta en habilidades mejoradas que le dan escudo."),
  "the Rotund Jotunn": ("el Jotunn Rollizo", "Cambia aturdimientos por sigilo, ralentización y daño extra."),
+ "the Rude Awakening": ("el Despertar Brusco", "El 1 empuja menos lejos; el 2 ya no enraíza pero pega más y se puede relanzar antes; el bostezo (3) hace daño en vez de mesmerizar y los enemigos golpeados vuelven a bostezar, dañando a los de alrededor."),
  "the Sickle": ("la Hoz", "Sus básicos ya no atraviesan: aplica heridas y las detona para daño extra. Izanami de habilidades."),
  "the Squall": ("la Borrasca", "Gana maná con kills, dispara 3 proyectiles y su tornado va pegado a él."),
  "the Steel Wind": ("el Viento de Acero", "Tras acertar su disparo puede lanzarse al rival. Hachiman cuerpo a cuerpo."),
@@ -84,7 +85,7 @@ ASPECTS_ES = {
 CLASSES = {
  "Asesino": ["Aladdin","Awilix","Bastet","Daji","Fenrir","Hun Batz","Kali","Loki","Mercury","Ne Zha","Nemesis","Pele","Ratatoskr","Ravana","Susano","Thanatos","Thor","Tsukuyomi"],
  "Guerrero": ["Achilles","Amaterasu","Bellona","Chaac","Cu Chulainn","Gilgamesh","Guan Yu","Hercules","Horus","Hua Mulan","Mordred","Nike","Odin","Osiris","Sun Wukong"],
- "Guardián": ["Ares","Artio","Athena","Atlas","Bacchus","Cabrakan","Cerberus","Charon","Ganesha","Geb","Jormungandr","Khepri","Kuzenbo","Sobek","Sylvanus","Xing Tian","Yemoja","Ymir"],
+ "Guardián": ["Ares","Kumbhakarna","Artio","Athena","Atlas","Bacchus","Cabrakan","Cerberus","Charon","Ganesha","Geb","Jormungandr","Khepri","Kuzenbo","Sobek","Sylvanus","Xing Tian","Yemoja","Ymir"],
  "Mago": ["Agni","Ah Puch","Anubis","Aphrodite","Baron Samedi","Chronos","Discordia","Eset","Hades","Hecate","Hel","Ix Chel","Janus","Kukulkan","Merlin","Morgan Le Fay","Nox","Nu Wa","Poseidon","Princess Bari","Ra","Scylla","Sol","The Morrigan","Vulcan","Zeus"],
  "Cazador": ["Anhur","Apollo","Artemis","Cernunnos","Chiron","Cupid","Danzaburou","Hachiman","Hou Yi","Ishtar","Izanami","Jing Wei","Medusa","Neith","Nut","Rama","Ullr","Xbalanque"],
 }

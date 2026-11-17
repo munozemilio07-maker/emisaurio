@@ -82,7 +82,7 @@ for g in gods:
     f = os.path.join(SRC, g["k"] + ".html")
     if not os.path.exists(f): print("falta", g["k"]); continue
     for name, ty, cls, txt, datos, cd, costo in parse(open(f, encoding="utf8", errors="replace").read()):
-        if ty == "BASIC" or "Basic Attack" in name: continue
+        if ty == "BASIC" or "Basic Attack" in name or not name.strip(): continue
         m = re.match(r"ABILITY (\d)", ty)
         mt = re.match(r"TALENT(\d)", ty)
         ranura = m.group(1) if m else mt.group(1) if mt else "P" if ty == "PASSIVE" else "otra"
@@ -120,6 +120,19 @@ for g in gods:
         rec.update(parche_verificado=PARCHE, fuente=f"https://smite2.live/god/{g['k']}/info", pendiente_verificar=ranura == "otra")
         out.append(rec)
 
+# Correcciones y habilidades escritas a mano (src/curado/efectos_extra.json): sobreviven a esta regeneración.
+extra_p = os.path.join(root, "src", "curado", "efectos_extra.json")
+if os.path.exists(extra_p):
+    extra = json.load(open(extra_p, encoding="utf8"))
+    for c in extra.get("corregir", []):
+        hit = [r for r in out if r["dios"] == c["dios"] and r["nombre"] == c["nombre"]]
+        if not hit: print("corrección sin habilidad:", c["dios"], c["nombre"]); continue
+        for r in hit:
+            r.update(c.get("campos", {})); r["parche_verificado"] = c.get("parche_verificado", r["parche_verificado"]); r["fuente"] = c.get("fuente", r["fuente"])
+            r["corregido_a_mano"] = c.get("motivo", True)
+    for a in extra.get("agregar", []):
+        out = [r for r in out if not (r["dios"] == a["dios"] and r["ranura"] == a["ranura"])] + [a]
+    out.sort(key=lambda r: (r["dios"], ["P", "1", "2", "3", "4", "otra"].index(r["ranura"]) if r["ranura"] in ["P", "1", "2", "3", "4", "otra"] else 9))
 doc = {"_como_editar": "Un registro por habilidad. 'dios' es el slug de data.json (el mismo de cards/<slug>.webp). 'ranura': P, 1, 2, 3, 4 u 'otra'. 'efectos' usa las claves de 'etiquetas'. Para una etiqueta nueva, agrégala en 'etiquetas' y úsala en 'efectos'.",
        "etiquetas": ETIQUETAS, "glosario": GLOSARIO, "habilidades": out}
 dst = os.path.join(root, "src", "curado", "efectos_habilidades.json")
@@ -129,4 +142,4 @@ with open(dst, "w", encoding="utf8") as fh:
     fh.write("\n ]\n}\n")
 from collections import Counter
 print(len(out), "habilidades;", Counter(e for r in out for e in r["efectos"]).most_common())
-print("pendientes:", [(r["dios"], r["nombre"], r["tipo_fuente"]) for r in out if r["pendiente_verificar"]])
+print("pendientes:", [(r["dios"], r["nombre"], r.get("tipo_fuente", "a mano")) for r in out if r["pendiente_verificar"]])

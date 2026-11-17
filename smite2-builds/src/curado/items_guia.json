@@ -366,9 +366,9 @@
      "contagion"
     ]
    },
-   "explicacion": "Contagion acumula cargas en quien te pega y suma 5 de golpe si un enemigo te roba 100 de vida; al atacarlo o controlarlo le quitas 1% de su vida máxima por carga. En Smite 2 no es antiheal: castiga al que se cura pegándote.",
-   "parche_verificado": "OB47",
-   "fuente": "https://smite2.live/items",
+   "explicacion": "Contagion acumula cargas en quien te pega (hasta 8) y suma 4 de golpe si un enemigo te roba 100 de vida; al atacarlo o controlarlo le quitas 0.7% de su vida máxima por carga. En Smite 2 no es antiheal: castiga al que se cura pegándote. En el OB48 bajó: antes eran 10 cargas, 5 por robo de vida y 1% por carga.",
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
    "pendiente_verificar": true,
    "nota": "La tienda todavía lo etiqueta como reducción de curación, aunque su texto no la menciona. Falta confirmar en partida que no reduce curación."
   },

@@ -1,0 +1,291 @@
+{
+ "_como_editar": "Resumen escrito a mano de lo que cambió en el parche. 'tipo' es dios, objeto o general; 'ref' es el slug del dios (data.json) o el id del objeto (items_catalogo.json). 'efecto' es la lectura práctica para Joust. Lo que solo afecta a otros modos va con aplica_joust: false.",
+ "parche": "OB48",
+ "nombre": "Sleeping Giant Update",
+ "fecha": "2026-11-17",
+ "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+ "nota_stats": "Las builds y los tiers siguen calculados con partidas del OB47: el parche salió el 17 de noviembre y todavía no hay partidas suficientes del OB48. Los textos de habilidades y objetos sí son del OB48.",
+ "cambios": [
+  {
+   "tipo": "dios",
+   "ref": "kumbhakarna",
+   "titulo": "Kumbhakarna, dios nuevo",
+   "cambios": [
+    "Guardián hindú. Pasiva: en vez de morir se duerme; si sobrevive, despierta con parte de su vida y maná.",
+    "1 Throw Back: embestida que se detiene en el primer enemigo; los súbditos que golpea salen volando y dañan a lo que toquen.",
+    "2 Groggy Strike: golpe al piso que enraíza.",
+    "3 Mighty Yawn: bostezo que mesmeriza; al recibir daño despiertan antes, ralentizados y con menos velocidad de ataque. Se puede usar dormido.",
+    "4 Epic Uppercut: embestida; levanta al primer dios con un gancho y al caer daña y empuja a los de alrededor.",
+    "Aspecto del Despertar Brusco: cambia el control (enraizar y mesmerizar) por más daño."
+   ],
+   "efecto": "Todavía no hay partidas de Joust con él, así que no tiene builds ni tier. Su kit de control encaja como support que prepara la jugada.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "izanami",
+   "titulo": "Izanami: nerf al Aspecto de la Hoz",
+   "cambios": [
+    "Sickle Storm: el radio del enraizamiento baja de 1.8 m a 1.4 m.",
+    "Fade Away: ya no da velocidad de movimiento; el sigilo dura 2.5 s en todos los rangos.",
+    "Dark Portal: daño inicial baja de 180–500 a 170–450 y su escalado de 40% a 30%.",
+    "Con el aspecto: 6% menos velocidad de ataque base y 5% menos daño de ataque base."
+   ],
+   "efecto": "Era S en el OB47 con su aspecto: es el nerf más grande del parche. Su tier en esta página todavía es del OB47.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "da-ji",
+   "titulo": "Da Ji: nerf a One Thousand Cuts",
+   "cambios": [
+    "Escalado de Fuerza baja de 35% a 30%.",
+    "Mitigación baja de 20–40% a 15–35%.",
+    "Con el aspecto, ahora aplica los efectos de objetos de ataque al 70% (antes 50%)."
+   ],
+   "efecto": "Pega y aguanta un poco menos sin aspecto; con aspecto, sus objetos de ataque rinden más.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "hou-yi",
+   "titulo": "Hou Yi: buff a sus habilidades",
+   "cambios": [
+    "Ricochet: escalado de Inteligencia sube de 55% a 70%.",
+    "Divebomb: escalado de Inteligencia sube de 40% a 65%."
+   ],
+   "efecto": "Mejoran sus builds con Inteligencia.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "nox",
+   "titulo": "Nox: varios ajustes",
+   "cambios": [
+    "Shadow Lock: daño por pulso 45–105 y 12% de Inteligencia; ya no pega al aplicarse (4 pulsos en vez de 5).",
+    "Siphon Darkness: escalado sube de 90% a 100% y se activa más rápido (0.4 s; 0 s con aspecto).",
+    "Night Terror: golpe inicial sube de 40% a 50% de Inteligencia; un pulso menos.",
+    "Shadow Lock y Shadow Step se pueden cancelar reactivándolos. Muchos arreglos y efectos visuales nuevos."
+   ],
+   "efecto": "Más daño de golpe y menos daño en el tiempo.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "sol",
+   "titulo": "Sol: rework del Aspecto de Conflagración",
+   "cambios": [
+    "Radiance dura 6 s, se puede colocar hasta a 8 m y ya no crece con el Calor.",
+    "Si Stellar Burst se expande del todo con un charco de Radiance en el mapa, lanza un proyectil al charco y vuelve a estallar ahí (dos si hay dos charcos).",
+    "Disapparate ya no deja estela."
+   ],
+   "efecto": "El aspecto se vuelve de zona: coloca charcos y hazlos estallar desde lejos.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "khepri",
+   "titulo": "Khepri: buff a Rising Dawn",
+   "cambios": [
+    "La mitigación de daño que da a los aliados aumenta con 3% de sus protecciones de objetos."
+   ],
+   "efecto": "Mientras más protecciones compre, más protege a su equipo.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "baron-samedi",
+   "titulo": "Barón Samedi: buff a Vivid Gaze",
+   "cambios": [
+    "El debilitamiento dura 4–6 s (antes 3–5 s).",
+    "El escalado del debilitamiento con protecciones sube de 5% a 6%."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "cupid",
+   "titulo": "Cupido: cambio al Aspecto del Amor",
+   "cambios": [
+    "Lovestruck ya no da daño extra por carga; la curación extra por carga sube de 2% a 4%.",
+    "Heart Bomb cura la cantidad completa desde el inicio."
+   ],
+   "efecto": "El aspecto queda más de curandero.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "cerberus",
+   "titulo": "Cerbero: Aspecto de las Almas",
+   "cambios": [
+    "Ghastly Breath ahora da inmunidad a desplazamientos."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "horus",
+   "titulo": "Horus: Aspecto del Halcón",
+   "cambios": [
+    "El tajo en área de Fracture sale mucho más rápido."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "nut",
+   "titulo": "Nut: Aspecto del Cosmos",
+   "cambios": [
+    "La inmunidad a control de Warp sube de 0.75 s a 1 s."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "ix-chel",
+   "titulo": "Ix Chel: costos de maná",
+   "cambios": [
+    "Threads of Light cuesta más: 50–70 (antes 40–60).",
+    "Lunar Invocation: el rango 5 baja de 90 a 85."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "dios",
+   "ref": "charon",
+   "titulo": "Caronte: arreglo",
+   "cambios": [
+    "Ahora sí gana 1 de oro por cada moneda que recoge."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "objeto",
+   "ref": "contagion",
+   "titulo": "Contagion: nerf",
+   "cambios": [
+    "Cargas máximas bajan de 10 a 8.",
+    "El robo de vida de 100 da 4 cargas (antes 5).",
+    "El daño baja de 1% a 0.7% de vida máxima por carga."
+   ],
+   "efecto": "Castiga menos a los carries con robo de vida.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "objeto",
+   "ref": "kinetic-cuirass",
+   "titulo": "Kinetic Cuirass: nerf",
+   "cambios": [
+    "Necesita 4 ataques recibidos para cargarse (antes 3)."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "objeto",
+   "ref": "qins-blade",
+   "titulo": "Qin's Blade: buff",
+   "cambios": [
+    "Su daño por vida de objetos del rival sube 1% por cada 30 de daño de ataque y Fuerza de tus objetos."
+   ],
+   "efecto": "Mejor contra tanques mientras más daño lleves.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "objeto",
+   "ref": "soul-reaver",
+   "titulo": "Soul Reaver: buff",
+   "cambios": [
+    "Su daño por vida de objetos del rival sube 1% por cada 80 de Inteligencia de tus objetos."
+   ],
+   "efecto": "Mejor contra tanques mientras más Inteligencia lleves.",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  },
+  {
+   "tipo": "objeto",
+   "ref": "selflessness",
+   "titulo": "Selflessness: protecciones",
+   "cambios": [
+    "La fuente lo muestra con 15 de protección física y mágica (antes 10). Las notas del parche no lo mencionan."
+   ],
+   "efecto": "",
+   "aplica_joust": true,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": true
+  },
+  {
+   "tipo": "general",
+   "ref": "",
+   "titulo": "Solo en Asalto (no aplica a Joust)",
+   "cambios": [
+    "Curación a aliados 50% menor para todos, nueva Meditación, nuevos objetos recogibles y ajustes de curación de Afrodita, Cronos, Ra y Sylvanus."
+   ],
+   "efecto": "No cambia nada en Joust.",
+   "aplica_joust": false,
+   "parche_verificado": "OB48",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
+   "pendiente_verificar": false
+  }
+ ]
+}
