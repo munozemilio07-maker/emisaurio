@@ -156,6 +156,35 @@ kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; 
 @media (max-width: 520px) { .tierrow { grid-template-columns: 48px minmax(0, 1fr); } .tierlbl { height: 44px; font-size: 20px; } }
 .alt { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--ok); background: rgba(127,214,154,.06); }
 .alt p { margin: 6px 0 0; } .alt-its { display: inline-flex; flex-wrap: wrap; gap: 6px; vertical-align: middle; margin-left: 6px; }
+body.noscroll { overflow: hidden; }
+.hall > * { min-width: 0; }   /* que nada dentro de una vista ensanche la página en el teléfono */
+.shop-modal { position: fixed; inset: 0; z-index: 200; background: rgba(4,4,10,.78); display: grid; place-items: center; padding: 16px; }
+.shop-box { width: min(1040px, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow: auto; background: var(--void); border: 1px solid var(--gold-deep); box-shadow: 0 0 0 1px rgba(0,0,0,.6), 0 20px 80px rgba(0,0,0,.7), 0 0 40px rgba(232,190,110,.12); padding: 0 18px 18px; }
+.shop-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0 10px; background: var(--void); border-bottom: 1px solid var(--gold-deep); margin-bottom: 12px; }
+.shop-head h2 { margin: 2px 0 0; font-size: 22px; }
+.shop-x { width: 44px; height: 44px; flex: none; background: var(--stone); color: var(--gold); border: 1px solid var(--gold-deep); font-size: 26px; line-height: 1; cursor: pointer; }
+.shop-x:hover { border-color: var(--gold); }
+.shop-box .suggs { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+@media (max-width: 600px) { .shop-box .suggs { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; } .shop-box .sugg { flex: 0 0 82%; scroll-snap-align: start; } .shop-modal { padding: 0; } .shop-box { max-height: 100vh; max-height: 100dvh; height: 100%; border: 0; padding: 0 12px 16px; } }
+.calc-build { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.goal-chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.goal { display: grid; gap: 4px; text-align: left; padding: 12px 14px; background: var(--stone); border: 1px solid var(--line); color: var(--ink); font: inherit; cursor: pointer; }
+.goal b { font-family: var(--font-head); font-size: 17px; color: var(--gold); letter-spacing: .03em; }
+.goal span:last-child { font-size: 13px; color: var(--muted); line-height: 1.35; }
+.goal .gi { font-size: 22px; color: var(--gold); line-height: 1; }
+.goal:hover { border-color: var(--gold-deep); }
+.goal[aria-pressed="true"] { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold), 0 0 24px rgba(232,190,110,.15); }
+.goal-res { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gold-deep); display: grid; gap: 10px; }
+.goal-top { display: flex; gap: 14px; align-items: center; }
+.goal-top .gi.big { font-size: 40px; color: var(--gold); }
+.goal-res .big { font-family: var(--font-head); font-size: 32px; color: var(--gold); line-height: 1.1; margin: 4px 0 0; }
+.goal-res .big small { font-family: var(--font-body); font-size: 15px; color: var(--muted); }
+.gsteps { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.gsteps li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto auto; align-items: center; gap: 8px; }
+.gsteps li > :nth-child(2) { min-width: 0; justify-self: start; max-width: 100%; }
+.gsteps .muted { font-size: 13px; text-align: right; white-space: nowrap; }
+.gstep { display: inline-grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--gold-deep); color: var(--gold); font-size: 13px; }
+.gain { font-weight: 700; color: var(--ok); min-width: 52px; font-variant-numeric: tabular-nums; }
 .calc { display: grid; gap: 16px; }
 .calc-ctl { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font-size: 14.5px; }
 .calc-ctl input[type=range] { width: 180px; max-width: 60vw; margin-left: 8px; vertical-align: middle; accent-color: var(--gold); }
@@ -168,7 +197,7 @@ kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; 
 .calc-t { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; font-variant-numeric: tabular-nums; }
 .calc-t th { text-align: left; font-family: var(--font-head); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); padding: 6px 10px 6px 0; border-bottom: 1px solid var(--gold-deep); }
 .calc-t td { padding: 6px 10px 6px 0; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: middle; }
-.calc-t td.v { font-weight: 700; font-size: 16px; } .calc-t td.dmg { color: var(--ember); } .calc-t td.heal { color: var(--ok); } .calc-t td.shield { color: var(--ice); }
+.calc-t td.v { font-weight: 700; font-size: 16px; } .calc-t td.dmg { color: var(--ember); } .calc-t td.heal { color: var(--ok); } .calc-t td.shield { color: var(--ice); } .calc-t td.otro { color: var(--ink); }
 .slot.sm { display: inline-grid; width: 22px; height: 22px; font-size: 12px; vertical-align: middle; }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
@@ -381,6 +410,7 @@ footer p { max-width: 90ch; }
  <section class="gut hall" id="v-sinergias" hidden></section>
  <section class="gut hall" id="v-objetos" hidden></section>
  <section class="gut hall" id="v-creador" hidden></section>
+ <section class="gut hall" id="v-calculadora" hidden></section>
  <section class="gut hall" id="v-chat-rapido" hidden></section>
 </main>
 
@@ -1070,20 +1100,22 @@ function bldSummary(g, r) {
     ${covers ? `<div class="fblock"><span class="eyebrow">${L("Qué cubre", "What it covers")}</span><ul class="plain">${covers}</ul></div>` : ""}
     <div class="fblock"><span class="eyebrow">${L("Efectos de cada objeto", "Each item's effect")}</span><ul class="plain">${passives}</ul></div>`;
 }
+function closeShop() { if (!BLD.open) return; BLD.open = false; BLD.slot = null; BLD.ghost = ""; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); }
+document.addEventListener("keydown", e => { if (e.key === "Escape" && BLD.open) closeShop(); });
 function bldActive() { return BLD.slot != null && BLD.slot >= 0 && BLD.slot < 6 ? Math.min(BLD.slot, BLD.items.length) : (BLD.items.length < 6 ? BLD.items.length : -1); }
 function renderBuilder() {
   const el = $("#v-creador");
   if (!ITEMS.length) { el.innerHTML = `<p class="empty">${L("Falta src/curado/items_catalogo.json.", "Item catalog missing.")}</p>`; return; }
   if (!bldGod()) { BLD.god = cur ? cur.god.s : G[0].s; BLD.role = ""; }
   const g = bldGod(), r = bldRole(g), keys = Object.keys(g.roles), { E } = analyse();
-  const act = bldActive(), replacing = act >= 0 && act < BLD.items.length ? IBY[BLD.items[act]] : null;
+  const act = BLD.open ? bldActive() : -1, replacing = act >= 0 && act < BLD.items.length ? IBY[BLD.items[act]] : null;
   const sug = bldSuggest(g, r);
   const ghostFor = i => sug[i - BLD.items.length];
   const slots = Array.from({ length: 6 }, (_, i) => {
     const it = IBY[BLD.items[i]], on = i === act ? " on" : "";
     if (it) return `<div class="slotb full${on}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="nm">${esc(iName(it))}</span></button><button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
     const gh = ghostFor(i), gi = gh && IBY[gh.id];
-    if (i === act) return `<div class="slotb on"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm">${L("Elige abajo", "Pick below")}</span></button></div>`;
+    if (i === act) return `<div class="slotb on"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm">${L("Eligiendo…", "Picking…")}</span></button></div>`;
     return gi ? `<div class="slotb ghost"><button class="pick" type="button" data-bldslot="${i}" data-ghost="${gi.id}" title="${L("Sugerido", "Suggested")}: ${esc(gi.nombre)}"><span class="ic spr-a" style="${posA(gi.i)}"></span><span class="nm">${esc(iName(gi))}</span><span class="tag">${L("sugerido", "suggested")}</span></button></div>`
       : `<div class="slotb"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm muted">${i + 1}</span></button></div>`;
   }).join("");
@@ -1101,12 +1133,13 @@ function renderBuilder() {
       <div class="picker-row"><input id="bldQ" class="inp" type="search" placeholder="${L("Buscar objeto…", "Search item…")}" value="${esc($("#bldQ") ? $("#bldQ").value : "")}" aria-label="${L("Buscar objeto", "Search item")}"></div>
       <div class="chips">${[["all", L("Todos", "All")], ...cats.map(c => [c, L(ICATS[c][0], ICATS[c][1])])].map(([k, l]) => `<button class="chip" type="button" data-bldcat="${k}" aria-pressed="${cat === k}">${l}</button>`).join("")}</div>
       <div class="itiles">${all.map(x => { const used = BLD.items.includes(x.id); return `<button class="itile${used ? " used" : ""}" type="button" ${used ? "disabled" : `data-bldadd="${x.id}"`} title="${esc(x.nombre)}${used ? L(" (ya está en tu build)", " (already in your build)") : ""}"><span class="ic spr-a" style="${posA(x.i)}"></span><span class="nm">${esc(iName(x))}</span></button>`; }).join("") || `<p class="muted">${L("Nada con ese filtro.", "No match.")}</p>`}</div></div>`;
-    shop = `<section class="panel" id="bldShop"><div class="sec-head"><span class="eyebrow">${L("Casilla", "Slot")} ${act + 1}</span><h2>${replacing ? L(`Cambiar ${iName(replacing)}`, `Replace ${iName(replacing)}`) : L("Elige un objeto", "Pick an item")}</h2></div>
-      ${BLD.items.length === 0 ? storeHTML + sugHTML : sugHTML + storeHTML}</section>`;
+    shop = `<div class="shop-modal" id="bldShop" role="dialog" aria-modal="true" aria-label="${L("Tienda", "Store")}"><div class="shop-box">
+      <div class="shop-head"><div><span class="eyebrow">${L("Tienda", "Store")} · ${L("casilla", "slot")} ${act + 1}</span><h2>${replacing ? L(`Cambiar ${iName(replacing)}`, `Replace ${iName(replacing)}`) : L("Elige un objeto", "Pick an item")}</h2></div><button class="shop-x" type="button" data-shopclose="1" aria-label="${L("Cerrar tienda", "Close store")}">×</button></div>
+      ${sugHTML}${storeHTML}</div></div>`;
   } else {
-    shop = `<section class="panel" id="bldShop"><div class="sec-head"><span class="eyebrow">${L("Build completa", "Build complete")}</span><h2>${L("Ya tienes los 6 objetos", "You have all 6 items")}</h2><p>${L("Toca una casilla para cambiar ese objeto, o la × para quitarlo.", "Tap a slot to change that item, or × to remove it.")}</p></div></section>`;
+    shop = "";
   }
-  const focusId = document.activeElement && document.activeElement.id;
+  const focusId = document.activeElement && document.activeElement.id, oldBox = $("#bldShop .shop-box"), boxY = oldBox ? oldBox.scrollTop : 0;
   el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Creador de builds", "Build maker")}</span><h2>${L("Arma tu build y mira qué hace", "Make your build and see what it does")}</h2>
       <p>${L("Toca una casilla para abrir la tienda. Las casillas vacías muestran en fantasma lo que te sugiero según lo que se compra en Joust con ese dios, su estilo y el equipo rival.", "Tap a slot to open the store. Empty slots show a ghost of what is suggested from Joust purchases on that god, their style and the enemy team.")}</p></div>
     <div class="panel">
@@ -1123,16 +1156,19 @@ function renderBuilder() {
       <div class="chips">
         ${["off", "hyb", "def"].filter(k => r.b[k]).map(k => `<button class="chip" type="button" data-bldload="${k}">${L("Cargar la", "Load")} ${t(KIND[k].t).toLowerCase()}</button>`).join("")}
         ${sug.length && BLD.items.length < 6 ? `<button class="chip" type="button" data-bldfill="1">${L("Aceptar las sugeridas", "Accept suggestions")}</button>` : ""}
+        ${BLD.items.length ? `<button class="chip calc-go" type="button" data-view="calculadora">${L("Ver cuánto pega en la calculadora", "See damage in the calculator")}</button>` : ""}
         ${BLD.items.length ? `<button class="chip" type="button" data-bldclear="1">${L("Vaciar", "Clear")}</button><button class="copy" type="button" data-copy="${esc(BLD.items.concat(bldStarter(r) ? [bldStarter(r)] : []).map(id => L(`${iName(IBY[id])} (${IBY[id].nombre})`, IBY[id].nombre)).join(" > "))}">${L("Copiar lista", "Copy list")}</button>` : ""}
       </div>
       <div class="fblock"><span class="eyebrow">${L("Equipo rival", "Enemy team")}</span>
         <div class="picker-row"><input id="foeQ2" type="search" list="godlist" class="inp" placeholder="${t("Agregar rival (hasta 3)…")}" autocomplete="off" aria-label="${t("Agregar rival (hasta 3)…")}">${E.length ? `<button class="chip" type="button" id="foeClear">${t("Limpiar")}</button>` : ""}</div>
         ${E.length ? `<div class="foes">${E.map(x => `<button class="foe" type="button" data-foe="${x.s}">${face(x)}<span>${esc(N(x))}</span><span class="x" aria-hidden="true">×</span></button>`).join("")}</div>` : `<p class="muted">${L("Agrega a los rivales para que las sugerencias y los avisos los tomen en cuenta.", "Add enemies so suggestions and warnings take them into account.")}</p>`}</div>
     </div>
-    <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Calculadora", "Calculator")}</span><h2>${L(`Cuánto pega ${esc(N(g))} con esta build`, `How hard ${esc(N(g))} hits with this build`)}</h2></div>${calcHTML(g, r)}</section>
-    <div class="bgrid2">${shop}
-      <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Resumen", "Summary")}</span><h2>${L("Qué hará tu build", "What your build does")}</h2></div>${bldSummary(g, r)}</section>
-    </div>`;
+    ${goalsHTML(g, r)}
+    <section class="panel"><div class="sec-head"><span class="eyebrow">${L("Resumen", "Summary")}</span><h2>${L("Qué hará tu build", "What your build does")}</h2></div>${bldSummary(g, r)}</section>
+    ${shop}`;
+  document.body.classList.toggle("noscroll", !!shop);
+  const nb = $("#bldShop .shop-box"); if (nb) nb.scrollTop = boxY;
+  if (shop && !focusId) { const x = $("#bldShop .shop-x"); if (x) x.focus({ preventScroll: true }); }
   if (focusId === "bldQ" || focusId === "foeQ2") { const f = $("#" + focusId); if (f) { f.focus(); if (focusId === "bldQ") f.setSelectionRange(f.value.length, f.value.length); } }
 }
 
@@ -1140,8 +1176,8 @@ function renderBuilder() {
 const SB = ((CURADO.stats_base || {}).dioses) || {};
 const CO = CURADO.calc_objetos || {};
 const byItem = arr => Object.fromEntries((arr || []).map(x => [x.item, x]));
-const C_STACK = byItem(CO.cargas), C_FIGHT = byItem(CO.en_pelea), C_CONV = byItem(CO.conversiones), C_PCT = byItem(CO.pct_todo), C_HIT = byItem(CO.al_pegar);
-let CALC = { lvl: 20, rank: 5, stacks: true, fight: false };
+const C_CRITX = byItem(CO.dano_critico), C_STACK = byItem(CO.cargas), C_FIGHT = byItem(CO.en_pelea), C_CONV = byItem(CO.conversiones), C_PCT = byItem(CO.pct_todo), C_HIT = byItem(CO.al_pegar);
+let CALC = { lvl: 20, rank: 5, stacks: true, fight: false, critMult: 1.5 };
 const TAGMAP = { PhysicalPower: "str", MagicalPower: "int", InhandPower: "ad", AttackSpeedPercent: "as", CritChance: "crit", EchoItem: "echo", LifeStealPercent: "ls", MaxHealth: "hp", MaxMana: "mana",
   PhysicalProtection: "pf", PhysicalProtectionItem: "pf", MagicalProtection: "pm", MagicalProtectionItem: "pm", Plating: "plating", Dampening: "damp", MagicalPenetrationFlat: "pen", MagicalPenetrationPercent: "penp", PhysicalPenetrationPercent: "penp", CooldownReductionPercent: "cdr" };
 // Con qué escala más el dios (para el desempate del stat adaptativo): Fuerza salvo que sus habilidades escalen más con Inteligencia.
@@ -1171,9 +1207,9 @@ function calcStats(g, items, starter, o) {
   for (const id of ids) { const c = C_CONV[id]; if (!c) continue;
     if (c.int_por_mana) add("int", (it.mana || 0) * (c.int_por_mana + (o.stacks && C_STACK[id] ? (C_STACK[id].int_por_mana_extra || 0) : 0)));
     if (c.str_por_mana) add("str", (it.mana || 0) * c.str_por_mana); }
-  if (ids.includes("rod-of-tahuti")) add("int", (it.int || 0) * 0.25);
-  if (o.fight && ids.includes("brawlers-beat-stick")) { for (const k of ["str", "int", "pf", "pm"]) if (it[k]) it[k] *= 1.1; }
-  if (ids.includes("nimble-ring")) { add("ad", (it.int || 0) * 0.1); add("as", (it.int || 0) * 0.1); }
+  for (const id of ids) { const c = C_CONV[id]; if (c && c.int_pct_objetos) add("int", (it.int || 0) * c.int_pct_objetos / 100); }
+  if (o.fight) for (const id of ids) { const f = C_FIGHT[id]; if (f && f.pct) for (const [k, v] of Object.entries(f.pct)) for (const kk of k === "prot" ? ["pf", "pm"] : [k]) if (it[kk]) it[kk] *= 1 + v / 100; }
+  for (const id of ids) { const c = C_CONV[id]; if (!c) continue; const i0 = it.int || 0; if (c.ad_por_int) add("ad", i0 * c.ad_por_int); if (c.as_por_int) add("as", i0 * c.as_por_int); }
   const S = { useInt, pctAll, it, lvl: o.lvl,
     str: it.str || 0, int: it.int || 0,
     hp: at("vida") + (it.hp || 0), mana: at("mana") + (it.mana || 0),
@@ -1186,12 +1222,14 @@ function calcStats(g, items, starter, o) {
   S.basicDefault = !!bb.por_defecto;
   S.asPct = at("vel_ataque_pct") + (it.as || 0);
   S.aps = (B.vel_ataque_base || 1) * (1 + S.asPct / 100);
-  S.deathbringer = ids.includes("deathbringer");
+  S.critExtra = ids.reduce((n, id) => n + (C_CRITX[id] ? C_CRITX[id].pct / 100 : 0), 0);
   S.onhit = ids.filter(id => C_HIT[id]).map(id => { const h = C_HIT[id]; let v = 0;
     if (h.int_pct) v = S.int * h.int_pct / 100; else if (h.por_nivel) v = h.base + h.por_nivel * o.lvl;
-    else if (h.extra_por_carga) v = h.base + (o.stacks ? h.extra_por_carga * Math.min(h.max_cargas, Math.floor(o.lvl / h.por_nivel_cada)) : 0);
+    else if (h.extra_por_carga) v = h.base + (o.stacks ? h.extra_por_carga * Math.min(h.max_cargas, (h.cargas_iniciales || 0) + Math.floor(o.lvl / h.por_nivel_cada)) : 0);
     return [id, v, h]; });
-  S.basicHit = S.basic + S.onhit.reduce((n, x) => n + x[1], 0);
+  // Polynomicon solo pega en el básico que sigue a una habilidad (enfriamiento 2 s): cuenta en el combo, no en cada básico.
+  S.basicHit = S.basic + S.onhit.filter(x => !x[2].tras_habilidad).reduce((n, x) => n + x[1], 0);
+  S.afterAbility = S.onhit.filter(x => x[2].tras_habilidad).reduce((n, x) => n + x[1], 0);
   S.partial = !SB[g.s] || base.pendiente_verificar;
   return S;
 }
@@ -1204,12 +1242,12 @@ function abilityLines(a, S, rank) {
     const nums = v.split("/").map(x => parseFloat(x)); if (nums.some(isNaN)) continue;
     const base = nums[Math.min(rank, nums.length) - 1];
     let add = 0, done = true, txt = v2.replace(/\s+/g, " ");
-    const parts = txt.split(/ and /);
+    const parts = txt.split(/\s+(?:and|\+)\s+/);
     for (const p0 of parts) { const p = p0.trim(); const m = /^([\d.]+)% (Strength(?: or Inhand Power)?|Intelligence|Int|Max ?Health)$/i.exec(p);
       if (!m) { done = false; continue; }
       const pct = +m[1] / 100, w = m[2].toLowerCase();
       add += pct * (w.startsWith("str") ? S.str : w.startsWith("int") ? S.int : S.hp); }
-    const kind = /Heal/i.test(k) ? "heal" : /Shield/i.test(k) ? "shield" : "dmg";
+    const kind = /Heal|Lifesteal/i.test(k) ? "heal" : /Shield/i.test(k) ? "shield" : (/Damage|Damager/i.test(k) && !/Minion|Zombie|Reduction|Taken|Thrown Minion/i.test(k)) ? "dmg" : "otro";
     out.push({ key: k, base, total: base + add, scal: v2, partial: !done, perTick: /Tick|Per Second/i.test(k), kind });
     i++;
   }
@@ -1218,12 +1256,13 @@ function abilityLines(a, S, rank) {
 const fmt = n => Math.round(n).toLocaleString("es-MX");
 function calcHTML(g, r) {
   if (!SB[g.s]) return `<p class="muted">${L("Todavía no hay stats base de este dios.", "No base stats for this god yet.")}</p>`;
+  if (!BLD.items.length) return `<p class="muted">${L("Tu build está vacía. Ármala en el Creador o carga una de las de arriba.", "Your build is empty.")}</p>`;
   const st = bldStarter(r), items = BLD.items, S = calcStats(g, items, st, CALC);
   const abil = ABILS.filter(a => a.dios === g.s && a.ranura !== "P" && (a.datos || []).some(d => /Scaling/.test(d[0]))).sort((a, b) => SLOT_ORDER.indexOf(a.ranura) - SLOT_ORDER.indexOf(b.ranura));
-  const rowsA = abil.map(a => abilityLines(a, S, CALC.rank).map(l => `<tr><td><span class="slot sm">${esc(a.ranura === "otra" ? "+" : a.ranura)}</span> ${esc(a.nombre)}</td><td>${esc(trKey(l.key))}${l.perTick ? L(" (por pulso)", " (per tick)") : ""}</td>
+  const rowsA = abil.map(a => abilityLines(a, S, CALC.rank).filter(l => l.kind !== "otro").map(l => `<tr><td><span class="slot sm">${esc(a.ranura === "otra" ? "+" : a.ranura)}</span> ${esc(a.nombre)}</td><td>${esc(trKey(l.key))}${l.perTick ? L(" (por pulso)", " (per tick)") : ""}</td>
     <td class="v ${l.kind}">${fmt(l.total)}${l.partial ? "*" : ""}</td><td class="muted">${fmt(l.base)} + ${esc(trVal(l.scal))}</td></tr>`).join("")).join("");
   const mitig = p => Math.round(100 * 100 / (100 + Math.max(0, p)));
-  const critA = S.basic * 1.5 * (S.deathbringer ? 1.35 : 1), critB = S.basic * 2.5 * (S.deathbringer ? 1.35 : 1);
+  const critA = S.basic * (1.5 + S.critExtra), critB = S.basic * (2.5 + S.critExtra);
   // Sin cada objeto: recalcula todo (quitar uno puede cambiar el stat adaptativo).
   const key0 = abil.map(a => [a, abilityLines(a, S, CALC.rank)[0]]).filter(x => x[1] && x[1].kind === "dmg").slice(0, 4);
   const without = items.concat(st ? [st] : []).map(id => {
@@ -1238,7 +1277,9 @@ function calcHTML(g, r) {
       <label for="calcRank">${L("Rango de habilidades", "Ability rank")} <select id="calcRank">${[1, 2, 3, 4, 5].map(n => `<option${n === CALC.rank ? " selected" : ""}>${n}</option>`).join("")}</select></label>
       <label class="chk"><input id="calcStacks" type="checkbox"${CALC.stacks ? " checked" : ""}> ${L("Objetos con cargas al máximo", "Stacking items at max")}</label>
       <label class="chk"><input id="calcFight" type="checkbox"${CALC.fight ? " checked" : ""}> ${L("En pelea (bonos de combate y de poca vida)", "In combat (combat and low-health bonuses)")}</label>
+      <label for="calcCrit">${L("Crítico", "Crit")} <select id="calcCrit"><option value="1.5"${CALC.critMult === 1.5 ? " selected" : ""}>×1.5</option><option value="2.5"${CALC.critMult === 2.5 ? " selected" : ""}>×2.5</option></select></label>
     </div>
+    <div id="calcOut" class="calc">
     ${S.partial ? `<p class="rule">${L("Los stats base de este dios en la fuente están incompletos: los números de vida, protección y básico pueden salir mal.", "This god's base stats are incomplete in the source.")}</p>` : ""}
     <div class="facts calc-facts">
       <div><span class="v">${fmt(S.str)}</span><span class="l">${L("Fuerza", "Strength")}</span></div>
@@ -1253,7 +1294,7 @@ function calcHTML(g, r) {
         <p class="big">${fmt(S.basic)} <small>${L("de daño", "damage")}${S.basicType ? " " + S.basicType : ""}</small></p>
         <p class="muted">${L(`${fmt(S.inhand)} de daño de ataque + ${fmt(S.str)} de Fuerza + 20% de ${fmt(S.int)} de Inteligencia${S.basicDefault ? " (escalado por defecto de la wiki)" : ""}.`, `${fmt(S.inhand)} attack damage + Strength + 20% Intelligence.`)}</p>
         <p>${L("Velocidad", "Speed")}: <b>${S.aps.toFixed(2)}</b> ${L("ataques/s", "attacks/s")} <span class="muted">(+${Math.round(S.asPct)}%)</span> · ${L("Por segundo", "Per second")}: <b>${fmt(S.basic * S.aps)}</b> <span class="pend">${L("estimado", "estimate")}</span></p>
-        ${S.crit ? `<p>${L("Crítico", "Crit")}: <b>${Math.round(S.crit)}%</b> · ${L("golpe crítico", "crit hit")} <b>${fmt(critA)}</b> ${L("o", "or")} <b>${fmt(critB)}</b> <span class="pend" title="${esc(F.critico ? F.critico.texto : "")}">${L("la wiki no es clara", "wiki unclear")}</span></p>` : ""}
+        ${S.crit ? `<p>${L("Crítico", "Crit")}: <b>${Math.round(S.crit)}%</b> · ${L("golpe crítico", "crit hit")} <b>${fmt(CALC.critMult === 2.5 ? critB : critA)}</b> <span class="pend" title="${esc(F.critico ? F.critico.texto : "")}">${L("la wiki no es clara", "wiki unclear")}</span></p>` : ""}
         ${S.onhit.length ? `<ul class="plain">${S.onhit.map(([id, v, h]) => `<li>${esc(iName(IBY[id]))}: +${fmt(v)} <span class="muted">${esc(h.texto || "")}</span></li>`).join("")}</ul>` : ""}
       </section>
       <section class="fblock"><span class="eyebrow">${L("Defensa", "Defense")}</span>
@@ -1268,7 +1309,117 @@ function calcHTML(g, r) {
     ${without ? `<div class="fblock"><span class="eyebrow">${L("Sin cada objeto", "Without each item")}</span><p class="muted">${L("Cuánto pierdes si quitas ese objeto (− es lo que dejas de tener).", "What you lose by removing that item.")}</p>
       <div class="tw"><table class="calc-t"><thead><tr><th>${L("Objeto", "Item")}</th><th>${L("Básico", "Basic")}</th>${key0.map(([a]) => `<th>${esc(a.ranura)}</th>`).join("")}<th>${L("Vida", "Health")}</th><th>${L("Prot.", "Prot.")}</th></tr></thead><tbody>${without}</tbody></table></div></div>` : ""}
     <details class="orig"><summary>${L("Cómo se calcula", "How it's calculated")}</summary><ul class="plain">${Object.values(F).map(f => `<li>${esc(f.texto)}${f.pendiente_verificar ? ` <span class="pend">${L("por verificar", "unverified")}</span>` : ""}</li>`).join("")}${S.pctAll ? `<li>${L(`Tus objetos de «% de todos los stats» suman ${S.pctAll}% (contando adaptativos y cargas; no sabemos si el juego los cuenta).`, `Your "% of all stats" items add ${S.pctAll}%.`)}</li>` : ""}</ul></details>
-  </div>`;
+  </div></div>`;
+}
+
+// Solo cambia los resultados, no los controles: así la barra de nivel se puede arrastrar.
+function calcRefresh() {
+  const g = bldGod(), out = $("#calcOut"); if (!g || !out) return;
+  const tmp = document.createElement("div"); tmp.innerHTML = calcHTML(g, bldRole(g));
+  const n = tmp.querySelector("#calcOut"); if (n) out.replaceWith(n);
+}
+function renderCalc() {
+  const el = $("#v-calculadora");
+  if (!bldGod()) { BLD.god = cur ? cur.god.s : G[0].s; BLD.role = ""; }
+  const g = bldGod(), r = bldRole(g), keys = Object.keys(g.roles), st = bldStarter(r);
+  const mine = BLD.items.concat(st ? [st] : []).filter(id => IBY[id]);
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Calculadora", "Calculator")}</span><h2>${L(`Cuánto pega ${esc(N(g))}`, `How hard ${esc(N(g))} hits`)}</h2>
+      <p>${L("Usa la build que tienes en el Creador. Mueve el nivel para ver cómo crece tu daño, tu curación y tu defensa.", "Uses your Build maker build. Move the level to see how damage, healing and defense grow.")}</p></div>
+    <div class="panel">
+      <div class="picker-row">
+        <button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>
+        <input id="calcGodQ" class="inp" type="search" list="godlist" placeholder="${L("Cambiar de dios…", "Change god…")}" autocomplete="off" aria-label="${L("Dios", "God")}">
+        ${keys.length > 1 ? `<label class="selects" for="calcRole">${L("Variante", "Variant")} <select id="calcRole">${keys.map(k => `<option value="${k}"${g.roles[k] === r ? " selected" : ""}>${g.roles[k].var.k === "asp" ? L("Con aspecto", "With aspect") + ": " + esc(lang === "en" ? g.roles[k].var.e : g.roles[k].var.es) : L("Sin aspecto", "No aspect")}</option>`).join("")}</select></label>` : ""}
+      </div>
+      <div class="calc-build">${mine.length ? mine.map(id => iMini(IBY[id])).join("") : `<span class="muted">${L("Sin objetos todavía.", "No items yet.")}</span>`}</div>
+      <div class="chips">
+        ${["off", "hyb", "def"].filter(k => r.b[k]).map(k => `<button class="chip" type="button" data-bldload="${k}">${L("Cargar la", "Load")} ${t(KIND[k].t).toLowerCase()}</button>`).join("")}
+        <button class="chip" type="button" data-view="creador">${L("Editar en el Creador", "Edit in Build maker")}</button>
+      </div>
+    </div>
+    <section class="panel">${calcHTML(g, r)}</section>`;
+}
+
+// ---------- Builds por objetivo: «quiero ser…» ----------
+// Prueba objetos con la calculadora y se queda con el que más sube la meta en cada casilla; luego intenta cambiar uno por uno.
+// Así se ve el rendimiento decreciente: si ya tienes 100% de crítico, otro objeto de crítico no suma nada.
+const RIVAL_PROT = 60;   // protección supuesta del rival para medir el daño (no viene del juego)
+const GOALS = [
+  { id: "as", ico: "»", es: "Metralleta", en: "Machine gun", d_es: "Básicos rapidísimos: el mayor daño por segundo con ataques básicos.", d_en: "Fast basics: most basic-attack damage per second." },
+  { id: "crit", ico: "✦", es: "Críticos", en: "Crits", d_es: "Cada básico pega lo más fuerte posible, contando la probabilidad de crítico.", d_en: "Each basic hits as hard as possible, crit chance included." },
+  { id: "burst", ico: "☄", es: "One Punch Man", en: "One Punch Man", d_es: "Todo el daño posible en un combo de habilidades más un básico.", d_en: "Most damage in one ability combo plus a basic." },
+  { id: "tank", ico: "⛨", es: "Tanque de guerra", en: "War tank", d_es: "La vida efectiva más alta: lo que te tienen que pegar para matarte.", d_en: "Highest effective health." },
+  { id: "bruiser", ico: "⚔", es: "Pegar y aguantar", en: "Hit and survive", d_es: "El mejor equilibrio entre combo y vida efectiva.", d_en: "Best balance of combo damage and effective health." },
+];
+let GOAL = null;
+const vsProt = S => { const eff = Math.max(0, RIVAL_PROT * (1 - Math.min(100, S.penp) / 100) - S.pen); return 100 / (100 + eff); };
+const critFactor = S => 1 + Math.min(100, S.crit) / 100 * (CALC.critMult - 1 + S.critExtra);
+function goalParts(g, items, st) {
+  const S = calcStats(g, items, st, { lvl: 20, rank: 5, stacks: true, fight: false }), m = vsProt(S);
+  const hit = S.basicHit * critFactor(S) * m;
+  let combo = 0;
+  for (const a of ABILS.filter(a => a.dios === g.s && /^[1-4]$/.test(a.ranura))) { const ls = abilityLines(a, S, 5).filter(l => l.kind === "dmg" && !l.perTick); if (ls.length) combo += Math.max(...ls.map(l => l.total)); }
+  combo = combo * m * (1 + Math.min(100, S.echo) / 100 * 0.15) + hit + S.afterAbility * m;
+  const ehp = S.hp * ((100 + S.pf) / 100 / (1 - S.plating / 200) + (100 + S.pm) / 100 / (1 - S.damp / 200)) / 2;
+  return { S, hit, dps: hit * S.aps, combo, ehp };
+}
+const goalScore = (id, P) => id === "as" ? P.dps : id === "crit" ? P.hit : id === "burst" ? P.combo : id === "tank" ? P.ehp : Math.sqrt(P.combo * P.ehp);
+const GOAL_CACHE = new Map();
+function goalBuild(g, r, goal) {
+  const ck = [g.s, BLD.role, goal, bldStarter(r), CALC.critMult].join("|");
+  if (!GOAL_CACHE.has(ck)) GOAL_CACHE.set(ck, goalBuild0(g, r, goal));
+  return GOAL_CACHE.get(ck);
+}
+function goalBuild0(g, r, goal) {
+  const st = bldStarter(r), picks = godPicks(g, r);
+  const pool = ITEMS.filter(x => buildable(x) && x.stats && x.stats.length).map(x => x.id);
+  const score = items => goalScore(goal, goalParts(g, items, st)) * (1 + 1e-6 * items.reduce((n, id) => n + (picks.get(id) || 0), 0));  // desempate: lo que más se compra con ese dios
+  let cur = [];
+  for (let k = 0; k < 6; k++) { let best = null, bv = -1; for (const id of pool) { if (cur.includes(id)) continue; const v = score(cur.concat([id])); if (v > bv) { bv = v; best = id; } } cur.push(best); }
+  for (let pass = 0; pass < 2; pass++) { let changed = false;
+    for (let k = 0; k < 6; k++) { let bv = score(cur), best = null;
+      for (const id of pool) { if (cur.includes(id)) continue; const t2 = cur.slice(); t2[k] = id; const v = score(t2); if (v > bv * 1.001) { bv = v; best = id; } }
+      if (best) { cur[k] = best; changed = true; } }
+    if (!changed) break; }
+  // orden de compra: en cada paso, lo que más sube la meta
+  const order = [], left = cur.slice(), steps = [];
+  let prev = goalScore(goal, goalParts(g, [], st));
+  while (left.length) { let bi = 0, bv = -1; left.forEach((id, i) => { const v = goalScore(goal, goalParts(g, order.concat([id]), st)); if (v > bv) { bv = v; bi = i; } });
+    const id = left.splice(bi, 1)[0]; order.push(id); const P = goalParts(g, order, st); steps.push({ id, gain: prev > 0 ? (goalScore(goal, P) / prev - 1) * 100 : 0, P }); prev = goalScore(goal, P); }
+  return { items: order, steps, P: goalParts(g, order, st) };
+}
+// Comparación: la misma meta llenando todo con un solo tipo de stat.
+function pureBuild(g, r, goal, stat) {
+  const st = bldStarter(r), has = x => x.stats.some(s => TAGMAP[s[0]] === stat);
+  const pool = ITEMS.filter(x => buildable(x) && has(x)).map(x => x.id);
+  let cur = [];
+  for (let k = 0; k < 6 && cur.length < pool.length; k++) { let best = null, bv = -1; for (const id of pool) { if (cur.includes(id)) continue; const v = goalScore(goal, goalParts(g, cur.concat([id]), st)); if (v > bv) { bv = v; best = id; } } if (!best) break; cur.push(best); }
+  return cur.length === 6 ? { items: cur, P: goalParts(g, cur, st) } : null;
+}
+function goalsHTML(g, r) {
+  const head = `<section class="panel goals"><div class="sec-head"><span class="eyebrow">${L("¿Qué quieres ser?", "What do you want to be?")}</span><h2>${L("Build según tu meta", "Build by goal")}</h2>
+    <p>${L("Elige una meta y la calculadora prueba los objetos uno por uno para armar la build que más la sube. No siempre gana llenar todo de un solo stat: cuando un stat ya rinde poco, conviene otro.", "Pick a goal and the calculator tries items one by one. Stacking one stat is not always best.")}</p></div>
+    <div class="goal-chips">${GOALS.map(x => `<button class="goal" type="button" data-goal="${x.id}" aria-pressed="${GOAL === x.id}"><span class="gi" aria-hidden="true">${x.ico}</span><b>${L(x.es, x.en)}</b><span>${L(x.d_es, x.d_en)}</span></button>`).join("")}</div>`;
+  if (!GOAL || !SB[g.s]) return head + (GOAL ? `<p class="muted">${L("Faltan los stats base de este dios.", "Missing base stats.")}</p>` : "") + `</section>`;
+  const res = goalBuild(g, r, GOAL), P = res.P, S = P.S, gl = GOALS.find(x => x.id === GOAL);
+  const unit = { as: [L("de daño por segundo con básicos", "basic DPS"), P.dps], crit: [L("de daño promedio por básico", "average damage per basic"), P.hit], burst: [L("de daño en un combo", "combo damage"), P.combo], tank: [L("de vida efectiva", "effective health"), P.ehp], bruiser: [L("de combo y", "combo and"), P.combo] }[GOAL];
+  const pureStat = { as: "as", crit: "crit", burst: S.useInt ? "int" : "str", tank: "hp", bruiser: S.useInt ? "int" : "str" }[GOAL];
+  const pure = pureBuild(g, r, GOAL, pureStat), pureName = { as: L("velocidad de ataque", "attack speed"), crit: L("crítico", "crit"), int: L("Inteligencia", "Intelligence"), str: L("Fuerza", "Strength"), hp: L("vida", "health") }[pureStat];
+  let cmp = "";
+  if (pure && pure.items.join() !== res.items.join()) { const a = goalScore(GOAL, P), b = goalScore(GOAL, pure.P), d = Math.round((a / b - 1) * 100);
+    cmp = `<p>${L(`Comparada con seis objetos que dan ${pureName} (${pure.items.map(id => iName(IBY[id])).join(", ")}), esta build rinde ${d >= 0 ? d + "% más" : Math.abs(d) + "% menos"} para esta meta.`, `Compared with six ${pureName} items, this build is ${d >= 0 ? d + "% better" : Math.abs(d) + "% worse"} for this goal.`)}</p>`; }
+  const stepTxt = res.steps.map((x, i) => { const S2 = x.P.S; const extra = GOAL === "as" ? `${S2.aps.toFixed(2)}/s` : GOAL === "crit" ? `${Math.round(Math.min(100, S2.crit))}% ${L("crít.", "crit")}` : GOAL === "tank" ? `${fmt(x.P.ehp)}` : `${fmt(x.P.combo)}`;
+    return `<li><span class="gstep">${i + 1}</span>${iMini(IBY[x.id])}<span class="gain">+${x.gain < 1 && x.gain > 0 ? x.gain.toFixed(1) : Math.round(x.gain)}%</span><span class="muted">${extra}</span></li>`; }).join("");
+  const capNote = GOAL === "crit" || GOAL === "as" ? `<p class="muted" style="font-size:13px">${L(`El crítico es una probabilidad: pasar de 100% no sirve de nada, así que la calculadora deja de sumarlo ahí. El blindaje y la amortiguación se topan en 35. La wiki no dice que la velocidad de ataque tenga tope, así que aquí no se topa.`, `Crit is a chance: past 100% it does nothing. Plating and dampening cap at 35. The wiki states no attack speed cap.`)}</p>` : GOAL === "tank" ? `<p class="muted" style="font-size:13px">${L("Cada punto de protección rinde un poco menos que el anterior y el blindaje y la amortiguación se topan en 35; por eso la build mezcla vida y protecciones.", "Each protection point is worth slightly less; plating and dampening cap at 35.")}</p>` : "";
+  return head + `<div class="goal-res">
+      <div class="goal-top"><span class="gi big" aria-hidden="true">${gl.ico}</span><div><span class="eyebrow">${L(gl.es, gl.en)} · ${esc(N(g))} · ${L("nivel 20", "level 20")}</span>
+        <p class="big">${fmt(unit[1])} <small>${unit[0]}${GOAL === "bruiser" ? ` ${fmt(P.ehp)} ${L("de vida efectiva", "effective health")}` : ""}</small></p></div></div>
+      <ol class="gsteps">${stepTxt}</ol>
+      <p class="muted">${L("El % es cuánto sube la meta al comprar ese objeto, en ese orden. Cuando baja mucho, ese tipo de stat ya está rindiendo poco.", "The % is how much each item raises the goal, in that order.")}</p>
+      ${cmp}${capNote}
+      <div class="chips"><button class="chip" type="button" data-goaluse="1">${L("Usar esta build", "Use this build")}</button></div>
+      <p class="muted" style="font-size:13px">${L(`Supuestos: nivel 20, rango 5, cargas al máximo, rival con ${RIVAL_PROT} de protección, crítico ×${CALC.critMult} (se cambia en la calculadora). Solo cuenta stats, cargas y los efectos de la calculadora; pasivas como ralentizar, quitar curación o dar escudo no entran, así que revisa los avisos del Creador.`, `Assumptions: level 20, rank 5, max stacks, enemy with ${RIVAL_PROT} protection, crit ×${CALC.critMult}. Only stats and calculator effects count.`)}</p>
+    </div></section>`;
 }
 
 // ---------- Chat rápido / VGS (src/curado/chat_rapido.json) ----------
@@ -1375,13 +1526,14 @@ function renderNovedades() {
 }
 
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["novedades", "Novedades", "Patch"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["creador", "Creador", "Build maker"], ["chat-rapido", "Chat rápido", "Quick chat"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["novedades", "Novedades", "Patch"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["creador", "Creador", "Build maker"], ["calculadora", "Calculadora", "Calculator"], ["chat-rapido", "Chat rápido", "Quick chat"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
   for (const [id] of VIEWS) { const el = $("#v-" + id); if (el) el.hidden = id !== view; }
 }
 function setView(v, keepHash) {
+  if (BLD.open) { BLD.open = false; BLD.slot = null; document.body.classList.remove("noscroll"); }
   view = VIEWS.some(x => x[0] === v) ? v : "dioses";
   renderViews();
   if (view === "habilidades") renderHabilidades();
@@ -1391,6 +1543,7 @@ function setView(v, keepHash) {
   if (view === "objetos") renderObjetos();
   if (view === "chat-rapido") renderChat();
   if (view === "creador") renderBuilder();
+  if (view === "calculadora") renderCalc();
   if (!keepHash) { try { history.replaceState(null, "", "#" + (view === "dioses" && cur ? cur.god.s : view)); } catch (e) {} }
 }
 
@@ -1538,19 +1691,23 @@ document.addEventListener("click", e => {
   if (fm) { fxMode = fm.dataset.fxmode; renderHabilidades(); return; }
   if (t.closest("#fxClear")) { fxSel = []; renderHabilidades(); return; }
   const ba = t.closest("[data-bldadd]");
-  if (ba) { const id = ba.dataset.bldadd, at = bldActive(); if (at >= 0 && !BLD.items.includes(id)) { if (at < BLD.items.length) BLD.items[at] = id; else BLD.items.push(id); BLD.slot = null; BLD.ghost = ""; BLD.q = ""; const bq = $("#bldQ"); if (bq) bq.value = ""; saveBld(); const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); } return; }
+  if (ba) { const id = ba.dataset.bldadd, at = bldActive(); if (at >= 0 && !BLD.items.includes(id)) { if (at < BLD.items.length) BLD.items[at] = id; else BLD.items.push(id); BLD.slot = null; BLD.open = false; BLD.ghost = ""; BLD.q = ""; const bq = $("#bldQ"); if (bq) bq.value = ""; saveBld(); const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); } return; }
   const br = t.closest("[data-bldrm]");
   if (br) { BLD.items.splice(+br.dataset.bldrm, 1); BLD.slot = null; BLD.ghost = ""; saveBld(); renderBuilder(); return; }
   const bs = t.closest("[data-bldslot]");
-  if (bs) { BLD.slot = +bs.dataset.bldslot; BLD.ghost = bs.dataset.ghost || ""; renderBuilder(); const sh = $("#bldShop"); if (sh && sh.getBoundingClientRect().top > innerHeight * 0.7) sh.scrollIntoView({ block: "start" }); return; }
+  if (bs) { BLD.slot = +bs.dataset.bldslot; BLD.open = true; BLD.ghost = bs.dataset.ghost || ""; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); return; }
+  if (t.closest("[data-shopclose]") || t.id === "bldShop") { closeShop(); return; }
   const bc = t.closest("[data-bldcat]");
   if (bc) { BLD.cat = bc.dataset.bldcat; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); return; }
   if (t.closest("[data-bldfill]")) { const g0 = bldGod(); for (const c of bldSuggest(g0, bldRole(g0))) { if (BLD.items.length >= 6) break; if (!BLD.items.includes(c.id)) BLD.items.push(c.id); } BLD.slot = null; saveBld(); renderBuilder(); return; }
   const bl = t.closest("[data-bldload]");
-  if (bl) { const g0 = bldGod(), b0 = bldRole(g0).b[bl.dataset.bldload]; if (b0) { BLD.items = b0.map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.slot = null; saveBld(); renderBuilder(); } return; }
+  if (bl) { const g0 = bldGod(), b0 = bldRole(g0).b[bl.dataset.bldload]; if (b0) { BLD.items = b0.map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.slot = null; saveBld(); view === "calculadora" ? renderCalc() : renderBuilder(); } return; }
   if (t.closest("[data-bldclear]")) { BLD.items = []; BLD.slot = null; saveBld(); renderBuilder(); return; }
   const cg = t.closest("[data-calcgod]");
-  if (cg) { const g0 = bySlug(cg.dataset.calcgod), r0 = g0 && g0.roles[cg.dataset.calcrole]; if (r0) { BLD.god = g0.s; BLD.role = cg.dataset.calcrole; BLD.items = r0.b[r0.meta].map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.starter = ""; BLD.slot = null; saveBld(); setView("creador"); window.scrollTo(0, $(".views").offsetTop); } return; }
+  if (cg) { const g0 = bySlug(cg.dataset.calcgod), r0 = g0 && g0.roles[cg.dataset.calcrole]; if (r0) { BLD.god = g0.s; BLD.role = cg.dataset.calcrole; BLD.items = r0.b[r0.meta].map(x => x[0]).filter(id => IBY[id]).slice(0, 6); BLD.starter = ""; BLD.slot = null; saveBld(); setView("calculadora"); window.scrollTo(0, $(".views").offsetTop); } return; }
+  const gbtn = t.closest("[data-goal]");
+  if (gbtn) { GOAL = GOAL === gbtn.dataset.goal ? null : gbtn.dataset.goal; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); return; }
+  if (t.closest("[data-goaluse]")) { const g0 = bldGod(); BLD.items = goalBuild(g0, bldRole(g0), GOAL).items; BLD.slot = null; saveBld(); const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); return; }
   const tb = t.closest("[data-trybuild]");
   if (tb) { const x = (NOV.a_probar || []).find(y => y.id === tb.dataset.trybuild); if (x && x.build && bySlug(x.build.dios)) { BLD.god = x.build.dios; BLD.role = ""; BLD.items = x.build.items.filter(id => IBY[id]).slice(0, 6); BLD.starter = IBY[x.build.inicial] ? x.build.inicial : ""; BLD.slot = null; saveBld(); setView("creador"); window.scrollTo(0, $(".views").offsetTop); } return; }
   const vg = t.closest("[data-vgsg]");
@@ -1595,11 +1752,13 @@ function tryAddFoe(inp, force) {
   const again = $(view === "creador" ? "#foeQ2" : "#foeQ"); if (again) again.focus();
 }
 document.addEventListener("change", e => {
-  if (e.target.id === "calcRank") { CALC.rank = +e.target.value; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); }
-  if (e.target.id === "calcStacks") { CALC.stacks = e.target.checked; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); }
-  if (e.target.id === "calcFight") { CALC.fight = e.target.checked; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); }
+  if (e.target.id === "calcRank") { CALC.rank = +e.target.value; calcRefresh(); }
+  if (e.target.id === "calcStacks") { CALC.stacks = e.target.checked; calcRefresh(); }
+  if (e.target.id === "calcFight") { CALC.fight = e.target.checked; calcRefresh(); }
+  if (e.target.id === "calcCrit") { CALC.critMult = +e.target.value; calcRefresh(); }
+  if (e.target.id === "calcGodQ") { const v = e.target.value.trim(), g2 = G.find(x => norm(x.n) === norm(v) || norm(x.e) === norm(v)); if (g2) { BLD.god = g2.s; BLD.role = ""; BLD.items = []; BLD.starter = ""; const r2 = Object.values(g2.roles)[0]; if (r2 && r2.b && r2.b[r2.meta]) BLD.items = r2.b[r2.meta].map(x => x[0]).filter(id => IBY[id]).slice(0, 6); saveBld(); renderCalc(); } }
   if (e.target.id === "bldStarter") { BLD.starter = e.target.value; saveBld(); renderBuilder(); }
-  if (e.target.id === "bldRole") { BLD.role = e.target.value; BLD.items = []; saveBld(); renderBuilder(); }
+  if (e.target.id === "bldRole" || e.target.id === "calcRole") { BLD.role = e.target.value; BLD.items = []; if (view === "calculadora") { const r2 = bldRole(bldGod()); if (r2.b[r2.meta]) BLD.items = r2.b[r2.meta].map(x => x[0]).filter(id => IBY[id]).slice(0, 6); } saveBld(); view === "calculadora" ? renderCalc() : renderBuilder(); }
   if (e.target.id === "itNeed") { itNeed = e.target.value; itCat = "all"; renderObjetos(); }
   if (e.target.id === "fPan") { fPan = e.target.value; renderGods(); }
   if (e.target.id === "fSort") { fSort = e.target.value; renderGods(); }
@@ -1610,7 +1769,7 @@ document.addEventListener("input", e => {
   if (e.target.id === "bldQ") { BLD.q = norm(e.target.value); renderBuilder(); }
   if (e.target.id === "bldGodQ") { const v = e.target.value.trim(), g2 = G.find(x => norm(x.n) === norm(v) || norm(x.e) === norm(v)); if (g2) { BLD.god = g2.s; BLD.role = ""; BLD.items = []; BLD.starter = ""; saveBld(); renderBuilder(); } }
   if (e.target.id === "godFilter") renderGods();
-  if (e.target.id === "calcLvl") { CALC.lvl = +e.target.value; const y = window.scrollY; renderBuilder(); window.scrollTo(0, y); const r2 = $("#calcLvl"); if (r2) r2.focus(); }
+  if (e.target.id === "calcLvl") { CALC.lvl = +e.target.value; const v = $("#calcLvlV"); if (v) v.textContent = CALC.lvl; calcRefresh(); }
   if (e.target.id === "vgsQ") { vgsQ = norm(e.target.value); renderChat(); }
   if (e.target.id === "itQ") { itQ = norm(e.target.value); renderObjetos(); }
   if (e.target.id === "comboQ") { comboQ = norm(e.target.value); renderCombos(); }

@@ -1,5 +1,5 @@
 {
- "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (se activa con la casilla «cargas al máximo»). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana).",
+ "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (se activa con la casilla «cargas al máximo»). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana). 'dano_critico': objetos que suben el daño de los críticos (pct).",
  "cargas": [
   {
    "suma": {
@@ -204,7 +204,8 @@
    "item": "polynomicon",
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
-   "pendiente_verificar": false
+   "pendiente_verificar": false,
+   "tras_habilidad": true
   },
   {
    "base": 10,
@@ -220,11 +221,12 @@
    "por_nivel_cada": 4,
    "extra_por_carga": 15,
    "max_cargas": 6,
-   "texto": "Cada básico pega 15 extra; al pegarle a un dios sube +15 por carga (una carga por cada 4 niveles, máximo 6).",
+   "texto": "Cada básico pega 15 extra; al pegarle a un dios sube +15 por carga (empieza con 1 carga y gana otra cada 4 niveles, máximo 6).",
    "item": "tyrfing",
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
-   "pendiente_verificar": false
+   "pendiente_verificar": false,
+   "cargas_iniciales": 1
   }
  ],
  "formulas": {
@@ -258,5 +260,16 @@
    "fuente": "https://wiki.smite2.com/w/Stats",
    "pendiente_verificar": false
   }
- }
+ },
+ "dano_critico": [
+  {
+   "item": "deathbringer",
+   "pct": 35,
+   "texto": "+35% de daño crítico: se suma al multiplicador del crítico (por ejemplo ×1.5 pasa a ×1.85).",
+   "parche_verificado": "OB48",
+   "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": true,
+   "nota": "No sabemos si el 35% se suma al multiplicador o lo multiplica; aquí se suma."
+  }
+ ]
 }
