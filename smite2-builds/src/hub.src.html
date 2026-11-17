@@ -73,6 +73,8 @@ a { color: var(--gold); }
 .pend { font-size: 11px; color: var(--ember); border: 1px solid var(--ember); padding: 0 6px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
 .orden { margin: 6px 0 0; padding-left: 22px; display: grid; gap: 5px; font-size: 14.5px; color: #d7d1bf; }
 .syn .foe { cursor: pointer; }
+.spr-e { background-image: url("img/items_evo.webp"); background-size: 600% 100%; background-color: var(--stone); }
+.slotb.evo .ic { border-color: var(--gold-hi); box-shadow: 0 0 14px rgba(236,198,112,.45); }
 .spr-a { background-image: url("img/items_all.webp"); background-size: calc(var(--ac) * 100%) calc(var(--ar) * 100%); background-color: var(--stone); }
 .it[data-item] { cursor: pointer; }
 .it[data-item]:hover .n { color: var(--gold); }
@@ -427,7 +429,7 @@ footer p { max-width: 90ch; }
 
 <footer class="gut">
   <div class="frieze" aria-hidden="true"></div>
-  <p id="tF1">Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí, salvo el retrato y la carta de Kumbhakarna, que son de la wiki oficial de Smite 2.</p>
+  <p id="tF1">Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí, salvo el retrato y la carta de Kumbhakarna y los íconos de objetos evolucionados, que son de la wiki oficial de Smite 2.</p>
   <p id="tF2">Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.</p>
 </footer>
 
@@ -510,7 +512,7 @@ const EN = {
   "Zeus, Atenea, Anubis…": "Zeus, Athena, Anubis…",
   "Habilidades y objetos del OB48 · builds y tiers con partidas de Joust del OB47": "OB48 abilities and items · builds and tiers from OB47 Joust games",
   "Elige a tu dios y recibe su build <b>ofensiva</b>, <b>híbrida</b> y <b>defensiva</b>, con lo que hace cada objeto y qué comprar según el equipo rival.": "Pick your god and get their <b>offensive</b>, <b>hybrid</b> and <b>defensive</b> build, with what each item does and what to buy against the enemy team.",
-  "Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí, salvo el retrato y la carta de Kumbhakarna, que son de la wiki oficial de Smite 2.": "Builds come from each god's most recent Joust matches published on Smite2.live: which items were bought and in how many games. The item catalog and images come from there too, except Kumbhakarna's portrait and card, which come from the official Smite 2 wiki.",
+  "Las builds salen de las partidas de Joust más recientes de cada dios publicadas en Smite2.live: qué objetos compraron y en cuántas partidas. El catálogo de objetos y las imágenes también vienen de ahí, salvo el retrato y la carta de Kumbhakarna y los íconos de objetos evolucionados, que son de la wiki oficial de Smite 2.": "Builds come from each god's most recent Joust matches published on Smite2.live: which items were bought and in how many games. The item catalog and images come from there too, except Kumbhakarna's portrait and card and the evolved item icons, which come from the official Smite 2 wiki.",
   "Los nombres en español son traducción propia: si tu juego está en inglés, guíate por el nombre en cursiva y por el ícono. Sitio de fans, sin relación con Hi-Rez ni Titan Forge Games.": "Item text in English is the in-game description. Fan site, not affiliated with Hi-Rez or Titan Forge Games."
 };
 let lang = "es";
@@ -1124,7 +1126,7 @@ function renderBuilder() {
   const ghostFor = i => sug[i - BLD.items.length];
   const slots = Array.from({ length: 6 }, (_, i) => {
     const it = IBY[BLD.items[i]], on = i === act ? " on" : "";
-    if (it) return `<div class="slotb full${on}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span class="ic spr-a" style="${posA(it.i)}"></span><span class="nm">${esc(iName(it))}</span></button>${hasStacks(it.id) ? `<button class="stkmini${STK_OFF.has(it.id) ? "" : " on"}" type="button" data-stk="${it.id}" aria-pressed="${!STK_OFF.has(it.id)}" title="${esc((C_STACK[it.id] || C_HIT[it.id]).texto || "")}">${STK_OFF.has(it.id) ? L("sin cargas", "no stacks") : L("con cargas", "stacked")}</button>` : ""}<button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
+    if (it) return `<div class="slotb full${on}${isEvo(it) ? " evo" : ""}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span ${icAttr(it)}></span><span class="nm">${esc(iName(it))}</span></button>${hasStacks(it.id) ? `<button class="stkmini${STK_OFF.has(it.id) ? "" : " on"}" type="button" data-stk="${it.id}" aria-pressed="${!STK_OFF.has(it.id)}" title="${esc((C_STACK[it.id] || C_HIT[it.id]).texto || "")}">${STK_OFF.has(it.id) ? L("sin cargas", "no stacks") : L("con cargas", "stacked")}</button>` : ""}<button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
     const gh = ghostFor(i), gi = gh && IBY[gh.id];
     if (i === act) return `<div class="slotb on"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm">${L("Eligiendo…", "Picking…")}</span></button></div>`;
     return gi ? `<div class="slotb ghost"><button class="pick" type="button" data-bldslot="${i}" data-ghost="${gi.id}" title="${L("Sugerido", "Suggested")}: ${esc(gi.nombre)}"><span class="ic spr-a" style="${posA(gi.i)}"></span><span class="nm">${esc(iName(gi))}</span><span class="tag">${L("sugerido", "suggested")}</span></button></div>`
@@ -1340,7 +1342,11 @@ function stkHTML(ids, withText) {
     <div class="stk-list">${xs.map(id => { const on = !STK_OFF.has(id), h = C_STACK[id] || C_HIT[id];
       return `<button class="stk${on ? " on" : ""}" type="button" data-stk="${id}" aria-pressed="${on}" title="${esc(h.texto || "")}">${iMiniIc(IBY[id])}<span><b>${esc(iName(IBY[id]))}</b><small>${on ? L("con cargas", "stacked") : L("sin cargas", "no stacks")}</small>${withText ? `<i>${esc(h.texto || "")}</i>` : ""}</span></button>`; }).join("")}</div></div>`;
 }
-const iMiniIc = it => `<span class="ic spr-a" style="${posA(it.i)}"></span>`;
+// Ícono evolucionado (wiki.smite2.com) cuando el objeto va con cargas.
+const EVO_IC = { "book-of-thoth": 0, "devourers-gauntlet": 1, "gauntlet-of-thebes": 2, "prophetic-cloak": 3, "rage": 4, "transcendence": 5 };
+const isEvo = it => EVO_IC[it.id] !== undefined && !STK_OFF.has(it.id);
+const icAttr = it => isEvo(it) ? `class="ic spr-e" style="${pos(EVO_IC[it.id], 6, 1)}"` : `class="ic spr-a" style="${posA(it.i)}"`;
+const iMiniIc = it => `<span ${icAttr(it)}></span>`;
 // Solo cambia los resultados, no los controles: así la barra de nivel se puede arrastrar.
 function calcRefresh() {
   const g = bldGod(), out = $("#calcOut"); if (!g || !out) return;
@@ -1360,7 +1366,7 @@ function renderCalc() {
         <input id="calcGodQ" class="inp" type="search" list="godlist" placeholder="${L("Cambiar de dios…", "Change god…")}" autocomplete="off" aria-label="${L("Dios", "God")}">
         ${keys.length > 1 ? `<label class="selects" for="calcRole">${L("Variante", "Variant")} <select id="calcRole">${keys.map(k => `<option value="${k}"${g.roles[k] === r ? " selected" : ""}>${g.roles[k].var.k === "asp" ? L("Con aspecto", "With aspect") + ": " + esc(lang === "en" ? g.roles[k].var.e : g.roles[k].var.es) : L("Sin aspecto", "No aspect")}</option>`).join("")}</select></label>` : ""}
       </div>
-      <div class="calc-build">${mine.length ? mine.map(id => iMini(IBY[id])).join("") : `<span class="muted">${L("Sin objetos todavía.", "No items yet.")}</span>`}</div>
+      <div class="calc-build">${mine.length ? mine.map(id => { const it = IBY[id]; return `<button class="foe" type="button" data-item="${it.id}" title="${esc(it.nombre)}"><span ${icAttr(it).replace('class="ic ', 'class="face ')}></span><span>${esc(iName(it))}</span></button>`; }).join("") : `<span class="muted">${L("Sin objetos todavía.", "No items yet.")}</span>`}</div>
       <div class="chips">
         ${["off", "hyb", "def"].filter(k => r.b[k]).map(k => `<button class="chip" type="button" data-bldload="${k}">${L("Cargar la", "Load")} ${t(KIND[k].t).toLowerCase()}</button>`).join("")}
         <button class="chip" type="button" data-view="creador">${L("Editar en el Creador", "Edit in Build maker")}</button>
