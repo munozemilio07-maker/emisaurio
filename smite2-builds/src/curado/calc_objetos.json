@@ -1,5 +1,5 @@
 {
- "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (cada objeto se puede poner con o sin cargas en la calculadora y en el creador; 'reduce_prot_rival' = % de protecciones que le quita al rival). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana). 'dano_critico': objetos que suben el daño de los críticos (pct). 'activos': lo que da la activa de un objeto mientras dura (suma, por_nivel, pct de str/int, escudo, int_a_str, reduce_prot_rival, ataques = cuántos básicos dura).",
+ "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (cada objeto se puede poner con o sin cargas en la calculadora y en el creador; 'reduce_prot_rival' = % de protecciones que le quita al rival). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana). 'dano_critico': objetos que suben el daño de los críticos (pct). 'activos': lo que da la activa de un objeto mientras dura (suma, por_nivel, pct de str/int, escudo, int_a_str, reduce_prot_rival, ataques = cuántos básicos dura). 'evolucion': cómo se consiguen las cargas de los objetos que evolucionan (pasos del texto del juego y un consejo deducido para Joust).",
  "cargas": [
   {
    "suma": {
@@ -447,6 +447,91 @@
    "pendiente_verificar": false,
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)"
+  }
+ ],
+ "evolucion": [
+  {
+   "item": "rage",
+   "cargas": "5 asesinatos o asistencias",
+   "pasos": [
+    "Cada asesinato o asistencia a un dios: +4% de crítico (hasta +20%).",
+    "Al llegar a 5 asesinatos o asistencias evoluciona: +10% de crítico extra (50% en total con el 20% base)."
+   ],
+   "consejo": "En Joust las peleas son seguidas: con 2 o 3 peleas ganadas ya está. Las asistencias cuentan igual, así que entra a todas las peleas aunque no remates.",
+   "parche_verificado": "OB48",
+   "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false,
+   "consejo_es_deduccion": true
+  },
+  {
+   "item": "book-of-thoth",
+   "cargas": "50 cargas",
+   "pasos": [
+    "Cada 900 de daño a súbditos o monstruos de la jungla: +1 carga y +10 de maná.",
+    "El daño a dioses cuenta doble.",
+    "Con 50 cargas evoluciona: +2% más de maná convertido en Inteligencia, +5 de penetración y +100 de maná."
+   ],
+   "consejo": "Son 45,000 de daño a súbditos (o la mitad pegándole a dioses). Cómpralo primero y limpia las oleadas con tus habilidades de área.",
+   "parche_verificado": "OB48",
+   "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false,
+   "consejo_es_deduccion": true
+  },
+  {
+   "item": "transcendence",
+   "cargas": "50 cargas",
+   "pasos": [
+    "Cada 700 de daño a súbditos o monstruos de la jungla: +1 carga y +10 de maná.",
+    "El daño a dioses cuenta doble.",
+    "Con 50 cargas evoluciona: +10 de penetración y +100 de maná."
+   ],
+   "consejo": "Son 35,000 de daño a súbditos (o la mitad pegándole a dioses). Cómpralo primero y pega a la oleada con básicos.",
+   "parche_verificado": "OB48",
+   "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false,
+   "consejo_es_deduccion": true
+  },
+  {
+   "item": "devourers-gauntlet",
+   "cargas": "75 cargas",
+   "pasos": [
+    "Cada súbdito o monstruo de la jungla que mates: +1 carga (+0.4 de Fuerza y +0.05% de robo de vida).",
+    "Con 75 cargas se completa: +10 de Fuerza, +3% de robo de vida y +5 de penetración.",
+    "Después sigue cargando más lento: +1 por cada 10 súbditos, +4 por jefe de la jungla."
+   ],
+   "consejo": "Cuenta solo el golpe final: remata tú los súbditos (last hit) y llévate los campamentos de la jungla.",
+   "parche_verificado": "OB48",
+   "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false,
+   "consejo_es_deduccion": true
+  },
+  {
+   "item": "gauntlet-of-thebes",
+   "cargas": "40 cargas",
+   "pasos": [
+    "Asistencia en un súbdito: +1 carga (+15 de vida cada una).",
+    "Asesinato o asistencia a un dios: +5 cargas.",
+    "Con 40 cargas evoluciona: +100 de vida y +10 de protecciones."
+   ],
+   "consejo": "Pensado para el que apoya: quédate cerca de la oleada y entra a todas las peleas. 8 asesinatos o asistencias lo completan casi solos.",
+   "parche_verificado": "OB48",
+   "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false,
+   "consejo_es_deduccion": true
+  },
+  {
+   "item": "prophetic-cloak",
+   "cargas": "15 de cada protección",
+   "pasos": [
+    "Hacerle daño a un dios: +1 carga de protección contra el tipo de daño que hace ese dios (una vez cada 5 s).",
+    "Necesitas 15 contra daño físico y 15 contra mágico.",
+    "Al evolucionar: +10 de protección física y mágica y 6% de mitigación (12% si tienes más de 300 de protecciones)."
+   ],
+   "consejo": "Como solo carga cada 5 s, son al menos 75 s peleando contra cada tipo de daño. Contra un equipo de puro daño físico o puro mágico nunca evoluciona.",
+   "parche_verificado": "OB48",
+   "fuente": "Descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false,
+   "consejo_es_deduccion": true
   }
  ]
 }

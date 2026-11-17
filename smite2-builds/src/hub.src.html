@@ -199,6 +199,9 @@ body.noscroll { overflow: hidden; }
 .gsteps li > :nth-child(2) { min-width: 0; justify-self: start; max-width: 100%; }
 .gsteps .muted { font-size: 13px; text-align: right; white-space: nowrap; }
 .gstep { display: inline-grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--gold-deep); color: var(--gold); font-size: 13px; }
+.evol { display: grid; gap: 4px; padding: 10px 12px; border-left: 3px solid var(--gold); background: rgba(232,190,110,.05); margin-top: 8px; font-size: 14px; }
+.evol ol { margin: 2px 0 0; padding-left: 20px; display: grid; gap: 2px; } .evol p { margin: 4px 0 0; }
+.evol-n { font-family: var(--font-head); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
 .evo-tag { font-family: var(--font-head); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-hi); border: 1px solid var(--gold-deep); padding: 2px 6px; white-space: nowrap; }
 .gsteps li { grid-template-columns: 24px minmax(0, 1fr) auto auto auto; }
 @media (max-width: 600px) { .evo-tag { font-size: 0; padding: 2px 5px; } .evo-tag::before { content: "⟳"; font-size: 14px; letter-spacing: 0; } }
@@ -983,6 +986,7 @@ function itemFicha(r) {
       ${block(L("Qué lo contrarresta", "What counters it"), counteredBy.map(c => `<div class="cline"><p>${esc(c.explicacion)}</p><div class="foes">${sideItems(c.respuesta).slice(0, 10).map(iMini).join("")}</div></div>`).join(""))}
       ${block(L("A qué contrarresta", "What it counters"), countersWhat.map(c => `<div class="cline"><p><b>${esc(c.titulo)}.</b> ${esc(c.explicacion)}</p><div class="foes">${sideItems(c.contra).filter(x => x !== r).slice(0, 10).map(iMini).join("")}</div></div>`).join(""))}
       ${block(L("Se arma con", "Builds from"), parts.length ? `<div class="foes">${parts.map(iMini).join("")}</div>` : "")}
+      ${C_EVOL[r.id] ? block(L("Cómo evolucionarlo", "How to evolve it"), evolHTML(r.id, false)) : ""}
       ${block(L("Quién lo compra en Joust", "Who buys it in Joust"), buyers.length ? `<div class="foes">${buyers.map(([g, pk]) => `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))} · ${pk}%</span></button>`).join("")}</div>` : "")}
       </div>
       <p class="muted" style="font-size:13px">${esc(r.parche_verificado || "")} · <a href="${esc(safeUrl(r.fuente))}" target="_blank" rel="noopener">${L("Fuente", "Source")}</a></p>
@@ -1132,7 +1136,7 @@ function renderBuilder() {
   const ghostFor = i => sug[i - BLD.items.length];
   const slots = Array.from({ length: 6 }, (_, i) => {
     const it = IBY[BLD.items[i]], on = i === act ? " on" : "";
-    if (it) return `<div class="slotb full${on}${isEvo(it) ? " evo" : ""}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span ${icAttr(it)}></span><span class="nm">${esc(iName(it))}</span></button>${hasStacks(it.id) ? `<button class="stkmini${STK_OFF.has(it.id) ? "" : " on"}" type="button" data-stk="${it.id}" aria-pressed="${!STK_OFF.has(it.id)}" title="${esc((C_STACK[it.id] || C_HIT[it.id]).texto || "")}">${STK_OFF.has(it.id) ? L("sin cargas", "no stacks") : L("con cargas", "stacked")}</button>` : ""}${C_ACT[it.id] ? `<button class="stkmini act${ACT_ON.has(it.id) ? " on" : ""}" type="button" data-act="${it.id}" aria-pressed="${ACT_ON.has(it.id)}" title="${esc(C_ACT[it.id].texto)}">${ACT_ON.has(it.id) ? L("activa usada", "active used") : L("usar activa", "use active")}</button>` : ""}<button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
+    if (it) return `<div class="slotb full${on}${isEvo(it) ? " evo" : ""}"><button class="pick" type="button" data-bldslot="${i}" title="${L("Cambiar", "Change")} ${esc(it.nombre)}"><span ${icAttr(it)}></span><span class="nm">${esc(iName(it))}</span></button>${hasStacks(it.id) ? `<button class="stkmini${STK_OFF.has(it.id) ? "" : " on"}" type="button" data-stk="${it.id}" aria-pressed="${!STK_OFF.has(it.id)}" title="${esc((C_STACK[it.id] || C_HIT[it.id]).texto || "")}${C_EVOL[it.id] ? " — " + L("Cómo evolucionarlo", "How to evolve it") + ": " + esc(C_EVOL[it.id].pasos[0]) : ""}">${STK_OFF.has(it.id) ? L("sin cargas", "no stacks") : L("con cargas", "stacked")}</button>` : ""}${C_ACT[it.id] ? `<button class="stkmini act${ACT_ON.has(it.id) ? " on" : ""}" type="button" data-act="${it.id}" aria-pressed="${ACT_ON.has(it.id)}" title="${esc(C_ACT[it.id].texto)}">${ACT_ON.has(it.id) ? L("activa usada", "active used") : L("usar activa", "use active")}</button>` : ""}<button class="rm" type="button" data-bldrm="${i}" aria-label="${L("Quitar", "Remove")} ${esc(it.nombre)}">×</button></div>`;
     const gh = ghostFor(i), gi = gh && IBY[gh.id];
     if (i === act) return `<div class="slotb on"><button class="pick" type="button" data-bldslot="${i}"><span class="ic"></span><span class="nm">${L("Eligiendo…", "Picking…")}</span></button></div>`;
     return gi ? `<div class="slotb ghost"><button class="pick" type="button" data-bldslot="${i}" data-ghost="${gi.id}" title="${L("Sugerido", "Suggested")}: ${esc(gi.nombre)}"><span class="ic spr-a" style="${posA(gi.i)}"></span><span class="nm">${esc(iName(gi))}</span><span class="tag">${L("sugerido", "suggested")}</span></button></div>`
@@ -1195,7 +1199,7 @@ function renderBuilder() {
 const SB = ((CURADO.stats_base || {}).dioses) || {};
 const CO = CURADO.calc_objetos || {};
 const byItem = arr => Object.fromEntries((arr || []).map(x => [x.item, x]));
-const C_ACT = byItem(CO.activos), C_CRITX = byItem(CO.dano_critico), C_STACK = byItem(CO.cargas), C_FIGHT = byItem(CO.en_pelea), C_CONV = byItem(CO.conversiones), C_PCT = byItem(CO.pct_todo), C_HIT = byItem(CO.al_pegar);
+const C_EVOL = byItem(CO.evolucion), C_ACT = byItem(CO.activos), C_CRITX = byItem(CO.dano_critico), C_STACK = byItem(CO.cargas), C_FIGHT = byItem(CO.en_pelea), C_CONV = byItem(CO.conversiones), C_PCT = byItem(CO.pct_todo), C_HIT = byItem(CO.al_pegar);
 let CALC = { lvl: 20, rank: 5, stacks: true, fight: false, critMult: 1.5 };
 // Objetos que el usuario puso «sin cargas» (por defecto todos van con cargas, como al final de la partida).
 const STK_OFF = new Set(); try { for (const id of JSON.parse(localStorage.getItem("stkoff") || "[]")) STK_OFF.add(id); } catch (e) {}
@@ -1359,6 +1363,7 @@ function stkHTML(ids, withText) {
   const xs = ids.filter(id => IBY[id] && hasStacks(id));
   if (!xs.length) return "";
   return `<div class="stk-box"><span class="eyebrow">${L("Objetos que se potencian", "Stacking items")}</span>
+    ${withText && xs.some(id => C_EVOL[id]) ? `<details class="orig"><summary>${L("Cómo conseguir las cargas de los que evolucionan", "How to stack the evolving items")}</summary>${xs.filter(id => C_EVOL[id]).map(id => evolHTML(id, true)).join("")}</details>` : ""}
     <div class="stk-list">${xs.map(id => { const on = !STK_OFF.has(id), h = C_STACK[id] || C_HIT[id];
       return `<button class="stk${on ? " on" : ""}" type="button" data-stk="${id}" aria-pressed="${on}" title="${esc(h.texto || "")}">${iMiniIc(IBY[id])}<span><b>${esc(iName(IBY[id]))}</b><small>${on ? L("con cargas", "stacked") : L("sin cargas", "no stacks")}</small>${withText ? `<i>${esc(h.texto || "")}</i>` : ""}</span></button>`; }).join("")}</div></div>`;
 }
@@ -1372,6 +1377,12 @@ function actHTML(ids) {
   return `<div class="stk-box"><span class="eyebrow">${L("Activas", "Actives")}</span>
     <div class="stk-list">${xs.map(id => { const on = ACT_ON.has(id), a = C_ACT[id];
       return `<button class="stk act${on ? " on" : ""}" type="button" data-act="${id}" aria-pressed="${on}">${iMiniIc(IBY[id])}<span><b>${esc(iName(IBY[id]))}</b><small>${on ? L("activa usada", "active used") : L("toca para usarla", "tap to use it")}</small><i>${esc(a.texto)}</i>${a.pendiente_verificar ? `<span class="pend">${L("por verificar", "unverified")}</span>` : ""}</span></button>`; }).join("")}</div></div>`;
+}
+// Cómo se evoluciona un objeto: pasos del juego + consejo para Joust.
+function evolHTML(id, compact) {
+  const e = C_EVOL[id]; if (!e) return "";
+  return `<div class="evol${compact ? " compact" : ""}"><div>${compact ? `<b>${esc(iName(IBY[id]))}</b> · ` : ""}<span class="evol-n">${L("Cómo evolucionarlo", "How to evolve it")}: ${esc(e.cargas)}</span></div>
+    <ol>${e.pasos.map(x => `<li>${esc(x)}</li>`).join("")}</ol>${e.consejo ? `<p><b>${L("En Joust", "In Joust")}:</b> ${esc(e.consejo)} <span class="pend">${L("consejo", "tip")}</span></p>` : ""}</div>`;
 }
 const iMiniIc = it => `<span ${icAttr(it)}></span>`;
 // Solo cambia los resultados, no los controles: así la barra de nivel se puede arrastrar.
@@ -1485,6 +1496,7 @@ function goalsHTML(g, r) {
         <p class="big">${fmt(unit[1])} <small>${unit[0]}${GOAL === "bruiser" ? ` ${fmt(P.ehp)} ${L("de vida efectiva", "effective health")}` : ""}</small></p></div></div>
       <ol class="gsteps">${stepTxt}</ol>
       <p class="muted">${L("El % es cuánto sube la meta al comprar ese objeto, en ese orden. Cuando baja mucho, ese tipo de stat ya está rindiendo poco.", "The % is how much each item raises the goal, in that order.")}${res.steps.some(x => x.evo) ? L(" Los objetos que evolucionan van primero aunque al principio rindan poco: necesitan tiempo para juntar cargas, y la build se calcula con ellos ya evolucionados (máximo 2 por build).", " Evolving items go first: they need time to stack, and the build counts them evolved (max 2).") : ""}</p>
+      ${res.items.some(id => C_EVOL[id]) ? `<div class="fblock"><span class="eyebrow">${L("Cómo evolucionar los primeros", "How to evolve the first ones")}</span>${res.items.filter(id => C_EVOL[id]).map(id => evolHTML(id, true)).join("")}</div>` : ""}
       ${cmp}${capNote}
       <div class="chips"><button class="chip" type="button" data-goaluse="1">${L("Usar esta build", "Use this build")}</button></div>
       <p class="muted" style="font-size:13px">${L(`Supuestos: nivel 20, rango 5, cargas al máximo, ${GOAL === "as" ? "sin usar activas (daño sostenido)" : "con las activas usadas (pelea corta)"}, rival con ${RIVAL_PROT} de protección, crítico ×${CALC.critMult} (se cambia en la calculadora). Solo cuenta stats, cargas y los efectos de la calculadora; pasivas como ralentizar, quitar curación o dar escudo no entran, así que revisa los avisos del Creador.`, `Assumptions: level 20, rank 5, max stacks, enemy with ${RIVAL_PROT} protection, crit ×${CALC.critMult}. Only stats and calculator effects count.`)}</p>
