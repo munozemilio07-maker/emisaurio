@@ -199,6 +199,18 @@ body.noscroll { overflow: hidden; }
 .gsteps li > :nth-child(2) { min-width: 0; justify-self: start; max-width: 100%; }
 .gsteps .muted { font-size: 13px; text-align: right; white-space: nowrap; }
 .gstep { display: inline-grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--gold-deep); color: var(--gold); font-size: 13px; }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.meta-card { display: grid; gap: 8px; align-content: start; padding: 14px; background: var(--stone); border: 1px solid var(--line); }
+.meta-card:first-child { border-color: var(--gold); box-shadow: 0 0 26px rgba(232,190,110,.12); }
+.meta-top { display: flex; align-items: center; gap: 10px; }
+.meta-rank { font-family: var(--font-head); font-size: 28px; color: var(--gold); width: 26px; text-align: center; }
+.meta-top .foe { flex: 1; min-width: 0; font-size: 16px; } .meta-top .foe .face { width: 44px; height: 44px; }
+.meta-score { display: grid; justify-items: end; line-height: 1.1; } .meta-score b { font-family: var(--font-head); font-size: 22px; color: var(--gold); } .meta-score small { font-size: 11px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.meta-why { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+.meta-why .up b { color: var(--ok); } .meta-why .down b { color: var(--ember); }
+.meta-build { display: flex; flex-wrap: wrap; gap: 4px; }
+.mb-it .ic { display: block; width: 36px; height: 36px; border: 1px solid var(--line); }
+.mb-it.chg .ic { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
 .evol { display: grid; gap: 4px; padding: 10px 12px; border-left: 3px solid var(--gold); background: rgba(232,190,110,.05); margin-top: 8px; font-size: 14px; }
 .evol ol { margin: 2px 0 0; padding-left: 20px; display: grid; gap: 2px; } .evol p { margin: 4px 0 0; }
 .evol-n { font-family: var(--font-head); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
@@ -426,6 +438,7 @@ footer p { max-width: 90ch; }
  </div>
 
  <section class="gut hall" id="v-novedades" hidden></section>
+ <section class="gut hall" id="v-meta" hidden></section>
  <section class="gut hall" id="v-habilidades" hidden></section>
  <section class="gut hall" id="v-combos" hidden></section>
  <section class="gut hall" id="v-sinergias" hidden></section>
@@ -1589,6 +1602,49 @@ function probarHTML() {
     ${roto.length ? `<div class="sits">${roto.map(card).join("")}</div>` : ""}
     ${resto.length ? `<div class="sits">${resto.map(card).join("")}</div>` : ""}</section>`;
 }
+// ---------- Posible meta ----------
+// Pronóstico: winrate del OB47 en Joust (ajustado por pocas partidas) + cambios del OB48 al dios + cambios a los objetos que compra.
+const META_CLS = [["Mago", "Magos", "Mages"], ["Asesino", "Asesinos", "Assassins"], ["Guardián", "Tanques", "Tanks"], ["Guerrero", "Guerreros", "Warriors"], ["Cazador", "Cazadores", "Hunters"]];
+function metaInfo(g) {
+  const r = Object.values(g.roles)[0], K = 40, n = g.tn || 0, wins = (g.wr || 50) * n / 100;
+  const adj = n ? (wins + 0.5 * K) / (n + K) * 100 : 50;   // winrate encogido hacia 50%
+  const why = []; let d = 0;
+  for (const c of NOVC) { if (c.aplica_joust === false || c.peso_meta == null) continue;
+    if (c.tipo === "dios" && c.ref === g.s && c.peso_meta) { d += c.peso_meta; why.push({ v: c.peso_meta, t: c.titulo }); }
+    if (c.tipo === "objeto" && c.peso_meta && r && !r.nodata) { const pk = godPicks(g, r).get(c.ref) || 0; if (pk >= 10) { const v = c.peso_meta * pk / 100; d += v; why.push({ v, t: L(`${c.titulo} (lo compra en el ${pk}% de sus partidas)`, `${c.titulo} (bought in ${pk}% of games)`) }); } } }
+  return { g, r, adj, d, score: adj + d, n, why };
+}
+let metaRows = null;
+function renderMeta() {
+  const el = $("#v-meta");
+  if (!metaRows) metaRows = G.map(metaInfo);
+  const card = (m, i) => { const g = m.g, r = m.r, b = r && !r.nodata && r.b[r.meta] ? r.b[r.meta].map(x => x[0]).filter(id => IBY[id]).slice(0, 6) : [];
+    const chg = new Set(NOVC.filter(c => c.tipo === "objeto").map(c => c.ref));
+    return `<article class="meta-card">
+      <div class="meta-top"><span class="meta-rank">${i + 1}</span><button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>
+        <span class="meta-score"><b>${m.score.toFixed(1)}</b><small>${L("pronóstico", "forecast")}</small></span></div>
+      <p class="muted">${L(`OB47: tier ${g.tier || "?"}, ${g.wr}% de victorias en ${m.n} partidas.`, `OB47: tier ${g.tier || "?"}, ${g.wr}% wins in ${m.n} games.`)}${m.n < 100 ? ` <span class="pend">${L("pocas partidas", "few games")}</span>` : ""}</p>
+      ${m.why.length ? `<ul class="meta-why">${m.why.map(w => `<li class="${w.v > 0 ? "up" : "down"}"><b>${w.v > 0 ? "▲ +" : "▼ "}${w.v.toFixed(1)}</b> ${esc(w.t)}</li>`).join("")}</ul>` : `<p class="muted">${L("El parche no lo tocó: se queda donde estaba.", "Untouched by the patch.")}</p>`}
+      ${b.length ? `<div class="meta-build">${b.map(id => `<span class="mb-it${chg.has(id) ? " chg" : ""}" title="${esc(iName(IBY[id]))}${chg.has(id) ? L(" · cambió en el parche", " · changed this patch") : ""}"><span class="ic spr-a" style="${posA(IBY[id].i)}"></span></span>`).join("")}</div>` : ""}
+      <div class="chips">${b.length ? `<button class="chip" type="button" data-calcgod="${g.s}" data-calcrole="${Object.keys(g.roles)[0]}">${L("Ver cuánto pega", "See damage")}</button>` : ""}<button class="chip" type="button" data-slug="${g.s}" data-go="god">${L("Ver builds", "See builds")}</button></div>
+    </article>`; };
+  const cols = META_CLS.map(([cls, es, en]) => { const xs = metaRows.filter(m => m.g.cls === cls && m.n).sort((a, b) => b.score - a.score).slice(0, 3);
+    return `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Posible meta", "Possible meta")}</span><h2>${L(es, en)}</h2></div><div class="meta-grid">${xs.map(card).join("")}</div></section>`; }).join("");
+  const down = metaRows.filter(m => m.d < -0.5).sort((a, b) => a.d - b.d);
+  const novos = G.filter(g => !g.tn);
+  el.innerHTML = `<div class="sec-head"><span class="eyebrow">${L("Pronóstico", "Forecast")} · ${esc(NOV.parche || "")}</span><h2>${L("Posible meta de Joust", "Possible Joust meta")}</h2>
+      <p>${L(`Los 3 mejores de cada clase si juntamos cómo les fue en el OB47 con lo que el ${esc(NOV.parche || "")} les subió o les bajó, a ellos y a los objetos que compran. Es una deducción: lo confirmamos cuando haya partidas del parche nuevo.`, "Top 3 per class combining OB47 results with this patch's buffs and nerfs to them and their items. A deduction until new-patch matches exist.")}</p></div>
+    ${cols}
+    ${down.length ? `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Los que bajan", "Going down")}</span><h2>${L("Nerfeados o con objetos nerfeados", "Nerfed or with nerfed items")}</h2></div><div class="foes">${down.map(m => `<button class="foe" type="button" data-slug="${m.g.s}" data-go="god">${face(m.g)}<span>${esc(N(m.g))} · ${m.d.toFixed(1)}</span></button>`).join("")}</div></section>` : ""}
+    ${novos.length ? `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Sin datos", "No data")}</span><h2>${L("Nuevos", "New")}</h2><p>${L("Todavía no hay partidas de Joust con ellos, así que no entran al pronóstico.", "No Joust matches yet.")}</p></div><div class="foes">${novos.map(g => `<button class="foe" type="button" data-slug="${g.s}" data-go="god">${face(g)}<span>${esc(N(g))}</span></button>`).join("")}</div></section>` : ""}
+    <details class="orig"><summary>${L("Cómo se calcula", "How it's calculated")}</summary><ul class="plain">
+      <li>${L("Punto de partida: su porcentaje de victorias en Joust del OB47, acercado a 50% cuando tiene pocas partidas (como si tuviera 40 partidas más empatadas).", "Start: OB47 Joust win rate, pulled toward 50% for small samples.")}</li>
+      <li>${L("Cambios al dios: un buff suma y un nerf resta puntos según qué tan grande es (de 0.5 a 3). Reworks y cambios mixtos no suman ni restan.", "God changes add or subtract 0.5–3 points.")}</li>
+      <li>${L("Cambios a objetos: los puntos del cambio por el % de partidas en que ese dios compra el objeto (solo si es 10% o más).", "Item changes: points × how often the god buys the item.")}</li>
+      <li>${L("Los cambios a un aspecto se cuentan para todo el dios. Los puntos los pusimos nosotros leyendo las notas del parche.", "Aspect changes count for the whole god. Points are our own reading of the notes.")} <span class="pend">${L("deducción", "deduction")}</span></li>
+    </ul></details>`;
+}
+
 function renderNovedades() {
   const el = $("#v-novedades");
   if (!NOVC.length) { el.innerHTML = `<p class="empty">${L("Todavía no hay notas de parche: se agregan en src/curado/novedades.json.", "No patch notes yet.")}</p>`; return; }
@@ -1607,7 +1663,7 @@ function renderNovedades() {
 }
 
 // ---------- Vistas ----------
-const VIEWS = [["dioses", "Dioses", "Gods"], ["novedades", "Novedades", "Patch"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["creador", "Creador", "Build maker"], ["calculadora", "Calculadora", "Calculator"], ["chat-rapido", "Chat rápido", "Quick chat"]];
+const VIEWS = [["dioses", "Dioses", "Gods"], ["novedades", "Novedades", "Patch"], ["meta", "Posible meta", "Possible meta"], ["habilidades", "Habilidades", "Abilities"], ["combos", "Combos", "Combos"], ["sinergias", "Sinergias", "Synergies"], ["objetos", "Objetos", "Items"], ["creador", "Creador", "Build maker"], ["calculadora", "Calculadora", "Calculator"], ["chat-rapido", "Chat rápido", "Quick chat"]];
 let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
@@ -1619,6 +1675,7 @@ function setView(v, keepHash) {
   renderViews();
   if (view === "habilidades") renderHabilidades();
   if (view === "novedades") renderNovedades();
+  if (view === "meta") renderMeta();
   if (view === "combos") renderCombos();
   if (view === "sinergias") renderSinergias();
   if (view === "objetos") renderObjetos();
