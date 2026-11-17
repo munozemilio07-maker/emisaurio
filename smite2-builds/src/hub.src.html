@@ -146,6 +146,14 @@ kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; 
 .evoic { width: 40px; height: 40px; border: 1px solid var(--gold-deep); flex: none; }
 .probar.roto { border-color: var(--ember); box-shadow: 0 0 0 1px rgba(255,125,69,.4), 0 0 30px rgba(255,125,69,.12); }
 .roto-tag { color: var(--ember); } .c-alta { color: var(--ok); } .c-media { color: var(--gold); } .c-baja { color: var(--muted); }
+.tierrow { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line); }
+.tierlbl { display: grid; place-items: center; height: 56px; font-family: var(--font-head); font-weight: 700; font-size: 26px; border: 1px solid var(--gold-deep); background: var(--void); color: var(--gold); }
+.tierlbl.tS { background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: #1a1305; }
+.tierlbl.tA { color: var(--gold-hi); } .tierlbl.tD { color: var(--muted); border-color: var(--line); } .tierlbl.tN { font-size: 12px; text-align: center; color: var(--muted); border-color: var(--line); }
+.itile .flag { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 0 5px; border: 1px solid currentColor; }
+.flag.fs { color: var(--ice); } .flag.fc { color: var(--ember); }
+.tier.it-t { position: static; display: inline-grid; margin-left: 6px; }
+@media (max-width: 520px) { .tierrow { grid-template-columns: 48px minmax(0, 1fr); } .tierlbl { height: 44px; font-size: 20px; } }
 .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .step { display: inline-grid; justify-items: center; gap: 3px; min-width: 46px; padding: 8px 10px 6px; border: 1px solid var(--line); background: var(--void); }
 .step b { font-family: var(--font-head); font-size: 18px; line-height: 1; color: var(--ink); }
@@ -853,6 +861,33 @@ function itemStats(r) {
   if (ad) rows.unshift(L(`+${ad[1]} Fuerza o +${ad[2]} Inteligencia (según lo que más tengas)`, `+${ad[1]} Strength or +${ad[2]} Intelligence`));
   return rows;
 }
+// ---------- Tier list y combinaciones de objetos ----------
+const ITIERS = DATA.item_tiers || {};
+const ISIN = CURADO.items_sinergias || {};
+const ISTATS = ISIN.stats || {};
+const ISCALE = Object.fromEntries((ISIN.objetos || []).map(x => [x.item, x]));
+const SITU_ITEMS = new Set([...(GUIA.contra_control || []).map(c => c.item), ...((GUIA.situaciones || []).flatMap(x => Object.values(x.sugerencias || {}).flat()))]);
+const CHANGED_ITEMS = new Set(NOVC_ITEMS());
+function NOVC_ITEMS() { return (((CURADO.novedades || {}).cambios) || []).filter(c => c.tipo === "objeto").map(c => c.ref); }
+const isFinal = r => r && iComplete(r) && (r.tipo === "pasivo" || r.tipo === "activo") && r.categoria !== "de_un_dios";
+// Cuánto de un stat da un objeto. adaptive = viene de «Adaptive Stat» (solo cuenta si ese es tu stat principal).
+function statOf(r, key) {
+  const def = ISTATS[key] || {}; let v = 0, adaptive = 0;
+  if (def.items_regex) return { v: new RegExp(def.items_regex, "i").test(r.texto_en) ? 1 : 0, adaptive: 0 };
+  for (const [tag, val] of r.stats) if ((def.tags || []).includes(tag)) v += val;
+  const ad = /Adaptive Stat: \+(\d+) Strength or \+(\d+) Intelligence/.exec(r.texto_en);
+  if (ad && (key === "int" || key === "str" || key === "ad")) adaptive = key === "int" ? +ad[2] : +ad[1];
+  return { v, adaptive };
+}
+function fuelFor(key, exclude) {
+  if (!ISTATS[key] || ISTATS[key].mejor_al_final) return [];
+  return ITEMS.filter(r => isFinal(r) && r.id !== exclude).map(r => [r, statOf(r, key)]).filter(([, x]) => x.v + x.adaptive > 0)
+    .sort((a, b) => (b[1].v + b[1].adaptive) - (a[1].v + a[1].adaptive)).slice(0, 10);
+}
+const statName = k => ISTATS[k] ? L(ISTATS[k].nombre, ISTATS[k].nombre_en || ISTATS[k].nombre) : k;
+const fuelMini = ([r, x], key) => `<button class="foe" type="button" data-item="${r.id}" title="${esc(r.nombre)}"><span class="face spr-a" style="${posA(r.i)}"></span><span>${esc(iName(r))}${ISTATS[key].items_regex ? "" : ` · ${x.v ? "+" + x.v : ""}${x.adaptive ? `${x.v ? " " : "+"}${x.adaptive}*` : ""}`}</span></button>`;
+const tierBadge = id => { const t = ITIERS[id]; if (!t) return ""; return `<span class="tier it-t t${t.t === "?" ? "N" : t.t}" title="${t.t === "?" ? L("Pocas partidas", "Few games") : L(`${t.n} partidas`, `${t.n} games`)}">${t.t === "?" ? "–" : t.t}</span>`; };
+
 function itemFicha(r) {
   const cat = iCat(r), needs = itemNeeds(r), nota = (GUIA.notas_items || {})[r.id];
   const counteredBy = (GUIA.counters || []).filter(c => sideItems(c.contra).includes(r) && !sideItems(c.respuesta).includes(r));
@@ -874,6 +909,9 @@ function itemFicha(r) {
       <div class="fcols">
       ${block(L("Stats", "Stats"), stats.length ? `<div class="fxs">${stats.map(x => `<span class="fx on">${esc(x)}</span>`).join("")}</div>` : `<p class="muted">${L("No da stats fijas.", "No flat stats.")}</p>`)}
       ${block(L("Qué hace", "What it does"), `${lang === "es" && r.descripcion_es ? `<p class="lead">${esc(r.descripcion_es)}</p>` : ""}${r.texto_en ? `<div class="gtext"><span class="muted">${L("Texto del juego:", "In-game text:")}</span>${r.texto_en.split("\n").map(l => `<p>${esc(l)}</p>`).join("")}</div>` : `<p class="muted">${L("Sin pasiva ni activa: solo da stats.", "No passive or active: stats only.")}</p>`}`)}
+      ${ITIERS[r.id] ? block(L("Tier en Joust", "Joust tier"), (() => { const x = ITIERS[r.id]; return x.t === "?" ? `<p class="muted">${L(`Pocas partidas para calificarlo (${x.n}).`, `Too few games to rate (${x.n}).`)}</p>` : `<p><span class="tier it-t t${x.t}" style="position:static;display:inline-grid">${x.t}</span> ${L(`Gana ${x.d > 0 ? "+" : ""}${x.d} puntos sobre lo esperado para los dioses que lo compran (${x.wr}% de victorias en ${x.n} partidas del ${DATA.patch}).`, `${x.d > 0 ? "+" : ""}${x.d} points over what its buyers usually win (${x.wr}% in ${x.n} ${DATA.patch} games).`)}</p>${SITU_ITEMS.has(r.id) ? `<p class="muted">${L("Es un objeto situacional: se compra cuando ya vas perdiendo contra algo, así que su tier sale más bajo de lo que vale en su momento.", "Situational item: bought when already losing to something, so its tier understates it.")}</p>` : ""}${CHANGED_ITEMS.has(r.id) ? `<p class="muted">${L("Cambió en el parche nuevo: este tier todavía es del anterior.", "Changed this patch: this tier is from the previous one.")}</p>` : ""}`; })()) : ""}
+      ${ISCALE[r.id] ? block(L("Con qué combina", "What it pairs with"), (() => { const sc = ISCALE[r.id], fuel = fuelFor(sc.escala_con, r.id); return `<p>${esc(L(sc.explicacion, sc.explicacion_en || sc.explicacion))}${pendTag(sc)}</p>${sc.nota ? `<p class="muted">${esc(sc.nota)}</p>` : ""}${fuel.length ? `<p class="muted">${L(`Los que más ${statName(sc.escala_con).toLowerCase()} dan:`, `Items giving the most ${statName(sc.escala_con).toLowerCase()}:`)}</p><div class="foes">${fuel.map(f => fuelMini(f, sc.escala_con)).join("")}</div>${fuel.some(([, x]) => x.adaptive) ? `<p class="muted" style="font-size:13px">${L("* stat adaptativo: solo cuenta si ese es tu stat principal.", "* adaptive stat: only counts if it is your main stat.")}${sc.solo_de_objetos ? L(" Este objeto solo cuenta lo que dan tus objetos.", " This item only counts stats from items.") : ""}</p>` : ""}` : ""}`; })()) : ""}
+      ${(() => { const users = Object.values(ISCALE).filter(sc => sc.item !== r.id && fuelFor(sc.escala_con, sc.item).some(([x]) => x.id === r.id)).map(sc => IBY[sc.item]).filter(Boolean); return users.length ? block(L("Le da combustible a", "Fuels"), `<div class="foes">${users.map(iMini).join("")}</div>`) : ""; })()}
       ${block(L("Cuándo comprarlo", "When to buy it"), (nota || needs.length) ? `<ul class="plain">${nota ? `<li>${esc(nota.cuando)}</li>` : ""}${needs.map(n => `<li><button class="linkb" type="button" data-need="${n.id}">${esc(L(n.nombre, n.nombre_en || n.nombre))}</button>: ${esc(n.cuando)}</li>`).join("")}</ul>` : `<p class="muted">${L("Todavía no hay consejo escrito para este objeto.", "No buying advice written yet.")}</p>`)}
       ${ctrl ? block(L("Contra el control", "Against crowd control"), `<p>${esc(ctrl.efecto)}</p><p class="muted">${esc(ctrl.cuando)}</p>`) : ""}
       ${block(L("Qué lo contrarresta", "What counters it"), counteredBy.map(c => `<div class="cline"><p>${esc(c.explicacion)}</p><div class="foes">${sideItems(c.respuesta).slice(0, 10).map(iMini).join("")}</div></div>`).join(""))}
@@ -887,7 +925,7 @@ function itemFicha(r) {
 function renderObjetos() {
   const el = $("#v-objetos");
   if (!ITEMS.length) { el.innerHTML = `<p class="empty">${L("Falta src/curado/items_catalogo.json.", "src/curado/items_catalogo.json is missing.")}</p>`; return; }
-  const tabs = [["catalogo", L("Catálogo", "Catalog")], ["counters", "Counters"], ["control", L("Contra el control", "Against crowd control")]];
+  const tabs = [["catalogo", L("Catálogo", "Catalog")], ["tier", "Tier list"], ["combinaciones", L("Combinaciones", "Pairings")], ["counters", "Counters"], ["control", L("Contra el control", "Against crowd control")]];
   const seg = `<div class="seg" role="group">${tabs.map(([k, l]) => `<button type="button" data-ittab="${k}" aria-pressed="${itTab === k}">${l}</button>`).join("")}</div>`;
   let body = "";
   if (itTab === "catalogo") {
@@ -907,6 +945,21 @@ function renderObjetos() {
         <p class="muted">${L(`${list.length} objetos. Toca uno para ver su ficha.`, `${list.length} items. Tap one to open it.`)}</p>
         <div class="itiles">${list.map(iTile).join("") || `<p class="empty">${L("Ningún objeto con esos filtros.", "No items match.")}</p>`}</div>
       </div>`;
+  } else if (itTab === "tier") {
+    const cats = ["ofensivo", "defensivo", "hibrido", "especial"];
+    const pool = ITEMS.filter(r => isFinal(r) && ITIERS[r.id] && (itCat === "all" || iCat(r) === itCat));
+    const groups = ["S", "A", "B", "C", "D", "?"].map(t => [t, pool.filter(r => ITIERS[r.id].t === t).sort((a, b) => ITIERS[b.id].d - ITIERS[a.id].d)]).filter(([, xs]) => xs.length);
+    const tile = r => `<button class="itile" type="button" data-item="${r.id}" title="${esc(r.nombre)} · ${ITIERS[r.id].n} ${L("partidas", "games")}"><span class="ic spr-a" style="${posA(r.i)}"></span><span class="nm">${esc(iName(r))}</span>${SITU_ITEMS.has(r.id) ? `<span class="flag fs">${L("situacional", "situational")}</span>` : ""}${CHANGED_ITEMS.has(r.id) ? `<span class="flag fc">${L("cambió", "changed")}</span>` : ""}</button>`;
+    body = `<p class="rule">${L(`Ordenados por cuánto ganan por encima de lo esperado para los dioses que los compran, en partidas de Joust del ${DATA.patch} (así un objeto no sube solo porque lo usa un dios fuerte). «Situacional» se compra cuando ya vas perdiendo contra algo, y por eso sale más bajo. «Cambió» se tocó en el parche nuevo y su tier todavía es del anterior.`, `Ranked by how much more they win than their buyers usually do, in ${DATA.patch} Joust games. "Situational" items are bought when already losing, so they rank lower. "Changed" items were touched this patch.`)}</p>
+      <div class="chips">${[["all", L("Todos", "All")], ...cats.map(c => [c, L(ICATS[c][0], ICATS[c][1])])].map(([k, l]) => `<button class="chip" type="button" data-itcat="${k}" aria-pressed="${itCat === k}">${l}</button>`).join("")}</div>
+      ${groups.map(([tt, xs]) => `<section class="tierrow"><div class="tierlbl t${tt === "?" ? "N" : tt}">${tt === "?" ? L("Sin datos", "No data") : tt}</div><div class="itiles">${xs.map(tile).join("")}</div></section>`).join("")}`;
+  } else if (itTab === "combinaciones") {
+    const byStat = {};
+    for (const sc of ISIN.objetos || []) if (IBY[sc.item]) (byStat[sc.escala_con] = byStat[sc.escala_con] || []).push(sc);
+    body = `<p class="rule">${L("Objetos que escalan con un stat: rinden mucho más cuando el resto de tu build da ese stat. Por ejemplo, Nimble Ring con objetos de mucha Inteligencia. Leído de la descripción de cada objeto; los compañeros salen ordenados por cuánto de ese stat dan.", "Items that scale with a stat get much better when the rest of the build gives it, e.g. Nimble Ring with high-Intelligence items.")}</p>
+      ${Object.keys(ISTATS).filter(k => byStat[k]).map(k => `<section class="panel"><div class="sec-head"><span class="eyebrow">${L("Escalan con", "Scale with")}</span><h2>${esc(statName(k))}</h2></div>
+        <div class="sits">${byStat[k].map(sc => { const it = IBY[sc.item], fuel = fuelFor(k, sc.item).slice(0, 6); return `<article class="sit"><h3>${iMini(it)}${tierBadge(it.id)}${pendTag(sc)}</h3><p class="why" style="color:#d7d1bf;font-size:14.5px">${esc(L(sc.explicacion, sc.explicacion_en || sc.explicacion))}</p>${fuel.length ? `<div><span class="eyebrow">${L("Combínalo con", "Pair it with")}</span><div class="foes" style="margin-top:6px">${fuel.map(f => fuelMini(f, k)).join("")}</div></div>` : ""}</article>`; }).join("")}</div></section>`).join("")}
+      <p class="muted" style="font-size:13px">${L("* stat adaptativo: solo cuenta si ese es tu stat principal.", "* adaptive stat: only counts if it is your main stat.")}</p>`;
   } else if (itTab === "counters") {
     body = `<div class="combos">${(GUIA.counters || []).map(c => `<article class="sit"><h3>${esc(c.titulo)}${pendTag(c)}</h3><p class="why" style="color:#d7d1bf;font-size:15px">${esc(c.explicacion)}</p>
       <div><span class="eyebrow">${L("El problema", "The problem")}</span><div class="foes" style="margin-top:6px">${sideItems(c.contra).slice(0, 16).map(iMini).join("")}</div></div>
@@ -986,6 +1039,10 @@ function bldSummary(g, r) {
   for (const st of SITS) { const hot = out[st.id]; if (!hot) continue; const all = Object.values(st.picks).flat(); if (!ids.some(id => all.includes(id))) warns.push(L(`${st.t} (${hot.join(", ")}) y tu build no lleva nada para eso.`, `${st.t_en || st.t} (${hot.join(", ")}) and your build has no answer.`)); }
   if (ids.filter(id => inNeed(id, "antiheal")).length > 1) warns.push(L("Llevas más de un antiheal: sus efectos no se suman, sobra uno.", "More than one anti-heal: they do not stack."));
   if (ids.length === 6 && nDef + nHyb === 0 && r.prof !== "aa") warns.push(L("Seis objetos de daño y ninguno de aguante: cualquier control te mata.", "Six damage items and no durability."));
+  for (const id of ids) { const sc = ISCALE[id]; const def = sc && ISTATS[sc.escala_con]; if (!def || !def.minimo) continue;
+    const others = (st ? ids.concat([st]) : ids).filter(x => x !== id);
+    let fuel = 0; for (const x of others) { const o = statOf(IBY[x], sc.escala_con); fuel += o.v + ((sc.escala_con === "int") === useInt || sc.escala_con === "ad" && !useInt ? o.adaptive : 0); }
+    if (fuel < def.minimo) warns.push(L(`${iName(IBY[id])} escala con ${statName(sc.escala_con).toLowerCase()}, y el resto de tu build solo suma ${Math.round(fuel)} (conviene ${def.minimo} o más).`, `${IBY[id].nombre} scales with ${statName(sc.escala_con).toLowerCase()}, and the rest of your build only adds ${Math.round(fuel)} (aim for ${def.minimo}+).`)); }
   if (ids.filter(id => IBY[id].tipo === "activo").length > 3) warns.push(L("Más de tres objetos activos: son muchos botones para usar en una pelea.", "More than three actives: a lot of buttons in a fight."));
   const passives = ids.map(id => { const it = IBY[id]; const txt = lang === "es" && it.descripcion_es ? it.descripcion_es : (it.texto_en.split("\n").find(l => !/^Adaptive Stat/.test(l)) || ""); return `<li><b>${esc(iName(it))}:</b> ${esc(txt)}</li>`; }).join("");
   return `<p class="lead" style="font-size:17px">${perfil}</p>

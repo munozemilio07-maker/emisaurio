@@ -224,7 +224,32 @@ for i,k in enumerate(ids):
     es=ES.get(k,(x['name'],''))
     I[k]=dict(n=es[0],e=x['name'].strip(),d=es[1],de=clean_en(x['desc']),s=chips[:4],se=chipsE[:4],c=cat(k) if x['type'] in('Passive','Active') else 'x',i=i,g=round(x['cost']))
 sh.save(OUT+'/img/items.webp',quality=84,method=6)
-data=dict(patch=STATS_PATCH.upper(),parche_juego=GAME_PATCH,mode='joust',gc=GC,gr=sheet.height//S,ic=IC,ir=sh.height//T,items=I,gods=gods)
+# Tier list de objetos: victorias por encima de lo esperado para los dioses que lo compran
+# (cada partida espera el % de victorias suavizado de su dios), suavizado con K=40 partidas.
+def item_tiers():
+    _cat={r['id']:r for r in _CAT}
+    def ok(x):
+        r=_cat.get(x); return r and r['tipo'] in('pasivo','activo') and r['categoria']!='de_un_dios' and (r['nivel']=='T3' or (r['nivel']=='' and r['costo']>=2000))
+    acc={}
+    for f in glob.glob('joust/*.json'):
+        ms=[m for m in json.load(open(f)) if m['patch']==STATS_PATCH]
+        if not ms: continue
+        p=(sum(m['w'] for m in ms)+20)/(len(ms)+40)
+        for m in ms:
+            its=[ID2SL.get(x) for x in (m['ids'].split('|')+[''])[1].split(',')][:6]
+            for i,x in enumerate(its):
+                if x and ok(x):
+                    a=acc.setdefault(x,[0,0.0,0,0]); a[0]+=1; a[1]+=m['w']-p; a[2]+=m['w']; a[3]+=i+1
+    out={}
+    for x,(n,ex,w,sl_) in acc.items():
+        d=100*ex/(n+40)
+        t=('S' if d>=5 else 'A' if d>=2 else 'B' if d>=-2 else 'C' if d>=-5 else 'D') if n>=100 else '?'
+        out[x]=dict(t=t,n=n,wr=round(100*w/n,1),d=round(d,1),slot=round(sl_/n,1))
+    return out
+ITEM_TIERS=item_tiers()
+from collections import Counter as _C
+print('tiers de objetos:',_C(v['t'] for v in ITEM_TIERS.values()))
+data=dict(patch=STATS_PATCH.upper(),item_tiers=ITEM_TIERS,parche_juego=GAME_PATCH,mode='joust',gc=GC,gr=sheet.height//S,ic=IC,ir=sh.height//T,items=I,gods=gods)
 json.dump(data,open('data.json','w'),ensure_ascii=False,separators=(',',':'))
 print(len(gods),'dioses',len(ids),'items')
 

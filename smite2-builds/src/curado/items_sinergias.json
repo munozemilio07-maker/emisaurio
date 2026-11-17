@@ -1,0 +1,627 @@
+{
+ "_como_editar": "Con qué stat escala cada objeto (leído de su descripción). 'escala_con' usa una clave de 'stats'. La página calcula sola qué objetos dan más de ese stat. 'solo_de_objetos': true si la descripción dice «from items» (no cuentan los stats base del dios ni los bonos de otros objetos). 'minimo' es lo que pide la página antes de dejar de avisar en el creador.",
+ "stats": {
+  "int": {
+   "nombre": "Inteligencia",
+   "nombre_en": "Intelligence",
+   "tags": [
+    "MagicalPower"
+   ],
+   "minimo": 200
+  },
+  "str": {
+   "nombre": "Fuerza",
+   "nombre_en": "Strength",
+   "tags": [
+    "PhysicalPower"
+   ],
+   "minimo": 100
+  },
+  "ad": {
+   "nombre": "Fuerza y daño de ataque",
+   "nombre_en": "Strength and Attack Damage",
+   "tags": [
+    "InhandPower",
+    "PhysicalPower"
+   ],
+   "minimo": 100
+  },
+  "as": {
+   "nombre": "Velocidad de ataque",
+   "nombre_en": "Attack Speed",
+   "tags": [
+    "AttackSpeedPercent"
+   ],
+   "minimo": 50
+  },
+  "crit": {
+   "nombre": "Probabilidad de crítico",
+   "nombre_en": "Critical chance",
+   "tags": [
+    "CritChance"
+   ],
+   "minimo": 15
+  },
+  "prot": {
+   "nombre": "Protecciones",
+   "nombre_en": "Protections",
+   "tags": [
+    "PhysicalProtection",
+    "MagicalProtection",
+    "PhysicalProtectionItem",
+    "MagicalProtectionItem"
+   ],
+   "minimo": 150
+  },
+  "hp": {
+   "nombre": "Vida",
+   "nombre_en": "Health",
+   "tags": [
+    "MaxHealth"
+   ],
+   "minimo": 800
+  },
+  "ls": {
+   "nombre": "Robo de vida",
+   "nombre_en": "Lifesteal",
+   "tags": [
+    "LifeStealPercent"
+   ],
+   "minimo": 10
+  },
+  "mana": {
+   "nombre": "Maná",
+   "nombre_en": "Mana",
+   "tags": [
+    "MaxMana"
+   ],
+   "minimo": 500
+  },
+  "echo": {
+   "nombre": "Eco",
+   "nombre_en": "Echo",
+   "tags": [
+    "EchoItem"
+   ],
+   "minimo": 10
+  },
+  "heal": {
+   "nombre": "Curación a aliados",
+   "nombre_en": "Ally healing",
+   "items_regex": "Increased Healing and Shielding"
+  },
+  "todo": {
+   "nombre": "Muchos stats",
+   "nombre_en": "Lots of stats",
+   "mejor_al_final": true
+  }
+ },
+ "objetos": [
+  {
+   "item": "nimble-ring",
+   "escala_con": "int",
+   "explicacion": "Por cada 10 de Inteligencia te da +1 de daño de ataque y +1% de velocidad de ataque. Con 400 de Inteligencia son +40 de daño de ataque y +40% de velocidad: necesita objetos que den mucha.",
+   "explicacion_en": "Every 10 Intelligence gives +1 Attack Damage and +1% Attack Speed. Needs lots of Intelligence.",
+   "solo_de_objetos": false,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "rod-of-tahuti",
+   "escala_con": "int",
+   "explicacion": "Suma 25% de la Inteligencia que dan tus objetos. Mientras más Inteligencia de objetos lleves, más aporta.",
+   "explicacion_en": "Adds 25% of your Intelligence from items.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "soul-reaver",
+   "escala_con": "int",
+   "explicacion": "Desde el OB48, su daño por vida del rival sube con la Inteligencia de tus objetos (+1% por cada 80).",
+   "explicacion_en": "Since OB48 its %-health damage grows with Intelligence from items (+1% per 80).",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "polynomicon",
+   "escala_con": "int",
+   "explicacion": "Tras usar una habilidad, tu siguiente básico pega 80% de tu Inteligencia.",
+   "explicacion_en": "After an ability, your next basic attack deals 80% of your Intelligence.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "soul-gem",
+   "escala_con": "int",
+   "explicacion": "Cada tres habilidades acertadas, la siguiente pega 40% de tu Inteligencia extra.",
+   "explicacion_en": "Every third ability hit deals 40% of your Intelligence as bonus damage.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "divine-ruin",
+   "escala_con": "int",
+   "explicacion": "Su rayo en cadena pega 40 + 20% de tu Inteligencia (el antiheal no depende de eso).",
+   "explicacion_en": "Its chain lightning deals 40 + 20% Intelligence.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "dreamers-idol",
+   "escala_con": "int",
+   "explicacion": "Al activarlo te da +25% de Inteligencia por 10 s: rinde más con mucha Inteligencia.",
+   "explicacion_en": "Active: +25% Intelligence for 10s.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "blood-bound-book",
+   "escala_con": "int",
+   "explicacion": "Su escudo es 7.5% de tu vida máxima + 75% de la Inteligencia de tus objetos.",
+   "explicacion_en": "Shield = 7.5% Max Health + 75% Intelligence from items.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "death-metal",
+   "escala_con": "int",
+   "explicacion": "Al activarlo pierdes toda tu Inteligencia y ganas 66% de ella como Fuerza, más 25% de crítico, por 6 s. Solo tiene sentido con mucha Inteligencia y ataques básicos que puedan aprovechar la Fuerza.",
+   "explicacion_en": "Active: lose all Intelligence, gain 66% of it as Strength plus 25% crit for 6s.",
+   "nota": "Combinación rara: falta probar con qué dioses rinde.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": true
+  },
+  {
+   "item": "the-crusher",
+   "escala_con": "str",
+   "explicacion": "Tus habilidades hacen daño extra igual a 35% de tu Fuerza.",
+   "explicacion_en": "Abilities deal bonus damage equal to 35% of your Strength.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "heartseeker",
+   "escala_con": "str",
+   "explicacion": "Tus habilidades pegan un % de la vida máxima del rival igual a 2% de tu Fuerza (con 200 de Fuerza, 4%).",
+   "explicacion_en": "Abilities deal %-max-health damage equal to 2% of your Strength.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "avatars-parashu",
+   "escala_con": "str",
+   "explicacion": "Al activarlo te da +25% de Fuerza por 10 s.",
+   "explicacion_en": "Active: +25% Strength for 10s.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "arondight",
+   "escala_con": "str",
+   "explicacion": "El primer golpe a un dios revelado pega 50 + 50% de tu Fuerza.",
+   "explicacion_en": "First hit on a revealed god deals 50 + 50% Strength.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "bloodforge",
+   "escala_con": "str",
+   "explicacion": "Su escudo es 10% de tu vida máxima + 150% de la Fuerza de tus objetos.",
+   "explicacion_en": "Shield = 10% Max Health + 150% Strength from items.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "qins-blade",
+   "escala_con": "ad",
+   "explicacion": "Desde el OB48, su daño por vida del rival sube con el daño de ataque y la Fuerza de tus objetos (+1% por cada 30).",
+   "explicacion_en": "Since OB48 its %-health damage grows with Attack Damage and Strength from items (+1% per 30).",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "odysseus-bow",
+   "escala_con": "ad",
+   "explicacion": "Cada cuarto ataque lanza un rayo en cadena de 15 + 60% de tu daño de ataque.",
+   "explicacion_en": "Every fourth attack fires chain lightning for 15 + 60% Attack Damage.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "lernaean-bow",
+   "escala_con": "ad",
+   "explicacion": "Sus flechas pegan 40% de tu daño de ataque y pueden ser crítico.",
+   "explicacion_en": "Its arrows deal 40% of your Attack Damage and can crit.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "silverbranch-bow",
+   "escala_con": "as",
+   "explicacion": "Dispara una flecha extra por cada punto de velocidad de ataque que tengas: rinde con mucha velocidad de ataque.",
+   "explicacion_en": "Fires one extra arrow per point of Attack Speed you have.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "deathbringer",
+   "escala_con": "crit",
+   "explicacion": "+35% de daño de crítico: solo sirve si ya tienes probabilidad de crítico.",
+   "explicacion_en": "+35% critical damage: only useful with crit chance.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "demon-blade",
+   "escala_con": "crit",
+   "explicacion": "Al dar crítico ganas +30% de velocidad de ataque: necesita probabilidad de crítico.",
+   "explicacion_en": "Critical hits grant +30% Attack Speed.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "musashis-dual-swords",
+   "escala_con": "crit",
+   "explicacion": "Al dar crítico ganas velocidad de movimiento: necesita probabilidad de crítico.",
+   "explicacion_en": "Critical hits grant Movement Speed.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "rage",
+   "escala_con": "crit",
+   "explicacion": "Gana probabilidad de crítico con kills y asistencias; combina con otros objetos de crítico.",
+   "explicacion_en": "Gains crit chance from kills; pairs with other crit items.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "gladiators-shield",
+   "escala_con": "prot",
+   "explicacion": "Tus habilidades pegan 10 + 40% de tus protecciones de objetos.",
+   "explicacion_en": "Abilities deal 10 + 40% of your item Protections.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "golden-blade",
+   "escala_con": "prot",
+   "explicacion": "Tus ataques pegan en área 10 + 20% de tus protecciones de objetos.",
+   "explicacion_en": "Attacks deal 10 + 20% of item Protections in an area.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "runeforged-hammer",
+   "escala_con": "prot",
+   "explicacion": "Al controlar a un dios y pegarle, haces 50 + 65% de tus protecciones de objetos.",
+   "explicacion_en": "After CC, your attack deals 50 + 65% of item Protections.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "glorious-pridwen",
+   "escala_con": "prot",
+   "explicacion": "Explota por 40% de tus protecciones y te da un escudo de 125% de ellas.",
+   "explicacion_en": "Explodes for 40% of your Protections and shields you for 125%.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "shroud-of-vengeance",
+   "escala_con": "prot",
+   "explicacion": "Al recibir control fuerte suelta una onda de 50 + 40% de tus protecciones.",
+   "explicacion_en": "When hard CC'd, releases a shockwave for 50 + 40% of your Protections.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "prophetic-cloak",
+   "escala_con": "prot",
+   "explicacion": "Al cargarse da 6% de mitigación, o 12% si tus protecciones pasan de 300.",
+   "explicacion_en": "When evolved gives 6% mitigation, or 12% above 300 Protections.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "erosion",
+   "escala_con": "prot",
+   "explicacion": "Cuando rompe escudos te da +10% de tus protecciones (hasta 2 veces).",
+   "explicacion_en": "When reducing shields, gain +10% of your Protections (stacks twice).",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "kinetic-cuirass",
+   "escala_con": "hp",
+   "explicacion": "Su onda pega 40 + 4% de tu vida.",
+   "explicacion_en": "Its shockwave deals 40 + 4% of your Health.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "phoenix-feather",
+   "escala_con": "hp",
+   "explicacion": "Su daño verdadero es 3% de la vida máxima que dan tus objetos.",
+   "explicacion_en": "Its true damage is 3% of Max Health from items.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "yogis-necklace",
+   "escala_con": "hp",
+   "explicacion": "Te cura 0.5% de tu vida máxima por segundo.",
+   "explicacion_en": "Heals 0.5% of your Max Health per second.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "sphere-of-negation",
+   "escala_con": "hp",
+   "explicacion": "Genera un escudo mágico de hasta 14% de tu vida máxima.",
+   "explicacion_en": "Builds a magical shield up to 14% of your Max Health.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "barbed-carver",
+   "escala_con": "ls",
+   "explicacion": "Cada carga suma 8% de daño, +1% por cada 10% de robo de vida que tengas.",
+   "explicacion_en": "Each stack adds 8% damage, +1% per 10% Lifesteal.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "sanguine-lash",
+   "escala_con": "ls",
+   "explicacion": "Su aura pega 0.75% de vida por segundo, +0.66% por cada 10% de robo de vida.",
+   "explicacion_en": "Its aura deals 0.75% Health per second, +0.66% per 10% Lifesteal.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "umbral-link",
+   "escala_con": "ls",
+   "explicacion": "Comparte tu curación por robo de vida con tus aliados: necesita robo de vida.",
+   "explicacion_en": "Shares your lifesteal healing with allies.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "typhons-heart",
+   "escala_con": "ls",
+   "explicacion": "Su monstruo pega 300% de tu robo de vida y 30% de tu Inteligencia.",
+   "explicacion_en": "Its monster deals 300% of your Lifesteal and 30% of your Intelligence.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "gluttonous-grimoire",
+   "escala_con": "ls",
+   "explicacion": "Guarda la mitad de tu curación por robo de vida como daño extra para tu siguiente ataque.",
+   "explicacion_en": "Stores half your lifesteal healing as bonus damage on your next attack.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "book-of-thoth",
+   "escala_con": "mana",
+   "explicacion": "Te da Inteligencia igual a 5% del maná de tus objetos (y se carga farmeando).",
+   "explicacion_en": "Grants Intelligence equal to 5% of Mana from items.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "transcendence",
+   "escala_con": "mana",
+   "explicacion": "Te da Fuerza igual a 3% del maná de tus objetos (y se carga farmeando).",
+   "explicacion_en": "Grants Strength equal to 3% of Mana from items.",
+   "solo_de_objetos": true,
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "sun-beam-bow",
+   "escala_con": "mana",
+   "explicacion": "Mientras está activo gasta 5% de tu maná máximo por segundo: necesita maná.",
+   "explicacion_en": "While toggled on it drains 5% Max Mana per second.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "the-cosmic-horror",
+   "escala_con": "echo",
+   "explicacion": "Cada cierto número de Ecos invoca un tentáculo de 45% de tu Inteligencia: necesita Eco (y Inteligencia).",
+   "explicacion_en": "Every few Echoes spawns a tentacle for 45% of your Intelligence.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "totem-of-death",
+   "escala_con": "echo",
+   "explicacion": "Cada Eco pega 8% de la vida que le falta al rival: necesita Eco.",
+   "explicacion_en": "Each Echo deals 8% of the target's missing Health.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "omen-drum",
+   "escala_con": "echo",
+   "explicacion": "Cada Eco le da +10% de daño de Eco (hasta 30 cargas): necesita Eco.",
+   "explicacion_en": "Each Echo grants +10% Echo damage (up to 30 stacks).",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "eye-of-the-storm",
+   "escala_con": "echo",
+   "explicacion": "Tras 10 Ecos abre una tormenta de 10 + 20% de tu Fuerza: necesita Eco.",
+   "explicacion_en": "After 10 Echoes, opens a storm for 10 + 20% Strength.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "damaru",
+   "escala_con": "echo",
+   "explicacion": "Cada Eco que pega te da velocidad de movimiento: necesita Eco.",
+   "explicacion_en": "Each Echo hit grants Movement Speed.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "chandras-grace",
+   "escala_con": "heal",
+   "explicacion": "+20% a tus curaciones y escudos: rinde en dioses que curan o escudan a su equipo.",
+   "explicacion_en": "+20% healing and shielding: for gods who heal or shield allies.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "rod-of-asclepius",
+   "escala_con": "heal",
+   "explicacion": "+10% a curaciones y escudos, y cura más a aliados con poca vida: necesita habilidades de curación.",
+   "explicacion_en": "+10% healing and shielding, more on low-health allies.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "heartwood-charm",
+   "escala_con": "heal",
+   "explicacion": "Guarda parte de lo que curas con habilidades y lo suelta al activarlo: necesita curar.",
+   "explicacion_en": "Stores part of your ability healing and releases it on use.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "soul-locket",
+   "escala_con": "heal",
+   "explicacion": "Se carga al curar, escudar o potenciar aliados: necesita habilidades de apoyo.",
+   "explicacion_en": "Charges when you heal, shield or buff allies.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "lifebinder",
+   "escala_con": "heal",
+   "explicacion": "+8% a curaciones y escudos: para dioses que curan.",
+   "explicacion_en": "+8% healing and shielding.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "shell-of-rebuke",
+   "escala_con": "todo",
+   "explicacion": "Suma 7.5% de todos los stats de tus objetos: rinde más al final, con la build completa.",
+   "explicacion_en": "Adds 7.5% of all item stats: best late, with a full build.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "sundering-echo",
+   "escala_con": "todo",
+   "explicacion": "Suma 7.5% de todos los stats de tus objetos.",
+   "explicacion_en": "Adds 7.5% of all item stats.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "talisman-of-purification",
+   "escala_con": "todo",
+   "explicacion": "Suma 7.5% de todos los stats de tus objetos.",
+   "explicacion_en": "Adds 7.5% of all item stats.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "time-lock-aegis",
+   "escala_con": "todo",
+   "explicacion": "Suma 6% de todos los stats de tus objetos.",
+   "explicacion_en": "Adds 6% of all item stats.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "agility-greaves",
+   "escala_con": "todo",
+   "explicacion": "Suma 7.5% de todos los stats de tus objetos.",
+   "explicacion_en": "Adds 7.5% of all item stats.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "blinking-abyss",
+   "escala_con": "todo",
+   "explicacion": "Suma 5% de todos los stats de tus objetos.",
+   "explicacion_en": "Adds 5% of all item stats.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  }
+ ]
+}
