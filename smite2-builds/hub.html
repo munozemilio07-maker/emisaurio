@@ -53,6 +53,9 @@ a { color: var(--gold); }
 .view-btn { cursor: pointer; flex: none; background: none; border: 0; border-bottom: 2px solid transparent; padding: 14px 14px 12px; font-family: var(--font-head); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .view-btn:hover { color: var(--ink); }
 .view-btn[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
+/* En pantallas anchas las pestañas bajan a otra línea en vez de cortarse; en el teléfono se deslizan. */
+@media (min-width: 761px) { .views-in { flex-wrap: wrap; justify-content: center; overflow: visible; gap: 0 2px; } .view-btn { padding: 12px 11px 10px; letter-spacing: .1em; } }
+@media (max-width: 760px) { .views-in { mask-image: linear-gradient(90deg, #000 85%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); } }
 .fx { display: inline-block; font-size: 12px; padding: 1px 7px; border: 1px solid var(--line); color: #d7d1bf; white-space: nowrap; }
 .fx.on { border-color: var(--gold-deep); color: var(--gold); }
 .abil { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start; }
@@ -1668,6 +1671,7 @@ let view = "dioses";
 function renderViews() {
   $("#views").innerHTML = VIEWS.map(([id, es, en]) => `<button class="view-btn" type="button" data-view="${id}"${id === view ? ' aria-current="page"' : ""}>${L(es, en)}</button>`).join("");
   for (const [id] of VIEWS) { const el = $("#v-" + id); if (el) el.hidden = id !== view; }
+  const curBtn = $('#views [aria-current="page"]'); if (curBtn && curBtn.parentElement.scrollWidth > curBtn.parentElement.clientWidth) curBtn.parentElement.scrollLeft = curBtn.offsetLeft - 40;
 }
 function setView(v, keepHash) {
   if (BLD.open) { BLD.open = false; BLD.slot = null; document.body.classList.remove("noscroll"); }
