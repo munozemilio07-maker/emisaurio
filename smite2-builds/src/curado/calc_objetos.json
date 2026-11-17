@@ -1,5 +1,5 @@
 {
- "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (se activa con la casilla «cargas al máximo»). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana). 'dano_critico': objetos que suben el daño de los críticos (pct).",
+ "_como_editar": "Lo que la calculadora no puede sacar de los stats fijos del catálogo. 'cargas': lo que suma un objeto con sus cargas al máximo (cada objeto se puede poner con o sin cargas en la calculadora y en el creador; 'reduce_prot_rival' = % de protecciones que le quita al rival). 'en_pelea': efectos que solo cuentan peleando o según tu vida (casilla «en pelea»). 'conversiones': stats que dependen de otros (Rod of Tahuti, Book of Thoth…). 'pct_todo': objetos que suman un % de todos los stats de tus objetos. 'al_pegar': daño extra de los ataques básicos que no es un stat. Claves de stat: str, int, ad (daño de ataque), as (% vel. de ataque), crit, ls (% robo de vida), hp, mana, pf/pm (protección física/mágica), pen (penetración plana). 'dano_critico': objetos que suben el daño de los críticos (pct).",
  "cargas": [
   {
    "suma": {
@@ -74,6 +74,75 @@
    },
    "texto": "8 cargas al pegarle a dioses: +64 de daño de ataque por 10 s.",
    "item": "bracer-of-the-abyss",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "crit": 30
+   },
+   "texto": "5 asesinatos o asistencias: +20% de crítico (4% por cada una) y +10% extra al llegar a 5.",
+   "item": "rage",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "pf": 10,
+    "pm": 10
+   },
+   "texto": "Evolucionado (15 cargas de cada protección): +10 de protección física y mágica. La mitigación extra de 6% no la cuenta la calculadora.",
+   "item": "prophetic-cloak",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "as": 39
+   },
+   "texto": "6 cargas al matar súbditos o monstruos: +39% de velocidad de ataque (6.5% cada una, duran 10 s).",
+   "item": "war-banner",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "as": 6
+   },
+   "texto": "6 cargas al matar súbditos o monstruos: +6% de velocidad de ataque (1% cada una, duran 10 s).",
+   "item": "war-flag",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {
+    "pf": 28
+   },
+   "texto": "4 cargas al recibir daño físico: +28 de protección física por 6 s.",
+   "item": "helm-of-radiance",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {},
+   "reduce_prot_rival": 28,
+   "texto": "4 cargas al pegarle con básicos: el rival pierde 28% de sus protecciones por 4 s.",
+   "item": "the-executioner",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "suma": {},
+   "reduce_prot_rival": 10.5,
+   "texto": "3 cargas al pegarle con básicos: el rival pierde 10.5% de sus protecciones (el doble si está en la jungla o se cura).",
+   "item": "avenging-blade",
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
    "pendiente_verificar": false
