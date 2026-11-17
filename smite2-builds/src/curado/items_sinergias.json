@@ -1,5 +1,5 @@
 {
- "_como_editar": "Con qué stat escala cada objeto (leído de su descripción). 'escala_con' usa una clave de 'stats'. La página calcula sola qué objetos dan más de ese stat. 'solo_de_objetos': true si la descripción dice «from items» (no cuentan los stats base del dios ni los bonos de otros objetos). 'minimo' es lo que pide la página antes de dejar de avisar en el creador.",
+ "_como_editar": "Con qué stat escala cada objeto (leído de su descripción). 'escala_con' usa una clave de 'stats'. La página calcula sola qué objetos dan más de ese stat. 'solo_de_objetos': true si la descripción dice «from items» (no cuentan los stats base del dios ni los bonos de otros objetos). 'minimo' es cuánto de ese stat (contando el del propio objeto) pide el creador antes de dejar de avisar; 'sin_aviso': true lo apaga para ese objeto.",
  "stats": {
   "int": {
    "nombre": "Inteligencia",
@@ -7,7 +7,7 @@
    "tags": [
     "MagicalPower"
    ],
-   "minimo": 200
+   "minimo": 150
   },
   "str": {
    "nombre": "Fuerza",
@@ -15,7 +15,7 @@
    "tags": [
     "PhysicalPower"
    ],
-   "minimo": 100
+   "minimo": 80
   },
   "ad": {
    "nombre": "Fuerza y daño de ataque",
@@ -24,7 +24,7 @@
     "InhandPower",
     "PhysicalPower"
    ],
-   "minimo": 100
+   "minimo": 80
   },
   "as": {
    "nombre": "Velocidad de ataque",
@@ -51,7 +51,7 @@
     "PhysicalProtectionItem",
     "MagicalProtectionItem"
    ],
-   "minimo": 150
+   "minimo": 100
   },
   "hp": {
    "nombre": "Vida",
@@ -59,7 +59,7 @@
    "tags": [
     "MaxHealth"
    ],
-   "minimo": 800
+   "nota": "Cuenta tu vida total (la del dios incluida), así que el creador no avisa por falta de vida."
   },
   "ls": {
    "nombre": "Robo de vida",
@@ -94,6 +94,14 @@
    "nombre": "Muchos stats",
    "nombre_en": "Lots of stats",
    "mejor_al_final": true
+  },
+  "damp": {
+   "nombre": "Amortiguación",
+   "nombre_en": "Dampening",
+   "tags": [
+    "Dampening"
+   ],
+   "minimo": 10
   }
  },
  "objetos": [
@@ -300,7 +308,8 @@
    "explicacion_en": "Gains crit chance from kills; pairs with other crit items.",
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
-   "pendiente_verificar": false
+   "pendiente_verificar": false,
+   "sin_aviso": true
   },
   {
    "item": "gladiators-shield",
@@ -619,6 +628,15 @@
    "escala_con": "todo",
    "explicacion": "Suma 5% de todos los stats de tus objetos.",
    "explicacion_en": "Adds 5% of all item stats.",
+   "parche_verificado": "OB48",
+   "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
+   "pendiente_verificar": false
+  },
+  {
+   "item": "doublet-of-binding",
+   "escala_con": "damp",
+   "explicacion": "Recibes 20% del daño que le hacen a tu aliado enlazado, y ese daño lo reduce tu amortiguación: rinde con objetos que den amortiguación.",
+   "explicacion_en": "You take 20% of the damage dealt to your linked ally, reduced by your Dampening.",
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
    "pendiente_verificar": false

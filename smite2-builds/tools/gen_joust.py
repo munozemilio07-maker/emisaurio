@@ -225,7 +225,7 @@ for i,k in enumerate(ids):
     I[k]=dict(n=es[0],e=x['name'].strip(),d=es[1],de=clean_en(x['desc']),s=chips[:4],se=chipsE[:4],c=cat(k) if x['type'] in('Passive','Active') else 'x',i=i,g=round(x['cost']))
 sh.save(OUT+'/img/items.webp',quality=84,method=6)
 # Tier list de objetos: victorias por encima de lo esperado para los dioses que lo compran
-# (cada partida espera el % de victorias suavizado de su dios), suavizado con K=40 partidas.
+# (cada partida espera el % de victorias crudo de su dios), y el puntaje del objeto se suaviza con K=40 partidas.
 def item_tiers():
     _cat={r['id']:r for r in _CAT}
     def ok(x):
@@ -234,7 +234,7 @@ def item_tiers():
     for f in glob.glob('joust/*.json'):
         ms=[m for m in json.load(open(f)) if m['patch']==STATS_PATCH]
         if not ms: continue
-        p=(sum(m['w'] for m in ms)+20)/(len(ms)+40)
+        p=sum(m['w'] for m in ms)/len(ms)  # % de victorias crudo del dios: así los residuos se cancelan por dios
         for m in ms:
             its=[ID2SL.get(x) for x in (m['ids'].split('|')+[''])[1].split(',')][:6]
             for i,x in enumerate(its):
