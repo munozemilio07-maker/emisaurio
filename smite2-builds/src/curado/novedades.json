@@ -4,7 +4,7 @@
  "nombre": "Sleeping Giant Update",
  "fecha": "2026-11-17",
  "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
- "nota_stats": "Las builds y los tiers siguen calculados con partidas del OB47: el parche salió el 17 de noviembre y todavía no hay partidas suficientes del OB48. Los textos de habilidades y objetos sí son del OB48.",
+ "nota_stats": "Las builds y los tiers se calculan con las partidas de Joust del OB47 y las primeras del OB48 (descargadas el 19 de noviembre). Kumbhakarna ya tiene partidas, todas del OB48. Los textos de habilidades y objetos son del OB48.",
  "cambios": [
   {
    "tipo": "dios",
@@ -18,7 +18,7 @@
     "4 Epic Uppercut: embestida; levanta al primer dios con un gancho y al caer daña y empuja a los de alrededor.",
     "Aspecto del Despertar Brusco: cambia el control (enraizar y mesmerizar) por más daño."
    ],
-   "efecto": "Todavía no hay partidas de Joust con él, así que no tiene builds ni tier. Su kit de control encaja como support que prepara la jugada.",
+   "efecto": "Ya hay 347 partidas de Joust con él, todas del OB48, y sus builds salen de ahí. Por ahora gana 46% (tier D): es normal que un dios nuevo empiece bajo mientras la gente lo aprende.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
@@ -36,7 +36,7 @@
     "Dark Portal: daño inicial baja de 180–500 a 170–450 y su escalado de 40% a 30%.",
     "Con el aspecto: 6% menos velocidad de ataque base y 5% menos daño de ataque base."
    ],
-   "efecto": "Es el nerf más grande del parche. En Joust estaba en tier B en el OB47; su tier en esta página todavía es de ese parche.",
+   "efecto": "Es el nerf más grande del parche. En Joust estaba en tier B en el OB47; con las primeras partidas del OB48 ya baja a C.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",

@@ -135,14 +135,15 @@ gen.pool=lambda r:[dict(x) for x in r['_pool']]
 def aspinfo(sl):
     en=items[sl]['name'].replace('Aspect of ','').strip(); es=ASPECTS_ES.get(en,(en,''))
     return dict(e=en,es=es[0],d=es[1],de=clean_en(items[sl]['desc'],300))
-STATS_PATCH='ob47'  # parche de las partidas usadas; cambiar al re-descargar
+STATS_PATCHES=('ob47','ob48')  # parches de las partidas usadas; cambiar al re-descargar
+STATS_LABEL='OB47 y OB48'
 GAME_PATCH='OB48'
 G0={g['key']:g for g in json.load(open('gods.json'))}
 gods=[]
 for key,g in G0.items():
     fn=f'joust/{key}.json'
     allm=json.load(open(fn)) if os.path.exists(fn) else []
-    ms=[m for m in allm if m['patch']==STATS_PATCH]
+    ms=[m for m in allm if m['patch'] in STATS_PATCHES]
     old=False
     if len(ms)<70 and len(allm)>len(ms): ms=allm; old=True
     tags=[x for l in re.findall(r'\[[^\]]*\]',g['filt']) for x in ast.literal_eval(l)]
@@ -191,7 +192,7 @@ for key,g in G0.items():
     if top['prof']=='aa': tr.append('aa')
     if 'burst damage' in tags or 'stealth' in tags: tr.append('burst')
     slug=re.sub(r'[^a-z0-9]+','-',{'Daji':'Da Ji'}.get(g['name'],g['name']).lower()).strip('-')
-    gods.append(dict(k=key,s=slug,n=GODS_ES.get(g['name'],g['name']),e=g['name'],p=PAN_ES.get(g['pan'],g['pan']),pe=g['pan'],dmg='M' if 'magical' in tags else 'P',tr=tr,cls=CLASS_OF.get(g['name'],'Mago'),tier=tier,wr=round(100*W/N),tn=N,roles=roles))
+    gods.append(dict(k=key,s=slug,n=GODS_ES.get(g['name'],g['name']),e=g['name'],p=PAN_ES.get(g['pan'],g['pan']),pe=g['pan'],dmg='M' if 'magical' in tags else 'P',tr=tr,cls=CLASS_OF.get(g['name'],'Mago'),tier=tier,wr=round(100*W/N),tn=N,tn48=sum(1 for m in ms if m['patch']=='ob48'),roles=roles))
 gods.sort(key=lambda g:g['e'])
 # sprites
 os.makedirs(OUT+'/img',exist_ok=True); os.makedirs(OUT+'/cards',exist_ok=True); os.makedirs('img/item',exist_ok=True)
@@ -232,7 +233,7 @@ def item_tiers():
         r=_cat.get(x); return r and r['tipo'] in('pasivo','activo') and r['categoria']!='de_un_dios' and (r['nivel']=='T3' or (r['nivel']=='' and r['costo']>=2000))
     acc={}
     for f in glob.glob('joust/*.json'):
-        ms=[m for m in json.load(open(f)) if m['patch']==STATS_PATCH]
+        ms=[m for m in json.load(open(f)) if m['patch'] in STATS_PATCHES]
         if not ms: continue
         p=sum(m['w'] for m in ms)/len(ms)  # % de victorias crudo del dios: así los residuos se cancelan por dios
         for m in ms:
@@ -249,7 +250,7 @@ def item_tiers():
 ITEM_TIERS=item_tiers()
 from collections import Counter as _C
 print('tiers de objetos:',_C(v['t'] for v in ITEM_TIERS.values()))
-data=dict(patch=STATS_PATCH.upper(),item_tiers=ITEM_TIERS,parche_juego=GAME_PATCH,mode='joust',gc=GC,gr=sheet.height//S,ic=IC,ir=sh.height//T,items=I,gods=gods)
+data=dict(patch=STATS_LABEL,item_tiers=ITEM_TIERS,parche_juego=GAME_PATCH,mode='joust',gc=GC,gr=sheet.height//S,ic=IC,ir=sh.height//T,items=I,gods=gods)
 json.dump(data,open('data.json','w'),ensure_ascii=False,separators=(',',':'))
 print(len(gods),'dioses',len(ids),'items')
 
