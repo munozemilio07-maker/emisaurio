@@ -1251,7 +1251,7 @@ function calcStats(g, items, starter, o) {
     if (C_FIGHT[id] && C_FIGHT[id].adaptativo) adapt.push(C_FIGHT[id].adaptativo);
     if (o.fight && C_FIGHT[id] && C_FIGHT[id].suma) for (const [k, v] of Object.entries(C_FIGHT[id].suma)) add(k, v);
   }
-  const useInt = (it.int || 0) > (it.str || 0) || ((it.int || 0) === (it.str || 0) && godMain(g) === "int");
+  const useInt = o.forceInt || (it.int || 0) > (it.str || 0) || ((it.int || 0) === (it.str || 0) && godMain(g) === "int");
   for (const [a, b] of adapt) add(useInt ? "int" : "str", useInt ? b : a);
   const pctAll = ids.reduce((n, id) => n + (C_PCT[id] ? C_PCT[id].pct : 0), 0);
   if (pctAll) for (const k of ["str", "int", "ad", "as", "hp", "mana", "pf", "pm", "ls", "crit"]) if (it[k]) it[k] *= 1 + pctAll / 100;
@@ -1445,7 +1445,7 @@ let GOAL = null;
 const vsProt = S => { const eff = Math.max(0, RIVAL_PROT * (1 - S.shred / 100) * (1 - Math.min(100, S.penp) / 100) - S.pen); return 100 / (100 + eff); };
 const critFactor = S => 1 + Math.min(100, S.crit) / 100 * (CALC.critMult - 1 + S.critExtra);
 function goalParts(g, items, st, goal) {
-  const S = calcStats(g, items, st, { lvl: 20, rank: 5, stacks: true, fight: false, actAll: goal !== "as" }), m = vsProt(S);
+  const S = calcStats(g, items, st, { lvl: 20, rank: 5, stacks: true, fight: false, actAll: goal !== "as", forceInt: goal === "gojo" }), m = vsProt(S);
   const hit = S.basicHit * critFactor(S) * m;
   let combo = 0;
   for (const a of ABILS.filter(a => a.dios === g.s && /^[1-4]$/.test(a.ranura))) { const ls = abilityLines(a, S, 5).filter(l => l.kind === "dmg" && !l.perTick); if (ls.length) combo += Math.max(...ls.map(l => l.total)); }
@@ -1496,7 +1496,6 @@ function goalsHTML(g, r) {
     <p>${L("Elige una meta y la calculadora prueba los objetos uno por uno para armar la build que más la sube. No siempre gana llenar todo de un solo stat: cuando un stat ya rinde poco, conviene otro.", "Pick a goal and the calculator tries items one by one. Stacking one stat is not always best.")}</p></div>
     <div class="goal-chips">${GOALS.map(x => `<button class="goal" type="button" data-goal="${x.id}" aria-pressed="${GOAL === x.id}"><span class="gi" aria-hidden="true">${x.ico}</span><b>${L(x.es, x.en)}</b><span>${L(x.d_es, x.d_en)}</span></button>`).join("")}</div>`;
   if (!GOAL || !SB[g.s]) return head + (GOAL ? `<p class="muted">${L("Faltan los stats base de este dios.", "Missing base stats.")}</p>` : "") + `</section>`;
-  if (GOAL === "gojo" && godMain(g) !== "int") return head + `<div class="goal-res"><p class="lead" style="font-size:17px">${L(`Las habilidades de ${esc(N(g))} escalan con Fuerza, así que la magia dura de Gojo no le sirve: la Inteligencia casi no le sube el daño. Prueba One Punch Man.`, `${esc(N(g))}'s abilities scale with Strength, so Gojo's hard magic doesn't fit. Try One Punch Man.`)}</p></div></section>`;
   const res = goalBuild(g, r, GOAL), P = res.P, S = P.S, gl = GOALS.find(x => x.id === GOAL);
   const unit = { as: [L("de daño por segundo con básicos", "basic DPS"), P.dps], crit: [L("de daño promedio por básico", "average damage per basic"), P.hit], burst: [L("de daño en un combo", "combo damage"), P.combo], gojo: [L("de daño mágico en un combo", "magic combo damage"), P.combo], tank: [L("de vida efectiva", "effective health"), P.ehp], bruiser: [L("de combo y", "combo and"), P.combo] }[GOAL];
   const pureStat = { as: "as", crit: "crit", burst: S.useInt ? "int" : "str", gojo: "int", tank: "hp", bruiser: S.useInt ? "int" : "str" }[GOAL];
@@ -1507,7 +1506,8 @@ function goalsHTML(g, r) {
   const stepTxt = res.steps.map((x, i) => { const S2 = x.P.S; const extra = GOAL === "as" ? `${S2.aps.toFixed(2)}/s` : GOAL === "crit" ? `${Math.round(Math.min(100, S2.crit))}% ${L("crít.", "crit")}` : GOAL === "tank" ? `${fmt(x.P.ehp)}` : `${fmt(x.P.combo)}`;
     return `<li><span class="gstep">${i + 1}</span>${iMini(IBY[x.id])}${x.evo ? `<span class="evo-tag" title="${L("Cómpralo pronto para juntar cargas; al principio rinde menos.", "Buy early to stack it; weaker at first.")}">${L("evoluciona", "evolves")}</span>` : "<span></span>"}<span class="gain">+${x.gain < 1 && x.gain > 0 ? x.gain.toFixed(1) : Math.round(x.gain)}%</span><span class="muted">${extra}</span></li>`; }).join("");
   const capNote = GOAL === "crit" || GOAL === "as" ? `<p class="muted" style="font-size:13px">${L(`El crítico es una probabilidad: pasar de 100% no sirve de nada, así que la calculadora deja de sumarlo ahí. El blindaje y la amortiguación se topan en 35. La wiki no dice que la velocidad de ataque tenga tope, así que aquí no se topa.`, `Crit is a chance: past 100% it does nothing. Plating and dampening cap at 35. The wiki states no attack speed cap.`)}</p>` : GOAL === "tank" ? `<p class="muted" style="font-size:13px">${L("Cada punto de protección rinde un poco menos que el anterior y el blindaje y la amortiguación se topan en 35; por eso la build mezcla vida y protecciones.", "Each protection point is worth slightly less; plating and dampening cap at 35.")}</p>` : "";
-  return head + `<div class="goal-res">
+  const gojoWarn = GOAL === "gojo" && godMain(g) !== "int" ? `<p class="rule">${L(`Ojo: las habilidades de ${esc(N(g))} escalan casi todo con Fuerza, así que esta build de pura Inteligencia le sube poco el daño de habilidades (sí su básico, que escala 20% con Inteligencia). Para pegar fuerte con ${esc(N(g))} usa One Punch Man.`, `${esc(N(g))}'s abilities scale mostly with Strength, so this pure Intelligence build adds little. Use One Punch Man instead.`)}</p>` : "";
+  return head + `<div class="goal-res">${gojoWarn}
       <div class="goal-top"><span class="gi big" aria-hidden="true">${gl.ico}</span><div><span class="eyebrow">${L(gl.es, gl.en)} · ${esc(N(g))} · ${L("nivel 20", "level 20")}</span>
         <p class="big">${fmt(unit[1])} <small>${unit[0]}${GOAL === "bruiser" ? ` ${fmt(P.ehp)} ${L("de vida efectiva", "effective health")}` : ""}</small></p></div></div>
       <ol class="gsteps">${stepTxt}</ol>
