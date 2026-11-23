@@ -128,8 +128,8 @@
   {
    "item": "soul-reaver",
    "escala_con": "int",
-   "explicacion": "Desde el OB48, su daño por vida del rival sube con la Inteligencia de tus objetos (+1% por cada 80).",
-   "explicacion_en": "Since OB48 its %-health damage grows with Intelligence from items (+1% per 80).",
+   "explicacion": "Desde el OB48, su daño por vida del rival sube con la Inteligencia de tus objetos: +0.5% por cada 80 desde el hotfix del 19 de noviembre (antes +1%; la descripción del juego no lo mostrará hasta el OB49).",
+   "explicacion_en": "Since OB48 its %-health damage grows with Intelligence from items: +0.5% per 80 since the Nov 19 hotfix (was +1%; the in-game tooltip updates in OB49).",
    "solo_de_objetos": true,
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",
@@ -240,8 +240,8 @@
   {
    "item": "qins-blade",
    "escala_con": "ad",
-   "explicacion": "Desde el OB48, su daño por vida del rival sube con el daño de ataque y la Fuerza de tus objetos (+1% por cada 30).",
-   "explicacion_en": "Since OB48 its %-health damage grows with Attack Damage and Strength from items (+1% per 30).",
+   "explicacion": "Desde el OB48, su daño por vida del rival sube con el daño de ataque y la Fuerza de tus objetos: +1% por cada 60 desde el hotfix del 19 de noviembre (antes cada 30; la descripción del juego no lo mostrará hasta el OB49).",
+   "explicacion_en": "Since OB48 its %-health damage grows with Attack Damage and Strength from items: +1% per 60 since the Nov 19 hotfix (was per 30; the in-game tooltip updates in OB49).",
    "solo_de_objetos": true,
    "parche_verificado": "OB48",
    "fuente": "Lectura de la descripción del objeto en el catálogo del OB48 (https://smite2.live/items)",

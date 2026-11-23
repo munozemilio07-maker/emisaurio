@@ -16,15 +16,18 @@
     "2 Groggy Strike: golpe al piso que enraíza.",
     "3 Mighty Yawn: bostezo que mesmeriza; al recibir daño despiertan antes, ralentizados y con menos velocidad de ataque. Se puede usar dormido.",
     "4 Epic Uppercut: embestida; levanta al primer dios con un gancho y al caer daña y empuja a los de alrededor.",
-    "Aspecto del Despertar Brusco: cambia el control (enraizar y mesmerizar) por más daño."
+    "Aspecto del Despertar Brusco: cambia el control (enraizar y mesmerizar) por más daño.",
+    "Hotfix 19/11: Throw Back pega 10 más en todos los rangos y su escalado sube de 50% a 60% de Inteligencia.",
+    "Hotfix 19/11: Epic Uppercut pega 25 más al caer; Groggy Strike ya no se reduce por resistencia a control y ahora también impide usar movilidad (Cripple) mientras dura; arreglos de tiempos en sus básicos y habilidades.",
+    "Hotfix 19/11: Yogi's Necklace ya no pierde su curación cuando se activa su pasiva."
    ],
    "efecto": "Ya hay 347 partidas de Joust con él, todas del OB48, y sus builds salen de ahí. Por ahora gana 46% (tier D): es normal que un dios nuevo empiece bajo mientras la gente lo aprende.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
    "pendiente_verificar": false,
-   "direccion": "nuevo",
-   "peso_meta": 0
+   "direccion": "buff",
+   "peso_meta": 1
   },
   {
    "tipo": "dios",
@@ -288,32 +291,34 @@
   {
    "tipo": "objeto",
    "ref": "qins-blade",
-   "titulo": "Qin's Blade: buff",
+   "titulo": "Qin's Blade: buff, y luego nerf en el hotfix",
    "cambios": [
-    "Su daño por vida de objetos del rival sube 1% por cada 30 de daño de ataque y Fuerza de tus objetos."
+    "Su daño por vida de objetos del rival sube 1% por cada 30 de daño de ataque y Fuerza de tus objetos.",
+    "Hotfix 19/11 (nerf): ahora necesitas 60 de Fuerza o daño de ataque (antes 30) por cada % de vida que quita. La descripción del juego no lo mostrará hasta el OB49."
    ],
-   "efecto": "Mejor contra tanques mientras más daño lleves.",
+   "efecto": "El hotfix le quitó la mitad del buff: sigue mejor que en el OB47, pero ya no tanto.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
    "pendiente_verificar": false,
    "direccion": "buff",
-   "peso_meta": 2
+   "peso_meta": 1
   },
   {
    "tipo": "objeto",
    "ref": "soul-reaver",
-   "titulo": "Soul Reaver: buff",
+   "titulo": "Soul Reaver: buff, y luego nerf en el hotfix",
    "cambios": [
-    "Su daño por vida de objetos del rival sube 1% por cada 80 de Inteligencia de tus objetos."
+    "Su daño por vida de objetos del rival sube 1% por cada 80 de Inteligencia de tus objetos.",
+    "Hotfix 19/11 (nerf): el daño extra por Inteligencia baja de 1% a 0.5%. La descripción del juego no lo mostrará hasta el OB49."
    ],
-   "efecto": "Mejor contra tanques mientras más Inteligencia lleves.",
+   "efecto": "El hotfix le quitó la mitad del buff: sigue mejor que en el OB47, pero ya no tanto.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
    "pendiente_verificar": false,
    "direccion": "buff",
-   "peso_meta": 2
+   "peso_meta": 1
   },
   {
    "tipo": "objeto",
@@ -349,15 +354,15 @@
    "id": "qins-carries",
    "titulo": "Qin's Blade en carries de ataque básico contra tanques",
    "tipo": "build",
-   "confianza": "media",
-   "posiblemente_roto": true,
-   "resumen": "El buff hace que Qin's Blade pegue más mientras más Fuerza y daño de ataque lleves. En el OB47 casi nadie lo aprovechaba (ganaba 46.5% en 361 partidas de Joust); ahora con una build de daño puro vale la pena probarlo cuando el rival tiene uno o dos tanques.",
+   "confianza": "baja",
+   "posiblemente_roto": false,
+   "resumen": "El buff hace que Qin's Blade pegue más mientras más Fuerza y daño de ataque lleves. En el OB47 casi nadie lo aprovechaba (ganaba 46.5% en 361 partidas de Joust); ahora con una build de daño puro vale la pena probarlo cuando el rival tiene uno o dos tanques. Actualización: el hotfix del 19 de noviembre le quitó la mitad del buff, así que ya no esperamos que esté roto.",
    "numeros": [
     "Con Qin's Blade, Tyrfing, The Executioner, Dominance, Riptalon y Devourer's Gauntlet sumas 200 de Fuerza y daño de ataque de objetos (255 con Hunter's Cowl).",
-    "Lectura más probable de la nota: el 5% de la vida de objetos del rival sube 1 punto por cada 30, o sea de 5% a unos 11.7% (13.5% con el inicial). Más del doble contra tanques.",
+    "Antes del hotfix: el 5% de la vida de objetos del rival subía 1 punto por cada 30, o sea a unos 11.7% (13.5% con el inicial). Con el hotfix (1 punto por cada 60) queda en unos 8.3% (9.3% con el inicial).",
     "Si «+1%» fuera relativo y no en puntos, el aumento sería pequeño. Las notas no lo aclaran: hay que probarlo en partida.",
     "No sabemos si cuentan las cargas de Devourer's Gauntlet ni el inicial; el cálculo de arriba solo usa stats fijas y adaptativas.",
-    "La etiqueta «puede estar roto» solo vale con la lectura en puntos; si fuera relativo, el buff es menor."
+    "Con el hotfix ya no lo marcamos como «puede estar roto»."
    ],
    "dioses": [
     "hachiman",
@@ -386,14 +391,14 @@
    "id": "soul-reaver-magos",
    "titulo": "Soul Reaver en magos con mucha Inteligencia",
    "tipo": "build",
-   "confianza": "media",
-   "posiblemente_roto": true,
-   "resumen": "Mismo tipo de buff para magos: Soul Reaver pega más mientras más Inteligencia lleves. En el OB47 estaba entre los 6 objetos con peor resultado en Joust (40.5% en 474 partidas; de 88 objetos completos con más de 100 partidas). Con una build de Inteligencia pura puede volverse la respuesta contra equipos con dos tanques.",
+   "confianza": "baja",
+   "posiblemente_roto": false,
+   "resumen": "Mismo tipo de buff para magos: Soul Reaver pega más mientras más Inteligencia lleves. En el OB47 estaba entre los 6 objetos con peor resultado en Joust (40.5% en 474 partidas; de 88 objetos completos con más de 100 partidas). Con una build de Inteligencia pura puede volverse la respuesta contra equipos con dos tanques. Actualización: el hotfix del 19 de noviembre le quitó la mitad del buff, así que ya no esperamos que esté roto.",
    "numeros": [
     "Soul Reaver, Rod of Tahuti, Spear of Desolation, Obsidian Shard, Divine Ruin y The World Stone suman 470 de Inteligencia de objetos (560 con Archmage's Gem).",
-    "Lectura más probable: el 3% de la vida de objetos del rival sube 1 punto por cada 80, de 3% a unos 8.9% (10% con el inicial), aplicado en cada habilidad.",
+    "Antes del hotfix: el 3% de la vida de objetos del rival subía 1 punto por cada 80 de Inteligencia, a unos 8.9% (10% con el inicial). Con el hotfix (0.5 puntos por cada 80) queda en unos 5.9% (6.5% con el inicial), en cada habilidad.",
     "No sabemos si cuenta el 25% extra de Rod of Tahuti; si cuenta, sube un poco más.",
-    "La etiqueta «puede estar roto» solo vale con la lectura en puntos; si fuera relativo, el buff es menor."
+    "Con el hotfix ya no lo marcamos como «puede estar roto»."
    ],
    "dioses": [
     "eset",
@@ -541,5 +546,6 @@
    "fuente": "Deducción propia a partir de las notas del OB48 (https://wiki.smite2.com/w/SMITE_2_Open_Beta_48), el catálogo de objetos del OB48 y las partidas de Joust del OB47 en Smite2.live",
    "pendiente_verificar": true
   }
- ]
+ ],
+ "fecha_hotfix": "2026-11-19"
 }

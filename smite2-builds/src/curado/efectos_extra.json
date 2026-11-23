@@ -20,6 +20,60 @@
    "motivo": "La fuente todavía trae el costo del OB47; las notas del OB48 lo suben.",
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48"
+  },
+  {
+   "dios": "kumbhakarna",
+   "nombre": "Throw Back",
+   "campos": {
+    "datos": [
+     [
+      "Dash Damage",
+      "105/170/235/300/365"
+     ],
+     [
+      "Dash Scaling",
+      "60% Intelligence"
+     ],
+     [
+      "Thrown Minion Damage",
+      "95/165/235/305/375"
+     ],
+     [
+      "Thrown Minion Scaling",
+      "60% Intelligence"
+     ]
+    ]
+   },
+   "motivo": "Hotfix del 19 de noviembre: daño de la embestida +10 en todos los rangos y escalado de 50% a 60% de Inteligencia. La fuente todavía trae los números de antes.",
+   "parche_verificado": "OB48 (hotfix 19/11)",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48"
+  },
+  {
+   "dios": "kumbhakarna",
+   "nombre": "Epic Uppercut",
+   "campos": {
+    "datos": [
+     [
+      "Dash Damage",
+      "75/100/125/150/175"
+     ],
+     [
+      "Dash Scaling",
+      "15% Intelligence"
+     ],
+     [
+      "Landing Damage",
+      "225/315/405/495/585"
+     ],
+     [
+      "Landing Scaling",
+      "40% Intelligence"
+     ]
+    ]
+   },
+   "motivo": "Hotfix del 19 de noviembre: daño al caer +25 en todos los rangos. La fuente todavía trae los números de antes.",
+   "parche_verificado": "OB48 (hotfix 19/11)",
+   "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48"
   }
  ],
  "agregar": [
