@@ -13,7 +13,7 @@ for g in gods:
     fn=os.path.join(OUT,g['key']+'.json')
     if os.path.exists(fn): continue
     seen={}
-    for pg in range(1,9):
+    for pg in range(1,41):  # hasta 40 páginas; para cuando una página no trae nada nuevo
         s=get(f"https://smite2.live/god/{g['key']}/builds?mode=joust&page={pg}")
         before=len(seen)
         for res,mid,pid,ids,rest in RX.findall(s):
