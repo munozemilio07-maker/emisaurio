@@ -4,7 +4,7 @@
  "nombre": "Sleeping Giant Update",
  "fecha": "2026-11-17",
  "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
- "nota_stats": "Las builds y los tiers se calculan con las partidas de Joust del OB47 y las del OB48 (última descarga: 23 de noviembre, ya con los hotfixes del 19). Kumbhakarna ya tiene partidas, todas del OB48. Los textos de habilidades y objetos son del OB48.",
+ "nota_stats": "Las builds y los tiers se calculan con las partidas de Joust del OB47 y las del OB48 (última descarga: 28 de noviembre, ya con los hotfixes del 19). Kumbhakarna ya tiene partidas, todas del OB48. Los textos de habilidades y objetos son del OB48.",
  "cambios": [
   {
    "tipo": "dios",
@@ -21,7 +21,7 @@
     "Hotfix 19/11: Epic Uppercut pega 25 más al caer; Groggy Strike ya no se reduce por resistencia a control y ahora también impide usar movilidad (Cripple) mientras dura; arreglos de tiempos en sus básicos y habilidades.",
     "Hotfix 19/11: Yogi's Necklace ya no pierde su curación cuando se activa su pasiva."
    ],
-   "efecto": "Ya hay 697 partidas de Joust con él, todas del OB48, y sus builds salen de ahí. Gana 42% (tier D). Ojo: en las 350 partidas más nuevas, casi todas después del hotfix que lo mejoró, ganó 39%, menos que en las primeras (46%). Todavía se está aprendiendo.",
+   "efecto": "Ya hay 965 partidas de Joust con él, todas del OB48, y sus builds salen de ahí. Gana 44% (tier D). Las 347 que bajamos el 19 de noviembre, el día del hotfix que lo mejoró, ganaban 46%; las 618 que bajamos después ganan 43%. El buff no lo ha levantado: todavía se está aprendiendo.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
@@ -39,7 +39,7 @@
     "Dark Portal: daño inicial baja de 180–500 a 170–450 y su escalado de 40% a 30%.",
     "Con el aspecto: 6% menos velocidad de ataque base y 5% menos daño de ataque base."
    ],
-   "efecto": "Es el nerf más grande del parche. En sus 198 partidas de Joust del OB48 gana 49%, contra 53% con el aspecto en el OB47: bajó, pero menos de lo que esperábamos, y sigue en tier B al juntar los dos parches.",
+   "efecto": "Es el nerf más grande del parche. En sus 297 partidas de Joust del OB48 gana 51%, contra 53% con el aspecto en el OB47: bajó poco, y sigue en tier B al juntar los dos parches.",
    "aplica_joust": true,
    "parche_verificado": "OB48",
    "fuente": "https://wiki.smite2.com/w/SMITE_2_Open_Beta_48",
